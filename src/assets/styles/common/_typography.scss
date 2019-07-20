@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
 
-  color: palette(gray);
+  color: palette(black);
   font-family: font(sans);
   font-weight: weight(normal);
   font-size: responsive rem(0) rem(1);
@@ -70,4 +70,21 @@ hr {
   margin: rem(0) 0;
   border: 0;
   border-top: 1px solid rgba(palette(gray, xx-dark), 0.5);
+}
+
+code {
+  color: palette(red);
+  border-radius: (em(-2) * 1/4);
+
+  position: relative;
+
+  &, &:before, &:after {
+    background-color: palette(gray, xx-light);
+  }
+
+  &:before, &:after {
+    content: '';
+    display: inline-block;
+    width: (em(0) * 1/4);
+  }
 }
