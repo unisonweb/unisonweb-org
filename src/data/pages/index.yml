@@ -1,0 +1,14 @@
+title: Unison Computing
+description: placeholder
+hero:
+  eyebrow: Unison is in public alpha
+  heading: A friendly<br>programming<br>language<br>from the future.
+  blurb: |
+    Unison is experimental as the moment and under active development. It's not quite ready for production use, but you could have a huge impact on how Unison develops. It's easy to jump in!
+  graphic:
+    alt: placeholder
+    title: placeholder
+    path: 'https://placehold.it/640x640'
+  cta:
+    label: Install
+    url: '#'

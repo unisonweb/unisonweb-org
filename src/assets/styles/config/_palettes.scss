@@ -1,0 +1,21 @@
+@import 'data/colors.yml'; // $colors
+
+$tones: (
+  xxx-dark:  ( mix: 'shade', percentage: 75% ),
+  xx-dark:   ( mix: 'shade', percentage: 60% ),
+  x-dark:    ( mix: 'shade', percentage: 45% ),
+  dark:      ( mix: 'shade', percentage: 20% ),
+  mid:       ( mix: 'tint',  percentage: 20% ),
+  light:     ( mix: 'tint',  percentage: 45% ),
+  x-light:   ( mix: 'tint',  percentage: 60% ),
+  xx-light:  ( mix: 'tint',  percentage: 75% ),
+  xxx-light: ( mix: 'tint',  percentage: 90% )
+);
+
+$UCpalettes: generate-palettes($colors, $tones);
+
+@function palette($name, $tone: 'base') {
+  $palette: map-get($UCpalettes, $name);
+  $color: map-get($palette, $tone);
+  @return $color;
+}

@@ -1,0 +1,8 @@
+$UCopacities: (
+  '0':    0,
+  '100':  1
+);
+
+@function opacity($opacity) {
+  @return map-get($UCopacities, $opacity);
+}

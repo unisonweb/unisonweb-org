@@ -1,0 +1,8 @@
+$UCweights: (
+  normal: 400,
+  bold: 700
+);
+
+@function weight($weight) {
+  @return map-get($UCweights, $weight);
+}

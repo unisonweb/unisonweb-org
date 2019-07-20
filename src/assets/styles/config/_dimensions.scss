@@ -1,0 +1,17 @@
+$UCdimensions: (
+  siteNav: (
+    paddingVertical: rem(0),
+    logoHeight: rem(7),
+    fontSize: rem(-1)
+  ),
+  pageSection: (
+    xs: rem(4),
+    sm: rem(6),
+    md: rem(10),
+    lg: rem(10)
+  )
+);
+
+@function dim($element, $dimension) {
+  @return map-get(map-get($UCdimensions, $element), $dimension);
+}

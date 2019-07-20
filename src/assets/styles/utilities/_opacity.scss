@@ -1,0 +1,6 @@
+@each $opacity, $value in $UCopacities {
+
+  .u-opacity--#{$opacity} {
+    opacity: $value;
+  }
+}

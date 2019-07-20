@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  color: palette(gray);
+  font-family: font(sans);
+  font-weight: weight(normal);
+  font-size: responsive rem(0) rem(1);
+  font-range: breakpoint(xs, max) breakpoint(xl);
+  line-height: line-height(default);
+
+  background: transparent; // overridden by bg utility classes as needed
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+
+  -webkit-tap-highlight-color: rgba(palette(primary), 0.15);
+}
+
+::selection {
+  color: palette(white);
+  background-color: palette(yellow);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+
+  font-size: inherit;
+  font-weight: weight(bold);
+  line-height: line-height(half);
+}
+
+p, ul, ol, dl, table, blockquote, li, dt, dd {
+  // reset
+  margin: 0;
+
+  margin-top: rem(0);
+  margin-bottom: 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+a {
+  cursor: pointer;
+  color: palette(primary);
+  text-decoration: none;
+
+  &:hover {
+    color: palette(primary, bright);
+    text-decoration: underline;
+  }
+}
+
+a, button, label {
+
+  &:focus {
+    outline: none;
+  }
+}
+
+hr {
+  // <hr> reset
+  margin: rem(0) 0;
+  border: 0;
+  border-top: 1px solid rgba(palette(gray, xx-dark), 0.5);
+}

@@ -1,0 +1,58 @@
+@function generate-palettes($colors, $tones) {
+
+  $palettes: ();
+
+  @each $color in $colors {
+
+    $color-name: map-get($color, 'name');
+    $base-hex: map-get($color, 'base');
+
+    // add `base` tone
+    $palettes: map-merge(
+      $palettes, (
+        $color-name: (base: $base-hex)
+      )
+    );
+
+    // add `bright` tone
+    $bright-color: map-merge(
+      map-get($palettes, $color-name),
+      (bright: mix-blend-overlay($base-hex, $base-hex))
+    );
+
+    $palettes: map-merge(
+      $palettes, (
+        $color-name: $bright-color
+      )
+    );
+
+    @each $tone, $value in $tones {
+
+      $mix-type: map-get($value, 'mix');          // tint/shade
+      $percentage: map-get($value, 'percentage'); // strength of mix
+      $hex: null;
+
+      @if $mix-type == 'tint' {
+        $hex: mix-tint($base-hex, $percentage);
+      }
+      @if $mix-type == 'shade' {
+        $hex: mix-shade($base-hex, $percentage);
+      }
+
+      $mixed-color: map-merge(
+        map-get($palettes, $color-name),
+        ($tone: $hex)
+      );
+
+      // add `mixed` tone
+      $palettes: map-merge(
+        $palettes, (
+          $color-name: $mixed-color
+        )
+      );
+
+    }
+  }
+
+  @return $palettes;
+}

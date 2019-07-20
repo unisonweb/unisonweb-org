@@ -1,0 +1,26 @@
+@include generate-color-utilities(u-color, color);
+@include generate-color-utilities(u-fill, fill);
+@include generate-color-utilities(u-stroke, stroke);
+@include generate-color-utilities(u-border, border-color);
+@include generate-color-utilities(u-bg, background-color);
+
+.u-border {
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+
+  &--top,     &--vertical { border-top-width: 1px; border-top-style: solid; }
+  &--bottom,  &--vertical { border-bottom-width: 1px; border-bottom-style: solid; }
+  &--right, &--horizontal { border-right-width: 1px; border-right-style: solid; }
+  &--left,  &--horizontal { border-left-width: 1px; border-left-style: solid; }
+
+  &--none                             { border: 0 !important; }
+  &--top--none,     &--vertical--none { border-top: 0 !important; }
+  &--bottom--none,  &--vertical--none { border-bottom: 0 !important; }
+  &--right--none, &--horizontal--none { border-right: 0 !important; }
+  &--left--none,  &--horizontal--none { border-left: 0 !important; }
+}
+
+.u-bg--none {
+  background: none !important;
+}

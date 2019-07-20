@@ -1,0 +1,140 @@
+@include generate-font-utilities($UCfonts);
+
+// text alignment
+.u-align {
+
+  &--left   { text-align: left !important; }
+  &--right  { text-align: right !important; }
+  &--center { text-align: center !important; }
+
+  @each $breakpoint in map-keys($UCbreakpoints) {
+    @include screen(breakpoint($breakpoint, min), breakpoint($breakpoint, max)) {
+      &--right\@#{$breakpoint} {
+        text-align: right !important;
+      }
+      &--left\@#{$breakpoint} {
+        text-align: left !important;
+      }
+      &--center\@#{$breakpoint} {
+        text-align: center !important;
+      }
+    }
+  }
+}
+
+// text casing
+.u-capitalize   { text-transform: capitalize; }
+.u-uppercase    { text-transform: uppercase; }
+.u-lowercase    { text-transform: lowercase; }
+
+// text emphasis
+.u-normal       { font-weight: weight(normal); letter-spacing: 0; font-style: normal; }
+.u-bold         { font-weight: weight(bold); }
+.u-italic       { font-style: italic; }
+.u-underline    { text-decoration: underline !important; }
+.u-underline--none { text-decoration: none !important; }
+
+// text height
+.u-line-height {
+
+  @each $line-height, $value in $UClineheights {
+    &--#{$line-height} {
+      line-height: $value !important;
+    }
+  }
+}
+
+// text formatting
+.u-expanded     { letter-spacing:  2px; }
+.u-extended     { letter-spacing:  1px; }
+.u-tight        { letter-spacing: -.25px; }
+.u-condensed    { letter-spacing: -1px; }
+.u-compressed   { letter-spacing: -2px; }
+.u-nowrap       { white-space: nowrap; }
+.u-pre-wrap     { white-space: pre-wrap; }
+// .u-text-shadow  { text-shadow: 0 1px rem(3) rgba(palette(gray, xx-dark), 0.5); }
+.u-truncate     { @include mix-ellipsis; }
+
+// text sizing
+@each $scale, $value in $UCmodularscales {
+  [data-font-size="#{$scale}"] {
+    @if( ($scale - 3) < 10 ) {
+      font-size: rem($scale) !important;
+    } @else {
+      font-size: responsive rem(($scale - 3)) rem($scale) !important;
+      font-range: breakpoint(xs, max) breakpoint(xl);
+    }
+  }
+}
+
+.u-trademark {
+
+  &:after {
+    content: '\2122'; // TM symbol
+    display: inline-block;
+    font-size: em(-1);
+    line-height: 0;
+  }
+}
+
+.u-list--unstyled {
+
+  @at-root ul#{&}, ol#{&}, dl#{&} {
+    // reset
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    width: 100%;
+
+    > li, dt, dd {
+      // reset
+      margin: 0;
+    }
+  }
+}
+
+.u-list--inline {
+  @extend .u-list--unstyled;
+
+  > li, dt, dd {
+    display: inline-block;
+  }
+}
+
+.u-list--comma-separated {
+  @extend .u-list--inline;
+
+  > li, dt, dd {
+
+    &:not(:last-child) {
+
+      &:after {
+        content: ', ';
+      }
+
+      > * {
+        float: left;
+      }
+    }
+  }
+}
+
+.u-columns {
+
+  &--2 {
+
+    @include min-screen(breakpoint(sm)) {
+      columns: 2;
+      column-gap: rem(6);
+    }
+  }
+}
+
+strong {
+  font-weight: weight(bold);
+}
+
+small {
+  font-size: ((rem(-2) / rem(0)) * 100%);
+}

@@ -1,0 +1,34 @@
+@mixin reset-input {
+  outline: none !important;
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font-family: font(system);
+  border: none;
+  background: none;
+  background-image: none;
+  box-shadow: none;
+
+  &:focus {
+    outline: none;
+    background: none;
+  }
+}
+
+@mixin reset-button {
+  appearance: none;
+  cursor: pointer;
+  outline: none !important; // prevent outline from :focus
+  user-select: none; // to prevent text highlights inside buttons
+  margin: 0;
+  padding: 0;
+  text-shadow: none;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+@mixin box-shadow {
+  box-shadow: 0 (rem(0) * 1/2) rem(4) rgba(palette(black), 0.07);
+}

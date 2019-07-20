@@ -1,0 +1,10 @@
+@mixin generate-font-utilities($fonts) {
+  // loop through the palettes
+  @each $font, $value in $fonts {
+    // write the utility class
+    .u-font--#{$font} {
+      font-family: map-get($value, 'family');
+      font-weight: map-get($value, 'weight');
+    }
+  }
+}

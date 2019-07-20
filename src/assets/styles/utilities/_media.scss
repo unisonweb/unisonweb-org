@@ -1,0 +1,87 @@
+.u-img--responsive,
+.u-media--responsive {
+
+  &, & > * {
+    display: block;
+    width: 100%;
+  }
+}
+
+.u-img--centered {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+
+  @each $breakpoint in map-keys($UCbreakpoints) {
+    @include screen(breakpoint($breakpoint, min), breakpoint($breakpoint, max)) {
+        &\@#{$breakpoint} {
+            display: none !important;
+        }
+    }
+  }
+}
+
+.u-img--rounded {
+
+  &, & > * {
+    border-radius: 999px;
+  }
+}
+
+.u-media--cover {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  overflow: hidden;
+
+  img, svg, iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: auto;
+    height: auto;
+
+    max-height: none;
+    max-width: none;
+
+    min-height: 100%;
+    min-width: 100%;
+  }
+}
+
+.u-video--responsive {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+
+  &#{&}--16x9 {
+    height: 0;
+    padding-bottom: (9/16 * 100%);
+
+    overflow: hidden;
+    position: relative;
+  }
+
+  > * {
+    object-fit: inherit;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  iframe {
+    border: none;
+  }
+}

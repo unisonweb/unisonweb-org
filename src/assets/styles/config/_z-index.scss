@@ -1,0 +1,9 @@
+$UCzindexes: (
+  cookiesNotice: 9999,
+  modal: 9000,
+  siteNav: 2000
+);
+
+@function z-index($index) {
+  @return map-get($UCzindexes, $index);
+}

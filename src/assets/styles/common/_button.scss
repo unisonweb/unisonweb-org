@@ -1,0 +1,111 @@
+%uc-button {
+  @include reset-button;
+
+  // Defaults
+  position: relative; // for positiong radio/check icons
+  display: inline-block;
+  cursor: pointer;
+
+  line-height: line-height(base);
+  text-align: center;
+
+  border-radius: 99px; // big number to force rounded edges
+  border: none;
+
+  box-shadow: none;
+  transition: all .05s ease-in-out;
+}
+
+.uc-button {
+  @extend %uc-button;
+
+  $this: &;
+
+  @at-root {
+
+    a #{$this},
+    a:hover #{$this},
+    a#{$this},
+    a#{$this}:hover {
+      text-decoration: none !important;
+    }
+  }
+
+  // Sizing
+  padding: rem(0);
+  font-size: rem(-1);
+
+  &#{$this}--large {
+    font-size: rem(0);
+    padding: rem(0) rem(7);
+  }
+
+  &#{$this}--block {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &#{$this}--centered {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  @each $breakpoint in map-keys($UCbreakpoints) {
+
+    @include screen(breakpoint($breakpoint, min), breakpoint($breakpoint, max)) {
+
+      &#{$this}--block\@#{$breakpoint} {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &#{$this}--centered\@#{$breakpoint} {
+        margin-right: auto;
+        margin-left: auto;
+      }
+    }
+  }
+
+  &:disabled,
+  &#{$this}--disabled {
+    pointer-events: none; // https://jakearchibald.com/2017/events-and-disabled-form-fields/
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-style: dashed;
+  }
+
+  &#{$this}--link {
+    // reset
+    padding: 0;
+    border: none;
+
+    color: palette(primary);
+    font-size: unset;
+    font-family: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+
+    &:hover {
+      color: palette(primary, bright);
+      text-decoration: underline;
+    }
+  }
+
+  @include generate-button-color-modifier(#{$this}, primary);
+  @include generate-button-color-modifier(#{$this}, yellow);
+
+  svg {
+
+    &, & + span {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+.u-float {
+
+  &--right { float: right !important; }
+  &--left  { float: left !important; }
+  &--none  { float: none !important; }
+
+  @each $breakpoint in map-keys($UCbreakpoints) {
+    @include screen(breakpoint($breakpoint, min), breakpoint($breakpoint, max)) {
+      &--right\@#{$breakpoint} {
+        float: right !important;
+      }
+      &--left\@#{$breakpoint} {
+        float: left !important;
+      }
+      &--none\@#{$breakpoint} {
+        float: none !important;
+      }
+    }
+  }
+}
+
+.u-clear {
+
+  &--right { clear: right !important; }
+  &--left  { clear: left !important; }
+  &--both  { clear: both !important; }
+  &--none  { clear: none !important; }
+}
+
+.u-clearfix     { @include mix-clearfix; }
+.u-block        { display: block; }
+.u-inline-block { display: inline-block; }
+.u-invisible    { visibility: hidden; }
+.is-invisible    { visibility: hidden; }
+
+.u-hidden {
+  display: none !important;
+
+  @each $breakpoint in map-keys($UCbreakpoints) {
+    @include screen(breakpoint($breakpoint, min), breakpoint($breakpoint, max)) {
+      &\@#{$breakpoint} {
+        display: none !important;
+      }
+    }
+  }
+}
+
+.u-hidden--visually {
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.u-scrollable {
+
+  &--horizontal {
+    overflow-x: scroll;
+
+    margin-right: -#{rem(0)};
+    margin-left: -#{rem(0)};
+
+    padding-right: rem(0);
+    padding-left: rem(0);
+  }
+}
+
+.is-blocked-from-scrolling {
+
+
+  @at-root body#{&} {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    @each $breakpoint in map-keys($UCbreakpoints) {
+      @include screen(breakpoint($breakpoint, min), breakpoint($breakpoint, max)) {
+        &\@#{$breakpoint} {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}

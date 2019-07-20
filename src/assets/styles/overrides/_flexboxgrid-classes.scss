@@ -1,0 +1,56 @@
+.container,
+.container-fluid {
+  max-width: 100%;
+
+  padding-right: rem(0);
+  padding-left: rem(0);
+}
+
+.container {
+
+  @include max-screen(breakpoint(xs, max)) {
+    width: 100%;
+  }
+
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container-fluid {
+  width: 100%;
+}
+
+.row {
+
+  &.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > [class^='col-'] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
+  &.large-gutters {
+
+    @include min-screen(breakpoint(sm)) {
+      margin-right: -#{(rem(0) * 1.5)};
+      margin-left: -#{(rem(0) * 1.5)};
+
+      > [class^='col-'] {
+        padding-right: (rem(0) * 1.5);
+        padding-left: (rem(0) * 1.5);
+      }
+    }
+  }
+}
+
+@each $breakpoint in map-keys($UCbreakpoints) {
+  @include min-screen(breakpoint($breakpoint, min)) {
+    .stretch-#{$breakpoint} {
+      display: flex;
+      align-items: stretch;
+    }
+  }
+}

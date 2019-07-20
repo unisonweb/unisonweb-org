@@ -1,0 +1,11 @@
+$UCbreakpoints: (
+  xs: (min: 0,      max: 599px),
+  sm: (min: 600px,  max: 899px),
+  md: (min: 900px,  max: 1199px),
+  lg: (min: 1200px, max: 1799px),
+  xl: (min: 1800px)
+);
+
+@function breakpoint($breakpoint, $variant: 'min') {
+  @return map-get(map-get($UCbreakpoints, $breakpoint), $variant);
+}

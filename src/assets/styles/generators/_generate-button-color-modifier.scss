@@ -1,0 +1,81 @@
+@mixin generate-button-color-modifier($class, $color, $tone: 'base') {
+
+  &#{$class}--#{$color} {
+
+    $bgColor: null;
+    $bgHoverColor: null;
+    $textColor: null;
+
+    @if $color == 'white' {
+      $textColor: palette(primary);
+      $bgColor: palette($color);
+      $bgHoverColor: palette(white);
+    }
+    @else {
+      $textColor: mix-pick-visible-color(
+        palette($color),           // background
+        palette($color, xxx-dark), // black text color
+        palette(white)             // white text color
+      );
+      $bgColor: palette($color);
+      $bgHoverColor: palette($color, bright);
+    }
+
+    color: $textColor;
+    background-color: $bgColor;
+
+    &:hover {
+      color: $textColor;
+      background-color: $bgHoverColor;
+    }
+
+    &:active {
+
+    }
+
+    &:focus {
+      
+    }
+
+    &#{$class}--outline {
+
+      $textColorForOutline: null;
+      $bgColorForOutline: null;
+      $bgHoverColorForOutline: null;
+
+      @if $color == 'white' {
+        $textColorForOutline: palette(gray);
+        $bgColorForOutline: palette(primary);
+        $bgHoverColorForOutline: palette(primary);
+      }
+      @else {
+        $textColorForOutline: palette($color);
+        $bgColorForOutline: transparent;
+        $bgHoverColorForOutline: rgba(palette($color, bright), 0.2);;
+      }
+
+      color: $textColorForOutline;
+      background-color: $bgColorForOutline;
+
+      // faux border
+      box-shadow: inset 0 0 0 2px currentColor;
+
+      &#{$class}--small {
+        box-shadow: inset 0 0 0 1px currentColor;
+      }
+
+      &:hover {
+        color: $textColorForOutline;
+        background-color: $bgHoverColorForOutline;
+      }
+
+      &:active {
+
+      }
+
+      &:focus {
+        
+      }
+    }
+  }
+}

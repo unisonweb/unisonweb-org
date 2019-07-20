@@ -1,0 +1,6 @@
+$flexboxgrid-breakpoints:
+  sm breakpoint(sm) container(sm),
+  md breakpoint(md) container(md),
+  lg breakpoint(lg) container(lg);
+
+$flexboxgrid-max-width: breakpoint(xl);

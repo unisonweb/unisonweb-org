@@ -1,0 +1,23 @@
+$UCsans: sans-serif;
+
+$UCfonts: (
+  'sans': (
+    family: $UCsans,
+    weight: weight(normal),
+    cap-height: .01,
+    x-height: .01,
+    descent: .01,
+    ascent: .01
+  ),
+  'system': (
+    family: mix-system-fonts(),
+    weight: weight(normal),
+    cap-height: .01,
+    descent: .01,
+    ascent: .01
+   )
+);
+
+@function font($font, $property: 'family') {
+  @return map-get(map-get($UCfonts, $font), $property);
+}

@@ -1,0 +1,25 @@
+@mixin generate-color-utilities($class, $property) {
+  // loop through the palettes
+  @each $palette, $value in $UCpalettes {
+    // assign default color name
+    $color: $palette;
+    // loop through the shades of the palette
+    @each $tone, $i in $value {
+
+      // for base colors, use the color for the color name
+      @if $tone == 'base' {
+        $color: $palette;
+      }
+      // for tones, include a modifier on the color name
+      @else {
+        $color: #{$palette}--#{$tone};
+      }
+
+      // write the utility class
+      .#{$class}--#{$color} {
+        #{$property}: $i !important;
+      }
+
+    }
+  }
+}

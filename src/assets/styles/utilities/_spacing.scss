@@ -1,0 +1,129 @@
+.u-margin {
+  margin: rem(0) !important;
+  &--top,     &--vertical { margin-top: rem(0) !important; }
+  &--bottom,  &--vertical { margin-bottom: rem(0) !important; }
+  &--right, &--horizontal { margin-right: rem(0) !important; }
+  &--left,  &--horizontal { margin-left: rem(0) !important; }
+
+  &--none { margin: 0 !important; }
+  &--top--none,     &--vertical--none { margin-top: 0 !important; }
+  &--bottom--none,  &--vertical--none { margin-bottom: 0 !important; }
+  &--right--none, &--horizontal--none { margin-right: 0 !important; }
+  &--left--none,  &--horizontal--none { margin-left: 0 !important; }
+
+  @each $breakpoint in map-keys($UCbreakpoints) {
+    @include screen(breakpoint($breakpoint, min), breakpoint($breakpoint, max)) {
+      &\@#{$breakpoint} {
+        margin: rem(0) !important;
+      }
+      &--none\@#{$breakpoint} {
+        margin: 0 !important;
+      }
+      &--top\@#{$breakpoint} {
+        margin-top: rem(0) !important;
+      }
+      &--top--none\@#{$breakpoint} {
+        margin-top: 0 !important;
+      }
+      &--right\@#{$breakpoint} {
+        margin-right: rem(0) !important;
+      }
+      &--right--none\@#{$breakpoint} {
+        margin-right: 0 !important;
+      }
+      &--bottom\@#{$breakpoint} {
+        margin-bottom: rem(0) !important;
+      }
+      &--bottom--none\@#{$breakpoint} {
+        margin-bottom: 0 !important;
+      }
+      &--left\@#{$breakpoint} {
+        margin-left: rem(0) !important;
+      }
+      &--left--none\@#{$breakpoint} {
+        margin-left: 0 !important;
+      }
+      &--vertical\@#{$breakpoint} {
+        margin-top: rem(0) !important;
+        margin-bottom: rem(0) !important;
+      }
+      &--vertical--none\@#{$breakpoint} {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
+      &--horizontal\@#{$breakpoint} {
+        margin-right: rem(0) !important;
+        margin-left: rem(0) !important;
+      }
+      &--horizontal--none\@#{$breakpoint} {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+      }
+    }
+  }
+}
+
+.u-padding {
+  padding: rem(0) !important;
+  &--top,     &--vertical { padding-top: rem(0) !important; }
+  &--bottom,  &--vertical { padding-bottom: rem(0) !important; }
+  &--right, &--horizontal { padding-right: rem(0) !important; }
+  &--left,  &--horizontal { padding-left: rem(0) !important; }
+
+  &--none { padding: 0 !important; }
+  &--top--none,     &--vertical--none { padding-top: 0 !important; }
+  &--bottom--none,  &--vertical--none { padding-bottom: 0 !important; }
+  &--right--none, &--horizontal--none { padding-right: 0 !important; }
+  &--left--none,  &--horizontal--none { padding-left: 0 !important; }
+
+  @each $breakpoint in map-keys($UCbreakpoints) {
+    @include screen(breakpoint($breakpoint, min), breakpoint($breakpoint, max)) {
+      &\@#{$breakpoint} {
+        padding: rem(0) !important;
+      }
+      &--none\@#{$breakpoint} {
+        padding: 0 !important;
+      }
+      &--top\@#{$breakpoint} {
+        padding-top: rem(0) !important;
+      }
+      &--top--none\@#{$breakpoint} {
+        padding-top: 0 !important;
+      }
+      &--right\@#{$breakpoint} {
+        padding-right: rem(0) !important;
+      }
+      &--right--none\@#{$breakpoint} {
+        padding-right: 0 !important;
+      }
+      &--bottom\@#{$breakpoint} {
+        padding-bottom: rem(0) !important;
+      }
+      &--bottom--none\@#{$breakpoint} {
+        padding-bottom: 0 !important;
+      }
+      &--left\@#{$breakpoint} {
+        padding-left: rem(0) !important;
+      }
+      &--left--none\@#{$breakpoint} {
+        padding-left: 0 !important;
+      }
+      &--vertical\@#{$breakpoint} {
+        padding-top: rem(0) !important;
+        padding-bottom: rem(0) !important;
+      }
+      &--vertical--none\@#{$breakpoint} {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      &--horizontal\@#{$breakpoint} {
+        padding-right: rem(0) !important;
+        padding-left: rem(0) !important;
+      }
+      &--horizontal--none\@#{$breakpoint} {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+      }
+    }
+  }
+}

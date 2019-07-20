@@ -1,0 +1,33 @@
+// manual modular scale font sizes
+// based on http://modularscale.com/scale/?px1=16&px2=18&ra1=1.333&ra2=0
+$UCmodularscales: (
+  -3: 10,
+  -2: 12,
+  -1: 14,
+   0: 16,
+   1: 18,
+   2: 20,
+   3: 22,
+   4: 27,
+   5: 31,
+   6: 37,
+   7: 42,
+   8: 50,
+   9: 56,
+  10: 67,
+  11: 75,
+  12: 89,
+  13: 100
+);
+
+@function ms($scale) {
+  @return map-get($UCmodularscales, $scale);
+}
+
+@function rem($scale) {
+  @return (ms($scale) / ms(0) * 1rem);
+}
+
+@function em($scale) {
+  @return (ms($scale) / ms(0) * 1em);
+}

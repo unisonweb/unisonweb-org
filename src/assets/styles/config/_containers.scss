@@ -1,0 +1,10 @@
+$UCcontainers: (
+  xs: 100%,
+  sm: 800px,
+  md: 960px,
+  lg: 1280px
+);
+
+@function container($width) {
+  @return map-get($UCcontainers, $width);
+}
