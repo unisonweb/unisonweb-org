@@ -29,6 +29,7 @@ function getPlugins() {
           './src/**/*.md',
         ],
         whitelistPatterns: [
+          /(body).*/,
           /(un-).*/,
           /(is-).*/,
         ],
