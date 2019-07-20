@@ -1,9 +1,12 @@
 <template>
   <uc-link
-    class="uc-site-nav__logo"
+    class="uc-site-nav__logo__wrapper"
     title="Unison"
     url="/">
-    Unison
+    <span
+      class="uc-site-nav__logo"
+      v-text="'Unison'"
+    />
   </uc-link>
 </template>
 
@@ -19,17 +22,17 @@
 
 <style lang="scss">
 
-  .uc-site-nav__logo {
+  .uc-site-nav__logo__wrapper {
     display: block;
     width: auto;
     height: dim(siteNav, logoHeight);
     line-height: line-height(base);
+  }
 
-    > svg {
-      display: block;
-      width: auto;
-      height: 100%;
-    }
+  .uc-site-nav__logo {
+    display: block;
+    width: auto;
+    height: 100%;
   }
 
 </style>
