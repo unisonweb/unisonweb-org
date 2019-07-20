@@ -106,9 +106,9 @@
     @include min-screen(breakpoint(sm)) {
       display: inline-block;
       margin-bottom: dim(pageSection, sm); // gap between __eyebrow and __heading
-      margin-left: -#{$eyebrowPadding * 2}; // align left edge of the text with __heading
-      padding-right: ($eyebrowPadding * 2);
-      padding-left: ($eyebrowPadding * 2);
+      margin-left: -#{rem(-2)}; // align left edge of the text with __heading
+      padding-right: rem(-2);
+      padding-left: rem(-2);
       border-radius: 99px; // big number to force rounded edges
     }
   }
