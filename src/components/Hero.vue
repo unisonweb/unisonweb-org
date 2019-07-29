@@ -67,7 +67,7 @@
 <style lang="scss">
 
   $eyebrowPadding: rem(-3);
-  $eyebrowFontSize: rem(-2);
+  $eyebrowFontSize: rem(-1);
 
   .uc-hero {
     overflow: hidden;
@@ -116,6 +116,7 @@
   .uc-hero__heading {
     font-size: responsive rem(5) rem(10);
     font-range: breakpoint(xs, max) breakpoint(xl);
+    letter-spacing: -#{3/100 * em(0)};
     line-height: line-height(base);
   }
 

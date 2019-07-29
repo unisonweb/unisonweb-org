@@ -29,7 +29,7 @@
 
 // text emphasis
 .u-normal       { font-weight: weight(normal); letter-spacing: 0; font-style: normal; }
-.u-bold         { font-weight: weight(bold); }
+.u-bold         { font-family: font(bold); font-weight: weight(normal); }
 .u-italic       { font-style: italic; }
 .u-underline    { text-decoration: underline !important; }
 .u-underline--none { text-decoration: none !important; }
@@ -52,7 +52,6 @@
 .u-compressed   { letter-spacing: -2px; }
 .u-nowrap       { white-space: nowrap; }
 .u-pre-wrap     { white-space: pre-wrap; }
-// .u-text-shadow  { text-shadow: 0 1px rem(3) rgba(palette(gray, xx-dark), 0.5); }
 .u-truncate     { @include mix-ellipsis; }
 
 // text sizing
@@ -132,7 +131,8 @@
 }
 
 strong {
-  font-weight: weight(bold);
+  font-family: font(bold);
+  font-weight: weight(normal);
 }
 
 small {
