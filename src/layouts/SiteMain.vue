@@ -1,6 +1,10 @@
 <template>
-  <div class="uc-site-main__platform">
-    <uc-site-nav />
+  <div class="uc-site-main__stage">
+
+    <uc-site-nav
+      :nav-search="navSearch"
+      :nav-inverted="navInverted"
+    />
 
     <div class="uc-site-main__wrapper">
       <main
@@ -14,26 +18,31 @@
     </div>
 
     <uc-cookies-notice />
+
   </div>
 </template>
 
 <script>
-import SiteNav from '~/components/SiteNav/SiteNav'
-import SiteFooter from '~/components/SiteFooter'
-import CookiesNotice from '~/components/CookiesNotice'
+  import siteNavProps from '~/mixins/siteNavProps'
+  import SiteNav from '~/components/SiteNav/SiteNav'
+  import SiteFooter from '~/components/SiteFooter'
+  import CookiesNotice from '~/components/CookiesNotice'
 
-export default {
-  components: {
-    'uc-site-nav': SiteNav,
-    'uc-site-footer': SiteFooter,
-    'uc-cookies-notice': CookiesNotice,
-  },
-}
+  export default {
+    components: {
+      'uc-site-nav': SiteNav,
+      'uc-site-footer': SiteFooter,
+      'uc-cookies-notice': CookiesNotice,
+    },
+    mixins: [
+      siteNavProps,
+    ]
+  }
 </script>
 
 <style lang="scss">
 
-  .uc-site-main__platform {
+  .uc-site-main__stage {
     position: relative; // for positioning the site nav
   }
 

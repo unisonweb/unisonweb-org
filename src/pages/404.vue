@@ -23,8 +23,8 @@
 </template>
 
 <script>
-  import page from '~/mixins/page'
   import pageContent from '~/data/pages/404.yml'
+  import pageMetaInfo from '~/mixins/pageMetaInfo'
 
   export default {
     computed: {
@@ -33,7 +33,7 @@
       },
     },
     mixins: [
-      page,
+      pageMetaInfo,
     ],
   }
 </script>

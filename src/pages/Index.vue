@@ -14,8 +14,8 @@
 
 <script>
   import pageContent from '~/data/pages/index.yml'
-  import page from '~/mixins/page'
   import Hero from '~/components/Hero'
+  import pageMetaInfo from '~/mixins/pageMetaInfo'
 
   export default {
     computed: {
@@ -23,12 +23,12 @@
         return pageContent
       },
     },
-    mixins: [
-      page,
-    ],
     components: {
       'uc-hero': Hero,
     },
+    mixins: [
+      pageMetaInfo,
+    ],
   }
 </script>
 

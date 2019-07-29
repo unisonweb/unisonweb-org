@@ -116,7 +116,6 @@
 
     &, &:hover {
       cursor: pointer;
-      color: palette(black);
       text-decoration: none;
     }
 
@@ -136,8 +135,8 @@
         background-color: palette(pink);
 
         transition:
-          opacity .45s ease-in-out,
-          transform .45s ease-in-out;
+          opacity .25s ease-in-out,
+          transform .25s ease-in-out;
         opacity: 0;
         transform: scale(0);
         transform-origin: left;

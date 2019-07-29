@@ -1,5 +1,9 @@
 <template>
-  <div class="uc-site-nav__stage">
+  <div
+    class="uc-site-nav__stage"
+    :class="{
+      'is-inverted': navInverted,
+    }">
     <div class="container">
       <div class="uc-site-nav">
 
@@ -30,6 +34,7 @@
   import Links from '~/components/SiteNav/Links'
   import Logo from '~/components/SiteNav/Logo'
   import componentContent from '~/data/components/site-nav.yml'
+  import siteNavProps from '~/mixins/siteNavProps'
 
   export default {
     computed: {
@@ -41,20 +46,31 @@
       Links,
       Logo,
     },
+    mixins: [
+      siteNavProps,
+    ]
   }
 </script>
 
 <style lang="scss">
 
   .uc-site-nav__stage {
-    // position: absolute;
-    // z-index: z-index(siteNav);
-    // top: 0;
-    // left: 0;
-    // width: 100vw;
-
     padding-top: dim(siteNav, paddingVertical);
     padding-bottom: dim(siteNav, paddingVertical);
+
+    background-color: palette(white);
+
+    .uc-site-nav__link {
+      color: palette(black);
+    }
+
+    &.is-inverted {
+      background-color: palette(black);
+
+      .uc-site-nav__link {
+        color: palette(white);
+      }
+    }
   }
 
   .uc-site-nav {
