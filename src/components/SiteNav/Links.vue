@@ -29,7 +29,7 @@
 
   .uc-site-nav__links__stage {
 
-    @include max-screen(breakpoint(sm, max)) {
+    @include max-screen(breakpoint(xs, max)) {
       position: absolute;
       top: 0;
       left: 0;
@@ -46,18 +46,18 @@
       display: none;
     }
 
-    @include min-screen(breakpoint(md)) {
+    @include min-screen(breakpoint(sm)) {
       display: flex;
       align-items: center;
     }
 
     .uc-social-links__container {
 
-      @include max-screen(breakpoint(sm, max)) {
+      @include max-screen(breakpoint(xs, max)) {
         margin-top: rem(3);
       }
 
-      @include min-screen(breakpoint(md)) {
+      @include min-screen(breakpoint(sm)) {
         margin-left: rem(5);
       }
     }
@@ -73,12 +73,12 @@
 
       display: flex;
 
-      @include max-screen(breakpoint(sm, max)) {
+      @include max-screen(breakpoint(xs, max)) {
         flex-direction: column;
         align-items: center;
       }
 
-      @include min-screen(breakpoint(md)) {
+      @include min-screen(breakpoint(sm)) {
         align-items: center;
       }
 
@@ -88,18 +88,18 @@
 
         &:not(:last-child) {
 
-          @include max-screen(breakpoint(sm, max)) {
+          @include max-screen(breakpoint(xs, max)) {
             margin-bottom: rem(3);
           }
 
-          @include min-screen(breakpoint(md)) {
+          @include min-screen(breakpoint(sm)) {
             margin-right: rem(5);
           }
         }
       }
     }
 
-    @include max-screen(breakpoint(sm, max)) {
+    @include max-screen(breakpoint(xs, max)) {
 
       a {
         display: block;
@@ -119,7 +119,7 @@
       text-decoration: none;
     }
 
-    @include min-screen(breakpoint(md)) {
+    @include min-screen(breakpoint(sm)) {
       font-size: dim(siteNav, fontSize);
 
       position: relative;

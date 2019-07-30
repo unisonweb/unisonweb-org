@@ -114,7 +114,7 @@
 
   .uc-site-nav__mobile-nav-button {
 
-    @include max-screen(breakpoint(sm, max)) {
+    @include max-screen(breakpoint(xs, max)) {
       user-select: none;
 
       // position absolutely to prevent this
@@ -156,7 +156,7 @@
       }
     }
 
-    @include min-screen(breakpoint(md)) {
+    @include min-screen(breakpoint(sm)) {
       display: none;
     }
   }
