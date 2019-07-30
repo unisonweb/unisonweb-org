@@ -40,6 +40,7 @@
       padding-bottom: dim(siteNav, paddingVertical);
 
       border-top: 1px solid palette(gray, x-light);
+      border-bottom: 1px solid palette(gray, x-light);
       background-color: palette(gray, xxx-light);
 
       display: none;

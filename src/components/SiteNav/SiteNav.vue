@@ -17,11 +17,7 @@
 
         <Logo />
 
-        <label
-          class="uc-site-nav__mobile-nav-button"
-          for="mobile-nav-toggle"
-          v-html="'&nbsp;'"
-        />
+        <MobileNavButton />
 
         <Links :links="componentContent.links" />
 
@@ -33,6 +29,7 @@
 <script>
   import Links from '~/components/SiteNav/Links'
   import Logo from '~/components/SiteNav/Logo'
+  import MobileNavButton from '~/components/SiteNav/MobileNavButton'
   import componentContent from '~/data/components/site-nav.yml'
   import siteNavProps from '~/mixins/siteNavProps'
 
@@ -45,6 +42,7 @@
     components: {
       Links,
       Logo,
+      MobileNavButton,
     },
     mixins: [
       siteNavProps,
@@ -67,8 +65,18 @@
     &.is-inverted {
       background-color: palette(black);
 
+      .uc-site-nav__mobile-nav-button {
+
+        @include max-screen(breakpoint(xs, max)) {
+          color: palette(white);
+        }
+      }
+
       .uc-site-nav__link {
-        color: palette(white);
+
+        @include min-screen(breakpoint(sm)) {
+          color: palette(white);
+        }
       }
     }
   }
@@ -111,66 +119,6 @@
 
         display: block;
       }
-    }
-  }
-
-  .uc-site-nav__mobile-nav-button {
-
-    @include max-screen(breakpoint(xs, max)) {
-
-      $iconSize: rem(4);
-
-      user-select: none;
-
-      // position absolutely to prevent this
-      // element from affecting document flow;
-      // this ensures the tallest element in
-      // .site-nav is the __logo
-      position: absolute;
-      z-index: z-index(mobileNavButton);
-      top: 50%;
-      right: 0;
-      transform: translate3d(
-        // align the right-edge of the faux icon
-        // with the right-edge of the .container
-        // to keep the appearance of being aligned
-        // with the content below
-        #{(dim(siteNav, logoHeight) - $iconSize) * 1/2},
-        -50%,
-        0
-      );
-
-      width: dim(siteNav, logoHeight);
-      height: dim(siteNav, logoHeight);
-
-      color: palette(black);
-
-      &:before,
-      &:after {
-        content: '';
-        position: absolute;
-        top: calc(50% - 1px);
-        left: 50%;
-
-        width: $iconSize;
-        height: 2px;
-
-        background-color: currentColor;
-
-        transition: transform .1s ease-in-out;
-      }
-
-      &:before {
-        transform: translate3d(-50%, -#{rem(-3) * 1/2}, 0);
-      }
-
-      &:after {
-        transform: translate3d(-50%, #{rem(-3) * 1/2}, 0);
-      }
-    }
-
-    @include min-screen(breakpoint(sm)) {
-      display: none;
     }
   }
 
