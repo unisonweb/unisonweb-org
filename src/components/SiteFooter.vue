@@ -6,7 +6,8 @@
       <div class="container">
 
         <vue-markdown
-          class="u-align--right u-align--center@xs u-color--gray"
+          class="u-align--center"
+          data-font-size="-1"
           :source="componentContent.meta"
         />
 
