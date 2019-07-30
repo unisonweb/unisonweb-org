@@ -1,4 +1,4 @@
-$UCsans: 'Inter-Regular', sans-serif;
+$UCsans: 'Inter-Light', sans-serif;
 $UCitalic: 'Inter-Italic', sans-serif;
 $UCbold: 'Inter-Bold', sans-serif;
 $UCmono: 'Roboto Mono', monospace;
@@ -7,34 +7,34 @@ $UCfonts: (
   'sans': (
     family: $UCsans,
     weight: weight(normal),
-    capHeight: .01,
-    xHeight: .01,
-    descent: .01,
-    ascent: .01
+    capHeight: .68,
+    xHeight: .455,
+    descent: .215,
+    ascent: .685
   ),
   'italic': (
     family: $UCitalic,
     weight: weight(normal),
-    capHeight: .01,
-    xHeight: .01,
-    descent: .01,
-    ascent: .01
+    capHeight: .68,
+    xHeight: .455,
+    descent: .215,
+    ascent: .685
   ),
   'bold': (
     family: $UCbold,
     weight: weight(normal),
-    capHeight: .01,
-    xHeight: .01,
-    descent: .01,
-    ascent: .01
+    capHeight: .68,
+    xHeight: .455,
+    descent: .215,
+    ascent: .685
   ),
   'mono': (
     family: $UCmono,
     weight: weight(normal),
-    capHeight: .01,
-    xHeight: .01,
-    descent: .01,
-    ascent: .01
+    capHeight: .67,
+    xHeight: .455,
+    descent: .215,
+    ascent: .685
   ),
   'system': (
     family: mix-system-fonts(),
