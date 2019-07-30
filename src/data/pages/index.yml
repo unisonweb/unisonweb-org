@@ -2,13 +2,31 @@ title: Unison Computing
 description: placeholder
 hero:
   eyebrow: Unison is in public alpha
-  heading: A friendly<br>programming<br>language<br>from the future.
+  heading: A friendly programming language from the future.
   blurb: |
     Unison is experimental as the moment and under active development. It's not quite ready for production use, but you could have a huge impact on how Unison develops. It's easy to jump in!
   graphic:
     alt: placeholder
     title: placeholder
-    path: 'https://placehold.it/640x640'
+    path: /media/graphic-homepage-hero.svg
   cta:
+    label: Install
+    url: '#'
+intro: |
+  Unison is an _open source functional programming language_ based on a simplifying core idea: code in Unison is content-addressed, identified by a hash of its syntax tree. The idea is used to simplify codebase management (Unison has no builds, code sharing without dependency conflicts, instant renames, and more). And it forms the basis for a runtime that robustly supports dynamic code deployment, and allows a single Unison program to describe entire elastic distributed systems.
+
+  Though a lot of the work on Unison is still experimental and ongoing, we’re sharing an early release of the language for people to try out. You can read the [Roadmap and Project Status](#) or click below to get started in 3 minutes.
+ctas:
+  heading: Documentation
+  items:
+    - label: Get started with Unison in 3 minutes
+      url: '#'
+    - label: Tutorials
+      url: '#'
+    - label: API Documentation
+      url: '#'
+    - label: What to help us create Unison?
+      url: '#'
+  button:
     label: Install
     url: '#'
