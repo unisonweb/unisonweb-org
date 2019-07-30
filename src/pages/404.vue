@@ -5,7 +5,7 @@
       <div class="container">
 
         <h1
-          class="u-margin--bottom"
+          class="u-margin--bottom u-padding--bottom"
           data-font-size="6"
           v-text="pageContent.title"
         />
@@ -49,7 +49,8 @@
     );
 
     color: palette(white);
-    background-color: palette(primary);
+    text-align: center;
+    background-color: palette(pink);
 
     display: flex;
     align-items: center;

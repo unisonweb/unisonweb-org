@@ -102,6 +102,7 @@
 
   @include generate-button-color-modifier(#{$this}, primary);
   @include generate-button-color-modifier(#{$this}, orange);
+  @include generate-button-color-modifier(#{$this}, white);
 
   svg {
 
