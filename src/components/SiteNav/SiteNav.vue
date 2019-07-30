@@ -74,6 +74,8 @@
   }
 
   .uc-site-nav {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -107,7 +109,7 @@
       ~ .uc-site-nav__links__stage {
         z-index: 1;
 
-        display: flex;
+        display: block;
       }
     }
   }
@@ -115,6 +117,9 @@
   .uc-site-nav__mobile-nav-button {
 
     @include max-screen(breakpoint(xs, max)) {
+
+      $iconSize: rem(4);
+
       user-select: none;
 
       // position absolutely to prevent this
@@ -124,13 +129,21 @@
       position: absolute;
       z-index: z-index(mobileNavButton);
       top: 50%;
-      right: rem(0);
-      transform: translate3d(0, -50%, 0);
+      right: 0;
+      transform: translate3d(
+        // align the right-edge of the faux icon
+        // with the right-edge of the .container
+        // to keep the appearance of being aligned
+        // with the content below
+        #{(dim(siteNav, logoHeight) - $iconSize) * 1/2},
+        -50%,
+        0
+      );
 
-      width: rem(6);
-      height: rem(6);
+      width: dim(siteNav, logoHeight);
+      height: dim(siteNav, logoHeight);
 
-      color: palette(white);
+      color: palette(black);
 
       &:before,
       &:after {
@@ -139,8 +152,8 @@
         top: calc(50% - 1px);
         left: 50%;
 
-        width: rem(4);
-        height: 1px;
+        width: $iconSize;
+        height: 2px;
 
         background-color: currentColor;
 

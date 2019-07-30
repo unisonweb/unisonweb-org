@@ -31,17 +31,16 @@
 
     @include max-screen(breakpoint(xs, max)) {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 100%;
+      left: -#{rem(3)};
       width: 100vw;
-      height: 100vh;
 
-      background-color: rgba(palette(primary), 0.9);
+      margin-top: dim(siteNav, paddingVertical);
+      padding-top: dim(siteNav, paddingVertical);
+      padding-bottom: dim(siteNav, paddingVertical);
 
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      border-top: 1px solid palette(gray, x-light);
+      background-color: palette(gray, xxx-light);
 
       display: none;
     }
@@ -49,17 +48,6 @@
     @include min-screen(breakpoint(sm)) {
       display: flex;
       align-items: center;
-    }
-
-    .uc-social-links__container {
-
-      @include max-screen(breakpoint(xs, max)) {
-        margin-top: rem(3);
-      }
-
-      @include min-screen(breakpoint(sm)) {
-        margin-left: rem(5);
-      }
     }
   }
 
@@ -71,14 +59,14 @@
       padding: 0;
       list-style: none;
 
-      display: flex;
-
       @include max-screen(breakpoint(xs, max)) {
-        flex-direction: column;
-        align-items: center;
+        text-align: center;
+        // flex-direction: column;
+        // align-items: center;
       }
 
       @include min-screen(breakpoint(sm)) {
+        display: flex;
         align-items: center;
       }
 
@@ -88,22 +76,10 @@
 
         &:not(:last-child) {
 
-          @include max-screen(breakpoint(xs, max)) {
-            margin-bottom: rem(3);
-          }
-
           @include min-screen(breakpoint(sm)) {
             margin-right: rem(5);
           }
         }
-      }
-    }
-
-    @include max-screen(breakpoint(xs, max)) {
-
-      a {
-        display: block;
-        font-size: rem(3);
       }
     }
   }
@@ -117,6 +93,13 @@
     &, &:hover {
       cursor: pointer;
       text-decoration: none;
+    }
+
+    @include max-screen(breakpoint(xs, max)) {
+      padding-top: dim(siteNav, paddingVertical);
+      padding-bottom: dim(siteNav, paddingVertical);
+
+      font-family: font(bold);
     }
 
     @include min-screen(breakpoint(sm)) {
