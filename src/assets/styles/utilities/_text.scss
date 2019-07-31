@@ -23,15 +23,15 @@
 }
 
 // text casing
-.u-capitalize   { text-transform: capitalize; }
-.u-uppercase    { text-transform: uppercase; }
-.u-lowercase    { text-transform: lowercase; }
+.u-capitalize      { text-transform: capitalize; }
+.u-uppercase       { text-transform: uppercase; }
+.u-lowercase       { text-transform: lowercase; }
 
 // text emphasis
-.u-normal       { font-weight: weight(normal); letter-spacing: 0; font-style: normal; }
-.u-bold         { font-weight: weight(bold); }
-.u-italic       { font-style: italic; }
-.u-underline    { text-decoration: underline !important; }
+.u-normal          { font-weight: weight(normal); letter-spacing: 0; font-style: normal; }
+.u-bold, strong    { font-family: font(bold); font-weight: weight(normal); }
+.u-italic, em      { font-family: font(italic); font-style: normal; }
+.u-underline       { text-decoration: underline !important; }
 .u-underline--none { text-decoration: none !important; }
 
 // text height
@@ -52,7 +52,6 @@
 .u-compressed   { letter-spacing: -2px; }
 .u-nowrap       { white-space: nowrap; }
 .u-pre-wrap     { white-space: pre-wrap; }
-// .u-text-shadow  { text-shadow: 0 1px rem(3) rgba(palette(gray, xx-dark), 0.5); }
 .u-truncate     { @include mix-ellipsis; }
 
 // text sizing
@@ -74,6 +73,24 @@
     display: inline-block;
     font-size: em(-1);
     line-height: 0;
+  }
+}
+
+.u-drop-cap {
+
+  &:first-letter {
+    float: left;
+
+    margin-top: -#{font(sans, ascent) * em(0) * 1/2};     // pull up
+    margin-right: (em(0) * 3/16);                         // space to the right
+    margin-bottom: -#{em(0) * 1/2};                       // prevent collision with 3rd line of text
+    padding-top: (font(sans, capHeight) * rem(1) * 1/2);  // push down to align with top of lowercase text
+
+    font-family: font(bold);
+    font-size: (
+      (em(0) * line-height(default) * 2) // double the font size
+    - (font(sans, descent) * em(0))      // minus the descent
+    );
   }
 }
 
@@ -130,11 +147,6 @@
     }
   }
 }
-
-strong {
-  font-weight: weight(bold);
-}
-
 small {
   font-size: ((rem(-2) / rem(0)) * 100%);
 }

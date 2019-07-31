@@ -6,6 +6,8 @@
   display: inline-block;
   cursor: pointer;
 
+  font-family: font(bold);
+  letter-spacing: 0;
   line-height: line-height(base);
   text-align: center;
 
@@ -34,6 +36,7 @@
   // Sizing
   padding: rem(0);
   font-size: rem(-1);
+  min-width: (rem(13) * line-height(default));
 
   &#{$this}--large {
     font-size: rem(0);
@@ -98,7 +101,8 @@
   }
 
   @include generate-button-color-modifier(#{$this}, primary);
-  @include generate-button-color-modifier(#{$this}, yellow);
+  @include generate-button-color-modifier(#{$this}, orange);
+  @include generate-button-color-modifier(#{$this}, white);
 
   svg {
 

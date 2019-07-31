@@ -703,6 +703,15 @@
     micromatch "^3.1.10"
     sitemap "^2.1.0"
 
+"@gridsome/remark-prismjs@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@gridsome/remark-prismjs/-/remark-prismjs-0.1.0.tgz#1b8abb81f5b2f914a654f700b91bd00e2c5a0032"
+  integrity sha512-TUO6TiNmkkjdSh0TbXfGL0ln4ptoWEXNlCrC5eAkQy4uTty15l8xJhCLyW2daKsH4QIOxP/D6ynO+A/5OBZmGg==
+  dependencies:
+    escape-html "^1.0.3"
+    prismjs "^1.15.0"
+    unist-util-visit "^1.4.0"
+
 "@gridsome/source-filesystem@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@gridsome/source-filesystem/-/source-filesystem-0.3.0.tgz#c659440d014a9337e7db3de7109b6ce11e9ac74a"
@@ -714,10 +723,10 @@
     lodash "^4.17.10"
     slash "^2.0.0"
 
-"@gridsome/transformer-remark@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@gridsome/transformer-remark/-/transformer-remark-0.2.1.tgz#4d495abc21bd429160ef447f9c5a31142a46d06b"
-  integrity sha512-Hbq7FO1tQQqk7ZyH30L9bpAs6eOueeCtXwVgNDbWixtUhAiTDJPuuIg84Icvp2e0UEJIHdxPr2q678AHEPepGQ==
+"@gridsome/transformer-remark@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@gridsome/transformer-remark/-/transformer-remark-0.3.2.tgz#f4027da6c496ec5a2c2468bc595a9c311cb26c76"
+  integrity sha512-OGZvYli8MiAdvs8CAOhaNRlEurEHWbJ3b27G5CMNMr9HsesOcKeh1TQoH/tdiInyT7OZz01anJTsRCZmUU1IjA==
   dependencies:
     gray-matter "^4.0.2"
     hash-sum "^1.0.2"
@@ -2068,6 +2077,15 @@ cli-cursor@^2.0.0:
   dependencies:
     restore-cursor "^2.0.0"
 
+clipboard@^2.0.0:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/clipboard/-/clipboard-2.0.4.tgz#836dafd66cf0fea5d71ce5d5b0bf6e958009112d"
+  integrity sha512-Vw26VSLRpJfBofiVaFb/I8PVfdI1OxKcYShe6fm0sP/DtmiWQNCjhM/okTvdCo0G+lMMm1rMYbk4IK4x1X+kgQ==
+  dependencies:
+    good-listener "^1.2.2"
+    select "^1.1.2"
+    tiny-emitter "^2.0.0"
+
 cliui@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/cliui/-/cliui-3.2.0.tgz#120601537a916d29940f934da3b48d585a39213d"
@@ -2787,6 +2805,11 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
+delegate@^3.1.2:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/delegate/-/delegate-3.2.0.tgz#b66b71c3158522e8ab5744f720d8ca0c2af59166"
+  integrity sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==
+
 delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
@@ -3090,7 +3113,7 @@ es-to-primitive@^1.2.0:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-escape-html@~1.0.3:
+escape-html@^1.0.3, escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
@@ -3855,6 +3878,13 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
+good-listener@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/good-listener/-/good-listener-1.2.2.tgz#d53b30cdf9313dffb7dc9a0d477096aa6d145c50"
+  integrity sha1-1TswzfkxPf+33JoNR3CWqm0UXFA=
+  dependencies:
+    delegate "^3.1.2"
+
 got@^7.0.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/got/-/got-7.1.0.tgz#05450fd84094e6bbea56f451a43a9c289166385a"
@@ -3953,10 +3983,10 @@ gray-matter@^4.0.2:
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
 
-gridsome@^0.6.4:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/gridsome/-/gridsome-0.6.6.tgz#054ce5b4f4c43624fd4885cbadd116e4b12471e2"
-  integrity sha512-6NSnOhM5wvxxSxIJt9FAOeA5IRZgx6J1V19kyfKyLxdWjlzfDwrhKFUPgROgob3N5zQfapslt3Zi21t8YS8DKg==
+gridsome@^0.6.7:
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/gridsome/-/gridsome-0.6.7.tgz#f86232e18426acda78b97b552cccdf310240a765"
+  integrity sha512-0BuCq2YF2edRfkhI4phsBywB2XX9P5yMfbNy4nStNKU6187UsvnQO/aYjSl1m1rxoBSAFvvOBTuo0VXXKpf4Qw==
   dependencies:
     "@babel/core" "^7.0.0"
     "@gridsome/cli" "^0.2.1"
@@ -7224,6 +7254,13 @@ pretty-hrtime@^1.0.3:
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
+prismjs@^1.15.0:
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.17.1.tgz#e669fcbd4cdd873c35102881c33b14d0d68519be"
+  integrity sha512-PrEDJAFdUGbOP6xK/UsfkC5ghJsPJviKgnQOoxaDbBjwc8op68Quupwt1DeAFoG8GImPhiKXAvvsH7wDSLsu1Q==
+  optionalDependencies:
+    clipboard "^2.0.0"
+
 private@^0.1.6:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -8005,6 +8042,11 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "~2.8.1"
 
+select@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/select/-/select-1.1.2.tgz#0e7350acdec80b1108528786ec1d4418d11b396d"
+  integrity sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0=
+
 semver-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/semver-regex/-/semver-regex-2.0.0.tgz#a93c2c5844539a770233379107b38c7b4ac9d338"
@@ -8781,6 +8823,11 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+
+tiny-emitter@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
+  integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"

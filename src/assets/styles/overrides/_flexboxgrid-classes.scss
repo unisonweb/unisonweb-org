@@ -2,8 +2,8 @@
 .container-fluid {
   max-width: 100%;
 
-  padding-right: rem(0);
-  padding-left: rem(0);
+  padding-right: rem(3);
+  padding-left: rem(3);
 }
 
 .container {
@@ -35,12 +35,12 @@
   &.large-gutters {
 
     @include min-screen(breakpoint(sm)) {
-      margin-right: -#{(rem(0) * 1.5)};
-      margin-left: -#{(rem(0) * 1.5)};
+      margin-right: -#{(rem(3) * 1.5)};
+      margin-left: -#{(rem(3) * 1.5)};
 
       > [class^='col-'] {
-        padding-right: (rem(0) * 1.5);
-        padding-left: (rem(0) * 1.5);
+        padding-right: (rem(3) * 1.5);
+        padding-left: (rem(3) * 1.5);
       }
     }
   }

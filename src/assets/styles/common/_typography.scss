@@ -9,8 +9,8 @@ body {
   color: palette(black);
   font-family: font(sans);
   font-weight: weight(normal);
-  font-size: responsive rem(0) rem(1);
-  font-range: breakpoint(xs, max) breakpoint(xl);
+  font-size: rem(0);
+  letter-spacing: -#{1/20 * em(0)};
   line-height: line-height(default);
 
   background: transparent; // overridden by bg utility classes as needed
@@ -30,8 +30,9 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
 
+  font-family: font(bold);
   font-size: inherit;
-  font-weight: weight(bold);
+  font-weight: weight(normal);
   line-height: line-height(half);
 }
 

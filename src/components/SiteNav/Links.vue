@@ -29,37 +29,26 @@
 
   .uc-site-nav__links__stage {
 
-    @include max-screen(breakpoint(sm, max)) {
+    @include max-screen(breakpoint(xs, max)) {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 100%;
+      left: -#{rem(3)};
       width: 100vw;
-      height: 100vh;
 
-      background-color: rgba(palette(primary), 0.9);
+      margin-top: dim(siteNav, paddingVertical);
+      padding-top: dim(siteNav, paddingVertical);
+      padding-bottom: dim(siteNav, paddingVertical);
 
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      border-top: 1px solid palette(gray, x-light);
+      border-bottom: 1px solid palette(gray, x-light);
+      background-color: palette(gray, xxx-light);
 
       display: none;
     }
 
-    @include min-screen(breakpoint(md)) {
+    @include min-screen(breakpoint(sm)) {
       display: flex;
       align-items: center;
-    }
-
-    .uc-social-links__container {
-
-      @include max-screen(breakpoint(sm, max)) {
-        margin-top: rem(3);
-      }
-
-      @include min-screen(breakpoint(md)) {
-        margin-left: rem(5);
-      }
     }
   }
 
@@ -71,14 +60,14 @@
       padding: 0;
       list-style: none;
 
-      display: flex;
-
-      @include max-screen(breakpoint(sm, max)) {
-        flex-direction: column;
-        align-items: center;
+      @include max-screen(breakpoint(xs, max)) {
+        text-align: center;
+        // flex-direction: column;
+        // align-items: center;
       }
 
-      @include min-screen(breakpoint(md)) {
+      @include min-screen(breakpoint(sm)) {
+        display: flex;
         align-items: center;
       }
 
@@ -88,22 +77,10 @@
 
         &:not(:last-child) {
 
-          @include max-screen(breakpoint(sm, max)) {
-            margin-bottom: rem(3);
-          }
-
-          @include min-screen(breakpoint(md)) {
+          @include min-screen(breakpoint(sm)) {
             margin-right: rem(5);
           }
         }
-      }
-    }
-
-    @include max-screen(breakpoint(sm, max)) {
-
-      a {
-        display: block;
-        font-size: rem(3);
       }
     }
   }
@@ -116,11 +93,17 @@
 
     &, &:hover {
       cursor: pointer;
-      color: palette(black);
       text-decoration: none;
     }
 
-    @include min-screen(breakpoint(md)) {
+    @include max-screen(breakpoint(xs, max)) {
+      padding-top: dim(siteNav, paddingVertical);
+      padding-bottom: dim(siteNav, paddingVertical);
+
+      font-family: font(bold);
+    }
+
+    @include min-screen(breakpoint(sm)) {
       font-size: dim(siteNav, fontSize);
 
       position: relative;
@@ -136,8 +119,8 @@
         background-color: palette(pink);
 
         transition:
-          opacity .45s ease-in-out,
-          transform .45s ease-in-out;
+          opacity .25s ease-in-out,
+          transform .25s ease-in-out;
         opacity: 0;
         transform: scale(0);
         transform-origin: left;

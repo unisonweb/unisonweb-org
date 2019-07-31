@@ -3,6 +3,24 @@ module.exports = {
   siteUrl: 'www.unisonweb.org',
   titleTemplate: '%s',
   plugins: [{
+    use: '@gridsome/source-filesystem',
+    options: {
+      index: ['README'],
+      path: 'docs/**/*.md',
+      typeName: 'DocPage',
+      remark: {
+        autolinkHeadings: {
+          content: {
+            type: 'text',
+            value: '#'
+          }
+        },
+        plugins: [
+          '@gridsome/remark-prismjs'
+        ]
+      }
+    }
+  }, {
     use: '@gridsome/plugin-sitemap',
     options: {
       cacheTime: 600000, // default
