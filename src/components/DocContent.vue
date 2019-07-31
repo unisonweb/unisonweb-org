@@ -21,40 +21,47 @@
       }
     },
     created() {
-      const vm = this
-      const $el = document.createElement('div')
 
-      // convert the content string to actual HTML
-      $el.innerHTML = vm.content
+      if (process.isClient) {
+        const vm = this
+        const $el = document.createElement('div')
 
-      // find all the `<pre>` tags
-      $el.querySelectorAll('pre').forEach($pre => {
+        // convert the content string to actual HTML
+        $el.innerHTML = vm.content
 
-        // since the inner `<code>` element needs to have
-        // overflow: auto, let's create a new `flair
-        // element to style
-        const $span = document.createElement('span')
-        $span.classList.add('uc-codeblock__flair')
-        $pre.appendChild($span)
+        // find all the `<pre>` tags
+        $el.querySelectorAll('pre').forEach($pre => {
 
-        // add `line-numbers` class to the `<pre>` tag
-        // so the line numbers plugin will render correctly`
-        $pre.classList.add('uc-codeblock', 'line-numbers')
-      })
+          // since the inner `<code>` element needs to have
+          // overflow: auto, let's create a new `flair
+          // element to style
+          const $span = document.createElement('span')
+          $span.classList.add('uc-codeblock__flair')
+          $pre.appendChild($span)
 
-      // save the modified HTML
-      vm.HTML = $el.innerHTML
+          // add `line-numbers` class to the `<pre>` tag
+          // so the line numbers plugin will render correctly`
+          $pre.classList.add('uc-codeblock', 'line-numbers')
+        })
 
-      // update Prism to select our custom codeblocks
-      Prism.hooks.add('before-highlightall', function (env) {
-        env.selector += ", .uc-codeblock code"
-      })
+        // save the modified HTML
+        vm.HTML = $el.innerHTML
+
+        // update Prism to select our custom codeblocks
+        Prism.hooks.add('before-highlightall', function(env) {
+          env.selector += ", .uc-codeblock code"
+        })
+      }
+
     },
     mounted() {
-      const vm = this
 
-      // run the highlighter
-      Prism.highlightAllUnder(vm.$refs['content'])
+      if (process.isClient) {
+        const vm = this
+
+        Prism.highlightAllUnder(vm.$refs['content'])
+      }
+
     },
   }
 </script>
