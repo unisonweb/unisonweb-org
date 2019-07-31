@@ -32,6 +32,8 @@ function getPlugins() {
           /(body).*/,
           /(un-).*/,
           /(is-).*/,
+          /(line-numbers-rows).*/,
+          /(token).*/,
         ],
         keyframes: true,
         extractors: [{
