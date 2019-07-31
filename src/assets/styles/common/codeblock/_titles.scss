@@ -1,10 +1,26 @@
 .uc-codeblock {
   $this: &;
 
-  // styling for block "titles"
   &:before {
+
     position: absolute;
     left: 0;
+
+    @include max-screen(breakpoint(xs, max)) {
+      content: '';
+
+      top: -#{$verticalSpacing * 1/2};
+      transform: translate3d(0, -50%, 0);
+
+      width: $titleIconSize;
+
+      margin-top: 1px; // for pixel-perfect alignment
+    }
+
+    @include min-screen(breakpoint(sm)) {
+      top: 0;
+      width: $titleWidth;
+    }
 
     padding-top: $titleIconSize;
 
@@ -16,20 +32,28 @@
 
     background-repeat: no-repeat;
     background-position: top left;
-    background-size: $titleIconSize auto;
+    background-size: $titleIconSize;
   }
 
   &:first-of-type {
 
     &:before {
-      content: 'Code';
+
+      @include min-screen(breakpoint(sm)) {
+        content: 'Code';
+      }
+
       background-image: url('/media/icon-code.svg');
     }
 
     + #{$this} {
 
       &:before {
-        content: 'Output';
+
+        @include min-screen(breakpoint(sm)) {
+          content: 'Output';
+        }
+
         background-image: url('/media/icon-terminal.svg');
       }
     }

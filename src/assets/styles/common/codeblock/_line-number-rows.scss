@@ -6,17 +6,46 @@
     #{$this} {
       position: absolute; // relative to the immediate parent <code> element
       top: 0;
-      left: 0;
 
-      width: $lineNumbersWidth;
+      @include max-screen(breakpoint(xs, max)) {
+        left: 0;
+      }
+
+      @include min-screen(breakpoint(sm)) {
+        left: $titleWidth;
+      }
+
+      width: ($lineNumbersWidth + dim(boxShadow, blur));
       height: 100%;
-      padding: em(0);
+      padding-top: rem(0);
+      padding-right: (rem(0) + dim(boxShadow, blur));
+      padding-bottom: rem(0);
+      padding-left: rem(0);
 
       border-top-left-radius: $borderRadius;
       border-bottom-left-radius: $borderRadius;
-      background-color: palette(gray, xxx-light);
+
+      // prevent the box-shadow from bleeding out
+      // into the box-shadow of the `<code>` block
+      overflow: hidden;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        width: $lineNumbersWidth;
+
+        background-color: palette(gray, xxx-light);
+        @include drop-shadow;
+      }
 
       > span {
+        position: relative;
+        z-index: 2;
+
         display: block;
 
         width: 100%;

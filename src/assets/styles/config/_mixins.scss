@@ -31,7 +31,7 @@
 
 @mixin drop-shadow {
   box-shadow:
-    0 8px 24px 0 rgba(palette(black), 0.05),
-    0 4px 8px 0 rgba(palette(black), 0.05),
-    0 0 4px 0 rgba(palette(black), 0.1);
+    0 (dim(boxShadow, blur) * 1/3) dim(boxShadow, blur) 0 rgba(palette(black), 0.05),
+    0 (dim(boxShadow, blur) * 1/6) (dim(boxShadow, blur) * 1/3) 0 rgba(palette(black), 0.05),
+    0 0 (dim(boxShadow, blur) * 1/6) 0 rgba(palette(black), 0.1);
 }

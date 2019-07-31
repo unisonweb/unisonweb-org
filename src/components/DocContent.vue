@@ -2,6 +2,7 @@
   <div
     ref="content"
     class="uc-doc-content"
+    v-html="HTML"
   />
 </template>
 
@@ -26,9 +27,20 @@
       // convert the content string to actual HTML
       $el.innerHTML = vm.content
 
-      // find all the `<pre>` tags, and add
-      // the `line-numbers` class to each one
-      $el.querySelectorAll('pre').forEach($pre => $pre.classList.add('uc-codeblock', 'line-numbers'))
+      // find all the `<pre>` tags
+      $el.querySelectorAll('pre').forEach($pre => {
+
+        // since the inner `<code>` element needs to have
+        // overflow: auto, let's create a new `flair
+        // element to style
+        const $span = document.createElement('span')
+        $span.classList.add('uc-codeblock__flair')
+        $pre.appendChild($span)
+
+        // add `line-numbers` class to the `<pre>` tag
+        // so the line numbers plugin will render correctly`
+        $pre.classList.add('uc-codeblock', 'line-numbers')
+      })
 
       // save the modified HTML
       vm.HTML = $el.innerHTML
@@ -41,9 +53,6 @@
     mounted() {
       const vm = this
 
-      // set the saved HTML
-      vm.$refs['content'].innerHTML = vm.HTML
-
       // run the highlighter
       Prism.highlightAllUnder(vm.$refs['content'])
     },
@@ -53,6 +62,31 @@
 <style lang="scss">
 
   .uc-doc-content {
+
+    @include min-screen(breakpoint(md)) {
+      padding-right: (1/12 * 100%);
+      padding-left: (4/12 * 100%);
+
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: (3/12 * 100%);
+
+        border-left: 1px solid palette(gray, xx-light);
+      }
+
+      .uc-codeblock {
+
+        // make the right-edge of codeblocks
+        // touch the right edge of .uc-doc-content
+        margin-right: -#{2/12 * 100%};
+        padding-right: (rem(3) * 1/2);
+      }
+    }
 
     h1, h2, h3, h4, h5, h6 {
       margin-top: em(5);
@@ -122,7 +156,8 @@
       }
 
       + p {
-        font-size: rem(2);
+        font-size: responsive rem(1) rem(2);
+        font-range: breakpoint(xs, max) breakpoint(xl);
       }
     }
     h2 {

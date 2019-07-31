@@ -7,13 +7,16 @@
 
 .uc-codeblock {
 
-  // for positioning the `code`/`output`
-  // pseudo elements
+  // for positioning the `title` pseudo elements,
+  // and the __flair
   position: relative;
 
   margin-top: $verticalSpacing;
   margin-bottom: $verticalSpacing;
-  padding-left: $titleWidth;
+
+  @include min-screen(breakpoint(sm)) {
+    padding-left: $titleWidth;
+  }
 
   font-family: font(mono);
   text-align: left;
@@ -32,9 +35,9 @@
 
   > code {
 
-    // for positioning the line numbers,
-    // and flair (pseudo elements)
-    position: relative;
+    // force scrolling when text is
+    // too long
+    overflow: auto;
 
     display: block;
     padding:

@@ -6,7 +6,7 @@
       <uc-page-section>
 
         <div class="uc-doc-page">
-          <uc-doc-sidebar :links="links" />
+          <uc-doc-sidebar />
           <uc-doc-content :content="$page.doc.content" />
         </div>
 
@@ -16,16 +16,10 @@
 </template>
 
 <script>
-  import links from '~/data/doc-links.yml'
   import DocContent from '~/components/DocContent'
   import DocSidebar from '~/components/DocSidebar'
 
   export default {
-    computed: {
-      links () {
-        return links
-      }
-    },
     // metaInfo () {
     //   const { title, headings } = this.$page.doc
 
@@ -43,11 +37,7 @@
 <style lang="scss">
 
   .uc-doc-page {
-
-    @include min-screen(breakpoint(md)) {
-      display: flex;
-      align-items: stretch;
-    }
+    position: relative;
   }
 
 </style>
@@ -58,10 +48,10 @@
       path
       title
       content
-      headings (depth: h1) {
+      headings (depth: h2) {
         value
       }
-      subtitles: headings (depth: h2) {
+      subheadings: headings (depth: h3) {
         value
         anchor
       }
