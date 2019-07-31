@@ -1,0 +1,61 @@
+.uc-codeblock {
+  $this: &;
+
+  &:before {
+
+    position: absolute;
+    left: 0;
+
+    @include max-screen(breakpoint(xs, max)) {
+      content: '';
+
+      top: -#{$verticalSpacing * 1/2};
+      transform: translate3d(0, -50%, 0);
+
+      width: $titleIconSize;
+
+      margin-top: 1px; // for pixel-perfect alignment
+    }
+
+    @include min-screen(breakpoint(sm)) {
+      top: 0;
+      width: $titleWidth;
+    }
+
+    padding-top: $titleIconSize;
+
+    color: palette(gray, dark);
+    font-size: em(-2);
+    font-weight: weight(bold);
+    @extend .u-expanded;
+    text-transform: uppercase;
+
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: $titleIconSize;
+  }
+
+  &:first-of-type {
+
+    &:before {
+
+      @include min-screen(breakpoint(sm)) {
+        content: 'Code';
+      }
+
+      background-image: url('/media/icon-code.svg');
+    }
+
+    + #{$this} {
+
+      &:before {
+
+        @include min-screen(breakpoint(sm)) {
+          content: 'Output';
+        }
+
+        background-image: url('/media/icon-terminal.svg');
+      }
+    }
+  }
+}

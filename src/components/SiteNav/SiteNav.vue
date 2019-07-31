@@ -56,28 +56,12 @@
     padding-top: dim(siteNav, paddingVertical);
     padding-bottom: dim(siteNav, paddingVertical);
 
+    color: palette(black);
     background-color: palette(white);
 
-    .uc-site-nav__link {
-      color: palette(black);
-    }
-
     &.is-inverted {
+      color: palette(white);
       background-color: palette(black);
-
-      .uc-site-nav__mobile-nav-button {
-
-        @include max-screen(breakpoint(xs, max)) {
-          color: palette(white);
-        }
-      }
-
-      .uc-site-nav__link {
-
-        @include min-screen(breakpoint(sm)) {
-          color: palette(white);
-        }
-      }
     }
   }
 

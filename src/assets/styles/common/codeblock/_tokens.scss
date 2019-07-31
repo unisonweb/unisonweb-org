@@ -1,0 +1,32 @@
+// token types are defined at https://github.com/brianfryer/prism/blob/master/components/prism-unison.js
+
+.token {
+
+  &.comment {}
+
+  &.char {}
+
+  &.string {}
+
+  &.keyword {}
+
+  &.import_statement {}
+
+  &.builtin {
+    color: palette(blue);
+  }
+
+  &.number {
+    color: palette(pink);
+  }
+
+  &.operator {
+    color: palette(green);
+  }
+
+  &.hvariable {}
+
+  &.constant {}
+
+  &.punctuation {}
+}
