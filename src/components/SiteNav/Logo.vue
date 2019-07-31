@@ -3,9 +3,9 @@
     class="uc-site-nav__logo__wrapper"
     title="Unison"
     url="/">
-    <span
+    <inline-svg
       class="uc-site-nav__logo"
-      v-text="'Unison'"
+      src="/media/logo-unison.svg"
     />
   </uc-link>
 </template>
@@ -27,12 +27,18 @@
     width: auto;
     height: dim(siteNav, logoHeight);
     line-height: line-height(base);
+
+    &, &:hover {
+      color: inherit;
+    }
   }
 
   .uc-site-nav__logo {
     display: block;
     width: auto;
     height: 100%;
+
+    fill: currentColor;
   }
 
 </style>

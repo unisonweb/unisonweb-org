@@ -36,8 +36,8 @@
       width: 100vw;
 
       margin-top: dim(siteNav, paddingVertical);
-      padding-top: dim(siteNav, paddingVertical);
-      padding-bottom: dim(siteNav, paddingVertical);
+      padding-top: em(0);
+      padding-bottom: em(0);
 
       border-top: 1px solid palette(gray, x-light);
       border-bottom: 1px solid palette(gray, x-light);
@@ -62,8 +62,6 @@
 
       @include max-screen(breakpoint(xs, max)) {
         text-align: center;
-        // flex-direction: column;
-        // align-items: center;
       }
 
       @include min-screen(breakpoint(sm)) {
@@ -89,23 +87,25 @@
     cursor: default;
 
     display: block;
+
+    font-size: dim(siteNav, fontSize);
+    font-family: font(bold);
     line-height: line-height(base);
 
     &, &:hover {
+      color: inherit;
       cursor: pointer;
       text-decoration: none;
     }
 
     @include max-screen(breakpoint(xs, max)) {
-      padding-top: dim(siteNav, paddingVertical);
-      padding-bottom: dim(siteNav, paddingVertical);
+      padding-top: em(0);
+      padding-bottom: em(0);
 
-      font-family: font(bold);
+      color: palette(black);
     }
 
     @include min-screen(breakpoint(sm)) {
-      font-size: dim(siteNav, fontSize);
-
       position: relative;
 
       &:after {
