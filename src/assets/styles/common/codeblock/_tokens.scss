@@ -1,5 +1,7 @@
 // token types are defined at https://github.com/brianfryer/prism/blob/master/components/prism-unison.js
 
+/*! purgecss start ignore */
+
 .token {
 
   @at-root .uc-codeblock & {
@@ -34,3 +36,5 @@
 
   }
 }
+
+/*! purgecss end ignore */
