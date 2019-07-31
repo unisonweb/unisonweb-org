@@ -30,6 +30,8 @@ function getPlugins() {
         ],
         whitelist: [
           'body',
+          'line-numbers-rows',
+          'token',
         ],
         whitelistPatterns: [
           /(un-).*/,
