@@ -14,10 +14,7 @@ module.exports = {
             type: 'text',
             value: '#'
           }
-        },
-        plugins: [
-          '@gridsome/remark-prismjs'
-        ]
+        }
       }
     }
   }, {
