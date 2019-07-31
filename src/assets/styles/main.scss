@@ -2,22 +2,22 @@
   font-family: 'Inter-Light';
   src: url('../fonts/Inter/Inter-Light-BETA.woff2') format('woff2'),
        url('../fonts/Inter/Inter-Light-BETA.woff') format('woff');
- }
+}
 
 @font-face {
   font-family: 'Inter-Italic';
   src: url('../fonts/Inter/Inter-LightItalic-BETA.woff2') format('woff2'),
        url('../fonts/Inter/Inter-LightItalic-BETA.woff') format('woff');
- }
+}
 
 @font-face {
   font-family: 'Inter-Bold';
   src: url('../fonts/Inter/Inter-Bold.woff2') format('woff2'),
        url('../fonts/Inter/Inter-Bold.woff') format('woff');
- }
+}
 
 @import
   url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap'),
-  './vendor/libraries',
-  './utilities/utilities',
-  './common/common';
+  'vendor/libraries',
+  'utilities/utilities',
+  'common/common';

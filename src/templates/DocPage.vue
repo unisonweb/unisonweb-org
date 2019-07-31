@@ -3,12 +3,44 @@
     :nav-search="true"
     :nav-inverted="true">
     <div class="container">
+      <uc-page-section>
 
-      <uc-doc-content :content="$page.doc.content" />
+        <div class="uc-doc-page">
+          <uc-doc-sidebar />
+          <uc-doc-content :content="$page.doc.content" />
+        </div>
 
+      </uc-page-section>
     </div>
   </uc-site-main>
 </template>
+
+<script>
+  import DocContent from '~/components/DocContent'
+  import DocSidebar from '~/components/DocSidebar'
+
+  export default {
+    // metaInfo () {
+    //   const { title, headings } = this.$page.doc
+
+    //   return {
+    //     title: title || (headings.length ? headings[0].value : undefined)
+    //   }
+    // }
+    components: {
+      'uc-doc-content': DocContent,
+      'uc-doc-sidebar': DocSidebar,
+    },
+  }
+</script>
+
+<style lang="scss">
+
+  .uc-doc-page {
+    position: relative;
+  }
+
+</style>
 
 <page-query>
   query DocPage ($path: String!) {
@@ -16,36 +48,13 @@
       path
       title
       content
-      headings (depth: h1) {
+      headings (depth: h2) {
         value
       }
-      subtitles: headings (depth: h2) {
+      subheadings: headings (depth: h3) {
         value
         anchor
       }
     }
   }
 </page-query>
-
-<script>
-// import links from '@/data/doc-links.yaml'
-import DocContent from '~/components/DocContent'
-
-export default {
-  // computed: {
-  //   links () {
-  //     return links
-  //   }
-  // },
-  // metaInfo () {
-  //   const { title, headings } = this.$page.doc
-
-  //   return {
-  //     title: title || (headings.length ? headings[0].value : undefined)
-  //   }
-  // }
-  components: {
-    'uc-doc-content': DocContent,
-  },
-}
-</script>

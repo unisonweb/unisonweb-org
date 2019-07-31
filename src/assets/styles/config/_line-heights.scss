@@ -2,7 +2,8 @@ $UClineheights: (
   'base': 1,
   'heading': (32/21),
   'default': (24/15),
-  'half': (24/15 * 1/2)
+  'half': (24/15 * 1/2),
+  'double': (24/15 * 1.25)
 );
 
 @function line-height($height: 'base') {

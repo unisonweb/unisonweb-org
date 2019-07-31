@@ -1,0 +1,58 @@
+.uc-codeblock__flair {
+  $this: &;
+
+  @at-root .uc-codeblock {
+
+    &:not(:last-of-type) #{$this} {
+
+      position: absolute; // relative to `<pre>` (not `<code>`)
+      z-index: 2; // keep this above subsequent code blocks
+      transform: translate3d(-50%, 0, 0);
+      top: 100%;
+
+      @include max-screen(breakpoint(xs, max)) {
+        left: $lineNumbersWidth;
+      }
+
+      @include min-screen(breakpoint(sm)) {
+        left: ($titleWidth + $lineNumbersWidth);
+      }
+
+      width: 1px;
+      height: $verticalSpacing;
+
+      background-color: palette(gray, x-light);
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        left: 0;
+
+        width: $flairDotSize;
+        height: $flairDotSize;
+
+        margin-left: 1px; // for pixel-perfect alignment
+
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 1px solid palette(gray, light);
+
+        background-color: palette(white);
+        @include drop-shadow;
+      }
+
+      &:before {
+        top: 0;
+        transform: translate3d(-50%, -50%, 0);
+      }
+
+      &:after {
+        bottom: 0;
+        transform: translate3d(-50%, 50%, 0);
+      }
+    }
+
+  }
+}

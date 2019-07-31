@@ -1,7 +1,7 @@
 $UCdimensions: (
   siteNav: (
-    paddingVertical: rem(0),
-    logoHeight: rem(7),
+    paddingVertical: rem(4),
+    logoHeight: rem(6),
     fontSize: rem(0)
   ),
   pageSection: (
@@ -9,6 +9,9 @@ $UCdimensions: (
     sm: rem(6),
     md: rem(10),
     lg: rem(10)
+  ),
+  boxShadow: (
+    blur: rem(3)
   )
 );
 
