@@ -28,12 +28,12 @@ function getPlugins() {
           './src/**/*.html',
           './src/**/*.md',
         ],
+        whitelist: [
+          'body',
+        ],
         whitelistPatterns: [
-          /(body).*/,
           /(un-).*/,
           /(is-).*/,
-          /(line-numbers-rows).*/,
-          /(token).*/,
         ],
         keyframes: true,
         extractors: [{
