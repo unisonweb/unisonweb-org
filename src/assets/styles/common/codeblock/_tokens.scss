@@ -2,31 +2,35 @@
 
 .token {
 
-  &.comment {}
+  @at-root .uc-codeblock & {
 
-  &.char {}
+    &.comment {}
 
-  &.string {}
+    &.char {}
 
-  &.keyword {}
+    &.string {}
 
-  &.import_statement {}
+    &.keyword {}
 
-  &.builtin {
-    color: palette(blue);
+    &.import_statement {}
+
+    &.builtin {
+      color: palette(blue);
+    }
+
+    &.number {
+      color: palette(pink);
+    }
+
+    &.operator {
+      color: palette(green);
+    }
+
+    &.hvariable {}
+
+    &.constant {}
+
+    &.punctuation {}
+
   }
-
-  &.number {
-    color: palette(pink);
-  }
-
-  &.operator {
-    color: palette(green);
-  }
-
-  &.hvariable {}
-
-  &.constant {}
-
-  &.punctuation {}
 }
