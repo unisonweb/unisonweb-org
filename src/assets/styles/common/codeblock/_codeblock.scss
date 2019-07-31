@@ -1,0 +1,69 @@
+@import
+  './variables',
+  './flair',
+  './line-number-rows',
+  './titles',
+  './tokens';
+
+.uc-codeblock {
+
+  // for positioning the `code`/`output`
+  // pseudo elements
+  position: relative;
+
+  margin-top: $verticalSpacing;
+  margin-bottom: $verticalSpacing;
+  padding-left: $titleWidth;
+
+  font-family: font(mono);
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 4;
+  hyphens: none;
+
+  &::selection,
+  & ::selection {
+    color: palette(white);
+    background-color: palette(primary);
+  }
+
+  > code {
+
+    // for positioning the line numbers,
+    // and flair (pseudo elements)
+    position: relative;
+
+    display: block;
+    padding:
+      $verticalPadding
+      $horizontalPadding
+      $verticalPadding
+      ($horizontalPadding + $lineNumbersWidth);
+
+    line-height: line-height(double);
+
+    border-radius: $borderRadius;
+    background-color: palette(white);
+    @include drop-shadow;
+  }
+}
+
+*:not(.uc-codeblock) > code {
+  color: palette(pink);
+  border-radius: (em(-2) * 1/4);
+
+  position: relative;
+
+  &, &:before, &:after {
+    background-color: palette(gray, xx-light);
+  }
+
+  &:before, &:after {
+    content: '';
+    display: inline-block;
+    width: (em(0) * 1/4);
+  }
+}

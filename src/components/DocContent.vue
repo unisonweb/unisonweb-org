@@ -1,14 +1,51 @@
 <template>
   <div
+    ref="content"
     class="uc-doc-content"
-    v-html="content"
   />
 </template>
 
 <script>
+  import 'prismjs'
+  import 'prismjs/components/prism-unison'
+  import 'prismjs/plugins/line-numbers/prism-line-numbers'
+
   export default {
     props: {
-      content: { type: String, defaul: null },
+      content: { type: String, default: null },
+    },
+    data() {
+      return {
+        HTML: null,
+      }
+    },
+    created() {
+      const vm = this
+      const $el = document.createElement('div')
+
+      // convert the content string to actual HTML
+      $el.innerHTML = vm.content
+
+      // find all the `<pre>` tags, and add
+      // the `line-numbers` class to each one
+      $el.querySelectorAll('pre').forEach($pre => $pre.classList.add('uc-codeblock', 'line-numbers'))
+
+      // save the modified HTML
+      vm.HTML = $el.innerHTML
+
+      // update Prism to select our custom codeblocks
+      Prism.hooks.add('before-highlightall', function (env) {
+        env.selector += ", .uc-codeblock code"
+      })
+    },
+    mounted() {
+      const vm = this
+
+      // set the saved HTML
+      vm.$refs['content'].innerHTML = vm.HTML
+
+      // run the highlighter
+      Prism.highlightAllUnder(vm.$refs['content'])
     },
   }
 </script>
@@ -18,29 +55,85 @@
   .uc-doc-content {
 
     h1, h2, h3, h4, h5, h6 {
+      margin-top: em(5);
 
       &:first-child {
         margin-top: 0;
       }
     }
 
+    h2, h3, h4, h5, h6 {
+      display: flex;
+      align-items: flex-start;
+
+      > a {
+        // position this link after the text
+        order: 99;
+        flex: 0 0 auto;
+
+        // overrides to prevent text from displaying
+        color: transparent;
+        line-height: 0;
+
+        $iconSize: rem(1);
+
+        overflow: hidden;
+        display: block;
+        width: $iconSize;
+        height: (
+          em(0)
+        - (font(sans, descent) * em(0))
+        );
+
+        margin-left: $iconSize;
+
+        opacity: 0.25;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        position: relative;
+
+        &:before {
+          content: '';
+
+          display: block;
+          width: 100%;
+          height: 100%;
+
+          background-image: url('/media/icon-link.svg');
+          background-repeat: no-repeat;
+          background-position: center center;
+
+          // magic number to prevent display issues
+          // with the icon appearing to be "cut off"
+          background-size: 95%;
+        }
+      }
+    }
+
     h1 {
-      margin-top: em(6);
+      font-size: responsive rem(6) rem(8);
+      font-range: breakpoint(xs, max) breakpoint(xl);
+
+      > a {
+        display: none;
+      }
+
+      + p {
+        font-size: rem(2);
+      }
+    }
+    h2 {
       font-size: responsive rem(4) rem(5);
       font-range: breakpoint(xs, max) breakpoint(xl);
     }
-    h2 {
-      margin-top: em(6);
-      font-size: responsive rem(2) rem(4);
-      font-range: breakpoint(xs, max) breakpoint(xl);
-    }
     h3, h4 {
-      margin-top: em(0);
-      font-size: responsive rem(1) rem(2);
+      font-size: responsive rem(2) rem(3);
       font-range: breakpoint(xs, max) breakpoint(xl);
     }
     h5, h6 {
-      margin-top: em(0);
       font-size: responsive rem(0) rem(1);
       font-range: breakpoint(xs, max) breakpoint(xl);
     }
@@ -63,28 +156,6 @@
 
       margin-top: rem(6);
       margin-bottom: rem(6);
-    }
-
-    .wp-caption {
-      max-width: 100%;
-
-      @include max-screen(breakpoint(xs, max)) {
-        width: 100% !important;
-      }
-
-      margin-bottom: rem(6);
-
-      > img {
-        margin-bottom: 0;
-      }
-    }
-
-    .wp-caption-text {
-      margin-top: rem(-3);
-
-      color: palette(gray);
-      font-size: rem(-1);
-      text-align: center;
     }
 
     ul, ol {

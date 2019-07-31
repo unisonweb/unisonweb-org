@@ -1,0 +1,56 @@
+.line-numbers-rows {
+  $this: &;
+
+  @at-root .uc-codeblock {
+
+    #{$this} {
+      position: absolute; // relative to the immediate parent <code> element
+      top: 0;
+      left: 0;
+
+      width: $lineNumbersWidth;
+      height: 100%;
+      padding: em(0);
+
+      border-top-left-radius: $borderRadius;
+      border-bottom-left-radius: $borderRadius;
+      background-color: palette(gray, xxx-light);
+
+      > span {
+        display: block;
+
+        width: 100%;
+        height: (line-height(double) * em(0));
+
+        color: palette(gray);
+        text-align: center;
+
+        &:before {
+          content: '⌃';
+
+          display: block;
+
+          transform-origin: center center;
+          transform:
+            rotate(90deg)
+            translate3d(0, #{em(-3) * 1/3}, 0);
+        }
+      }
+    }
+
+    &:first-of-type #{$this} {
+      counter-reset: line-numbers;
+
+      > span {
+        counter-increment: line-numbers;
+
+        &:before {
+          content: counter(line-numbers);
+
+          transform: unset;
+        }
+      }
+    }
+
+  }
+}

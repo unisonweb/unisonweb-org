@@ -1,0 +1,37 @@
+.uc-codeblock {
+  $this: &;
+
+  // styling for block "titles"
+  &:before {
+    position: absolute;
+    left: 0;
+
+    padding-top: $titleIconSize;
+
+    color: palette(gray, dark);
+    font-size: em(-2);
+    font-weight: weight(bold);
+    @extend .u-expanded;
+    text-transform: uppercase;
+
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: $titleIconSize auto;
+  }
+
+  &:first-of-type {
+
+    &:before {
+      content: 'Code';
+      background-image: url('/media/icon-code.svg');
+    }
+
+    + #{$this} {
+
+      &:before {
+        content: 'Output';
+        background-image: url('/media/icon-terminal.svg');
+      }
+    }
+  }
+}

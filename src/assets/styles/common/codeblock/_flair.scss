@@ -1,0 +1,61 @@
+.uc-codeblock {
+
+  // styling for flair "connector" / faux border
+  &:not(:last-of-type) {
+
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 100%;
+      left: ($titleWidth + $lineNumbersWidth);
+      transform: translate3d(-50%, #{$flairDotSize * 1/2}, 0);
+
+      width: 1px;
+      height: (
+        $verticalSpacing
+      - $flairDotSize
+      );
+
+      background-color: palette(gray, x-light);
+    }
+  }
+
+  // styling for flair "dots"
+  &:not(:first-of-type) {
+
+    > code {
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        left: $lineNumbersWidth;
+        transform: translate3d(-50%, -50%, 0);
+
+        width: $flairDotSize;
+        height: $flairDotSize;
+
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 1px solid palette(gray, light);
+
+        background-color: palette(white);
+        @include drop-shadow;
+      }
+
+      &:before {
+        // make this one touch the bottom-edge of
+        // the previous `<pre>` tag
+        top: -#{$verticalSpacing};
+      }
+
+      &:after {
+        // make this one touch the top-edge of
+        // this `<pre>` tag
+        top: 0;
+      }
+    }
+  }
+}

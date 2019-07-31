@@ -45,7 +45,7 @@
 }
 
 // text formatting
-.u-expanded     { letter-spacing:  2px; }
+.u-expanded     { letter-spacing:  3px; }
 .u-extended     { letter-spacing:  1px; }
 .u-tight        { letter-spacing: -.25px; }
 .u-condensed    { letter-spacing: -1px; }
@@ -147,6 +147,7 @@
     }
   }
 }
+
 small {
   font-size: ((rem(-2) / rem(0)) * 100%);
 }

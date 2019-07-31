@@ -23,7 +23,7 @@ body {
 }
 
 ::selection {
-  color: palette(white);
+  color: palette(yellow, xxx-dark);
   background-color: palette(yellow);
 }
 
@@ -40,7 +40,7 @@ p, ul, ol, dl, table, blockquote, li, dt, dd {
   // reset
   margin: 0;
 
-  margin-top: rem(0);
+  margin-top: em(0);
   margin-bottom: 0;
 
   &:first-child {
@@ -71,21 +71,4 @@ hr {
   margin: rem(0) 0;
   border: 0;
   border-top: 1px solid rgba(palette(gray, xx-dark), 0.5);
-}
-
-code {
-  color: palette(red);
-  border-radius: (em(-2) * 1/4);
-
-  position: relative;
-
-  &, &:before, &:after {
-    background-color: palette(gray, xx-light);
-  }
-
-  &:before, &:after {
-    content: '';
-    display: inline-block;
-    width: (em(0) * 1/4);
-  }
 }
