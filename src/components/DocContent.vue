@@ -46,22 +46,18 @@
 
         // save the modified HTML
         vm.HTML = $el.innerHTML
-
-        // update Prism to select our custom codeblocks
-        Prism.hooks.add('before-highlightall', function(env) {
-          env.selector += ", .uc-codeblock code"
-        })
       }
+
+      // update Prism to select our custom codeblocks
+      Prism.hooks.add('before-highlightall', function(env) {
+        env.selector += ", .uc-codeblock code"
+      })
 
     },
     mounted() {
+      const vm = this
 
-      if (process.isClient) {
-        const vm = this
-
-        Prism.highlightAllUnder(vm.$refs['content'])
-      }
-
+      Prism.highlightAllUnder(vm.$refs['content'])
     },
   }
 </script>
