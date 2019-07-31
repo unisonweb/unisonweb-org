@@ -7,11 +7,11 @@
           :to="link.path">
           {{link.label}}
         </g-link>
-        <ul>
+        <!-- <ul>
           <li v-for="(heading, j) in link.headings" :key="j">
             {{heading.value}}
           </li>
-        </ul>
+        </ul> -->
       </li>
     </ul>
 
@@ -38,8 +38,8 @@
           return {
             label: link.label,
             path: link.path,
-            headings: page.headings,
-            subheadings: page.subheadings,
+            // headings: page.headings,
+            // subheadings: page.subheadings,
           }
         })
 
