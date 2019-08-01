@@ -1,4 +1,4 @@
-%uc-button {
+%un-button {
   @include reset-button;
 
   // Defaults
@@ -18,8 +18,8 @@
   transition: all .05s ease-in-out;
 }
 
-.uc-button {
-  @extend %uc-button;
+.un-button {
+  @extend %un-button;
 
   $this: &;
 

@@ -1,28 +1,28 @@
 <template>
   <aside
     ref="notice"
-    class="uc-cookies-notice__stage animated slideInUp"
+    class="un-cookies-notice__stage animated slideInUp"
     style="display: none;"
     hidden>
 
     <input
       ref="noticeToggle"
       @change="setCookieToHideNotice"
-      class="uc-cookies-notice__toggle"
+      class="un-cookies-notice__toggle"
       type="checkbox"
       id="cookies-notice"
       aria-hidden="true"
       hidden
     />
 
-    <div class="uc-cookies-notice__wrapper">
+    <div class="un-cookies-notice__wrapper">
       <label
-        class="uc-cookies-notice__close-button"
+        class="un-cookies-notice__close-button"
         for="cookies-notice"
         v-text="'&times;'"
       />
       <vue-markdown
-        class="uc-cookies-notice"
+        class="un-cookies-notice"
         :source="componentContent.blurb"
       />
     </div>
@@ -72,11 +72,11 @@
 
 <style lang="scss">
 
-  .uc-cookies-notice__toggle {
+  .un-cookies-notice__toggle {
     display: none;
   }
 
-  .uc-cookies-notice__stage {
+  .un-cookies-notice__stage {
     position: fixed;
     z-index: z-index(cookies-notice);
     bottom: 0;
@@ -85,12 +85,12 @@
 
     display: none;
 
-    @at-root .uc-cookies-notice__toggle:checked ~ & {
+    @at-root .un-cookies-notice__toggle:checked ~ & {
       display: block;
     }
   }
 
-  .uc-cookies-notice__wrapper {
+  .un-cookies-notice__wrapper {
     position: absolute;
     top: 0;
     left: 50%;
@@ -126,7 +126,7 @@
     }
   }
 
-  .uc-cookies-notice__close-button {
+  .un-cookies-notice__close-button {
     $this: &;
     cursor: pointer;
     position: absolute;
@@ -159,7 +159,7 @@
     }
   }
 
-  .uc-cookies-notice {
+  .un-cookies-notice {
     user-select: none;
 
     font-size: responsive rem(-2) rem(-1);

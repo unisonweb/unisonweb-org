@@ -1,7 +1,7 @@
 <template>
   <div
     ref="content"
-    class="uc-doc-content"
+    class="un-doc-content"
     v-html="HTML"
   />
 </template>
@@ -36,12 +36,12 @@
           // overflow: auto, let's create a new `flair
           // element to style
           const $span = document.createElement('span')
-          $span.classList.add('uc-codeblock__flair')
+          $span.classList.add('un-codeblock__flair')
           $pre.appendChild($span)
 
           // add `line-numbers` class to the `<pre>` tag
           // so the line numbers plugin will render correctly`
-          $pre.classList.add('uc-codeblock', 'line-numbers')
+          $pre.classList.add('un-codeblock', 'line-numbers')
         })
 
         // save the modified HTML
@@ -50,7 +50,7 @@
 
       // update Prism to select our custom codeblocks
       Prism.hooks.add('before-highlightall', function(env) {
-        env.selector += ", .uc-codeblock code"
+        env.selector += ", .un-codeblock code"
       })
 
     },
@@ -64,7 +64,7 @@
 
 <style lang="scss">
 
-  .uc-doc-content {
+  .un-doc-content {
 
     @include min-screen(breakpoint(md)) {
       padding-right: (1/12 * 100%);
@@ -82,10 +82,10 @@
         border-left: 1px solid palette(gray, xx-light);
       }
 
-      .uc-codeblock {
+      .un-codeblock {
 
         // make the right-edge of codeblocks
-        // touch the right edge of .uc-doc-content
+        // touch the right edge of .un-doc-content
         margin-right: -#{2/12 * 100%};
         padding-right: (rem(3) * 1/2);
       }

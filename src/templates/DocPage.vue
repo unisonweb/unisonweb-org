@@ -1,18 +1,18 @@
 <template>
-  <uc-site-main
+  <un-site-main
     :nav-search="true"
     :nav-inverted="true">
     <div class="container">
-      <uc-page-section>
+      <un-page-section>
 
-        <div class="uc-doc-page">
-          <uc-doc-sidebar />
-          <uc-doc-content :content="$page.doc.content" />
+        <div class="un-doc-page">
+          <un-doc-sidebar />
+          <un-doc-content :content="$page.doc.content" />
         </div>
 
-      </uc-page-section>
+      </un-page-section>
     </div>
-  </uc-site-main>
+  </un-site-main>
 </template>
 
 <script>
@@ -28,15 +28,15 @@
     //   }
     // }
     components: {
-      'uc-doc-content': DocContent,
-      'uc-doc-sidebar': DocSidebar,
+      'un-doc-content': DocContent,
+      'un-doc-sidebar': DocSidebar,
     },
   }
 </script>
 
 <style lang="scss">
 
-  .uc-doc-page {
+  .un-doc-page {
     position: relative;
   }
 

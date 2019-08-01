@@ -1,9 +1,9 @@
 <template>
   <span
-    class="uc-homepage-hero-graphic__wrapper"
+    class="un-homepage-hero-graphic__wrapper"
     aria-hidden="true">
     <inline-svg
-      class="uc-homepage-hero-graphic"
+      class="un-homepage-hero-graphic"
       :src="graphic.path"
       :alt="graphic.alt"
       :title="graphic.title"
@@ -21,7 +21,7 @@
 
 <style lang="scss">
 
-  .uc-homepage-hero-graphic__wrapper {
+  .un-homepage-hero-graphic__wrapper {
 
     @include max-screen(breakpoint(xs, max)) {
       margin-bottom: (dim(pageSection, xs) * 2);
@@ -89,7 +89,7 @@
     display: flex;
   }
 
-  .uc-homepage-hero-graphic {
+  .un-homepage-hero-graphic {
     position: relative;
     z-index: 2;
     display: block;

@@ -75,7 +75,7 @@ hr {
 
 code {
 
-  @at-root *:not(.uc-codeblock) > & {
+  @at-root *:not(.un-codeblock) > & {
     display: inline;
 
     padding-right: (em(0) * 1/4);

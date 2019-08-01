@@ -1,23 +1,23 @@
 <template>
-  <div class="uc-site-main__stage">
+  <div class="un-site-main__stage">
 
-    <uc-site-nav
+    <un-site-nav
       :nav-search="navSearch"
       :nav-inverted="navInverted"
     />
 
-    <div class="uc-site-main__wrapper">
+    <div class="un-site-main__wrapper">
       <main
-        class="uc-site-main"
+        class="un-site-main"
         role="main"
         tabindex="-1">
         <slot />
       </main>
 
-      <uc-site-footer />
+      <un-site-footer />
     </div>
 
-    <uc-cookies-notice />
+    <un-cookies-notice />
 
   </div>
 </template>
@@ -30,9 +30,9 @@
 
   export default {
     components: {
-      'uc-site-nav': SiteNav,
-      'uc-site-footer': SiteFooter,
-      'uc-cookies-notice': CookiesNotice,
+      'un-site-nav': SiteNav,
+      'un-site-footer': SiteFooter,
+      'un-cookies-notice': CookiesNotice,
     },
     mixins: [
       siteNavProps,
@@ -42,11 +42,11 @@
 
 <style lang="scss">
 
-  .uc-site-main__stage {
+  .un-site-main__stage {
     position: relative; // for positioning the site nav
   }
 
-  .uc-site-main__wrapper {
+  .un-site-main__wrapper {
     min-height: 100vh;
 
     display: flex;
@@ -54,7 +54,7 @@
     justify-content: space-between;
   }
 
-  .uc-site-main {
+  .un-site-main {
     $this: &;
 
     @at-root main#{&} {

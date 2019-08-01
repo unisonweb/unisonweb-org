@@ -1,7 +1,7 @@
 <template>
-  <div class="uc-doc-sidebar">
+  <div class="un-doc-sidebar">
 
-    <ul class="uc-doc-sidebar__links">
+    <ul class="un-doc-sidebar__links">
       <li v-for="(link, i) in links" :key="i">
         <g-link
           :to="link.path">
@@ -63,7 +63,7 @@
 
 <style lang="scss">
 
-  .uc-doc-sidebar {
+  .un-doc-sidebar {
 
     @include max-screen(breakpoint(xs, max)) {
       display: none;
@@ -77,7 +77,7 @@
     }
   }
 
-  .uc-doc-sidebar__links {
+  .un-doc-sidebar__links {
 
     @at-root ul#{&} {
       // <ul> reset

@@ -1,55 +1,55 @@
 <template>
-  <uc-site-main>
+  <un-site-main>
 
-    <uc-hero
+    <un-hero
       :eyebrow="pageContent.hero.eyebrow"
       :heading="pageContent.hero.heading"
       :blurb="pageContent.hero.blurb"
       :cta="pageContent.hero.cta"
       :graphic="pageContent.hero.graphic">
-      <uc-hero-graphic-for-homepage :graphic="pageContent.hero.graphic" />
-    </uc-hero>
+      <un-hero-graphic-for-homepage :graphic="pageContent.hero.graphic" />
+    </un-hero>
 
-    <uc-page-section size="large">
+    <un-page-section size="large">
       <div class="container">
 
         <vue-markdown
-          class="uc-homepage-intro u-drop-cap"
+          class="un-homepage-intro u-drop-cap"
           :source="pageContent.intro"
         />
 
       </div>
-    </uc-page-section>
+    </un-page-section>
 
-    <uc-page-section
+    <un-page-section
       size="large"
       class="u-bg--gray--xxx-light">
       <div class="container">
-        <div class="uc-homepage-ctas__stage u-align--center@xs u-align--center@sm">
+        <div class="un-homepage-ctas__stage u-align--center@xs u-align--center@sm">
 
           <h2
-            class="uc-homepage-ctas__heading"
+            class="un-homepage-ctas__heading"
             v-text="pageContent.ctas.heading"
           />
 
-          <ul class="uc-homepage-ctas__container u-list--unstyled">
+          <ul class="un-homepage-ctas__container u-list--unstyled">
             <li
               v-for="(item, i) in pageContent.ctas.items" :key="i"
-              class="uc-homepage-cta">
+              class="un-homepage-cta">
               <span
-                class="uc-homepage-cta__icon"
+                class="un-homepage-cta__icon"
                 aria-hidden="true"
               />
               <strong
-                class="uc-homepage-cta__label"
+                class="un-homepage-cta__label"
                 v-text="item.label"
               />
             </li>
           </ul>
 
-          <div class="uc-homepage-ctas__button">
+          <div class="un-homepage-ctas__button">
             <a
-              class="uc-button uc-button--primary"
+              class="un-button un-button--primary"
               :href="pageContent.ctas.button.url"
               v-text="pageContent.ctas.button.label"
             />
@@ -57,9 +57,9 @@
 
         </div>
       </div>
-    </uc-page-section>
+    </un-page-section>
 
-  </uc-site-main>
+  </un-site-main>
 </template>
 
 <script>
@@ -75,8 +75,8 @@
       },
     },
     components: {
-      'uc-hero': Hero,
-      'uc-hero-graphic-for-homepage': HeroGraphicForHomepage,
+      'un-hero': Hero,
+      'un-hero-graphic-for-homepage': HeroGraphicForHomepage,
     },
     mixins: [
       pageMetaInfo,
@@ -86,7 +86,7 @@
 
 <style lang="scss">
 
-  .uc-homepage-intro {
+  .un-homepage-intro {
 
     > p {
 
@@ -101,7 +101,7 @@
   $itemPadding: rem(4);
   $iconSize: rem(5);
 
-  .uc-homepage-ctas__stage {
+  .un-homepage-ctas__stage {
     position: relative;
 
     @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
@@ -111,7 +111,7 @@
     }
   }
 
-  .uc-homepage-ctas__heading {
+  .un-homepage-ctas__heading {
 
     @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
       // increase font size so the __heading
@@ -137,7 +137,7 @@
     line-height: line-height(base); // align top edge of text with top edge of parent element
   }
 
-  .uc-homepage-ctas__container {
+  .un-homepage-ctas__container {
 
     @at-root ul#{&} {
       margin-top: -#{$itemPadding};     // compensate for padding-top/bottom
@@ -156,7 +156,7 @@
     }
   }
 
-  .uc-homepage-cta {
+  .un-homepage-cta {
     padding-top: $itemPadding;
     padding-bottom: $itemPadding;
     padding-left: ($iconSize + $itemPadding);
@@ -184,7 +184,7 @@
     position: relative;
   }
 
-  .uc-homepage-cta__icon {
+  .un-homepage-cta__icon {
     position: absolute;
     top: 50%;
     left: 0;
@@ -199,11 +199,11 @@
     background-color: currentColor;
   }
 
-  .uc-homepage-cta__label {
+  .un-homepage-cta__label {
     color: palette(black);
   }
 
-  .uc-homepage-ctas__button {
+  .un-homepage-ctas__button {
     margin-top: ($itemPadding * 2);
 
     @include min-screen(breakpoint(md)) {

@@ -1,4 +1,4 @@
-%uc-codeblock__title {
+%un-codeblock__title {
   position: absolute;
   left: 0;
 
@@ -31,10 +31,10 @@
   background-size: $titleIconSize;
 }
 
-.uc-codeblock {
+.un-codeblock {
 
   &:before {
-    @extend %uc-codeblock__title;
+    @extend %un-codeblock__title;
     background-image: url('/media/icon-code.svg');
 
     @include min-screen(breakpoint(sm)) {

@@ -1,4 +1,4 @@
-.uc-codeblock__flair {
+.un-codeblock__flair {
   $this: &;
 
   position: absolute; // relative to `<pre>` (not `<code>`)
@@ -51,7 +51,7 @@
 
   display: none;
 
-  @at-root .uc-codeblock {
+  @at-root .un-codeblock {
 
     & + & #{$this} {
       display: block;

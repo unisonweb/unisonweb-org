@@ -1,69 +1,70 @@
-/*! purgecss start ignore */
-
 .line-numbers-rows {
   $this: &;
 
-  position: absolute; // relative to the immediate parent <code> element
-  top: 0;
+  @at-root .un-codeblock {
 
-  @include max-screen(breakpoint(xs, max)) {
-    left: 0;
-  }
+    & #{$this} {
+      position: absolute; // relative to the immediate parent <code> element
+      top: 0;
 
-  @include min-screen(breakpoint(sm)) {
-    left: $titleWidth;
-  }
+      @include max-screen(breakpoint(xs, max)) {
+        left: 0;
+      }
 
-  width: ($lineNumbersWidth + dim(boxShadow, blur));
-  height: 100%;
-  padding-top: rem(0);
-  padding-right: (rem(0) + dim(boxShadow, blur));
-  padding-bottom: rem(0);
-  padding-left: rem(0);
+      @include min-screen(breakpoint(sm)) {
+        left: $titleWidth;
+      }
 
-  border-top-left-radius: $borderRadius;
-  border-bottom-left-radius: $borderRadius;
+      width: ($lineNumbersWidth + dim(boxShadow, blur));
+      height: 100%;
+      padding-top: rem(0);
+      padding-right: (rem(0) + dim(boxShadow, blur));
+      padding-bottom: rem(0);
+      padding-left: rem(0);
 
-  // prevent the box-shadow from bleeding out
-  // into the box-shadow of the `<code>` block
-  overflow: hidden;
+      border-top-left-radius: $borderRadius;
+      border-bottom-left-radius: $borderRadius;
 
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+      // prevent the box-shadow from bleeding out
+      // into the box-shadow of the `<code>` block
+      overflow: hidden;
 
-    width: $lineNumbersWidth;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
 
-    background-color: palette(gray, xxx-light);
-    @include drop-shadow;
-  }
+        width: $lineNumbersWidth;
 
-  counter-reset: line-numbers;
+        background-color: palette(gray, xxx-light);
+        @include drop-shadow;
+      }
 
-  > span {
-    counter-increment: line-numbers;
+      counter-reset: line-numbers;
 
-    position: relative;
-    z-index: 2;
+      > span {
+        counter-increment: line-numbers;
 
-    display: block;
+        position: relative;
+        z-index: 2;
 
-    width: 100%;
-    height: (line-height(double) * em(0));
+        display: block;
 
-    color: palette(gray);
-    text-align: center;
+        width: 100%;
+        height: (line-height(double) * em(0));
 
-    &:before {
-      content: counter(line-numbers);
-      display: block;
+        color: palette(gray);
+        text-align: center;
+
+        &:before {
+          content: counter(line-numbers);
+          display: block;
+        }
+
+      }
     }
-  }
-
-  @at-root .uc-codeblock {
 
     & + & #{$this} {
 
@@ -78,5 +79,3 @@
     }
   }
 }
-
-/*! purgecss end ignore */

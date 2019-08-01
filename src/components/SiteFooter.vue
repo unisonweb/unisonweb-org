@@ -1,8 +1,8 @@
 <template>
   <footer
-    class="uc-site-footer"
+    class="un-site-footer"
     role="contentinfo">
-    <uc-page-section tag="div">
+    <un-page-section tag="div">
       <div class="container">
 
         <vue-markdown
@@ -12,7 +12,7 @@
         />
 
       </div>
-    </uc-page-section>
+    </un-page-section>
   </footer>
 </template>
 

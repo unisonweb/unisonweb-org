@@ -1,8 +1,8 @@
 <template>
   <component
     :is="tag"
-    class="uc-page-section"
-    :class="{ [`uc-page-section--${size}`] : size }">
+    class="un-page-section"
+    :class="{ [`un-page-section--${size}`] : size }">
     <slot />
   </component>
 </template>
@@ -18,7 +18,7 @@
 
 <style lang="scss">
 
-  .uc-page-section {
+  .un-page-section {
     $this: &;
 
     flex: 1 1 auto;

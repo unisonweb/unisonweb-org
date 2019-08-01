@@ -1,12 +1,12 @@
 <template>
-  <div class="uc-site-nav__links__stage">
-    <ul class="uc-site-nav__links__container">
+  <div class="un-site-nav__links__stage">
+    <ul class="un-site-nav__links__container">
       <li v-for="(link, i) in links" :key="i">
-        <uc-link
-          class="uc-site-nav__link"
+        <un-link
+          class="un-site-nav__link"
           :url="link.url">
           {{link.label}}
-        </uc-link>
+        </un-link>
       </li>
     </ul>
   </div>
@@ -27,7 +27,7 @@
 
 <style lang="scss">
 
-  .uc-site-nav__links__stage {
+  .un-site-nav__links__stage {
 
     @include max-screen(breakpoint(xs, max)) {
       position: absolute;
@@ -52,7 +52,7 @@
     }
   }
 
-  .uc-site-nav__links__container {
+  .un-site-nav__links__container {
 
     @at-root ul#{&} {
       // <ul> reset
@@ -83,7 +83,7 @@
     }
   }
 
-  .uc-site-nav__link {
+  .un-site-nav__link {
     cursor: default;
 
     display: block;

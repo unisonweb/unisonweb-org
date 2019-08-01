@@ -18,11 +18,11 @@ export default function (Vue, {router, head, isClient, isServer, appOptions}) {
   )
 
   // layouts
-  Vue.component('uc-site-main', SiteMain)
+  Vue.component('un-site-main', SiteMain)
 
   // components
-  Vue.component('uc-page-section', PageSection)
-  Vue.component('uc-link', Link)
+  Vue.component('un-page-section', PageSection)
+  Vue.component('un-link', Link)
   Vue.component('inline-svg', InlineSvg)
 
   // 3rd party components/libraries

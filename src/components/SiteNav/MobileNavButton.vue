@@ -1,6 +1,6 @@
 <template>
   <label
-    class="uc-site-nav__mobile-nav-button"
+    class="un-site-nav__mobile-nav-button"
     for="mobile-nav-toggle"
     v-html="'&nbsp;'"
   />
@@ -12,7 +12,7 @@
 
 <style lang="scss">
 
-  .uc-site-nav__mobile-nav-button {
+  .un-site-nav__mobile-nav-button {
 
     @include max-screen(breakpoint(xs, max)) {
 

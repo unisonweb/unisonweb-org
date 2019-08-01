@@ -1,14 +1,14 @@
 <template>
   <div
-    class="uc-site-nav__stage"
+    class="un-site-nav__stage"
     :class="{
       'is-inverted': navInverted,
     }">
     <div class="container">
-      <div class="uc-site-nav">
+      <div class="un-site-nav">
 
         <input
-          class="uc-site-nav__mobile-nav-toggle"
+          class="un-site-nav__mobile-nav-toggle"
           type="checkbox"
           id="mobile-nav-toggle"
           style="display: none;"
@@ -52,7 +52,7 @@
 
 <style lang="scss">
 
-  .uc-site-nav__stage {
+  .un-site-nav__stage {
     padding-top: dim(siteNav, paddingVertical);
     padding-bottom: dim(siteNav, paddingVertical);
 
@@ -65,7 +65,7 @@
     }
   }
 
-  .uc-site-nav {
+  .un-site-nav {
     position: relative;
 
     display: flex;
@@ -73,17 +73,17 @@
     justify-content: space-between;
   }
 
-  .uc-site-nav__mobile-nav-toggle {
+  .un-site-nav__mobile-nav-toggle {
     display: none;
 
     &:checked {
 
-      ~ .uc-site-nav__logo,
-      ~ .uc-site-nav__mobile-nav-button {
+      ~ .un-site-nav__logo,
+      ~ .un-site-nav__mobile-nav-button {
         z-index: 2;
       }
 
-      ~ .uc-site-nav__mobile-nav-button {
+      ~ .un-site-nav__mobile-nav-button {
 
         &:before {
           transform:
@@ -98,7 +98,7 @@
         }
       }
 
-      ~ .uc-site-nav__links__stage {
+      ~ .un-site-nav__links__stage {
         z-index: 1;
 
         display: block;

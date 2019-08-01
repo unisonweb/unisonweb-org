@@ -1,7 +1,7 @@
 <template>
-  <uc-site-main>
+  <un-site-main>
 
-    <div class="uc-404-hero">
+    <div class="un-404-hero">
       <div class="container">
 
         <h1
@@ -10,16 +10,16 @@
           v-text="pageContent.title"
         />
 
-        <uc-link
-          class="uc-button uc-button--outline uc-button--white"
+        <un-link
+          class="un-button un-button--outline un-button--white"
           :url="pageContent.cta.url">
           {{pageContent.cta.label}}
-        </uc-link>
+        </un-link>
 
       </div>
     </div>
 
-  </uc-site-main>
+  </un-site-main>
 </template>
 
 <script>
@@ -40,7 +40,7 @@
 
 <style lang="scss">
 
-  .uc-404-hero {
+  .un-404-hero {
     min-height: calc(
       100vh -
       #{dim(siteNav, paddingVertical) +

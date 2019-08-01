@@ -1,37 +1,37 @@
 <template>
-  <header class="uc-hero">
+  <header class="un-hero">
 
-    <uc-page-section tag="div" size="large">
+    <un-page-section tag="div" size="large">
       <div class="container">
         <div class="row center-xs start-md u-align--center@xs u-align--center@sm u-align--left">
           <div class="col-xs-12 col-sm-9 col-md-6">
 
             <strong
-              class="uc-hero__eyebrow"
+              class="un-hero__eyebrow"
               v-html="eyebrow"
             />
 
             <h1
-              class="uc-hero__heading"
+              class="un-hero__heading"
               v-html="heading"
             />
 
             <vue-markdown
-              class="uc-hero__blurb"
+              class="un-hero__blurb"
               :source="blurb"
             />
 
-            <uc-link
-              class="uc-button uc-button--orange uc-button--large"
+            <un-link
+              class="un-button un-button--orange un-button--large"
               :url="cta.url">
               <strong v-text="cta.label" />
               <!-- icon -->
-            </uc-link>
+            </un-link>
 
           </div>
         </div>
       </div>
-    </uc-page-section>
+    </un-page-section>
 
     <slot />
 
@@ -57,7 +57,7 @@
 
 <style lang="scss">
 
-  .uc-hero {
+  .un-hero {
     overflow: hidden;
     position: relative; // for positioning the __eyebrow and __graphic
 
@@ -65,7 +65,7 @@
     background-color: palette(primary);
   }
 
-  .uc-hero__eyebrow {
+  .un-hero__eyebrow {
     display: inline-block;
 
     margin-bottom: dim(pageSection, sm); // gap between __eyebrow and __heading
@@ -81,14 +81,14 @@
     background-color: palette(primary, dark);
   }
 
-  .uc-hero__heading {
+  .un-hero__heading {
     font-size: responsive rem(6) rem(10);
     font-range: breakpoint(xs, max) breakpoint(xl);
     letter-spacing: -#{3/100 * em(0)};
     line-height: line-height(base);
   }
 
-  .uc-hero__blurb {
+  .un-hero__blurb {
     margin-top: dim(pageSection, xs);
     margin-bottom: dim(pageSection, sm);
   }
