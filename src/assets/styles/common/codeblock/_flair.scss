@@ -51,7 +51,7 @@
 
   display: none;
 
-  @at-root .un-codeblock {
+  @at-root .un-codeblock, .code-extra {
 
     & + & #{$this} {
       display: block;

@@ -23,7 +23,7 @@ module.exports = {
                   type: 'element',
                   tagName: 'span',
                   properties: {
-                    class: 'un-codeblock__filename'
+                    class: 'un-codeblock__meta'
                   },
                   children: [{
                     type: 'text',
