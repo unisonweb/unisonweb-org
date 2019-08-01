@@ -3,86 +3,79 @@
 .line-numbers-rows {
   $this: &;
 
+  position: absolute; // relative to the immediate parent <code> element
+  top: 0;
+
+  @include max-screen(breakpoint(xs, max)) {
+    left: 0;
+  }
+
+  @include min-screen(breakpoint(sm)) {
+    left: $titleWidth;
+  }
+
+  width: ($lineNumbersWidth + dim(boxShadow, blur));
+  height: 100%;
+  padding-top: rem(0);
+  padding-right: (rem(0) + dim(boxShadow, blur));
+  padding-bottom: rem(0);
+  padding-left: rem(0);
+
+  border-top-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+
+  // prevent the box-shadow from bleeding out
+  // into the box-shadow of the `<code>` block
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: $lineNumbersWidth;
+
+    background-color: palette(gray, xxx-light);
+    @include drop-shadow;
+  }
+
+  counter-reset: line-numbers;
+
+  > span {
+    counter-increment: line-numbers;
+
+    position: relative;
+    z-index: 2;
+
+    display: block;
+
+    width: 100%;
+    height: (line-height(double) * em(0));
+
+    color: palette(gray);
+    text-align: center;
+
+    &:before {
+      content: counter(line-numbers);
+      display: block;
+    }
+  }
+
   @at-root .uc-codeblock {
 
-    #{$this} {
-      position: absolute; // relative to the immediate parent <code> element
-      top: 0;
-
-      @include max-screen(breakpoint(xs, max)) {
-        left: 0;
-      }
-
-      @include min-screen(breakpoint(sm)) {
-        left: $titleWidth;
-      }
-
-      width: ($lineNumbersWidth + dim(boxShadow, blur));
-      height: 100%;
-      padding-top: rem(0);
-      padding-right: (rem(0) + dim(boxShadow, blur));
-      padding-bottom: rem(0);
-      padding-left: rem(0);
-
-      border-top-left-radius: $borderRadius;
-      border-bottom-left-radius: $borderRadius;
-
-      // prevent the box-shadow from bleeding out
-      // into the box-shadow of the `<code>` block
-      overflow: hidden;
+    & + & #{$this} {
 
       &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-
-        width: $lineNumbersWidth;
-
-        background-color: palette(gray, xxx-light);
-        @include drop-shadow;
+        content: '⌃';
+        transform-origin: center center;
+        transform:
+          rotate(90deg)
+          translate3d(0, #{em(-3) * 1/3}, 0);
       }
 
-      > span {
-        position: relative;
-        z-index: 2;
-
-        display: block;
-
-        width: 100%;
-        height: (line-height(double) * em(0));
-
-        color: palette(gray);
-        text-align: center;
-
-        &:before {
-          content: '⌃';
-
-          display: block;
-
-          transform-origin: center center;
-          transform:
-            rotate(90deg)
-            translate3d(0, #{em(-3) * 1/3}, 0);
-        }
-      }
     }
-
-    &:first-of-type #{$this} {
-      counter-reset: line-numbers;
-
-      > span {
-        counter-increment: line-numbers;
-
-        &:before {
-          content: counter(line-numbers);
-
-          transform: unset;
-        }
-      }
-    }
-
   }
 }
 

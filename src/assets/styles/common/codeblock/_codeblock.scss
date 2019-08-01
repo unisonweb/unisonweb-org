@@ -27,17 +27,13 @@
   tab-size: 4;
   hyphens: none;
 
-  &::selection,
-  & ::selection {
+  &::selection {
     color: palette(white);
     background-color: palette(primary);
   }
 
   > code {
-
-    // force scrolling when text is
-    // too long
-    overflow: auto;
+    overflow: auto; // force scrolling when text is too long
 
     display: block;
     padding:
@@ -51,22 +47,5 @@
     border-radius: $borderRadius;
     background-color: palette(white);
     @include drop-shadow;
-  }
-}
-
-*:not(.uc-codeblock) > code {
-  color: palette(pink);
-  border-radius: (em(-2) * 1/4);
-
-  position: relative;
-
-  &, &:before, &:after {
-    background-color: palette(gray, xx-light);
-  }
-
-  &:before, &:after {
-    content: '';
-    display: inline-block;
-    width: (em(0) * 1/4);
   }
 }

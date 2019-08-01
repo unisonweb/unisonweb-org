@@ -72,3 +72,18 @@ hr {
   border: 0;
   border-top: 1px solid rgba(palette(gray, xx-dark), 0.5);
 }
+
+code {
+
+  @at-root *:not(.uc-codeblock) > & {
+    display: inline;
+
+    padding-right: (em(0) * 1/4);
+    padding-left: (em(0) * 1/4);
+
+    color: palette(gray, xx-dark);
+
+    border-radius: (em(-2) * 1/4);
+    background-color: palette(gray, xx-light);
+  }
+}

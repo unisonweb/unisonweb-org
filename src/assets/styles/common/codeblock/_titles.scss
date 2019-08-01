@@ -1,60 +1,54 @@
-.uc-codeblock {
-  $this: &;
+%uc-codeblock__title {
+  position: absolute;
+  left: 0;
 
-  &:before {
+  @include max-screen(breakpoint(xs, max)) {
+    content: '';
 
-    position: absolute;
-    left: 0;
+    top: -#{$verticalSpacing * 1/2};
+    transform: translate3d(0, -50%, 0);
 
-    @include max-screen(breakpoint(xs, max)) {
-      content: '';
+    width: $titleIconSize;
 
-      top: -#{$verticalSpacing * 1/2};
-      transform: translate3d(0, -50%, 0);
-
-      width: $titleIconSize;
-
-      margin-top: 1px; // for pixel-perfect alignment
-    }
-
-    @include min-screen(breakpoint(sm)) {
-      top: 0;
-      width: $titleWidth;
-    }
-
-    padding-top: $titleIconSize;
-
-    color: palette(gray, dark);
-    font-size: em(-2);
-    font-weight: weight(bold);
-    @extend .u-expanded;
-    text-transform: uppercase;
-
-    background-repeat: no-repeat;
-    background-position: top left;
-    background-size: $titleIconSize;
+    margin-top: 1px; // for pixel-perfect alignment
   }
 
-  &:first-of-type {
+  @include min-screen(breakpoint(sm)) {
+    top: 0;
+    width: $titleWidth;
+  }
+
+  padding-top: $titleIconSize;
+
+  color: palette(gray, dark);
+  font-size: em(-2);
+  font-weight: weight(bold);
+  @extend .u-expanded;
+  text-transform: uppercase;
+
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: $titleIconSize;
+}
+
+.uc-codeblock {
+
+  &:before {
+    @extend %uc-codeblock__title;
+    background-image: url('/media/icon-code.svg');
+
+    @include min-screen(breakpoint(sm)) {
+      content: 'Code';
+    }
+  }
+
+  & + & {
 
     &:before {
+      background-image: url('/media/icon-terminal.svg');
 
       @include min-screen(breakpoint(sm)) {
-        content: 'Code';
-      }
-
-      background-image: url('/media/icon-code.svg');
-    }
-
-    + #{$this} {
-
-      &:before {
-
-        @include min-screen(breakpoint(sm)) {
-          content: 'Output';
-        }
-
-        background-image: url('/media/icon-terminal.svg');
+        content: 'Output';
       }
     }
   }
