@@ -53,24 +53,44 @@
 <style lang="scss">
 
   .un-site-nav__stage {
-    padding-top: dim(siteNav, paddingVertical);
-    padding-bottom: dim(siteNav, paddingVertical);
+    padding-top: dim(siteNav, verticalPadding);
+    padding-bottom: dim(siteNav, verticalPadding);
 
     color: palette(black);
     background-color: palette(white);
 
+    .un-site-nav__links__container {
+
+      @include max-screen(breakpoint(xs, max)) {
+        border-color: palette(gray, x-light);
+        background-color: palette(gray, xxx-light);
+      }
+    }
+
     &.is-inverted {
       color: palette(white);
       background-color: palette(black);
+
+      .un-site-nav__links__container {
+
+        @include max-screen(breakpoint(xs, max)) {
+          border-color: palette(black);
+          background-color: palette(gray, xxx-dark);
+        }
+      }
     }
   }
 
   .un-site-nav {
     position: relative;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    line-height: line-height(base);
+
+    @include min-screen(breakpoint(sm)) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
   }
 
   .un-site-nav__mobile-nav-toggle {
@@ -99,9 +119,13 @@
       }
 
       ~ .un-site-nav__links__stage {
-        z-index: 1;
+        // z-index: 1;
 
-        display: block;
+        @include max-screen(breakpoint(xs, max)) {
+          pointer-events: auto;
+          opacity: 1;
+          max-height: 100vh;
+        }
       }
     }
   }

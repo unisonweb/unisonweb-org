@@ -23,7 +23,7 @@
 <style lang="scss">
 
   .un-site-nav__logo__wrapper {
-    display: block;
+    display: inline-block;
     width: auto;
     height: dim(siteNav, logoHeight);
     line-height: line-height(base);
@@ -34,7 +34,7 @@
   }
 
   .un-site-nav__logo {
-    display: block;
+    display: inline-block;
     width: auto;
     height: 100%;
 

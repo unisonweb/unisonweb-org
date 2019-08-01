@@ -43,9 +43,9 @@
   .un-404-hero {
     min-height: calc(
       100vh -
-      #{dim(siteNav, paddingVertical) +
+      #{dim(siteNav, verticalPadding) +
         dim(siteNav, logoHeight) +
-        dim(siteNav, paddingVertical)}
+        dim(siteNav, verticalPadding)}
     );
 
     color: palette(white);

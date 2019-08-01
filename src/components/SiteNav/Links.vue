@@ -30,20 +30,15 @@
   .un-site-nav__links__stage {
 
     @include max-screen(breakpoint(xs, max)) {
-      position: absolute;
-      top: 100%;
-      left: -#{rem(3)};
-      width: 100vw;
+      transform: translate3d(0, #{dim(siteNav, verticalPadding)}, 0);
 
-      margin-top: dim(siteNav, paddingVertical);
-      padding-top: em(0);
-      padding-bottom: em(0);
-
-      border-top: 1px solid palette(gray, x-light);
-      border-bottom: 1px solid palette(gray, x-light);
-      background-color: palette(gray, xxx-light);
-
-      display: none;
+      // hidden by default
+      pointer-events: none;
+      transition:
+        opacity .2s ease-in-out,
+        max-height .2s ease-in-out;
+      opacity: 0;
+      max-height: 0;
     }
 
     @include min-screen(breakpoint(sm)) {
@@ -61,7 +56,17 @@
       list-style: none;
 
       @include max-screen(breakpoint(xs, max)) {
+        margin-right: -#{rem(3)};
+        margin-left: -#{rem(3)};
+
+        padding-top: em(0);
+        padding-bottom: em(0);
+
         text-align: center;
+
+        border-color: transparent;
+        border-style: solid;
+        border-width: 1px 0;
       }
 
       @include min-screen(breakpoint(sm)) {
@@ -102,7 +107,9 @@
       padding-top: em(0);
       padding-bottom: em(0);
 
-      color: palette(black);
+      // &, &:hover {
+      //   color: palette(black);
+      // }
     }
 
     @include min-screen(breakpoint(sm)) {

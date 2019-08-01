@@ -13,11 +13,9 @@
 <style lang="scss">
 
   .un-site-nav__mobile-nav-button {
+    $iconSize: rem(4);
 
     @include max-screen(breakpoint(xs, max)) {
-
-      $iconSize: rem(4);
-
       user-select: none;
 
       // position absolutely to prevent this
@@ -26,16 +24,14 @@
       // .site-nav is the __logo
       position: absolute;
       z-index: z-index(mobileNavButton);
-      top: 50%;
+      top: 0;
       right: 0;
       transform: translate3d(
         // align the right-edge of the faux icon
         // with the right-edge of the .container
         // to keep the appearance of being aligned
         // with the content below
-        #{(dim(siteNav, logoHeight) - $iconSize) * 1/2},
-        -50%,
-        0
+        #{(dim(siteNav, logoHeight) - $iconSize) * 1/2}, 0, 0
       );
 
       width: dim(siteNav, logoHeight);
