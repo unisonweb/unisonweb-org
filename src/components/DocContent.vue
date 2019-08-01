@@ -117,10 +117,7 @@
         overflow: hidden;
         display: block;
         width: $iconSize;
-        height: (
-          em(0)
-        - (font(sans, descent) * em(0))
-        );
+        height: (em(0) * line-height(half));
 
         margin-left: $iconSize;
 
@@ -145,7 +142,7 @@
 
           // magic number to prevent display issues
           // with the icon appearing to be "cut off"
-          background-size: 95%;
+          background-size: 90% auto;
         }
       }
     }
