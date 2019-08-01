@@ -24,7 +24,7 @@
   .un-homepage-hero-graphic__wrapper {
 
     @include max-screen(breakpoint(xs, max)) {
-      margin-bottom: (dim(pageSection, xs) * 2);
+      margin-top: (dim(pageSection, xs) * 2);
     }
 
     @include max-screen(breakpoint(sm, max)) {
@@ -34,7 +34,7 @@
       margin-right: auto;
       margin-left: auto;
 
-      margin-bottom: (dim(pageSection, sm) * 2);
+      margin-top: (dim(pageSection, sm) * 2);
     }
 
     @include min-screen(breakpoint(md)) {
