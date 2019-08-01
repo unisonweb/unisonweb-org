@@ -14,7 +14,26 @@ module.exports = {
             type: 'text',
             value: '#'
           }
-        }
+        },
+        plugins: [
+          [
+            'remark-code-extra', {
+              transform: node => node.meta ? ({
+                before: [{
+                  type: 'element',
+                  tagName: 'span',
+                  properties: {
+                    class: 'uc-codeblock__filename'
+                  },
+                  children: [{
+                    type: 'text',
+                    value: node.meta,
+                  }]
+                }]
+              }) : null
+            }
+          ]
+        ]
       }
     }
   }, {

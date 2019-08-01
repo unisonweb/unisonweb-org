@@ -1,0 +1,26 @@
+.uc-codeblock__filename {
+  $this: &;
+
+  position: absolute;
+  z-index: 2;
+  bottom: 100%;
+  left: $titleWidth;
+
+  margin-bottom: 1px;
+  padding: em(-3) em(-1);
+
+  font-size: rem(-3);
+  line-height: line-height(base);
+
+  background-color: palette(gray, xxx-light);
+
+  @at-root .code-extra {
+    position: relative;
+
+    margin-top: $verticalSpacing;
+
+    & #{$this} {
+      // outline: 1px solid red;
+    }
+  }
+}

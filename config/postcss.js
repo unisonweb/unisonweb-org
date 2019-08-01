@@ -32,6 +32,7 @@ function getPlugins() {
           'body',
           'line-numbers-rows',
           'token',
+          'code-extra',
         ],
         whitelistPatterns: [
           /(un-).*/,
