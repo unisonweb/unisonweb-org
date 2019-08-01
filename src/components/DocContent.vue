@@ -10,6 +10,10 @@
   import 'prismjs'
   import 'prismjs/components/prism-unison'
   import 'prismjs/plugins/line-numbers/prism-line-numbers'
+  import Vue from 'vue'
+  import AsciiPlayer from '~/components/AsciiPlayer'
+
+  const AsciiPlayerClass = Vue.extend(AsciiPlayer)
 
   export default {
     props: {
@@ -20,16 +24,9 @@
         HTML: null,
       }
     },
-    created() {
+    methods: {
+      processCodeblocks($el) {
 
-      if (process.isClient) {
-        const vm = this
-        const $el = document.createElement('div')
-
-        // convert the content string to actual HTML
-        $el.innerHTML = vm.content
-
-        // find all the `<pre>` tags
         $el.querySelectorAll('pre').forEach($pre => {
 
           // since the inner `<code>` element needs to have
@@ -44,9 +41,41 @@
           $pre.classList.add('un-codeblock', 'line-numbers')
         })
 
-        // save the modified HTML
-        vm.HTML = $el.innerHTML
+      },
+      processAsciiPlayers() {
+        const vm = this
+
+        vm.$refs['content'].querySelectorAll('script').forEach($script => {
+
+          if ($script.id.includes('asciicast')) {
+            const id = $script.id.split('-').pop()
+            // create a new instance of the AsciiPlayer component
+            const instance = new AsciiPlayerClass({
+              propsData: { id: id }
+            })
+            // mount it
+            instance.$mount()
+            // insert it where the `<script>` the script
+            $script.parentNode.insertBefore(instance.$el, $script)
+            // lastly, remove the script
+            $script.remove()
+          }
+        })
+
+      },
+    },
+    created() {
+      const vm = this
+      let $el = document.createElement('div')
+
+      // convert the content string to actual HTML
+      $el.innerHTML = vm.content
+
+      if (process.isClient) {
+        vm.processCodeblocks($el)
       }
+
+      vm.HTML = $el.innerHTML
 
       // update Prism to select our custom codeblocks
       Prism.hooks.add('before-highlightall', function(env) {
@@ -56,6 +85,10 @@
     },
     mounted() {
       const vm = this
+
+      if (process.isClient) {
+        vm.processAsciiPlayers()
+      }
 
       Prism.highlightAllUnder(vm.$refs['content'])
     },
@@ -119,7 +152,7 @@
         width: $iconSize;
         height: (em(0) * line-height(half));
 
-        margin-left: $iconSize;
+        margin-left: ($iconSize * 1/2);
 
         opacity: 0.25;
 

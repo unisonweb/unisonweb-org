@@ -1,23 +1,53 @@
 <template>
-  <figure :id="id"></figure>
+  <figure
+    class="uc-asciiplayer"
+    ref="player"
+    :id="id"
+  />
 </template>
 
 <script>
   export default {
-    props: ['id'],
+    props: {
+      id: { type: String, default: null },
+    },
     data() {
       return {
         source: `https://asciinema.org/a/${this.id}.js`,
-        ascid: `asciicast-${this.id}`
+        castId: `asciicast-${this.id}`,
+        player: null,
       }
     },
+    created() {
+      const vm = this
+
+      let $script = document.createElement('script')
+      $script.setAttribute('src', vm.source)
+      $script.setAttribute('id', vm.castId)
+
+      vm.player = $script
+    },
     mounted() {
-      // Can't use script tags directly apparently
-      let asciiscript = document.createElement('script');
-      asciiscript.setAttribute('src', this.source);
-      asciiscript.setAttribute('id', this.ascid);
-      console.log(this.id);
-      document.getElementById(this.id).appendChild(asciiscript)
+      const vm = this
+
+      vm.$refs['player'].appendChild(vm.player)
     }
   }
 </script>
+
+<style lang="scss">
+
+  .uc-asciiplayer {
+    // <figure> reset
+    margin: 0;
+
+    margin-top: rem(3);
+    margin-bottom: rem(3);
+
+    > .asciicast {
+      // overrides
+      margin: 0 !important;
+    }
+  }
+
+</style>
