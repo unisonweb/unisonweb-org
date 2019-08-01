@@ -66,16 +66,14 @@
     },
     created() {
       const vm = this
-      let $el = document.createElement('div')
-
-      // convert the content string to actual HTML
-      $el.innerHTML = vm.content
 
       if (process.isClient) {
-        vm.processCodeblocks($el)
-      }
+        let $el = document.createElement('div')
 
-      vm.HTML = $el.innerHTML
+        $el.innerHTML = vm.content
+        vm.processCodeblocks($el)
+        vm.HTML = $el.innerHTML
+      }
 
       // update Prism to select our custom codeblocks
       Prism.hooks.add('before-highlightall', function(env) {
