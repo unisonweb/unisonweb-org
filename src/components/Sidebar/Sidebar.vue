@@ -91,6 +91,11 @@
         vm.isVisible = vm.$refs['sidebarToggle'].checked
       },
     },
+    watch: {
+      $route(to, from) {
+        this.closeSidebar()
+      },
+    },
     components: {
       Links,
     },
