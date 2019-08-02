@@ -1,5 +1,5 @@
 %un-codeblock__title {
-  position: absolute;
+  position: absolute; // relative to `.un-codeblock`
   left: 0;
 
   @include max-screen(breakpoint(xs, max)) {

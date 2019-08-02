@@ -4,7 +4,7 @@
   @at-root {
 
     .un-codeblock #{$this} {
-      position: absolute; // relative to the immediate parent <code> element
+      position: absolute; // relative to `.un-codeblock <pre>`
       top: 0;
 
       @include max-screen(breakpoint(xs, max)) {
@@ -65,7 +65,7 @@
       }
     }
 
-    .un-codeblock, .code-extra {
+    .un-codeblock {
 
       & + & #{$this} {
 

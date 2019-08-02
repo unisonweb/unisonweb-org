@@ -1,7 +1,7 @@
 .un-codeblock__flair {
   $this: &;
 
-  position: absolute; // relative to `<pre>` (not `<code>`)
+  position: absolute; // relative .un-codeblock
   z-index: 2; // keep this above subsequent code blocks
   transform: translate3d(-50%, 0, 0);
   bottom: 100%;
@@ -51,7 +51,7 @@
 
   display: none;
 
-  @at-root .un-codeblock, .code-extra {
+  @at-root .un-codeblock {
 
     & + & #{$this} {
       display: block;

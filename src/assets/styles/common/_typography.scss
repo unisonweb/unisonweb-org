@@ -75,13 +75,13 @@ hr {
 
 code {
 
-  @at-root *:not(.un-codeblock) > & {
+  @at-root *:not(.un-codeblock) & {
     display: inline;
 
     padding-right: (em(0) * 1/4);
     padding-left: (em(0) * 1/4);
 
-    color: palette(gray, xx-dark);
+    color: palette(pink);
 
     border-radius: (em(-2) * 1/4);
     background-color: palette(gray, xx-light);

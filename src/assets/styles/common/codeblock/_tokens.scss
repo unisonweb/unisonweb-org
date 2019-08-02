@@ -4,33 +4,17 @@
 
   @at-root .un-codeblock & {
 
-    &.comment {}
-
+    &.comment { color: palette(gray); }
     &.char {}
-
-    &.string {}
-
-    &.keyword {}
-
+    &.string { color: palette(black); }
+    &.keyword { color: palette(green); }
     &.import_statement {}
-
-    &.builtin {
-      color: palette(blue);
-    }
-
-    &.number {
-      color: palette(pink);
-    }
-
-    &.operator {
-      color: palette(green);
-    }
-
-    &.hvariable {}
-
-    &.constant {}
-
-    &.punctuation {}
+    &.builtin { color: palette(blue); }
+    &.number { color: palette(green); }
+    &.operator { color: palette(green); }
+    &.hvariable { color: palette(blue); }
+    &.constant { color: palette(purple); }
+    &.punctuation { color: palette(pink); }
 
   }
 }

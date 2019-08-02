@@ -8,32 +8,40 @@
 
 .un-codeblock {
 
-  // for positioning the `title` pseudo elements,
-  // and the __flair
+  // for positioning `__title` and `__flair`
   position: relative;
 
-  margin-top: $verticalSpacing;
-  margin-bottom: $verticalSpacing;
-
-  @include min-screen(breakpoint(sm)) {
-    padding-left: $titleWidth;
-  }
-
   font-family: font(mono);
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  tab-size: 4;
-  hyphens: none;
+  font-size: rem(-1);
 
-  &::selection {
-    color: palette(white);
-    background-color: palette(primary);
+  pre {
+
+    // for positioning `.line-numbers-rows`
+    position: relative;
+
+    margin-top: $verticalSpacing;
+    margin-bottom: $verticalSpacing;
+
+    @include min-screen(breakpoint(sm)) {
+      padding-left: $titleWidth;
+    }
+
+    font-family: inherit;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    tab-size: 4;
+    hyphens: none;
+
+    &::selection {
+      color: palette(white);
+      background-color: palette(primary);
+    }
   }
 
-  > code {
+  code {
     overflow: auto; // force scrolling when text is too long
 
     display: block;
@@ -43,6 +51,7 @@
       $verticalPadding
       ($horizontalPadding + $lineNumbersWidth);
 
+    font-family: inherit;
     line-height: line-height(double);
 
     border-radius: $borderRadius;

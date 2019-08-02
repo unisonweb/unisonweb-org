@@ -1,7 +1,5 @@
 .un-codeblock__meta {
-  $this: &;
-
-  position: absolute;
+  position: absolute; // relative to `.un-codeblock`
   z-index: 2;
   bottom: 100%;
   left: $titleWidth;
@@ -13,14 +11,4 @@
   line-height: line-height(base);
 
   background-color: palette(gray, xxx-light);
-
-  @at-root .code-extra {
-    position: relative;
-
-    margin-top: $verticalSpacing;
-
-    & #{$this} {
-      // outline: 1px solid red;
-    }
-  }
 }
