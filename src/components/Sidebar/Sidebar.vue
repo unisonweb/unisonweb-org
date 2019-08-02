@@ -118,7 +118,7 @@
 
         background-color: rgba(palette(black), 0.5);
 
-        transition: opacity .25s ease-in-out;
+        transition: opacity .5s ease-in-out;
         opacity: 0;
         pointer-events: none;
       }
@@ -199,7 +199,7 @@
       background-color: palette(white);
       @include drop-shadow;
 
-      transition: transform .3s ease-in-out;
+      transition: transform .5s ease-in-out;
       transform: translate3d(-100%, 0, 0);
     }
   }

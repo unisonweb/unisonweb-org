@@ -11,16 +11,14 @@
   // for positioning `__title` and `__flair`
   position: relative;
 
+  margin-top: $verticalSpacing;
+  margin-bottom: $verticalSpacing;
+
   font-family: font(mono);
   font-size: rem(-1);
 
   pre {
-
-    // for positioning `.line-numbers-rows`
-    position: relative;
-
-    margin-top: $verticalSpacing;
-    margin-bottom: $verticalSpacing;
+    position: relative; // for positioning `.line-numbers-rows`
 
     @include min-screen(breakpoint(sm)) {
       padding-left: $titleWidth;

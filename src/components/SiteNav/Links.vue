@@ -35,8 +35,8 @@
       // hidden by default
       pointer-events: none;
       transition:
-        opacity .35s ease-in-out,
-        max-height .35s ease-in-out;
+        opacity .5s ease-in-out,
+        max-height .5s ease-in-out;
       opacity: 0;
       max-height: 0;
     }
