@@ -21,7 +21,7 @@
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^1.1.0",
     "@gridsome/plugin-sitemap": "^0.1.1",
-    "@gridsome/source-filesystem": "^0.3.0",
+    "@gridsome/source-filesystem": "^0.5.0",
     "@gridsome/transformer-remark": "^0.3.2",
     "@gridsome/transformer-yaml": "^0.1.0",
     "animate.css": "^3.7.0",

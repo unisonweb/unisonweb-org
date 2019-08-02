@@ -2,7 +2,7 @@
   <div
     ref="content"
     class="un-doc-content"
-    v-html="HTML"
+    v-html="content"
   />
 </template>
 
@@ -19,39 +19,16 @@
     props: {
       content: { type: String, default: null },
     },
-    data() {
-      return {
-        HTML: null,
-      }
-    },
     methods: {
-      processCodeblocks($el) {
-
-        $el.querySelectorAll('pre').forEach($pre => {
-
-          // since the inner `<code>` element needs to have
-          // overflow: auto, let's create a new `flair
-          // element to style
-          const $span = document.createElement('span')
-          $span.classList.add('un-codeblock__flair')
-          $pre.appendChild($span)
-
-          // add `line-numbers` class to the `<pre>` tag
-          // so the line numbers plugin will render correctly`
-          $pre.classList.add('un-codeblock', 'line-numbers')
-        })
-
-      },
       processAsciiPlayers() {
         const vm = this
 
         vm.$refs['content'].querySelectorAll('script').forEach($script => {
 
           if ($script.id.includes('asciicast')) {
-            const id = $script.id.split('-').pop()
             // create a new instance of the AsciiPlayer component
             const instance = new AsciiPlayerClass({
-              propsData: { id: id }
+              propsData: { id: $script.id.split('-').pop() }
             })
             // mount it
             instance.$mount()
@@ -60,35 +37,15 @@
             // lastly, remove the script
             $script.remove()
           }
+
         })
 
       },
     },
-    created() {
-      const vm = this
-
-      if (process.isClient) {
-        let $el = document.createElement('div')
-
-        $el.innerHTML = vm.content
-        vm.processCodeblocks($el)
-        vm.HTML = $el.innerHTML
-      }
-
-      // update Prism to select our custom codeblocks
-      Prism.hooks.add('before-highlightall', function(env) {
-        env.selector += ", .un-codeblock code"
-      })
-
-    },
     mounted() {
       const vm = this
 
-      if (process.isClient) {
-        vm.processAsciiPlayers()
-      }
-
-      Prism.highlightAllUnder(vm.$refs['content'])
+      vm.processAsciiPlayers()
     },
   }
 </script>

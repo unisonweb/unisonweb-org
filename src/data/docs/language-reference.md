@@ -23,7 +23,7 @@ A top-level declaration can appear at the _top level_ or outermost scope of a Un
 
 A Unison term binding consists of an optional [type signature](#type-signature), and a [term definition](#term-definition). For example:
 
-``` haskell
+```unison
 timesTwo : Nat -> Nat
 timesTwo x = x * 2
 ```
@@ -34,7 +34,7 @@ The second line is the term definition. The `=` sign splits the definition into 
 
 The general form of a term binding is:
 
-``` haskell
+```unison
 name : Type
 name p_1 p_2 … p_n = expression
 ```
@@ -53,7 +53,7 @@ If the term takes no arguments, the term has the value of the fully evaluated ex
 
 The expression comprising the right-hand side can refer to the name given to the definition in the left-hand side. In that case, it’s a recursive definition. For example:
 
-``` Haskell
+```unison
 sumUpTo : Nat -> Nat
 sumUpTo n = 
   if n < 2 then n 
@@ -67,25 +67,25 @@ Note: The expression `drop n 1` on line 4 above subtracts one from the natural n
 #### Operator definitions
 [Operator identifiers](#identifiers) are valid names for Unison definitions, but the syntax for defining them is slightly different. For example, we could define a binary operator `?`:
 
-``` Haskell
+```unison
 (?) x y = if x == 0 then y else x 
 ```
 
 Or we could define it using infix notation:
 
-``` haskell
+```unison
 x ? y = if x == 0 then y else x
 ```
 
 If we want to give the operator a qualified name, we put the qualifier inside the parentheses:
 
-``` Haskell
+```unison
 (MyNamespace.?) x y = if x == 0 then y else x 
 ```
 
 Or if defining it infix:
 
-``` haskell
+```unison
 x MyNamespace.? y = if x == 0 then y else x
 ```
 
@@ -97,7 +97,7 @@ A user-defined data type is introduced with the `type` keyword.
 
 For example:
 
-``` haskell
+```unison
 type Optional a = None | Some a
 ```
 
@@ -124,7 +124,7 @@ type TypeConstructor p1 p2 … pn
 
 A user-defined _ability_ declaration has the following general form:
 
-``` haskell
+```unison
 ability A p_1 p_2 … p_n where
   Request_1 : Type_1
   Request_2 : Type_2
@@ -347,7 +347,7 @@ If `c` is a delayed computation, it can be _forced_ with `!c`, which is the same
 
 Delayed computations are important for writing expressions that require [abilities](#abilities-and-ability-handlers). For example:
 
-``` haskell
+```unison
 use io
 
 program : '{IO} ()
@@ -392,7 +392,7 @@ A _blank pattern_ has the form `_`. It matches any expression without creating a
 
 For example:
 
-``` haskell
+```unison
 case 42 of
   _ -> "Always matches"
 ```
@@ -402,7 +402,7 @@ A _literal pattern_ is a literal `Boolean`, `Nat`, `Int`, `Float`, or `Text`. A 
 
 For example:
 
-``` haskell
+```unison
 case 2 + 2 of
   4 -> "Matches"
   _ -> "Doesn't match"
@@ -413,7 +413,7 @@ A _variable pattern_ is a [regular identifier](#identifiers) and matches any exp
 
 For example, this expression evaluates to `3`:
 
-``` haskell
+```unison
 case 1 + 1 of
   x -> x + 1
 ```
@@ -423,7 +423,7 @@ An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](#identifi
 
 For example, this expression evaluates to `3`:
 
-``` haskell
+```unison
 case 1 + 1 of
   x@4 -> x * 2
   y@2 -> y + 1
@@ -435,7 +435,7 @@ A _constructor pattern_ has the form `C p1 p2 ... pn` where `C` is the name of a
 
 For example, this expression uses `Some` and `None`, the constructors of the `Optional` type, to return the 3rd element of the list `xs` if present or `0` if there was no 3rd element.
 
-``` haskell
+```unison
 case List.at 3 xs of
   None -> 0
   Some x -> x 
@@ -451,7 +451,7 @@ A _list pattern_ matches a `List t` for some type `t` and has one of three forms
 
 Examples:
 
-``` haskell
+```unison
 first : [a] -> Optional a
 first as = case as of
   h +: _ -> Some h
@@ -473,7 +473,7 @@ exactlyOne a = case a of
 
 For example, this expression evaluates to `4`:
 
-``` haskell
+```unison
 case (1,2,3) of
   (a,_,c) -> a + c
 ```
@@ -491,7 +491,7 @@ A _guard pattern_ has the form `p | g` where `p` is a pattern and `g` is a Boole
 
 For example, the following expression evaluates to 6:
 
-``` haskell
+```unison
 case 1 + 2 of
   x | x == 4 -> 0
   x | x + 1 == 4 -> 6
@@ -542,7 +542,7 @@ Type variables introduced by a type signature for a term remain in scope through
 
 For example in the following snippet, the type annotation `temp:x` is telling Unison that `temp` has the type `x` which is bound in the type signature, so `temp` and `a` have the same type.
 
-``` haskell
+```unison
 ex1 : x -> y -> x
 ex1 a b =
   -- refers to the type x in the outer scope
@@ -553,7 +553,7 @@ ex1 a b =
 
 To explicitly shadow a type variable in scope, the variable can be reintroduced in the inner scope by a `forall` binder, as follows:
 
-``` haskell
+```unison
 ex2 : x -> y -> x
 ex2 a b =
   -- doesn’t refer to x in outer scope
@@ -627,7 +627,7 @@ Stated the other way around, `f` can only be called in contexts where the abilit
 
 A user-defined ability is declared with an `ability` declaration such as:
 
-``` haskell
+```unison
 ability Store v where
   get : v
   put : v -> ()
@@ -644,7 +644,7 @@ The type `{Store v}` means that the computation which results in that type requi
 
 A constructor `{A} T` for some ability `A` and some type `T`  (or a function which uses such a constructor), can only be used in a scope where the ability `A` is provided. Abilities are provided by `handle` expressions:
 
-``` haskell
+```unison
 handle h in x
 ```
 
@@ -654,7 +654,7 @@ This expression gives `x` access to abilities handled by the function `h` which 
 
 Each constructor of an ability corresponds with a _pattern_ that can be used for pattern matching in ability handlers. The general form of such a pattern is:
 
-``` haskell
+```unison
 {A.c p_1 p_2 p_n -> k}
 ```
 
@@ -662,7 +662,7 @@ Where `A` is the name of the ability, `c` is the name of the constructor, `p_1` 
 
 A handler can choose to call the continuation or not. For example, a handler can ignore the continuation in order to handle an ability that aborts the execution of the program:
 
-``` haskell
+```unison
 ability Abort where
   aborting : ()
 
@@ -685,7 +685,7 @@ The pattern `{ x }` matches the case where the computation is pure (makes no fur
 
 When a handler calls the continuation, it needs describe how the ability is provided in the rest of the program, usually with a recursive call, like this:
 
-``` haskell
+```unison
 use .base Request
  
 ability Stored v where

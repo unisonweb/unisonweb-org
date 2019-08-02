@@ -6,7 +6,9 @@ module.exports = {
     use: '@gridsome/source-filesystem',
     options: {
       index: ['README'],
-      path: 'docs/**/*.md',
+      baseDir: './src/data/docs',
+      pathPrefix: '/docs',
+      path: '**/*.md',
       typeName: 'DocPage',
       remark: {
         autolinkHeadings: {
@@ -14,26 +16,7 @@ module.exports = {
             type: 'text',
             value: '#'
           }
-        },
-        plugins: [
-          [
-            'remark-code-extra', {
-              transform: node => node.meta ? ({
-                before: [{
-                  type: 'element',
-                  tagName: 'span',
-                  properties: {
-                    class: 'un-codeblock__meta'
-                  },
-                  children: [{
-                    type: 'text',
-                    value: node.meta,
-                  }]
-                }]
-              }) : null
-            }
-          ]
-        ]
+        }
       }
     }
   }, {
@@ -42,6 +25,11 @@ module.exports = {
       cacheTime: 600000, // default
     }
   }],
+  transformers: {
+    remark: {
+      plugins: require('./config/remarkPlugins')
+    }
+  },
   css: {
     loaderOptions: {
       scss: require('./config/scss'),
