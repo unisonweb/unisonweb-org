@@ -2,15 +2,16 @@
   <div
     class="un-site-nav__stage"
     :class="{
-      'is-inverted': navInverted,
+      'is-inverted': isInverted,
+      'with-search': withSearch,
     }">
     <div class="container">
       <div class="un-site-nav">
 
         <input
-          class="un-site-nav__mobile-nav-toggle"
+          class="un-site-nav__nav-toggle"
           type="checkbox"
-          id="mobile-nav-toggle"
+          id="nav-toggle"
           style="display: none;"
           hidden
         />
@@ -21,6 +22,8 @@
 
         <Links :links="componentContent.links" />
 
+        <un-search v-if="withSearch" />
+
       </div>
     </div>
   </div>
@@ -30,6 +33,7 @@
   import Links from '~/components/SiteNav/Links'
   import Logo from '~/components/SiteNav/Logo'
   import MobileNavButton from '~/components/SiteNav/MobileNavButton'
+  import Search from '~/components/Search'
   import componentContent from '~/data/components/site-nav.yml'
   import siteNavProps from '~/mixins/siteNavProps'
 
@@ -43,6 +47,7 @@
       Links,
       Logo,
       MobileNavButton,
+      'un-search': Search,
     },
     mixins: [
       siteNavProps,
@@ -79,6 +84,17 @@
         }
       }
     }
+
+    &.with-search {
+
+      @include max-screen(breakpoint(sm, max)) {
+        margin-bottom: (
+          dim(siteNav, fontSize)
+        + dim(siteNav, logoHeight)
+        + dim(siteNav, fontSize)
+        );
+      }
+    }
   }
 
   .un-site-nav {
@@ -93,7 +109,7 @@
     }
   }
 
-  .un-site-nav__mobile-nav-toggle {
+  .un-site-nav__nav-toggle {
     display: none;
 
     &:checked {

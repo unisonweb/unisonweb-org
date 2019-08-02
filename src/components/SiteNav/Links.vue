@@ -35,15 +35,19 @@
       // hidden by default
       pointer-events: none;
       transition:
-        opacity .2s ease-in-out,
-        max-height .2s ease-in-out;
+        opacity .35s ease-in-out,
+        max-height .35s ease-in-out;
       opacity: 0;
       max-height: 0;
     }
 
     @include min-screen(breakpoint(sm)) {
+      flex: 1 1 auto;
+      order: 99;
+
       display: flex;
       align-items: center;
+      justify-content: flex-end;
     }
   }
 

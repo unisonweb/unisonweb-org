@@ -55,20 +55,6 @@
   .un-doc-content {
 
     @include min-screen(breakpoint(md)) {
-      padding-right: (1/12 * 100%);
-      padding-left: (4/12 * 100%);
-
-      position: relative;
-
-      &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: (3/12 * 100%);
-
-        border-left: 1px solid palette(gray, xx-light);
-      }
 
       .un-codeblock {
 

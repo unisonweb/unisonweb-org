@@ -23,18 +23,12 @@
 
   .un-homepage-hero-graphic__wrapper {
 
-    @include max-screen(breakpoint(xs, max)) {
-      margin-top: (dim(pageSection, xs) * 2);
-    }
-
     @include max-screen(breakpoint(sm, max)) {
       position: relative;
 
       width: (7/12 * 100%);
       margin-right: auto;
       margin-left: auto;
-
-      margin-top: (dim(pageSection, sm) * 2);
     }
 
     @include min-screen(breakpoint(md)) {
@@ -66,6 +60,7 @@
       right: calc(50% - #{7/12 * container(lg)} + #{rem(0)});
     }
 
+    // this is the pink triangle thing
     &:before {
       content: '';
       position: absolute;

@@ -1,7 +1,7 @@
 <template>
   <label
     class="un-site-nav__mobile-nav-button"
-    for="mobile-nav-toggle"
+    for="nav-toggle"
     v-html="'&nbsp;'"
   />
 </template>

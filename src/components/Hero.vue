@@ -21,12 +21,14 @@
               :source="blurb"
             />
 
-            <un-link
-              class="un-button un-button--orange un-button--large"
-              :url="cta.url">
-              <strong v-text="cta.label" />
-              <!-- icon -->
-            </un-link>
+            <div class="un-hero__cta">
+              <un-link
+                class="un-button un-button--orange un-button--large"
+                :url="cta.url">
+                <strong v-text="cta.label" />
+                <!-- icon -->
+              </un-link>
+            </div>
 
           </div>
         </div>
@@ -91,6 +93,13 @@
   .un-hero__blurb {
     margin-top: dim(pageSection, xs);
     margin-bottom: dim(pageSection, sm);
+  }
+
+  .un-hero__cta {
+
+    @include max-screen(breakpoint(xs, max)) {
+      padding-bottom: (dim(pageSection, xs) * 2);
+    }
   }
 
 </style>

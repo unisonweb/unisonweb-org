@@ -1,6 +1,6 @@
 export default {
   props: {
-    navSearch: { type: Boolean, default: false },
-    navInverted: { type: Boolean, default: false },
+    withSearch: { type: Boolean, default: false },
+    isInverted: { type: Boolean, default: false },
   },
 }

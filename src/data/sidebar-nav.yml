@@ -1,0 +1,19 @@
+links:
+  - label: Introduction
+    path: /docs
+    icon: /media/icon-code.svg
+  - label: Quickstart
+    path: /docs/quickstart
+    icon: /media/icon-code.svg
+  - label: Getting Started
+    path: /docs/getting-started
+    icon: /media/icon-code.svg
+  - label: Tour
+    path: /docs/tour
+    icon: /media/icon-code.svg
+  - label: Roadmap
+    path: /docs/roadmap
+    icon: /media/icon-code.svg
+  - label: Language Reference
+    path: /docs/language-reference
+    icon: /media/icon-code.svg

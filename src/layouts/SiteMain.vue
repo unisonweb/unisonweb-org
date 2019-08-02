@@ -2,8 +2,8 @@
   <div class="un-site-main__stage">
 
     <un-site-nav
-      :nav-search="navSearch"
-      :nav-inverted="navInverted"
+      :with-search="withSearch"
+      :is-inverted="isInverted"
     />
 
     <div class="un-site-main__wrapper">

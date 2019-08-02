@@ -42,6 +42,8 @@
   }
 
   code {
+    color: unset; // reset
+
     overflow: auto; // force scrolling when text is too long
 
     display: block;

@@ -1,7 +1,8 @@
 $UCzindexes: (
-  cookiesNotice: 9999,
-  modal: 9000,
-  siteNav: 2000
+  searchCloseButton: 3001,
+  searchFocused: 3000,
+  siteNav: 2000,
+  sidebar: 1000
 );
 
 @function z-index($index) {
