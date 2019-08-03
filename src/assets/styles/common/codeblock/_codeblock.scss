@@ -24,7 +24,7 @@
       padding-left: $titleWidth;
     }
 
-    font-family: inherit;
+    font-family: font(mono);
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -51,7 +51,7 @@
       $verticalPadding
       ($horizontalPadding + $lineNumbersWidth);
 
-    font-family: inherit;
+    font-family: font(mono);
     line-height: line-height(double);
 
     border-radius: $borderRadius;
