@@ -23,10 +23,9 @@
 
             <div class="un-hero__cta">
               <un-link
-                class="un-button un-button--orange un-button--large"
+                class="un-button un-button--orange un-button--large u-nowrap"
                 :url="cta.url">
-                <strong v-text="cta.label" />
-                <!-- icon -->
+                <strong v-html="`${cta.label}&nbsp;&nbsp;&rarr;`" />
               </un-link>
             </div>
 

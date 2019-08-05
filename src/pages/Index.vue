@@ -50,9 +50,9 @@
           <div class="un-homepage-ctas__button">
             <a
               class="un-button un-button--primary"
-              :href="pageContent.ctas.button.url"
-              v-text="pageContent.ctas.button.label"
-            />
+              :href="pageContent.ctas.button.url">
+              <strong v-html="`${pageContent.ctas.button.label}&nbsp;&nbsp;&rarr;`" />
+            </a>
           </div>
 
         </div>
@@ -195,8 +195,19 @@
     width: $iconSize;
     height: $iconSize;
 
-    border-radius: 50%;
+    border-radius: 99px; // big number
     background-color: currentColor;
+
+    &:before {
+      content: '\02192';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+
+      color: palette(white);
+      font-weight: weight(bold);
+    }
   }
 
   .un-homepage-cta__label {
