@@ -42,9 +42,23 @@
 
       },
     },
+    created() {
+
+      Prism.hooks.add('before-highlightall', function(env) {
+        env.selector += ", .un-codeblock code"
+      })
+
+    },
     mounted() {
       const vm = this
 
+      Prism.highlightAllUnder(vm.$refs['content'])
+      vm.processAsciiPlayers()
+    },
+    updated() {
+      const vm = this
+
+      Prism.highlightAllUnder(vm.$refs['content'])
       vm.processAsciiPlayers()
     },
   }
