@@ -46,8 +46,7 @@ The Unison codebase format has a few key properties:
 
 Because of the append-only nature of the codebase format, we can cache all sorts of interesting information about definitions in the codebase and _never have to worry about cache invalidation_. For instance, Unison is a statically typed language and we know the type of all definitions added to the codebase, which is always in a well-typed state. So one thing that's useful and easy to maintain is an index that lets us query for definitions in the codebase by their type. Try out the following commands (new syntax is explained below):
 
-__unison__
-```
+```unison
 .> find : [a] -> [a]
 
   1. base.Heap.sort : [a] -> [a]
@@ -81,7 +80,7 @@ The Unison codebase, in its definition for `reverse`, doesn't store names for th
 
 Let's try this out. `reverse` is defined using `List.foldl`, where `l` is a kind of pointless abbreviation of `left`. Let's rename that to `List.foldLeft` to make things clearer. Try out the following command (you can use tab completion here if you like):
 
-```
+```unison
 .> move.term base.List.foldl base.List.foldLeft
 
   Done.
@@ -215,7 +214,6 @@ Save the file, and Unison comes back with:
 
 Some syntax notes:
 
-
 * `use test.v1` is a _wildcard use clause_. This lets us use anything from the `test.v1` namespace unqualified. For example we refer to `test.v1.run` as simply `run`.
 * The `test>` prefix tells Unison that what follows is a test watch expression. Note that we're also giving a name to this expression, `tests.square.ex1`.
 
@@ -254,7 +252,7 @@ This will test our function with a bunch of different inputs. Syntax notes:
 
 The `square` function and the tests we've written for it are not yet part of the codebase. So far they only exists in our scratch file. Let's add it now. Switch to the Unison console and type `add`. You should get something like:
 
-```
+```unison
 .> add
 
   ⍟ I've added these definitions:
@@ -291,7 +289,7 @@ The _Unison namespace_ is the mapping from names to definitions. Names in Unison
 
 We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. _Absolute_ names (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` command:
 
-```
+```unison
 .> namespace mylibrary
 
   ☝️  The namespace .mylibrary is empty.
@@ -305,7 +303,7 @@ Notice the prompt changes to `.mylibrary>`, indicating your current namespace is
 
 When we added `square`, we were at the root, so `square` and its tests are directly under the root. To keep our root namespace a bit tidier, let's go ahead and move our definitions into the `mylibrary` namespace:
 
-```
+```unison
 .mylibrary> move.term .square square
 
   Done.
@@ -321,7 +319,7 @@ When we added `square`, we were at the root, so `square` and its tests are direc
 
 We're using `.square` to refer to the `square` definition directly under the root, and then moving it to the _relative_ name `square`. When you're done shuffling some things around, you can use `find` with no arguments to view all the definitions under the current namespace:
 
-```
+```unison
 .mylibrary> find
 
   1.  tests.square.ex1  : [.base.Test.Result]
@@ -331,7 +329,7 @@ We're using `.square` to refer to the `square` definition directly under the roo
 
 Also notice that we don't need to rerun our tests after this reshuffling. The tests are still cached:
 
-```
+```unison
 .mylibrary> test
 
   Cached test results (`help testcache` to learn more)
@@ -354,7 +352,7 @@ When you're starting out writing some code, it can be nice to just put it in a t
 
 Instead of starting a function from scratch, often you just want to slightly modify something that already exists. Here we'll make a trivial change to our `square` function. Try doing `edit square` from your prompt (note you can use tab completion):
 
-```
+```unison
 .mylibrary> edit square
   ☝️
 
@@ -374,7 +372,7 @@ This copies the pretty-printed definition of `square` into you scratch file "abo
 
 Let's edit `square` and instead define `square x` (just for fun) as the sum of the odd numbers less than `x * 2`:
 
-```Haskellunison scratch.u
+```unison scratch.u
 use Nat >
 
 square : .base.Nat -> .base.Nat
@@ -399,7 +397,7 @@ Now evaluating any watch expressions (lines starting with `>`)... Ctrl+C cancels
 
 Notice the message says that `square` is "ok to `update`". Let's try that:
 
-```
+```unison
 .mylibrary> update
 
   ⍟ I've updated to these definitions:
@@ -409,7 +407,7 @@ Notice the message says that `square` is "ok to `update`". Let's try that:
 
 If we rerun the tests, the tests won't be cached this time, since one of their dependencies has actually changed:
 
-```
+```unison
 .mylibrary> test
 
 TODO: fixme - update doesn't propagate
@@ -421,7 +419,7 @@ Notice the message indicates that the tests weren't cached. If we do `test` agai
 
 Unison code is published just by virtue of it being pushed to github; there's no separate publication step. You might choose to make a copy of your namespace. Let's go ahead and do this:
 
-```
+```unison
 .mylibrary> path .
 .> copy.path mylibrary mylibrary.releases.v1
 
@@ -458,7 +456,7 @@ This section under construction.
 
 From the root, do:
 
-```
+```unison
 .> pull git@github.com:<github-username>/unisonbase.git temp
 ..
 .> move.path temp.myfirstlibrary.releases.v1 myfirstlibrary

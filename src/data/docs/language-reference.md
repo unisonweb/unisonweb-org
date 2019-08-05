@@ -2,7 +2,6 @@
 
 ## (Unison version 1.0.M1)
 
-
 This document is an informal reference for the Unison language, meant as an aid for Unison programmers as well as authors of implementations of the language.
 
 * This language reference, like the language it describes, is a work in progress and will be improved over time ([GitHub link](https://github.com/unisonweb/unison/blob/master/docs/LanguageReference.md)). Contributions and corrections are welcome!
@@ -112,7 +111,7 @@ When Unison compiles a type definition, it generates a term for each data constr
 
 The general form of a type declaration is as follows:
 
-```
+```unison
 type TypeConstructor p1 p2 … pn 
   = DataConstructor_1
   | DataConstructor_2
@@ -141,7 +140,7 @@ A _use clause_ tells Unison to allow [identifiers](#identifiers) from a given [n
 
 In this example, the `use .base.List` clause allows the definition that follows it to refer to `.base.List.take` as simply `take`:
 
-```
+```unison
 use .base.List
 
 oneTwo = take 2 [1,2,3]
@@ -149,7 +148,7 @@ oneTwo = take 2 [1,2,3]
 
 The general form of `use` clauses is as follows:
 
-```
+```unison
 use namespace name_1 name_2 .. name_n
 ```
 
@@ -192,7 +191,7 @@ The following names are reserved by Unison and cannot be used as identifiers: `=
 ### Blocks and statements
 A block is an expression that has the general form:
 
-```
+```unison
 statement_1
 statement_2
 ...
@@ -207,7 +206,7 @@ A block can have zero or more statements, and the value of the whole block is th
 
 An example of a block (this evaluates to `16`):
 
-```
+```unison
 x = 4
 y = x + 2
 f a = a + y
@@ -216,7 +215,7 @@ f 10
 
 A number of language constructs introduce blocks. These are detailed in the relevant sections of this reference. Wherever Unison expects an expression, a block can be introduced with the  `let` keyword:
 
-```
+```unison
 let <block>
 ```
 
@@ -231,7 +230,7 @@ A statement or expression in a block can continue for more than one line as long
 
 For example, these are valid indentations for a block:
 
-```
+```unison
 let 
   x = 1
   y = 2
@@ -245,7 +244,7 @@ let x = 1
 
 Whereas these are incorrect:
 
-```
+```unison
 let x = 1
   y = 2
   x + y
@@ -322,7 +321,7 @@ Evaluation of conditional expressions is non-strict. The evaluation semantics of
 
 The keywords `if`, `then`, and `else` each introduce a [Block](#blocks-and-statements)  as follows:
 
-```
+```unison
 if 
   <block>
 then
@@ -365,7 +364,7 @@ Inside the program, `!readLine` has to be forced, as the type of `io.readLine` i
 
 A _case expression_ has the general form:
 
-```
+```unison
 case e of 
   pattern_1 -> block_1
   pattern_2 -> block_2
