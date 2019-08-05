@@ -8,17 +8,17 @@ const codeExtraOptions = {
       node.data.hChildren[0].properties = { className: 'un-codeblock line-numbers' }
     },
 
-    before: node.meta && [{
-      type: 'element',
-      tagName: 'span',
-      properties: {
-        className: 'un-codeblock__meta'
-      },
-      children: [{
-        type: 'text',
-        value: node.meta,
-      }]
-    }],
+    // before: node.meta && [{
+    //   type: 'element',
+    //   tagName: 'span',
+    //   properties: {
+    //     className: 'un-codeblock__meta'
+    //   },
+    //   children: [{
+    //     type: 'text',
+    //     value: node.meta,
+    //   }]
+    // }],
 
     after: [{
       type: 'element',
