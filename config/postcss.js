@@ -30,12 +30,12 @@ function getPlugins() {
         ],
         whitelist: [
           'body',
-          'line-numbers-rows',
           'token',
         ],
         whitelistPatterns: [
           /(un-).*/,
           /(is-).*/,
+          /(line-numbers).*/,
         ],
         keyframes: true,
         extractors: [{

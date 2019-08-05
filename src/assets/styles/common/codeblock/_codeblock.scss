@@ -6,7 +6,7 @@
   './titles',
   './tokens';
 
-.un-codeblock {
+.un-codeblock__wrapper {
 
   // for positioning `__title` and `__flair`
   position: relative;
@@ -16,30 +16,30 @@
 
   font-family: font(mono);
   font-size: rem(-1);
+}
 
-  pre {
-    position: relative; // for positioning `.line-numbers-rows`
+.un-codeblock {
+  position: relative; // for positioning `.line-numbers-rows`
 
-    @include min-screen(breakpoint(sm)) {
-      padding-left: $titleWidth;
-    }
-
-    font-family: font(mono);
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    tab-size: 4;
-    hyphens: none;
-
-    &::selection {
-      color: palette(white);
-      background-color: palette(primary);
-    }
+  @include min-screen(breakpoint(sm)) {
+    padding-left: $titleWidth;
   }
 
-  code {
+  font-family: font(mono);
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 4;
+  hyphens: none;
+
+  &::selection {
+    color: palette(white);
+    background-color: palette(primary);
+  }
+
+  > code {
     color: unset; // reset
 
     overflow: auto; // force scrolling when text is too long

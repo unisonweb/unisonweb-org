@@ -3,9 +3,9 @@ const codeExtraOptions = {
 
     transform: node => {
       // add custom class to wrapping element
-      node.data.hProperties = { className: 'un-codeblock' }
+      node.data.hProperties = { className: 'un-codeblock__wrapper' }
       // add `line-numbers` class to `<pre>` tag
-      node.data.hChildren[0].properties = { className: 'line-numbers' }
+      node.data.hChildren[0].properties = { className: 'un-codeblock line-numbers' }
     },
 
     before: node.meta && [{

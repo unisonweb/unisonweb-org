@@ -31,7 +31,7 @@
   background-size: $titleIconSize;
 }
 
-.un-codeblock {
+.un-codeblock__wrapper {
 
   &:before {
     @extend %un-codeblock__title;
