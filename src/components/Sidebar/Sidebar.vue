@@ -82,8 +82,10 @@
       closeSidebar() {
         const vm = this
 
-        vm.$refs['sidebarToggle'].checked = false
-        triggerEvent(vm.$refs['sidebarToggle'], 'change')
+        if (process.isClient) { // check to prevent build errors
+          vm.$refs['sidebarToggle'].checked = false
+          triggerEvent(vm.$refs['sidebarToggle'], 'change')
+        }
       },
       handleChange() {
         const vm = this
