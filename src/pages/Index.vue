@@ -13,7 +13,7 @@
     <un-page-section size="large">
       <div class="container">
 
-        <vue-markdown
+        <vue-simple-markdown
           class="un-homepage-intro u-drop-cap"
           :source="pageContent.intro"
         />

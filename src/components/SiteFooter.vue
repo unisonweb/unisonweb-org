@@ -5,7 +5,7 @@
     <un-page-section tag="div">
       <div class="container">
 
-        <vue-markdown
+        <vue-simple-markdown
           class="u-align--center"
           data-font-size="-1"
           :source="componentContent.meta"
