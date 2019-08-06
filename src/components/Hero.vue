@@ -94,11 +94,4 @@
     margin-bottom: dim(pageSection, sm);
   }
 
-  .un-hero__cta {
-
-    @include max-screen(breakpoint(xs, max)) {
-      padding-bottom: (dim(pageSection, xs) * 2);
-    }
-  }
-
 </style>

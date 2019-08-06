@@ -27,6 +27,8 @@
       position: relative;
 
       width: (7/12 * 100%);
+
+      margin-top: (dim(pageSection, xs) * 2);
       margin-right: auto;
       margin-left: auto;
     }
@@ -88,7 +90,7 @@
     position: relative;
     z-index: 2;
     display: block;
-    margin: auto;
+    // margin: auto;
     width: 100%;
   }
 
