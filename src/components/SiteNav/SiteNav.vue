@@ -22,7 +22,7 @@
 
         <Links :links="componentContent.links" />
 
-        <un-search v-if="withSearch" />
+        <un-search-box v-if="withSearch" />
 
       </div>
     </div>
@@ -33,7 +33,7 @@
   import Links from '~/components/SiteNav/Links'
   import Logo from '~/components/SiteNav/Logo'
   import MobileNavButton from '~/components/SiteNav/MobileNavButton'
-  import Search from '~/components/Search'
+  import SearchBox from '~/components/SearchBox'
   import componentContent from '~/data/components/site-nav.yml'
   import siteNavProps from '~/mixins/siteNavProps'
 
@@ -47,7 +47,7 @@
       Links,
       Logo,
       MobileNavButton,
-      'un-search': Search,
+      'un-search-box': SearchBox,
     },
     mixins: [
       siteNavProps,

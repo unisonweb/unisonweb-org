@@ -1,6 +1,7 @@
 import '~/assets/styles/main.scss'
 
-import VueMarkdown from 'vue-markdown'
+import InstantSearch from 'vue-instantsearch'
+import VueSimpleMarkdown from 'vue-simple-markdown'
 import VueScrollTo from 'vue-scrollto'
 
 import SiteMain from '~/layouts/SiteMain.vue'
@@ -26,10 +27,11 @@ export default function (Vue, {router, head, isClient, isServer, appOptions}) {
   Vue.component('inline-svg', InlineSvg)
 
   // 3rd party components/libraries
-  Vue.component('vue-markdown', VueMarkdown)
+  Vue.use(InstantSearch)
+  Vue.use(VueSimpleMarkdown)
   Vue.use(VueScrollTo)
 
-  if (!isServer) {
+  if (isClient) {
     require('~/assets/scripts/lazyLoad')
   }
 

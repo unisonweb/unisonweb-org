@@ -8,7 +8,7 @@
 
       <div class="un-sidebar__page-title">
         <label
-          class="un-search__sidebar-toggle"
+          class="un-sidebar__mobile-sidebar-button"
           for="sidebar-toggle">
           <inline-svg
             v-if="isVisible"
@@ -24,7 +24,7 @@
 
       <input
         ref="sidebarToggle"
-        class="un-sidebar__sidebar-toggle"
+        class="un-sidebar__mobile-sidebar-toggle"
         type="checkbox"
         id="sidebar-toggle"
         style="display: none;"
@@ -144,7 +144,6 @@
 
     @include min-screen(breakpoint(md)) {
       position: absolute;
-      z-index: 2;
       top: 0;
       left: 0;
       width: (2/12 * 100%);
@@ -168,6 +167,7 @@
 
     @include max-screen(breakpoint(sm, max)) {
       position: absolute;
+      z-index: z-index(sidebar);
       left: 0;
       transform: translate3d(0, -50%, 0);
 
@@ -220,7 +220,24 @@
     }
   }
 
-  .un-sidebar__sidebar-toggle {
+  .un-sidebar__mobile-sidebar-button {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate3d(0, -50%, 0);
+
+    &, & > svg {
+      display: block;
+      width: $iconSize;
+      height: $iconSize;
+    }
+
+    > svg {
+      fill: currentColor;
+    }
+  }
+
+  .un-sidebar__mobile-sidebar-toggle {
     display: none;
 
     &:checked {
