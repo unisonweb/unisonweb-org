@@ -205,20 +205,25 @@
     width: 100%;
     padding-left: (rem(3) + rem(0));
 
+    @include max-screen(breakpoint(xs, max)) {
+      margin-right: -#{rem(0)};
+    }
+
     @include max-screen(breakpoint(sm, max)) {
       position: absolute;
       top: dim(siteNav, fontSize);
       right: 0;
-
-      overflow: hidden;
-      max-width: 0;
-      margin-right: -#{$iconSize * 1/2};
 
       // when open, prevent __page-title
       // from peeking through from underneath
       background-color: palette(white);
 
       transition: max-width .5s ease-in-out;
+      max-width: 0;
+    }
+
+    @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
+      margin-right: -#{$iconSize * 1/2};
     }
 
     @include min-screen(breakpoint(md)) {
@@ -231,6 +236,10 @@
     .ais-SearchBox {
       position: relative;
       z-index: 4;
+
+      @include max-screen(breakpoint(xs, max)) {
+        padding-right: $iconSize;
+      }
     }
 
     .ais-SearchBox-input {
@@ -248,10 +257,18 @@
       position: absolute;
       z-index: 2;
       top: 100%;
-      left: 0;
 
-      width: (9/12 * 100%);
-      margin-top: dim(siteNav, verticalPadding);
+      @include max-screen(breakpoint(xs, max)) {
+        right: -#{rem(3)};
+        left: -#{rem(3)};
+        margin-top: dim(siteNav, fontSize);
+      }
+
+      @include min-screen(breakpoint(sm)) {
+        left: 0;
+        width: (9/12 * 100%);
+        margin-top: dim(siteNav, verticalPadding);
+      }
 
       border-bottom-right-radius: rem(-3);
       border-bottom-left-radius: rem(-3);
@@ -299,9 +316,18 @@
 
       > a {
         display: block;
-        padding: $iconSize (rem(3) + rem(0));
+
+        @include max-screen(breakpoint(xs, max)) {
+           padding: $iconSize;
+         }
+
+        @include min-screen(breakpoint(sm)) {
+          padding: $iconSize (rem(3) + rem(0));
+        }
+
         background-color: palette(white);
 
+        &.active--exact,
         &:hover {
           color: palette(white);
           background-color: palette(purple);
