@@ -18,16 +18,49 @@
 
         <ais-search-box placeholder="Search" />
 
-        <ais-hits>
-          <template slot="item" slot-scope="{ item }">
-            <g-link
-              :to="item.path">
-              <h1>
-                <ais-highlight :hit="item" attribute="title" />
-              </h1>
-            </g-link>
+        <ais-state-results>
+          <template slot-scope="{ query }">
+
+            <ais-hits
+              v-if="query"
+              :escape-HTML="true">
+              <template slot="item" slot-scope="{ item }">
+                <h1>
+                  <g-link
+                    :to="item.path">
+                    <ais-highlight
+                      :hit="item"
+                      attribute="title"
+                    />
+                  </g-link>
+                </h1>
+
+                <p
+                  v-for="(heading, i) in item._highlightResult.headings" :key="i"
+                  v-if="heading.value.matchLevel !== 'none'">
+                  <a
+                    v-if="item.path === $route.path"
+                    href="#"
+                    v-scroll-to="{
+                      el: item.headings[i].anchor,
+                      onStart: closeSearchBox,
+                    }">
+                    <span v-html="heading.value.value" />
+                  </a>
+                  <g-link
+                    v-else
+                    :to="`${item.path}${item.headings[i].anchor}`">
+                    <span v-html="heading.value.value" />
+                  </g-link>
+                </p>
+
+              </template>
+            </ais-hits>
+
+            <span v-else />
+
           </template>
-        </ais-hits>
+        </ais-state-results>
 
         <ais-pagination />
 
@@ -67,6 +100,9 @@
       closeSearchBox() {
         this.isOpen = false
       },
+    },
+    mounted() {
+      console.log(this.$route)
     },
     watch: {
       $route(to, from) {
@@ -308,30 +344,32 @@
       // <li> reset
       margin: 0;
 
-      border-top: 1px solid palette(gray, xxx-light);
+      @include max-screen(breakpoint(xs, max)) {
+         padding: $iconSize;
+       }
 
-      &, & > a {
-        color: inherit;
+      @include min-screen(breakpoint(sm)) {
+        padding: $iconSize (rem(3) + rem(0));
       }
 
-      > a {
+      border-top: 1px solid palette(gray, xxx-light);
+      background-color: palette(white);
+
+      &:hover {
+        color: palette(white);
+        background-color: palette(purple);
+      }
+
+      a {
         display: block;
 
-        @include max-screen(breakpoint(xs, max)) {
-           padding: $iconSize;
-         }
-
-        @include min-screen(breakpoint(sm)) {
-          padding: $iconSize (rem(3) + rem(0));
+        &, &:hover {
+          color: inherit;
         }
+      }
 
-        background-color: palette(white);
-
-        &.active--exact,
-        &:hover {
-          color: palette(white);
-          background-color: palette(purple);
-        }
+      mark {
+        background-color: palette(yellow);
       }
     }
 
