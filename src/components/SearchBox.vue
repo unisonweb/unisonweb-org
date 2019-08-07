@@ -88,7 +88,7 @@
 
   const searchClient = algoliasearch(
     '6ZJ8V24AGR',
-    'fe58925b26fc084c7c3faecf6ea2d92d',
+    '80100f1abe6d9d7d6c874701aaa3fe88',
   )
 
   const { instantsearch, rootMixin } = createInstantSearch({
