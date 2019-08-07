@@ -4,11 +4,10 @@
     :class="{ 'is-open' : isOpen }"
     v-on-clickaway="closeSearchBox">
 
-    <div @click="openSearchBox">
-      <ais-instant-search
-        class="un-search-box"
-        :index-name="indexName"
-        :search-client="searchClient">
+    <div
+      class="un-search-box"
+      @click="openSearchBox">
+      <ais-instant-search-ssr>
 
         <label
           class="un-search-box__icon"
@@ -62,9 +61,7 @@
           </template>
         </ais-state-results>
 
-        <ais-pagination />
-
-      </ais-instant-search>
+      </ais-instant-search-ssr>
     </div>
 
     <button
@@ -78,18 +75,35 @@
 </template>
 
 <script>
+  import {
+    AisInstantSearchSsr,
+    AisStateResults,
+    AisHits,
+    AisHighlight,
+    AisSearchBox,
+    createInstantSearch,
+  } from 'vue-instantsearch'
   import algoliasearch from 'algoliasearch/lite'
   import { mixin as clickaway } from 'vue-clickaway'
 
+  const searchClient = algoliasearch(
+    '6ZJ8V24AGR',
+    'fe58925b26fc084c7c3faecf6ea2d92d',
+  )
+
+  const { instantsearch, rootMixin } = createInstantSearch({
+    searchClient,
+    indexName: 'dev_docs',
+  })
+
   export default {
+    asyncData() {
+      return instantsearch.then(() => ({
+        algoliaState: instantsearch.getState(),
+      }))
+    },
     data() {
       return {
-        indexName: 'dev_docs',
-        searchClient: algoliasearch(
-          '6ZJ8V24AGR',
-          'fe58925b26fc084c7c3faecf6ea2d92d',
-        ),
-        query: null,
         isOpen: false,
       }
     },
@@ -101,15 +115,20 @@
         this.isOpen = false
       },
     },
-    mounted() {
-      console.log(this.$route)
-    },
     watch: {
       $route(to, from) {
-        this.isOpen = false
+        this.closeSearchBox()
       },
     },
+    components: {
+      'ais-instant-search-ssr': AisInstantSearchSsr,
+      'ais-state-results': AisStateResults,
+      'ais-hits': AisHits,
+      'ais-highlight': AisHighlight,
+      'ais-search-box': AisSearchBox,
+    },
     mixins: [
+      rootMixin,
       clickaway,
     ],
   }
@@ -415,10 +434,6 @@
     }
 
     opacity: 0.5;
-  }
-
-  .ais-Pagination {
-    display: none;
   }
 
 </style>
