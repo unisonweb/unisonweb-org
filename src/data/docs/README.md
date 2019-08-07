@@ -19,11 +19,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium pretium temp
 5. Sed sit amet arcu aliquet, molestie justo at, auctor nunc.
 6. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
 
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+- Ut pretium pretium tempor.
+- Ut eget imperdiet neque.
+- In volutpat ante semper diam molestie, et aliquam erat laoreet.
+- Sed sit amet arcu aliquet, molestie justo at, auctor nunc.
+- Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
+
 ### Subheading 2
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium pretium tempor. Ut eget imperdiet neque. In volutpat ante semper diam molestie, et aliquam erat laoreet. Sed sit `amet arcu aliquet`, molestie justo at, auctor nunc. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
 
 ```unison
+---
+title: output
+filename: filename
+---
 -- A comment. Extends to end of line.
 
 -- Keywords:
@@ -89,6 +100,10 @@ type Optional a = None | Some a
 ```
 
 ```unison
+---
+title: output
+filename: filename
+---
 factorial n =
     product (range 1(n+1))
 
@@ -97,6 +112,28 @@ factorial-at bob n =
 ```
 
 ```unison
+---
+title: output
+---
+factorial n =
+    product (range 1(n+1))
+
+factorial-at bob n =
+    at bob {factorial n}
+```
+
+```unison
+factorial n =
+    product (range 1(n+1))
+
+factorial-at bob n =
+    at bob {factorial n}
+```
+
+```unison
+---
+filename: filename
+---
 factorial n =
     product (range 1(n+1))
 

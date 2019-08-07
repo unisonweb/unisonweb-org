@@ -7,17 +7,17 @@
   bottom: 100%;
 
   @include max-screen(breakpoint(xs, max)) {
-    left: $lineNumbersWidth;
+    left: calc(50% + #{($lineNumbersWidth - $horizontalPadding) * 1/2});
   }
 
   @include min-screen(breakpoint(sm)) {
-    left: ($titleWidth + $lineNumbersWidth);
+    left: calc(50% + #{($titleWidth + $lineNumbersWidth - $horizontalPadding) * 1/2});
   }
 
   width: 1px;
   height: $verticalSpacing;
 
-  background-color: palette(gray, x-light);
+  background-color: palette(gray, xx-light);
 
   &:before,
   &:after {
@@ -29,11 +29,11 @@
     width: $flairDotSize;
     height: $flairDotSize;
 
-    margin-left: 1px; // for pixel-perfect alignment
+    margin-left: .5px; // for pixel-perfect alignment
 
     box-sizing: border-box;
-    border-radius: 50%;
-    border: 1px solid palette(gray, light);
+    border-radius: 99px;
+    border: 1px solid palette(gray, x-light);
 
     background-color: palette(white);
     @include drop-shadow;

@@ -4,7 +4,7 @@
 
   @at-root .un-codeblock & {
 
-    &.comment { color: palette(gray); }
+    &.comment { color: palette(gray, light); }
     &.char {}
     &.string { color: palette(black); }
     &.keyword { color: palette(green); }
@@ -12,7 +12,7 @@
     &.builtin { color: palette(blue); }
     &.number { color: palette(green); }
     &.operator { color: palette(green); }
-    &.hvariable { color: palette(blue); }
+    &.hvariable { color: palette(gray, xx-dark); }
     &.constant { color: palette(purple); }
     &.punctuation { color: palette(pink); }
 

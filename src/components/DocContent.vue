@@ -70,7 +70,7 @@
 
     @include min-screen(breakpoint(md)) {
 
-      .un-codeblock {
+      .un-codeblock__wrapper {
 
         // make the right-edge of codeblocks
         // touch the right edge of .un-doc-content

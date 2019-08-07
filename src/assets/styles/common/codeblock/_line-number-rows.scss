@@ -53,9 +53,8 @@
         display: block;
 
         width: 100%;
-        height: (line-height(double) * em(0));
 
-        color: palette(gray);
+        color: palette(gray, mid);
         text-align: center;
 
         &:before {

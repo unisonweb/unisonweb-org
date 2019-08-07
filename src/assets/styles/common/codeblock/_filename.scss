@@ -1,0 +1,35 @@
+.un-codeblock__filename {
+  position: absolute; // relative to `.un-codeblock`
+  z-index: 2;
+  bottom: 100%;
+
+  @include max-screen(breakpoint(xs, max)) {
+    left: $lineNumbersWidth;
+  }
+
+  @include min-screen(breakpoint(sm)) {
+    left: $titleWidth;
+  }
+
+  padding: em(-3) em(-1) em(-2);
+
+  color: palette(white);
+  font-size: rem(-3);
+  line-height: line-height(base);
+
+  border-top-right-radius: $borderRadius;
+  border-top-left-radius: $borderRadius;
+  background-color: palette(gray, xx-dark);
+
+  & + .un-codeblock {
+
+    &,
+    & > code,
+    & .line-numbers-rows {
+
+      @include min-screen(breakpoint(sm)) {
+        border-top-left-radius: 0;
+      }
+    }
+  }
+}

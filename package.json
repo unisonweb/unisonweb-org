@@ -52,6 +52,7 @@
     "purgecss": "^1.1.0",
     "purgecss-custom-extractor": "^0.2.4",
     "remark-code-extra": "^1.0.1",
+    "remark-code-frontmatter": "^1.0.0",
     "rucksack-css": "^1.0.2",
     "sass-loader": "^7.1.0",
     "sass-mediaqueries": "git://github.com/brianfryer/sass-mediaqueries",
