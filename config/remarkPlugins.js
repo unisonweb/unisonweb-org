@@ -7,12 +7,12 @@ const codeExtraOptions = {
       // add custom properties to wrapping element
       node.data.hProperties = {
         className: 'un-codeblock__wrapper',
-        'data-title': node.frontmatter.title ? node.frontmatter.title : 'Code',
       }
       // add custom properties to the `<pre>` tag
       const $pre = find(node.data.hChildren, child => child.tagName === 'pre')
       $pre.properties = {
         className: 'un-codeblock line-numbers',
+        'data-title': node.frontmatter.title ? node.frontmatter.title : 'Code',
       }
     },
 

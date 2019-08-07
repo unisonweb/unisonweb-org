@@ -188,6 +188,10 @@
       > li {
         margin-left: rem(2);
         padding-left: (rem(0) * 1/2);
+
+        & + li {
+          margin-top: (rem(-2) * 1/2);
+        }
       }
     }
 
@@ -203,6 +207,7 @@
           position: absolute;
           top: 0;
           left: -#{rem(2) * 1/2};
+          transform: translate3d(-50%, 0, 0);
         }
       }
     }

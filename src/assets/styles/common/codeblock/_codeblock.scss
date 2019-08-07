@@ -19,12 +19,8 @@
 }
 
 .un-codeblock {
-  position: relative; // for positioning `.line-numbers-rows`
-
-  @include min-screen(breakpoint(sm)) {
-    padding-left: $titleWidth;
-  }
-
+  // reset
+  margin: unset;
   font-family: font(mono);
   text-align: left;
   white-space: pre;
@@ -33,6 +29,12 @@
   word-wrap: normal;
   tab-size: 4;
   hyphens: none;
+
+  position: relative; // for positioning `.line-numbers-rows`
+
+  @include min-screen(breakpoint(sm)) {
+    padding-left: $titleWidth;
+  }
 
   &::selection {
     color: palette(white);

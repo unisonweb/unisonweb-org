@@ -3,70 +3,70 @@
 
   @at-root {
 
-    .un-codeblock #{$this} {
-      position: absolute; // relative to `.un-codeblock <pre>`
-      top: 0;
+    .un-codeblock {
 
-      @include max-screen(breakpoint(xs, max)) {
-        left: 0;
-      }
-
-      @include min-screen(breakpoint(sm)) {
-        left: $titleWidth;
-      }
-
-      width: ($lineNumbersWidth + dim(boxShadow, blur));
-      height: 100%;
-      padding-top: rem(0);
-      padding-right: (rem(0) + dim(boxShadow, blur));
-      padding-bottom: rem(0);
-      padding-left: rem(0);
-
-      border-top-left-radius: $borderRadius;
-      border-bottom-left-radius: $borderRadius;
-
-      // prevent the box-shadow from bleeding out
-      // into the box-shadow of the `<code>` block
-      overflow: hidden;
-
-      &:before {
-        content: '';
-        position: absolute;
+      & #{$this} {
+        position: absolute; // relative to `.un-codeblock <pre>`
         top: 0;
-        bottom: 0;
-        left: 0;
 
-        width: $lineNumbersWidth;
+        @include max-screen(breakpoint(xs, max)) {
+          left: 0;
+        }
 
-        background-color: palette(gray, xxx-light);
-        @include drop-shadow;
-      }
+        @include min-screen(breakpoint(sm)) {
+          left: $titleWidth;
+        }
 
-      counter-reset: line-numbers;
+        width: ($lineNumbersWidth + dim(boxShadow, blur));
+        height: 100%;
+        padding-top: rem(0);
+        padding-right: (rem(0) + dim(boxShadow, blur));
+        padding-bottom: rem(0);
+        padding-left: rem(0);
 
-      > span {
-        counter-increment: line-numbers;
+        border-top-left-radius: $borderRadius;
+        border-bottom-left-radius: $borderRadius;
 
-        position: relative;
-        z-index: 2;
-
-        display: block;
-
-        width: 100%;
-
-        color: palette(gray, mid);
-        text-align: center;
+        // prevent the box-shadow from bleeding out
+        // into the box-shadow of the `<code>` block
+        overflow: hidden;
 
         &:before {
-          content: counter(line-numbers);
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+
+          width: $lineNumbersWidth;
+
+          background-color: palette(gray, xxx-light);
+          @include drop-shadow;
+        }
+
+        counter-reset: line-numbers;
+
+        > span {
+          counter-increment: line-numbers;
+
+          position: relative;
+          z-index: 2;
+
           display: block;
+
+          width: 100%;
+
+          color: palette(gray, mid);
+          text-align: center;
+
+          &:before {
+            content: counter(line-numbers);
+            display: block;
+          }
         }
       }
-    }
 
-    .un-codeblock__wrapper {
-
-      & + & #{$this} {
+      &[data-title="output"] #{$this} {
 
         > span {
 
@@ -81,6 +81,5 @@
         }
       }
     }
-
   }
 }

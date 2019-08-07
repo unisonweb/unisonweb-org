@@ -113,7 +113,10 @@ The codebase manager lets you make changes to your codebase and explore the defi
 
 Keep your `unison` terminal running and open up a file, `scratch.u` (or `foo.u`, or whatever you like) in your preferred editor, and put the following in your scratch file:
 
-```unison scratch.u
+```unison
+---
+filename: scratch.u
+---
 square x = x * x
 ```
 
@@ -136,7 +139,10 @@ Now evaluating any watch expressions (lines starting with `>`)... Ctrl+C cancels
 
 It typechecked the `square` function and inferred that it takes a natural number and returns a natural number, so it has the type `Nat -> Nat`. It also tells us that `square` is "ok to `add`". We'll do that shortly, but first, let's try calling our function right in the `scratch.u` file, just by starting a line with `>`:
 
-```unison scratch.u
+```unison
+---
+filename: scratch.u
+---
 square x = x * x
 
 > square 4
@@ -145,6 +151,9 @@ square x = x * x
 And Unison replies:
 
 ```unison
+---
+title: output
+---
 3 | > square 4
       ⧩
       16
@@ -158,7 +167,10 @@ __Question:__ do we really want to reevaluate all watch expressions on every fil
 
 Let's try out a few more examples:
 
-```unison scratch.u
+```unison
+---
+filename: scratch.u
+---
 -- A comment, ignored by Unison
 
 > base.List.reverse [1,2,3,4]
@@ -196,7 +208,10 @@ Now evaluating any watch expressions (lines starting with
 
 Let's add add a test for our `square` function:
 
-```unison scratch.u
+```unison
+---
+filename: scratch.u
+---
 square x = x * x
 
 use test.v1
@@ -221,7 +236,10 @@ The `expect` function has type `Boolean -> Test`. It takes a `Boolean` expressio
 
 Let's test this a bit more thoroughly. `square` should have the property that `square a * square b == square (a * b)` for all choices of `a` and `b`. The testing library supports writing property-based tests like this. There's some new syntax here, explained afterwards:
 
-```unison scratch.u
+```unison
+---
+filename: scratch.u
+---
 square x = x * x
 
 use test.v1
@@ -372,7 +390,10 @@ This copies the pretty-printed definition of `square` into you scratch file "abo
 
 Let's edit `square` and instead define `square x` (just for fun) as the sum of the odd numbers less than `x * 2`:
 
-```unison scratch.u
+```unison
+---
+filename: scratch.u
+---
 use Nat >
 
 square : .base.Nat -> .base.Nat
