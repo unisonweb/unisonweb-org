@@ -41,6 +41,9 @@
   }
 
   & ~ .un-codeblock__flair {
-    height: $spaceForTitle;
+
+    @include max-screen(breakpoint(xs, max)) {
+      height: $spaceForTitle;
+    }
   }
 }
