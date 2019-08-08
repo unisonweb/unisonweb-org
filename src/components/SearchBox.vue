@@ -18,44 +18,56 @@
         <ais-search-box placeholder="Search" />
 
         <ais-state-results>
-          <template slot-scope="{ query }">
+          <template slot-scope="{ query, hits }">
 
-            <ais-hits
+            <div
               v-if="query"
-              :escape-HTML="true">
-              <template slot="item" slot-scope="{ item }">
-                <h1>
-                  <g-link
-                    :to="item.path">
-                    <ais-highlight
-                      :hit="item"
-                      attribute="title"
-                    />
-                  </g-link>
-                </h1>
+              class="un-search-box__results">
 
-                <p
-                  v-for="(heading, i) in item._highlightResult.headings" :key="i"
-                  v-if="heading.value.matchLevel !== 'none'">
-                  <a
-                    v-if="item.path === $route.path"
-                    href="#"
-                    v-scroll-to="{
-                      el: item.headings[i].anchor,
-                      onStart: closeSearchBox,
-                    }">
-                    <span v-html="heading.value.value" />
-                  </a>
-                  <g-link
-                    v-else
-                    :to="`${item.path}${item.headings[i].anchor}`">
-                    <span v-html="heading.value.value" />
-                  </g-link>
-                </p>
+              <p
+                v-if="hits.length === 0"
+                class="un-search-box__results__none">
+                No results found matching <em>{{ query }}</em>
+              </p>
 
-              </template>
-            </ais-hits>
+              <ais-hits
+                :escape-HTML="true">
+                <template slot="item" slot-scope="{ item }">
+                  <h1>
+                    <g-link
+                      :to="item.path">
+                      <ais-highlight
+                        :hit="item"
+                        attribute="title"
+                      />
+                    </g-link>
+                  </h1>
 
+                  <p
+                    v-for="(heading, i) in item._highlightResult.headings" :key="i"
+                    v-if="heading.value.matchLevel !== 'none'">
+                    <a
+                      v-if="item.path === $route.path"
+                      href="#"
+                      v-scroll-to="{
+                        el: item.headings[i].anchor,
+                        onStart: closeSearchBox,
+                      }">
+                      <span v-html="heading.value.value" />
+                    </a>
+                    <g-link
+                      v-else
+                      :to="`${item.path}${item.headings[i].anchor}`">
+                      <span v-html="heading.value.value" />
+                    </g-link>
+                  </p>
+
+                </template>
+              </ais-hits>
+
+            </div>
+
+            <!-- span to fill `ais-search-results` default slot -->
             <span v-else />
 
           </template>
@@ -215,7 +227,7 @@
         }
       }
 
-      .ais-Hits {
+      .un-search-box__results {
         opacity: 1;
         pointer-events: auto;
       }
@@ -308,50 +320,6 @@
       display: none;
     }
 
-    .ais-Hits {
-      position: absolute;
-      z-index: 2;
-      top: 100%;
-
-      @include max-screen(breakpoint(xs, max)) {
-        right: -#{rem(3)};
-        left: -#{rem(3)};
-        margin-top: dim(siteNav, fontSize);
-      }
-
-      @include min-screen(breakpoint(sm)) {
-        left: 0;
-        width: (9/12 * 100%);
-        margin-top: dim(siteNav, verticalPadding);
-      }
-
-      border-bottom-right-radius: rem(-3);
-      border-bottom-left-radius: rem(-3);
-      @include drop-shadow;
-
-      transition: opacity 0 0.5s ease-in-out;
-      opacity: 0;
-      pointer-events: none;
-
-      &:after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        right: 0;
-
-        display: block;
-        width: (168px * 2/3);
-        height: (24px * 2/3);
-        padding: 4px 6px;
-
-        background-color: palette(white);
-        background-image: url('/media/search-by-algolia-light-background.svg');
-        background-repeat: no-repeat;
-        background-size: (168px * 2/3) (24px * 2/3);
-        background-position: center center;
-      }
-    }
-
     .ais-Hits-list {
       // <ol> reset
       margin: 0;
@@ -396,6 +364,63 @@
       display: none;
       @include reset-button;
     }
+  }
+
+  .un-search-box__results {
+    position: absolute;
+    z-index: 2;
+    top: 100%;
+
+    @include max-screen(breakpoint(xs, max)) {
+      right: -#{rem(3)};
+      left: -#{rem(3)};
+      margin-top: dim(siteNav, fontSize);
+    }
+
+    @include min-screen(breakpoint(sm)) {
+      left: 0;
+      width: (9/12 * 100%);
+      margin-top: dim(siteNav, verticalPadding);
+    }
+
+    border-bottom-right-radius: rem(-3);
+    border-bottom-left-radius: rem(-3);
+    @include drop-shadow;
+
+    transition: opacity 0 0.5s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      right: 0;
+
+      display: block;
+      width: (168px * 2/3);
+      height: (24px * 2/3);
+      padding: 4px 6px;
+
+      background-color: palette(white);
+      background-image: url('/media/search-by-algolia-light-background.svg');
+      background-repeat: no-repeat;
+      background-size: (168px * 2/3) (24px * 2/3);
+      background-position: center center;
+    }
+  }
+
+  .un-search-box__results__none {
+
+    @include max-screen(breakpoint(xs, max)) {
+       padding: $iconSize;
+     }
+
+    @include min-screen(breakpoint(sm)) {
+      padding: $iconSize (rem(3) + rem(0));
+    }
+
+    background-color: palette(white);
   }
 
   .un-search-box__icon,
