@@ -99,13 +99,13 @@
   import { mixin as clickaway } from 'vue-clickaway'
 
   const searchClient = algoliasearch(
-    '6ZJ8V24AGR',
-    '80100f1abe6d9d7d6c874701aaa3fe88',
+    'XNXUU7UYLX',
+    'fb9a74b45f909c666e8f6f52f97b6730',
   )
 
   const { instantsearch, rootMixin } = createInstantSearch({
     searchClient,
-    indexName: 'dev_docs',
+    indexName: 'prod_unison_docs',
   })
 
   export default {
