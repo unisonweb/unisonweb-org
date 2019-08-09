@@ -36,7 +36,7 @@
 
         <div class="un-sidebar">
           <Links
-            :links="links"
+            :links="componentContent.links"
             :headings="headings"
             :current-path="currentPath"
           />
@@ -51,12 +51,12 @@
 <script>
   import find from 'lodash.find'
   import { mixin as clickaway } from 'vue-clickaway'
+  import componentContent from '~/data/components/sidebar.yml'
   import Links from '~/components/Sidebar/Links'
   import triggerEvent from '~/assets/scripts/utils/triggerEvent'
 
   export default {
     props: {
-      links: { type: Array, default: null },
       headings: { type: Array, default: null },
     },
     data() {
@@ -65,6 +65,9 @@
       }
     },
     computed: {
+      componentContent() {
+        return componentContent
+      },
       currentPath() {
         return this.$route.matched[0].path
       },

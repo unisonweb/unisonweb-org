@@ -6,10 +6,7 @@
       <un-page-section>
 
         <div class="un-doc-page">
-          <un-sidebar
-            :links="sidebarNav.links"
-            :headings="$page.doc.headings"
-          />
+          <un-sidebar :headings="$page.doc.headings" />
           <un-doc-content :content="$page.doc.content" />
         </div>
 
@@ -21,7 +18,6 @@
 <script>
   import DocContent from '~/components/DocContent'
   import Sidebar from '~/components/Sidebar/Sidebar'
-  import sidebarNav from '~/data/sidebar-nav.yml'
 
   export default {
     metaInfo () {
