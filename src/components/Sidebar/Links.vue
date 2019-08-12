@@ -1,21 +1,16 @@
 <template>
-  <ul
-    v-if="links"
-    class="un-sidebar__links__container">
+  <ul class="un-sidebar__links__container">
     <li v-for="(link, i) in links" :key="i">
 
       <un-link
-        class="un-sidebar__link un-link-animation"
-        :url="link.path">
-        <inline-svg
-          class="un-sidebar__link__icon"
-          :src="link.icon"
-        />
+        class="un-sidebar__link"
+        :class="{ 'u-bold' : link.url === currentPath }"
+        :url="link.url">
         {{link.label}}
       </un-link>
 
       <ul
-        v-if="link.path === currentPath && headings && headings.length"
+        v-if="link.url === currentPath && headings && headings.length"
         class="un-sidebar__sub-links__container">
         <li v-for="(heading, j) in headings" :key="j">
           <un-link
@@ -43,6 +38,7 @@
 <style lang="scss">
 
   $iconSize: rem(3);
+  $iconSpacing: rem(0);
 
   .un-sidebar__links__container {
 
@@ -52,70 +48,17 @@
       padding: 0;
       list-style: none;
 
-      position: relative;
-
-      color: palette(black);
-      line-height: line-height(half);
-
       > li {
         // <li> reset
         margin: 0;
 
-        &:not(:last-child) {
-          margin-bottom: rem(4);
-        }
+        margin-top: rem(-1);
       }
     }
   }
 
   .un-sidebar__link {
-    position: relative;
-
     display: block;
-    padding-left: ($iconSize + rem(0));
-
-    color: inherit;
-    font-family: font(bold);
-    font-size: rem(1);
-  }
-
-  .un-sidebar__link__icon {
-    position: absolute;
-    top: (em(0) * line-height(half) * 1/2);
-    left: 0;
-    transform: translate3d(0, -50%, 0);
-
-    display: block;
-    width: $iconSize;
-    height: $iconSize;
-
-    fill: currentColor;
-  }
-
-  .un-sidebar__sub-links__container {
-    opacity: 1;
-
-    @at-root ul#{&} {
-      // <ul> reset
-      margin: 0;
-      padding: 0;
-      list-style: none;
-
-      padding-left: ($iconSize + rem(0));
-
-      > li {
-        // <li> reset
-        margin: 0;
-
-        margin-top: rem(-2);
-      }
-    }
-  }
-
-  .un-sidebar__sub-link {
-    display: inline-block;
-    color: inherit;
-    font-size: rem(-1);
 
     position: relative;
 
@@ -123,7 +66,7 @@
       content: '';
       position: absolute;
       top: (em(0) * line-height(half) * 1/2);
-      left: -#{($iconSize * 1/2) + rem(0)};
+      left: -#{($iconSize * 1/2) + $iconSpacing};
       transform: translate3d(-50%, -50%, 0);
 
       width: 8px;
@@ -142,6 +85,36 @@
         opacity: 1;
       }
     }
+  }
+
+  .un-sidebar__sub-links__container {
+    opacity: 1;
+
+    @at-root ul#{&} {
+      // <ul> reset
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      margin-left: 1px;
+      padding-left: $iconSpacing;
+      border-left: 1px solid palette(gray, x-light);
+
+      color: palette(gray);
+
+      > li {
+        // <li> reset
+        margin: 0;
+
+        margin-top: rem(-1);
+      }
+    }
+  }
+
+  .un-sidebar__sub-link {
+    display: inline-block;
+    color: inherit;
+    font-size: rem(-1);
   }
 
 </style>

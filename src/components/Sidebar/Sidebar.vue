@@ -33,15 +33,15 @@
       />
 
       <div class="un-sidebar__wrapper">
-
         <div class="un-sidebar">
-          <Links
-            :links="componentContent.links"
+
+          <LinkSets
+            :link-sets="componentContent.linkSets"
             :headings="headings"
             :current-path="currentPath"
           />
-        </div>
 
+        </div>
       </div>
 
     </div>
@@ -52,7 +52,7 @@
   import find from 'lodash.find'
   import { mixin as clickaway } from 'vue-clickaway'
   import componentContent from '~/data/components/sidebar.yml'
-  import Links from '~/components/Sidebar/Links'
+  import LinkSets from '~/components/Sidebar/LinkSets'
   import triggerEvent from '~/assets/scripts/utils/triggerEvent'
 
   export default {
@@ -114,7 +114,7 @@
       },
     },
     components: {
-      Links,
+      LinkSets,
     },
     mixins: [
       clickaway,
@@ -170,7 +170,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: (2/12 * 100%);
+      width: (2.5/12 * 100%);
     }
   }
 

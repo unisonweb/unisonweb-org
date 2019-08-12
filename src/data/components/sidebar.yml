@@ -1,19 +1,37 @@
-links:
-  - label: Introduction
-    path: /docs
+linkSets:
+
+  - heading: Headline 1
     icon: /media/icon-code.svg
-  - label: Quickstart
-    path: /docs/quickstart
+    links:
+      - label: Introduction
+        url: /docs
+
+  - heading: Headline 2
     icon: /media/icon-code.svg
-  - label: Getting Started
-    path: /docs/getting-started
+    links:
+      - label: Quickstart
+        url: /docs/quickstart
+
+  - heading: Headline 3
     icon: /media/icon-code.svg
-  - label: Tour
-    path: /docs/tour
+    links:
+      - label: Getting Started
+        url: /docs/getting-started
+
+  - heading: Headline 4
     icon: /media/icon-code.svg
-  - label: Roadmap
-    path: /docs/roadmap
+    links:
+      - label: Tour
+        url: /docs/tour
+
+  - heading: Headline 5
     icon: /media/icon-code.svg
-  - label: Language Reference
-    path: /docs/language-reference
+    links:
+      - label: Roadmap
+        url: /docs/roadmap
+
+  - heading: Headline 6
     icon: /media/icon-code.svg
+    links:
+      - label: Language Reference
+        url: /docs/language-reference

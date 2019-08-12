@@ -6,8 +6,8 @@
       <un-page-section>
 
         <div class="un-doc-page">
-          <un-sidebar :headings="$page.doc.headings" />
           <un-doc-content :content="$page.doc.content" />
+          <un-sidebar :headings="$page.doc.headings" />
         </div>
 
       </un-page-section>
