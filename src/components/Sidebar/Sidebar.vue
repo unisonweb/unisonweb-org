@@ -1,7 +1,7 @@
 <template>
   <div
     class="un-sidebar__platform"
-    :class="{ 'un-sidebar__platform--with-bg': isVisible }">
+    :class="{ 'un-sidebar__platform--show-mobile-bg': isVisible }">
     <div
       class="un-sidebar__stage"
       v-on-clickaway="closeSidebar">
@@ -72,10 +72,8 @@
         return this.$route.matched[0].path
       },
       pageTitle() {
-        const vm = this
-
-        const currentLink = find(vm.links, link => {
-          return link.path === vm.currentPath
+        const currentLink = find(this.links, link => {
+          return link.path === this.currentPath
         })
 
         return currentLink ? currentLink.label : null
@@ -83,17 +81,31 @@
     },
     methods: {
       closeSidebar() {
-        const vm = this
 
-        if (process.isClient) { // check to prevent build errors
-          vm.$refs['sidebarToggle'].checked = false
-          triggerEvent(vm.$refs['sidebarToggle'], 'change')
+        // check to prevent build errors
+        if (process.isClient) {
+          this.$refs['sidebarToggle'].checked = false
+          triggerEvent(this.$refs['sidebarToggle'], 'change')
         }
+
       },
       handleChange() {
-        const vm = this
+        this.toggleSidebarVisbility()
+        this.preventBodyScrolling()
+      },
+      toggleSidebarVisbility() {
+        this.isVisible = this.$refs['sidebarToggle'].checked
+      },
+      preventBodyScrolling() {
 
-        vm.isVisible = vm.$refs['sidebarToggle'].checked
+        if (this.$refs['sidebarToggle'].checked) {
+          document.body.classList.add('is-blocked-from-scrolling')
+          document.body.classList.add('is-blocked-from-scrolling')
+        } else {
+          document.body.classList.remove('is-blocked-from-scrolling')
+          document.body.classList.remove('is-blocked-from-scrolling')
+        }
+
       },
     },
     watch: {
@@ -116,15 +128,24 @@
 
   .un-sidebar__platform {
 
-    @include max-screen(breakpoint(xs, max)) {
+    &:before {
 
-      &:before {
-        content: '';
-        position: absolute;
+      @include max-screen(breakpoint(xs, max)) {
         top: -#{dim(pageSection, xs)};
         bottom: -#{dim(pageSection, xs)};
-        right: -#{rem(3)};
-        left: -#{rem(3)};
+      }
+
+      @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
+        top: -#{dim(pageSection, sm)};
+        bottom: -#{dim(pageSection, sm)};
+      }
+
+      @include max-screen(breakpoint(sm, max)) {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translate3d(-50%, 0, 0);
+        width: 100vw;
 
         background-color: rgba(palette(black), 0.5);
 
@@ -132,13 +153,13 @@
         opacity: 0;
         pointer-events: none;
       }
+    }
 
-      &--with-bg {
+    &--show-mobile-bg {
 
-        &:before {
-          opacity: 1;
-          pointer-events: auto;
-        }
+      &:before {
+        opacity: 1;
+        pointer-events: auto;
       }
     }
   }
@@ -209,7 +230,10 @@
       background-color: palette(white);
       @include drop-shadow;
 
-      transition: transform .5s ease-in-out;
+      transition:
+        opacity .5s ease-in-out,
+        transform .5s ease-in-out;
+      opacity: 0;
       transform: translate3d(-100%, 0, 0);
     }
   }
@@ -248,6 +272,7 @@
       & ~ .un-sidebar__wrapper {
 
         @include max-screen(breakpoint(sm, max)) {
+          opacity: 1;
           transform: translate3d(0, 0, 0);
         }
       }

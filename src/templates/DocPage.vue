@@ -20,11 +20,16 @@
   import Sidebar from '~/components/Sidebar/Sidebar'
 
   export default {
-    metaInfo () {
-      const { title, headings } = this.$page.doc
+    metaInfo() {
+      const { title, headings, description } = this.$page.doc
 
       return {
-        title: title || (headings.length ? headings[0].value : undefined)
+        title: title || (headings.length ? headings[0].value : undefined),
+        meta: [{
+          key: 'description',
+          name: 'description',
+          content: description
+        }],
       }
     },
     computed: {
@@ -47,30 +52,33 @@
     @include min-screen(breakpoint(md)) {
       padding-right: (1/12 * 100%);
       padding-left: (4/12 * 100%);
+    }
 
-      &:before {
+    &:before {
+
+      @include min-screen(breakpoint(md)) {
         content: '';
         position: absolute;
         top: 0;
         bottom: 0;
 
-        @include screen(breakpoint(md), container(md) - 1) {
-          left: (3/12 * 100%);
-        }
-
-        @include min-screen(container(md)) {
-          left: (3/12 * container(md));
-        }
-
-        @include screen(breakpoint(lg), container(lg) - 1) {
-          left: (3/12 * 100%);
-        }
-
-        @include min-screen(container(lg)) {
-          left: (3/12 * container(lg));
-        }
-
         border-left: 1px solid palette(gray, xx-light);
+      }
+
+      @include screen(breakpoint(md), container(md) - 1) {
+        left: (3/12 * 100%);
+      }
+
+      @include min-screen(container(md)) {
+        left: (3/12 * container(md));
+      }
+
+      @include screen(breakpoint(lg), container(lg) - 1) {
+        left: (3/12 * 100%);
+      }
+
+      @include min-screen(container(lg)) {
+        left: (3/12 * container(lg));
       }
     }
   }

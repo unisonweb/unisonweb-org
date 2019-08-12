@@ -43,11 +43,17 @@
 <style lang="scss">
 
   .un-site-main__stage {
-    position: relative; // for positioning the site nav
+    // intentionally blank
   }
 
   .un-site-main__wrapper {
-    min-height: 100vh;
+    $siteNavHeight: (
+      dim(siteNav, verticalPadding)
+    + dim(siteNav, logoHeight)
+    + dim(siteNav, verticalPadding)
+    );
+
+    min-height: calc(100vh - #{$siteNavHeight});
 
     display: flex;
     flex-direction: column;

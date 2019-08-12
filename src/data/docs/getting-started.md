@@ -1,3 +1,8 @@
+---
+title: Getting Started
+description: placeholder
+---
+
 # A tour of Unison
 
 This guide assumes you've already gone through the steps in [the quickstart guide](quickstart.html). We recommend going through that guide before continuing here.

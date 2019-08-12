@@ -1,13 +1,13 @@
 export default {
   metaInfo() {
-    const vm = this
+    const { title, description } = this.pageContent
 
     return {
-      title: vm.pageContent.title,
+      title: title,
       meta: [{
         key: 'description',
         name: 'description',
-        content: vm.pageContent.description
+        content: description,
       }],
     }
   },
