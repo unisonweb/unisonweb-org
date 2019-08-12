@@ -16,6 +16,16 @@ module.exports = {
     {
       use: '@gridsome/source-filesystem',
       options: {
+        baseDir: './src/data/supplemental-pages',
+        path: '**/*.md',
+        route: ':slug',
+        typeName: 'SupplementalPage',
+        remark: true
+      }
+    },
+    {
+      use: '@gridsome/source-filesystem',
+      options: {
         index: ['README'],
         baseDir: './src/data/docs',
         pathPrefix: '/docs',
