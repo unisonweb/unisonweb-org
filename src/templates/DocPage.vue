@@ -6,7 +6,7 @@
       <un-page-section>
 
         <div class="un-doc-page">
-          <un-doc-content :content="$page.doc.content" />
+          <un-content :content="$page.doc.content" />
           <un-sidebar :headings="$page.doc.headings" />
         </div>
 
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import DocContent from '~/components/DocContent'
+  import Content from '~/components/Content'
   import Sidebar from '~/components/Sidebar/Sidebar'
 
   export default {
@@ -38,7 +38,7 @@
       },
     },
     components: {
-      'un-doc-content': DocContent,
+      'un-content': Content,
       'un-sidebar': Sidebar,
     },
   }

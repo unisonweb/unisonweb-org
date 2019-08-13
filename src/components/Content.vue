@@ -1,7 +1,7 @@
 <template>
   <div
     ref="content"
-    class="un-doc-content"
+    class="un-content"
     v-html="content"
   />
 </template>
@@ -66,14 +66,14 @@
 
 <style lang="scss">
 
-  .un-doc-content {
+  .un-content {
 
     @include min-screen(breakpoint(md)) {
 
       .un-codeblock__wrapper {
 
         // make the right-edge of codeblocks
-        // touch the right edge of .un-doc-content
+        // touch the right edge of .un-content
         margin-right: -#{2/12 * 100%};
         padding-right: (rem(3) * 1/2);
       }
