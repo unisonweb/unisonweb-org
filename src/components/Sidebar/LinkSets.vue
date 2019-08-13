@@ -53,7 +53,6 @@
       list-style: none;
 
       color: palette(black);
-      line-height: line-height(half);
 
       > li {
         // <li> reset
@@ -73,7 +72,7 @@
   }
 
   .un-sidebar__link-set__heading {
-    font-size: rem(1);
+    font-size: rem(0);
 
     > a {
       color: inherit;

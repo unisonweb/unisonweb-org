@@ -50,11 +50,11 @@ p, ul, ol, dl, table, blockquote, li, dt, dd, iframe {
 
 a {
   cursor: pointer;
-  color: palette(primary);
+  color: palette(lightpurple);
   text-decoration: none;
 
   &:hover {
-    color: palette(primary, bright);
+    color: palette(primary);
     text-decoration: underline;
   }
 }

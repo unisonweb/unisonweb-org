@@ -4,7 +4,7 @@
 
       <un-link
         class="un-sidebar__link"
-        :class="{ 'u-bold' : link.url === currentPath }"
+        :class="{ 'un-sidebar__link--active' : link.url === currentPath }"
         :url="link.url">
         {{link.label}}
       </un-link>
@@ -48,11 +48,17 @@
       padding: 0;
       list-style: none;
 
+      margin-top: rem(0);
+
+      font-size: rem(-1);
+
       > li {
         // <li> reset
         margin: 0;
 
-        margin-top: rem(-1);
+        &:not(:last-child) {
+          margin-bottom: rem(0);
+        }
       }
     }
   }
@@ -60,29 +66,22 @@
   .un-sidebar__link {
     display: block;
 
-    position: relative;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: (em(0) * line-height(half) * 1/2);
-      left: -#{($iconSize * 1/2) + $iconSpacing};
-      transform: translate3d(-50%, -50%, 0);
-
-      width: 8px;
-      height: 8px;
-
-      border-radius: 50%;
-      background-color: currentColor;
-
-      transition: opacity .1s ease-in-out;
-      opacity: 0;
-    }
-
-    &:hover {
+    &--active {
+      font-family: font(bold);
+      position: relative;
 
       &:before {
-        opacity: 1;
+        content: '';
+        position: absolute;
+        top: (em(0) * line-height(default) * 1/2);
+        left: -#{($iconSize * 1/2) + $iconSpacing};
+        transform: translate3d(-50%, -50%, 0);
+
+        width: 8px;
+        height: 8px;
+
+        border-radius: 50%;
+        background-color: currentColor;
       }
     }
   }
@@ -96,17 +95,33 @@
       padding: 0;
       list-style: none;
 
-      margin-left: 1px;
+      margin-top: rem(-3);
       padding-left: $iconSpacing;
-      border-left: 1px solid palette(gray, x-light);
+
+      position: relative;
+
+      // faux border to align with top/bottom of links
+      &:before {
+        content: '';
+        position: absolute;
+        top: (((em(0) * line-height(default)) - em(0)) * 1/2);
+        bottom: (((em(0) * line-height(default)) - em(0)) * 1/2);
+        left: 1px;
+        width: 1px;
+
+        background-color: palette(gray, xx-light);
+      }
 
       color: palette(gray);
+      font-size: rem(-2);
 
       > li {
         // <li> reset
         margin: 0;
 
-        margin-top: rem(-1);
+        &:not(:last-child) {
+          margin-bottom: rem(-3);
+        }
       }
     }
   }
@@ -114,7 +129,6 @@
   .un-sidebar__sub-link {
     display: inline-block;
     color: inherit;
-    font-size: rem(-1);
   }
 
 </style>
