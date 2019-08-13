@@ -1,23 +1,24 @@
 <template>
   <div
-    class="un-search-box__stage"
+    v-show="!isLoading"
+    class="un-search-box__stage animated fadeIn"
     :class="{ 'is-open' : isOpen }"
     v-on-clickaway="closeSearchBox">
 
     <div
       class="un-search-box"
       @click="openSearchBox">
-      <ais-instant-search-ssr>
+      <AisInstantSearchSsr>
 
         <label
-          class="un-search-box__icon"
+          class="un-search-box__search-icon"
           for="search">
           <inline-svg src="/media/icon-search.svg" />
         </label>
 
-        <ais-search-box placeholder="Search" />
+        <AisSearchBox placeholder="Search" />
 
-        <ais-state-results>
+        <AisStateResults>
           <template slot-scope="{ query, hits }">
 
             <div
@@ -26,17 +27,17 @@
 
               <p
                 v-if="hits.length === 0"
-                class="un-search-box__results__none">
+                class="un-search-box__no-results-message">
                 No results found matching <em>{{ query }}</em>
               </p>
 
-              <ais-hits
-                :escape-HTML="true">
+              <AisHits :escape-HTML="true">
                 <template slot="item" slot-scope="{ item }">
+
                   <h1>
                     <g-link
                       :to="item.path">
-                      <ais-highlight
+                      <AisHighlight
                         :hit="item"
                         attribute="title"
                       />
@@ -63,7 +64,7 @@
                   </p>
 
                 </template>
-              </ais-hits>
+              </AisHits>
 
             </div>
 
@@ -71,9 +72,9 @@
             <span v-else />
 
           </template>
-        </ais-state-results>
+        </AisStateResults>
 
-      </ais-instant-search-ssr>
+      </AisInstantSearchSsr>
     </div>
 
     <button
@@ -109,14 +110,11 @@
   })
 
   export default {
-    asyncData() {
-      return instantsearch.then(() => ({
-        algoliaState: instantsearch.getState(),
-      }))
-    },
     data() {
       return {
+        isLoading: true,
         isOpen: false,
+        algoliaState: null,
       }
     },
     methods: {
@@ -132,12 +130,18 @@
         this.closeSearchBox()
       },
     },
+    created() {
+      instantsearch.findResultsState().then(() => {
+        this.algoliaState = instantsearch.getState
+        this.isLoading = false
+      })
+    },
     components: {
-      'ais-instant-search-ssr': AisInstantSearchSsr,
-      'ais-state-results': AisStateResults,
-      'ais-hits': AisHits,
-      'ais-highlight': AisHighlight,
-      'ais-search-box': AisSearchBox,
+      AisInstantSearchSsr,
+      AisStateResults,
+      AisHits,
+      AisHighlight,
+      AisSearchBox,
     },
     mixins: [
       rootMixin,
@@ -149,6 +153,14 @@
 <style lang="scss">
 
   $iconSize: rem(2);
+  $layers: (
+    closeButton: 6,
+    icon: 5,
+    input: 4,
+    bg: 3,
+    results: 2,
+    shadow: 1
+  );
 
   .un-search-box__stage {
     position: absolute;
@@ -256,12 +268,12 @@
     }
 
     &:before {
-      z-index: 3;
+      z-index: map-get($layers, bg);
       background-color: palette(white);
     }
 
     &:after {
-      z-index: 1;
+      z-index: map-get($layers, shadow);
       @include drop-shadow;
     }
   }
@@ -270,6 +282,7 @@
     position: relative; // for positioning __icon
 
     width: 100%;
+    height: dim(siteNav, logoHeight);
     padding-left: (rem(3) + rem(0));
 
     @include max-screen(breakpoint(xs, max)) {
@@ -302,7 +315,7 @@
 
     .ais-SearchBox {
       position: relative;
-      z-index: 4;
+      z-index: map-get($layers, input);
 
       @include max-screen(breakpoint(xs, max)) {
         padding-right: $iconSize;
@@ -368,7 +381,7 @@
 
   .un-search-box__results {
     position: absolute;
-    z-index: 2;
+    z-index: map-get($layers, results);
     top: 100%;
 
     @include max-screen(breakpoint(xs, max)) {
@@ -410,11 +423,11 @@
     }
   }
 
-  .un-search-box__results__none {
+  .un-search-box__no-results-message {
 
     @include max-screen(breakpoint(xs, max)) {
-       padding: $iconSize;
-     }
+      padding: $iconSize;
+    }
 
     @include min-screen(breakpoint(sm)) {
       padding: $iconSize (rem(3) + rem(0));
@@ -423,7 +436,7 @@
     background-color: palette(white);
   }
 
-  .un-search-box__icon,
+  .un-search-box__search-icon,
   .un-search__close-button {
     position: absolute;
     top: 50%;
@@ -440,25 +453,22 @@
     }
   }
 
-  .un-search-box__icon {
-    z-index: 3;
+  .un-search-box__search-icon {
+    z-index: map-get($layers, icon);
     left: 0;
   }
 
   .un-search__close-button {
     @include reset-button;
 
-    z-index: 4;
-
-    @include max-screen(breakpoint(sm, max)) {
-      right: 0;
-    }
-
-    @include min-screen(breakpoint(md)) {
-      left: 100%;
-    }
+    z-index: map-get($layers, closeButton);
+    right: 0;
 
     opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
 </style>
