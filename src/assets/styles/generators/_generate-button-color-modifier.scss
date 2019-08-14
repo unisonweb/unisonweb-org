@@ -7,7 +7,7 @@
     $textColor: null;
 
     @if $color == 'white' {
-      $textColor: palette(primary);
+      $textColor: palette(purple);
       $bgColor: palette($color);
       $bgHoverColor: palette(white);
     }
@@ -45,8 +45,8 @@
 
       @if $color == 'white' {
         $textColorForOutline: palette(gray);
-        $bgColorForOutline: palette(primary);
-        $bgHoverColorForOutline: palette(primary);
+        $bgColorForOutline: palette(purple);
+        $bgHoverColorForOutline: palette(purple);
       }
       @else {
         $textColorForOutline: palette($color);

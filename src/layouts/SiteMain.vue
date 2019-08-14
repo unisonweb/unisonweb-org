@@ -24,9 +24,9 @@
 
 <script>
   import siteNavProps from '~/mixins/siteNavProps'
-  import SiteNav from '~/components/SiteNav/SiteNav'
-  import SiteFooter from '~/components/SiteFooter'
-  import CookiesNotice from '~/components/CookiesNotice'
+  import SiteNav from './partials/SiteNav/SiteNav'
+  import SiteFooter from './partials/SiteFooter'
+  import CookiesNotice from './partials/CookiesNotice'
 
   export default {
     components: {

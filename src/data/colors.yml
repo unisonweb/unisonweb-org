@@ -1,10 +1,4 @@
 colors:
-  - name: 'primary'
-    base: '#520066'
-  - name: 'success'
-    base: '#35bda1'
-  - name: 'error'
-    base: '#e90000'
   - name: 'purple'
     base: '#520066'
   - name: 'lightpurple'

@@ -10,6 +10,7 @@
   import 'prismjs'
   import 'prismjs/components/prism-unison'
   import 'prismjs/plugins/line-numbers/prism-line-numbers'
+  import mediumZoom from 'medium-zoom'
   import Vue from 'vue'
   import AsciiPlayer from '~/components/AsciiPlayer'
 
@@ -54,6 +55,8 @@
 
       Prism.highlightAllUnder(vm.$refs['content'])
       vm.processAsciiPlayers()
+
+      mediumZoom(vm.$refs['content'].querySelectorAll('.g-image'))
     },
     updated() {
       const vm = this
@@ -142,11 +145,6 @@
       > a {
         display: none;
       }
-
-      + p {
-        font-size: responsive rem(1) rem(2);
-        font-range: breakpoint(xs, max) breakpoint(xl);
-      }
     }
     h2 {
       font-size: responsive rem(4) rem(5);
@@ -158,6 +156,11 @@
     }
     h5, h6 {
       font-size: responsive rem(0) rem(1);
+      font-range: breakpoint(xs, max) breakpoint(xl);
+    }
+
+    p:first-of-type {
+      font-size: responsive rem(1) rem(2);
       font-range: breakpoint(xs, max) breakpoint(xl);
     }
 
@@ -184,6 +187,10 @@
     ul, ol {
       // reset
       padding: 0;
+
+      & {
+        margin-top: (rem(-2) * 1/2);
+      }
 
       > li {
         margin-left: rem(2);
@@ -261,6 +268,14 @@
         }
       }
     }
+  }
+
+  .medium-zoom-overlay {
+    z-index: 3; // keep zoomed images above .un-codeblocks
+  }
+
+  .medium-zoom-image {
+    z-index: 4; // keep zoomed images above .un-codeblocks
   }
 
 </style>

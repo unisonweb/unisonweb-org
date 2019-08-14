@@ -1,20 +1,20 @@
 <template>
-  <ul class="un-sidebar__links__container">
+  <ul class="un-doc-sidebar__links__container">
     <li v-for="(link, i) in links" :key="i">
 
       <un-link
-        class="un-sidebar__link"
-        :class="{ 'un-sidebar__link--active' : link.url === currentPath }"
+        class="un-doc-sidebar__link"
+        :class="{ 'un-doc-sidebar__link--active' : link.url === currentPath }"
         :url="link.url">
         {{link.label}}
       </un-link>
 
       <ul
         v-if="link.url === currentPath && headings && headings.length"
-        class="un-sidebar__sub-links__container">
+        class="un-doc-sidebar__sub-links__container">
         <li v-for="(heading, j) in headings" :key="j">
           <un-link
-            class="un-sidebar__sub-link"
+            class="un-doc-sidebar__sub-link"
             :url="heading.anchor">
             {{heading.value}}
           </un-link>
@@ -40,7 +40,7 @@
   $iconSize: rem(3);
   $iconSpacing: rem(0);
 
-  .un-sidebar__links__container {
+  .un-doc-sidebar__links__container {
 
     @at-root ul#{&} {
       // <ul> reset
@@ -63,10 +63,11 @@
     }
   }
 
-  .un-sidebar__link {
+  .un-doc-sidebar__link {
     display: block;
 
     &--active {
+      color: palette(lightpurple);
       font-family: font(bold);
       position: relative;
 
@@ -86,7 +87,7 @@
     }
   }
 
-  .un-sidebar__sub-links__container {
+  .un-doc-sidebar__sub-links__container {
     opacity: 1;
 
     @at-root ul#{&} {
@@ -126,9 +127,14 @@
     }
   }
 
-  .un-sidebar__sub-link {
+  .un-doc-sidebar__sub-link {
     display: inline-block;
     color: inherit;
+
+    &:hover {
+      color: palette(lightpurple);
+      text-decoration: none;
+    }
   }
 
 </style>

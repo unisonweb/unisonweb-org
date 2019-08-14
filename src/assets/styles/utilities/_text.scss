@@ -30,7 +30,7 @@
 // text emphasis
 .u-normal          { font-weight: weight(normal); letter-spacing: 0; font-style: normal; }
 .u-bold, strong    { font-family: font(bold); font-weight: weight(normal); }
-.u-italic, em      { font-family: font(italic); font-style: normal; }
+.u-italic, em      { font-family: font(italic); font-style: normal; font-weight: normal; }
 .u-underline       { text-decoration: underline !important; }
 .u-underline--none { text-decoration: none !important; }
 
@@ -57,7 +57,10 @@
 // text sizing
 @each $scale, $value in $UCmodularscales {
   [data-font-size="#{$scale}"] {
-    @if( ($scale - 3) < 10 ) {
+    @if ($scale < 0) {
+      letter-spacing: 0;
+    }
+    @if (($scale - 3) < 10) {
       font-size: rem($scale) !important;
     } @else {
       font-size: responsive rem(($scale - 3)) rem($scale) !important;

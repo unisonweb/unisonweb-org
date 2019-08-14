@@ -22,7 +22,7 @@
 
         <Links :links="componentContent.links" />
 
-        <un-search-box v-if="withSearch" />
+        <SearchBox v-if="withSearch" />
 
       </div>
     </div>
@@ -30,10 +30,10 @@
 </template>
 
 <script>
-  import Links from '~/components/SiteNav/Links'
-  import Logo from '~/components/SiteNav/Logo'
-  import MobileNavButton from '~/components/SiteNav/MobileNavButton'
-  import SearchBox from '~/components/SearchBox'
+  import Links from './Links'
+  import Logo from './Logo'
+  import MobileNavButton from './MobileNavButton'
+  import SearchBox from './SearchBox'
   import componentContent from '~/data/components/site-nav.yml'
   import siteNavProps from '~/mixins/siteNavProps'
 
@@ -47,7 +47,7 @@
       Links,
       Logo,
       MobileNavButton,
-      'un-search-box': SearchBox,
+      SearchBox,
     },
     mixins: [
       siteNavProps,
@@ -63,6 +63,7 @@
 
     color: palette(black);
     background-color: palette(white);
+    @include drop-shadow;
 
     .un-site-nav__links__container {
 

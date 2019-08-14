@@ -117,7 +117,7 @@
     }
 
     color: palette(white);
-    background-color: palette(primary, xx-dark);
+    background-color: palette(purple, xx-dark);
 
     @include min-screen(breakpoint(sm)) {
       display: flex;

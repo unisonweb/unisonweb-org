@@ -41,6 +41,24 @@
       padding-bottom: dim(pageSection, md);
     }
 
+    &#{$this}--small {
+
+      @include max-screen(breakpoint(xs, max)) {
+        padding-top: (dim(pageSection, xs) * 1/2);
+        padding-bottom: (dim(pageSection, xs) * 1/2);
+      }
+
+      @include min-screen(breakpoint(sm)) {
+        padding-top: (dim(pageSection, sm) * 1/2);
+        padding-bottom: (dim(pageSection, sm) * 1/2);
+      }
+
+      @include min-screen(breakpoint(md)) {
+        padding-top: (dim(pageSection, md) * 1/2);
+        padding-bottom: (dim(pageSection, md) * 1/2);
+      }
+    }
+
     &#{$this}--large {
 
       @include max-screen(breakpoint(xs, max)) {

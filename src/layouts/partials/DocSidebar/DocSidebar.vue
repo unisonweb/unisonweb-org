@@ -1,14 +1,14 @@
 <template>
   <div
-    class="un-sidebar__platform"
-    :class="{ 'un-sidebar__platform--show-mobile-bg': isVisible }">
+    class="un-doc-sidebar__platform"
+    :class="{ 'un-doc-sidebar__platform--show-mobile-bg': isVisible }">
     <div
-      class="un-sidebar__stage"
+      class="un-doc-sidebar__stage"
       v-on-clickaway="closeSidebar">
 
-      <div class="un-sidebar__page-title">
+      <div class="un-doc-sidebar__page-title">
         <label
-          class="un-sidebar__mobile-sidebar-button"
+          class="un-doc-sidebar__mobile-sidebar-button"
           for="sidebar-toggle">
           <inline-svg
             v-if="isVisible"
@@ -24,7 +24,7 @@
 
       <input
         ref="sidebarToggle"
-        class="un-sidebar__mobile-sidebar-toggle"
+        class="un-doc-sidebar__mobile-sidebar-toggle"
         type="checkbox"
         id="sidebar-toggle"
         style="display: none;"
@@ -32,8 +32,8 @@
         @change="handleChange"
       />
 
-      <div class="un-sidebar__wrapper">
-        <div class="un-sidebar">
+      <div class="un-doc-sidebar__wrapper">
+        <div class="un-doc-sidebar">
 
           <LinkSets
             :link-sets="componentContent.linkSets"
@@ -51,8 +51,8 @@
 <script>
   import find from 'lodash.find'
   import { mixin as clickaway } from 'vue-clickaway'
-  import componentContent from '~/data/components/sidebar.yml'
-  import LinkSets from '~/components/Sidebar/LinkSets'
+  import componentContent from '~/data/components/doc-sidebar.yml'
+  import LinkSets from './LinkSets'
   import triggerEvent from '~/assets/scripts/utils/triggerEvent'
 
   export default {
@@ -126,7 +126,7 @@
 
   $iconSize: rem(3);
 
-  .un-sidebar__platform {
+  .un-doc-sidebar__platform {
 
     &:before {
 
@@ -164,7 +164,7 @@
     }
   }
 
-  .un-sidebar__stage {
+  .un-doc-sidebar__stage {
 
     @include min-screen(breakpoint(md)) {
       position: absolute;
@@ -174,7 +174,7 @@
     }
   }
 
-  .un-sidebar__page-title {
+  .un-doc-sidebar__page-title {
     $searchHeight: (
       dim(siteNav, fontSize)
     + dim(siteNav, logoHeight)
@@ -209,7 +209,7 @@
     }
   }
 
-  .un-sidebar__wrapper {
+  .un-doc-sidebar__wrapper {
 
     @include max-screen(breakpoint(xs, max)) {
       top: -#{dim(pageSection, xs)};
@@ -238,7 +238,7 @@
     }
   }
 
-  .un-sidebar {
+  .un-doc-sidebar {
 
     @include max-screen(breakpoint(sm, max)) {
       overflow: scroll;
@@ -247,7 +247,7 @@
     }
   }
 
-  .un-sidebar__mobile-sidebar-button {
+  .un-doc-sidebar__mobile-sidebar-button {
     position: absolute;
     top: 50%;
     left: 0;
@@ -264,12 +264,12 @@
     }
   }
 
-  .un-sidebar__mobile-sidebar-toggle {
+  .un-doc-sidebar__mobile-sidebar-toggle {
     display: none;
 
     &:checked {
 
-      & ~ .un-sidebar__wrapper {
+      & ~ .un-doc-sidebar__wrapper {
 
         @include max-screen(breakpoint(sm, max)) {
           opacity: 1;

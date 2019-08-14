@@ -1,12 +1,12 @@
 <template>
-  <ul class="un-sidebar__link-sets__container">
+  <ul class="un-doc-sidebar__link-sets__container">
     <li
       v-for="(linkSet, i) in linkSets" :key="i"
-      class="un-sidebar__link-set">
+      class="un-doc-sidebar__link-set">
 
-      <h2 class="un-sidebar__link-set__heading">
+      <h2>
         <inline-svg
-          class="un-sidebar__link-set__icon"
+          class="un-doc-sidebar__link-set__icon"
           :src="linkSet.icon"
         />
         <un-link :url="linkSet.links[0].url">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import Links from '~/components/Sidebar/Links'
+  import Links from './Links'
 
   export default {
     props: {
@@ -44,7 +44,7 @@
   $iconSize: rem(3);
   $iconSpacing: rem(0);
 
-  .un-sidebar__link-sets__container {
+  .un-doc-sidebar__link-sets__container {
 
     @at-root ul#{&} {
       // <ul> reset
@@ -65,21 +65,13 @@
     }
   }
 
-  .un-sidebar__link-set {
+  .un-doc-sidebar__link-set {
     position: relative; // for positioning the __icon
 
     padding-left: ($iconSize + $iconSpacing);
   }
 
-  .un-sidebar__link-set__heading {
-    font-size: rem(0);
-
-    > a {
-      color: inherit;
-    }
-  }
-
-  .un-sidebar__link-set__icon {
+  .un-doc-sidebar__link-set__icon {
     position: absolute;
     top: (em(0) * line-height(half) * 1/2);
     left: 0;

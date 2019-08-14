@@ -63,7 +63,7 @@
     position: relative; // for positioning the __eyebrow and __graphic
 
     color: palette(white);
-    background-color: palette(primary);
+    background-color: palette(purple);
   }
 
   .un-hero__eyebrow {
@@ -79,7 +79,7 @@
     line-height: line-height(base);
 
     border-radius: 99px; // big number to force rounded edges
-    background-color: palette(primary, dark);
+    background-color: palette(purple, dark);
   }
 
   .un-hero__heading {

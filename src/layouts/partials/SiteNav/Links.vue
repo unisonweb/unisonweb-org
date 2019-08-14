@@ -127,7 +127,7 @@
         width: 100%;
 
         height: 1px;
-        background-color: palette(pink);
+        background-color: palette(lightpurple);
 
         transition:
           opacity .25s ease-in-out,

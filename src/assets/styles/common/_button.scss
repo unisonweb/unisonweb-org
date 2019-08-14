@@ -87,7 +87,7 @@
     padding: 0;
     border: none;
 
-    color: palette(primary);
+    color: palette(lightpurple);
     font-size: unset;
     font-family: inherit;
     line-height: inherit;
@@ -95,12 +95,11 @@
     text-transform: inherit;
 
     &:hover {
-      color: palette(primary, bright);
       text-decoration: underline;
     }
   }
 
-  @include generate-button-color-modifier(#{$this}, primary);
+  @include generate-button-color-modifier(#{$this}, purple);
   @include generate-button-color-modifier(#{$this}, orange);
   @include generate-button-color-modifier(#{$this}, white);
 
