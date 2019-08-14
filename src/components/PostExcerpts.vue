@@ -1,15 +1,19 @@
 <template>
-  <un-post-intro
-    v-for="(post, i) in posts" :key="i"
-    :post="post"
-    :link-heading-to-post="true">
-    <p v-text="post.description" />
-    <un-link
-      class="u-inline-block u-margin--top u-color--lightpurple u-bold"
-      :url="post.path">
-      Read More &rarr;
-    </un-link>
-  </un-post-intro>
+  <div class="un-post-excerpts">
+
+    <un-post-intro
+      v-for="(post, i) in posts" :key="i"
+      :post="post"
+      :link-heading-to-post="true">
+      <p v-text="post.description" />
+      <un-link
+        class="u-inline-block u-margin--top u-color--lightpurple u-bold"
+        :url="post.path">
+        Read More &rarr;
+      </un-link>
+    </un-post-intro>
+
+  </div>
 </template>
 
 <script>
@@ -26,5 +30,9 @@
 </script>
 
 <style lang="scss">
-  // intentionally blank
+
+  .un-post-excerpts {
+    // intentionally blank
+  }
+
 </style>
