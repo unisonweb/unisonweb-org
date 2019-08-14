@@ -14,10 +14,11 @@
           class="un-homepage-cta__icon"
           aria-hidden="true"
         />
-        <strong
+        <un-link
           class="un-homepage-cta__label"
-          v-text="item.label"
-        />
+          :url="item.url">
+          {{item.label}}
+        </un-link>
       </li>
     </ul>
 
@@ -160,6 +161,7 @@
 
   .un-homepage-cta__label {
     color: palette(black);
+    font-family: font(bold);
   }
 
   .un-homepage-ctas__button {
