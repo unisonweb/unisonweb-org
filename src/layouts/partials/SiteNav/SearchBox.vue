@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show="!isLoading"
+    v-if="!isLoading"
     class="un-search-box__stage animated fadeIn"
     :class="{ 'is-open' : isOpen }"
     v-on-clickaway="closeSearchBox">
@@ -130,9 +130,9 @@
         this.closeSearchBox()
       },
     },
-    created() {
+    beforeCreate() {
       instantsearch.findResultsState().then(() => {
-        this.algoliaState = instantsearch.getState
+        this.algoliaState = instantsearch.getState()
         this.isLoading = false
       })
     },
