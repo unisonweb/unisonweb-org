@@ -63,6 +63,20 @@
 <style lang="scss">
 
   .un-share-links__container {
+
+    @include max-screen(breakpoint(xs, max)) {
+      margin-top: (dim(pageSection, xs) * 2);
+      margin-bottom: dim(pageSection, xs);
+    }
+
+    @include min-screen(breakpoint(sm)) {
+      margin-top: dim(pageSection, sm);
+    }
+
+    @include min-screen(breakpoint(md)) {
+      margin-top: dim(pageSection, md);
+    }
+
     display: flex;
     align-items: center;
   }

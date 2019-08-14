@@ -19,18 +19,14 @@
       }
     },
     created() {
-      const vm = this
-
       let $script = document.createElement('script')
-      $script.setAttribute('src', vm.source)
-      $script.setAttribute('id', vm.castId)
+      $script.setAttribute('src', this.source)
+      $script.setAttribute('id', this.castId)
 
-      vm.player = $script
+      this.player = $script
     },
     mounted() {
-      const vm = this
-
-      vm.$refs['player'].appendChild(vm.player)
+      this.$refs['player'].appendChild(this.player)
     }
   }
 </script>

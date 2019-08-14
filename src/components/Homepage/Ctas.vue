@@ -1,5 +1,5 @@
 <template>
-  <div class="un-homepage-ctas__stage u-align--center@xs u-align--center@sm">
+  <div class="un-homepage-ctas__stage">
 
     <h2
       class="un-homepage-ctas__heading"

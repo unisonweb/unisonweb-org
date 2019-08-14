@@ -41,17 +41,19 @@
 
     @include max-screen(breakpoint(xs, max)) {
       margin-top: dim(pageSection, xs);
+      padding-top: dim(pageSection, xs);
+      margin-bottom: dim(pageSection, xs);
     }
 
     @include min-screen(breakpoint(sm)) {
       margin-top: dim(pageSection, sm);
+      padding-top: rem(3);
     }
 
     @include min-screen(breakpoint(md)) {
       margin-top: dim(pageSection, md);
     }
 
-    padding-top: rem(3);
     border-top: 1px solid palette(gray, xxx-light);
 
     display: flex;

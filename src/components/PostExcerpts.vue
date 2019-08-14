@@ -48,6 +48,9 @@
 
           @include max-screen(breakpoint(xs, max)) {
             margin-bottom: dim(pageSection, xs);
+            padding-bottom: dim(pageSection, xs);
+
+            border-bottom: 1px solid palette(gray, xxx-light);
           }
 
           @include min-screen(breakpoint(sm)) {

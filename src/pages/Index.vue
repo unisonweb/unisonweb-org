@@ -12,18 +12,22 @@
 
     <un-page-section size="large">
       <div class="container">
+        <div class="row center-xs u-align--left">
+          <div class="col-xs-12 col-sm-10 col-md-12">
 
-        <vue-simple-markdown
-          :source="pageContent.intro"
-          class="u-drop-cap"
-          data-font-size="2"
-        />
+            <vue-simple-markdown
+              :source="pageContent.intro"
+              class="u-drop-cap"
+              data-font-size="2"
+            />
 
+          </div>
+        </div>
       </div>
     </un-page-section>
 
     <un-page-section size="large" class="u-bg--gray--xxx-light">
-      <div class="container">
+      <div class="container u-align--center@xs u-align--center@sm">
 
         <un-homepage-ctas
           :heading="pageContent.ctas.heading"

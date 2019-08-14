@@ -44,8 +44,8 @@
     &#{$this}--small {
 
       @include max-screen(breakpoint(xs, max)) {
-        padding-top: (dim(pageSection, xs) * 1/2);
-        padding-bottom: (dim(pageSection, xs) * 1/2);
+        padding-top: dim(pageSection, xs);
+        padding-bottom: dim(pageSection, xs);
       }
 
       @include min-screen(breakpoint(sm)) {

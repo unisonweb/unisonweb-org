@@ -5,12 +5,10 @@
 
     <un-content :content="$page.post.content" />
 
-    <un-page-section tag="div" size="small">
-      <un-share-links
-        :title="$page.post.title"
-        :path="$page.post.path"
-      />
-    </un-page-section>
+    <un-share-links
+      :title="$page.post.title"
+      :path="$page.post.path"
+    />
 
     <!-- prev/next posts -->
 

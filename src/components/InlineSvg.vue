@@ -17,32 +17,30 @@
     },
     computed: {
       isSvg() {
-        const vm = this
 
-        if (!vm.src) {
+        if (!this.src) {
           return false
         }
 
-        const filename = vm.src.split('/').pop()
+        const filename = this.src.split('/').pop()
         const ext = filename.split('.').pop()
         return (ext === 'svg')
       },
       loader() {
-        const vm = this
 
-        if (!vm.isSvg) {
+        if (!this.isSvg) {
           return null
         }
 
-        return () => import(`~/../static${vm.src}?inline`)
+        return () => import(`~/../static${this.src}?inline`)
       },
     },
     mounted() {
-      const vm = this
 
-      vm.loader().then(() => {
-        vm.inlineSvg = () => vm.loader()
+      this.loader().then(() => {
+        this.inlineSvg = () => this.loader()
       })
+
     },
   }
 </script>

@@ -47,23 +47,21 @@
     },
     methods: {
       setCookieToHideNotice() {
-        const vm = this
 
         // set the cookie
-        Cookies.set(vm.COOKIE, true);
+        Cookies.set(this.COOKIE, true);
         // hide the notice
-        vm.$refs['notice'].style.display = 'none'
-        vm.$refs['notice'].setAttribute('hidden', true)
+        this.$refs['notice'].style.display = 'none'
+        this.$refs['notice'].setAttribute('hidden', true)
 
       },
     },
     mounted() {
-      const vm = this
 
-      if (!Cookies.get(vm.COOKIE)) {
+      if (!Cookies.get(this.COOKIE)) {
         // make the notice visible
-        vm.$refs['notice'].style.display = 'block'
-        vm.$refs['notice'].setAttribute('hidden', false)
+        this.$refs['notice'].style.display = 'block'
+        this.$refs['notice'].setAttribute('hidden', false)
       }
 
     },
