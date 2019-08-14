@@ -10,6 +10,7 @@
       :required="required"
       :disabled="disabled"
       v-model="input"
+      v-validate="rules"
     />
 
     <label
@@ -24,10 +25,22 @@
 
     <slot />
 
+    <ul
+      v-if="errors.collect(inputName)"
+      class="un-input__errors__container">
+      <li
+        v-for="(error, i) in errors.collect(inputName)" :key="i"
+        v-text="error.validationMessage"
+      />
+    </ul>
+
   </div>
 </template>
 
 <script>
+  import isEmpty from 'lodash.isempty'
+  import set from 'lodash.set'
+
   export default {
     props: {
       value: { type: String, default: null },
@@ -37,38 +50,58 @@
       inputName: { type: String, default: null },
       disabled: { type: Boolean, default: false },
       required: { type: Boolean, default: false },
+      validationMessage: { type: String, default: null },
     },
     data() {
       return {
         input: null,
+        rulesArray: [],
       }
+    },
+    computed: {
+      rules() {
+        return this.rulesArray.join('|')
+      },
     },
     watch: {
       input(v) {
-        const vm = this
-
-        vm.$emit('input', v)
+        this.$emit('input', v)
       },
       value(v) {
-        const vm = this
-
-        vm.input = v
+        this.input = v
       },
     },
     created() {
-      const vm = this
 
-      vm.input = vm.value
+      // update the v-model
+      this.input = this.value
+
+      // create rules
+      const dict = {}
+
+      if (this.required) {
+        this.rulesArray.push('required')
+        set(dict, `custom[${this.inputName}].required.validationMessage`, this.validationMessage)
+      }
+
+      if (this.type === 'email') {
+        this.rulesArray.push('email')
+        set(dict, `custom[${this.inputName}].email.validationMessage`, this.validationMessage)
+      }
+
+      if (!isEmpty(dict)) {
+        this.$validator.localize('en', dict)
+      }
+
     },
     mounted() {
-      const vm = this
 
-      vm.$refs['input'].addEventListener('focus', () => {
-        vm.$emit('focus')
+      this.$refs['input'].addEventListener('focus', () => {
+        this.$emit('focus')
       }, false)
 
-      vm.$refs['input'].addEventListener('blur', () => {
-        vm.$emit('blur')
+      this.$refs['input'].addEventListener('blur', () => {
+        this.$emit('blur')
       }, false)
 
     }
@@ -77,20 +110,16 @@
 
 <style lang="scss">
 
-  $paddingTop: rem(0);
-  $paddingHorizontal: 0;
-  $fontSize: rem(1);
-  $labelSize: rem(-1);
+  $verticalPadding: rem(0);
+  $horizontalPadding: rem(0);
+  $fontSize: rem(0);
+  $labelSize: rem(-3);
 
   .un-input__wrapper {
     $this: &;
     position: relative; // for positioning __label
     width: 100%;
-
-    display: flex;
-    align-items: stretch;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    font-size: rem(0);
   }
 
   .un-input {
@@ -98,49 +127,80 @@
 
     @include reset-input;
 
-    // keep this above the __label
-    // so that <select> elements can
-    // be clicked
-    position: relative;
-    z-index: 2;
-
     // default styling
     width: 100%;
     padding:
-      ($paddingTop + ($labelSize * 1/2))
-      $paddingHorizontal
-      ($paddingTop - ($labelSize * 1/2));
+      ($verticalPadding + ($labelSize * 1/2))
+      $horizontalPadding
+      ($verticalPadding - ($labelSize * 1/2));
 
-    color: inherit;
+    color: palette(black);
+    font-family: font(system);
     font-size: $fontSize;
+
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: palette(gray, x-light);
+    background-color: palette(gray, xxx-light);
 
     &:focus {
       outline: none;
       background: none;
+      border-color: palette(blue, xx-light);
+      background-color: palette(blue, xxx-light);
     }
   }
 
   .un-input__label {
     position: absolute;
     z-index: 0; // keep this below .un-input
-    top: $paddingTop;
-    left: $paddingHorizontal;
+    top: $verticalPadding;
+    left: $horizontalPadding;
 
-    font-family: font(bold);
+    color: palette(gray);
+    font-family: font(sans);
+    letter-spacing: 0; // override
     line-height: line-height(base);
 
     transition:
       font-size .1s ease-in-out,
       transform .1s ease-in-out;
-    font-size: inherit;
+    font-size: $fontSize;
     transform: translate3d(0, 0, 0);
 
     @at-root {
 
       .un-input:focus ~ &,
       .un-input.is-dirty ~ & {
-        transform: translate3d(0, -#{ms(-3) / ms(0) * 100%}, 0);
+        transform: translate3d(0, -#{$labelSize * 1/2}, 0);
         font-size: $labelSize;
+      }
+    }
+  }
+
+  .un-input__errors__container {
+
+    @at-root ul#{&} {
+      // <ul> reset
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      color: palette(pink);
+      line-height: line-height(base);
+
+      font-size: $labelSize;
+      letter-spacing: 0; // override
+      text-align: left;
+
+      &:empty {
+        display: none;
+      }
+
+      > li {
+        // <li> reset
+        margin-top: (rem(-3) * 1/2);
       }
     }
   }

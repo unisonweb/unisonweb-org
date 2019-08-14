@@ -2,6 +2,9 @@ import '~/assets/styles/main.scss'
 
 import VueSimpleMarkdown from 'vue-simple-markdown'
 import VueScrollTo from 'vue-scrollto'
+import VeeValidate from 'vee-validate'
+
+import formOptions from '~/assets/scripts/formOptions'
 
 import SiteMain from '~/layouts/SiteMain.vue'
 
@@ -28,6 +31,7 @@ export default function (Vue, {router, head, isClient, isServer, appOptions}) {
   // 3rd party components/libraries
   Vue.use(VueSimpleMarkdown)
   Vue.use(VueScrollTo)
+  Vue.use(VeeValidate, formOptions)
 
   if (isClient) {
     require('~/assets/scripts/lazyLoad')

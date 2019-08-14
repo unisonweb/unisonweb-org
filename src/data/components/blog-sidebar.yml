@@ -1,0 +1,12 @@
+categories:
+  heading: Categories
+subscribeForm:
+  heading: Updates
+  blurb: |
+    Never miss an update! Get new blog posts delivered straight to your inbox.
+  errorMessage: Oops, something went wrong. Please try again.
+  successMessage: Message successful! We’ll get back to you ASAP.
+  emailInput:
+    label: Email address
+    validationMessage: Please enter a valid email address
+  submitButtonLabel: Sign Me Up →
