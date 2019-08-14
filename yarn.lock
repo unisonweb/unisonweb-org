@@ -5704,6 +5704,11 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
+medium-zoom@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/medium-zoom/-/medium-zoom-1.0.4.tgz#b1063093f81151a19989489589edf28e6090630c"
+  integrity sha512-BjE+00gQku3XQfgHDcqyYwQaBtFddzh6Lnj1RZOliqJ9HS0mh/P2IaqVJ25/j9EbnjAUf27mLeLZBRxnd00bfA==
+
 mem@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/mem/-/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
@@ -7976,6 +7981,14 @@ remark-squeeze-paragraphs@^3.0.2:
   integrity sha512-Wmz5Yj9q+W1oryo8BV17JrOXZgUKVcpJ2ApE2pwnoHwhFKSk4Wp2PmFNbmJMgYSqAdFwfkoe+TSYop5Fy8wMgA==
   dependencies:
     mdast-squeeze-paragraphs "^3.0.0"
+
+remark-unwrap-images@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/remark-unwrap-images/-/remark-unwrap-images-1.0.0.tgz#25ae98c2c68bec7797eb27ea41642ae70c7d69db"
+  integrity sha512-/I3QL5Bi5OqXCN9tlgaQZ1UA62ZeElZxUEt4L3BwkvAF1/qYWlVtMOflyFyCLtbMCYhEqrLx4osKSgEEDZaH6Q==
+  dependencies:
+    hast-util-whitespace "^1.0.0"
+    unist-util-visit "^1.4.0"
 
 remove-trailing-separator@^1.0.1:
   version "1.1.0"

@@ -1,23 +1,18 @@
 <template>
-  <un-site-main
-    :with-search="true"
-    :is-inverted="true">
-    <div class="container">
-      <un-page-section>
+  <un-docs>
 
-        <div class="un-doc-page">
-          <un-content :content="$page.doc.content" />
-          <un-sidebar :headings="$page.doc.headings" />
-        </div>
-
-      </un-page-section>
+    <div class="un-doc-page">
+      <un-content :content="$page.doc.content" />
+      <un-doc-sidebar :headings="$page.doc.headings" />
     </div>
-  </un-site-main>
+
+  </un-docs>
 </template>
 
 <script>
+  import Docs from '~/layouts/Docs'
+  import DocSidebar from '~/layouts/partials/DocSidebar/DocSidebar'
   import Content from '~/components/Content'
-  import Sidebar from '~/components/Sidebar/Sidebar'
 
   export default {
     metaInfo() {
@@ -32,14 +27,10 @@
         }],
       }
     },
-    computed: {
-      sidebarNav() {
-        return sidebarNav
-      },
-    },
     components: {
+      'un-docs': Docs,
       'un-content': Content,
-      'un-sidebar': Sidebar,
+      'un-doc-sidebar': DocSidebar,
     },
   }
 </script>

@@ -36,6 +36,7 @@ function getPlugins() {
           /(un-).*/,
           /(is-).*/,
           /(line-numbers).*/,
+          /(medium-zoom).*/,
         ],
         keyframes: true,
         extractors: [{
