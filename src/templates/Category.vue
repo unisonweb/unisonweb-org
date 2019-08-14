@@ -1,12 +1,16 @@
 <template>
   <un-blog>
+
     <un-post-excerpts :posts="posts" />
+    <un-pagination :info="$page.category.belongsTo.pageInfo" />
+
   </un-blog>
 </template>
 
 <script>
   import Blog from '~/layouts/Blog'
   import PostExcerpts from '~/components/PostExcerpts'
+  import Pagination from '~/components/Pagination'
 
   export default {
     metaInfo() {
@@ -29,6 +33,7 @@
     components: {
       'un-blog': Blog,
       'un-post-excerpts': PostExcerpts,
+      'un-pagination': Pagination,
     },
   }
 </script>
@@ -38,10 +43,10 @@
 </style>
 
 <page-query>
-  query Category ($path: String!) {
+  query Category ($path: String!, $page: Int) {
     category: category (path: $path) {
       title
-      belongsTo {
+      belongsTo (perPage: 5, page: $page) @paginate {
         pageInfo {
           totalPages
           currentPage

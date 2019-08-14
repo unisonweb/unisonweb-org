@@ -83,7 +83,7 @@
     }
 
     h1, h2, h3, h4, h5, h6 {
-      margin-top: em(5);
+      margin-top: em(3);
 
       &:first-child {
         margin-top: 0;
@@ -139,7 +139,7 @@
     }
 
     h1 {
-      font-size: responsive rem(6) rem(8);
+      font-size: responsive rem(5) rem(7);
       font-range: breakpoint(xs, max) breakpoint(xl);
 
       > a {
@@ -147,7 +147,7 @@
       }
     }
     h2 {
-      font-size: responsive rem(4) rem(5);
+      font-size: responsive rem(3) rem(4);
       font-range: breakpoint(xs, max) breakpoint(xl);
     }
     h3, h4 {
@@ -159,7 +159,7 @@
       font-range: breakpoint(xs, max) breakpoint(xl);
     }
 
-    p:first-of-type {
+    > p:first-of-type {
       font-size: responsive rem(1) rem(2);
       font-range: breakpoint(xs, max) breakpoint(xl);
     }
@@ -180,8 +180,8 @@
         width: 100%;
       }
 
-      margin-top: rem(6);
-      margin-bottom: rem(6);
+      margin-top: dim(pageSection, sm);
+      margin-bottom: dim(pageSection, sm);
     }
 
     ul, ol {
@@ -267,6 +267,15 @@
           }
         }
       }
+    }
+
+    blockquote {
+      margin-top: dim(pageSection, sm);
+      margin-bottom: dim(pageSection, sm);
+      padding: rem(3);
+
+      border-left: 2px solid palette(yellow, xx-light);
+      background-color: palette(yellow, xxx-light);
     }
   }
 

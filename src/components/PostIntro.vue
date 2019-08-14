@@ -4,7 +4,7 @@
     <h1
       class="un-post-intro__heading">
       <un-link
-        v-if="linkHeadingToPost"
+        v-if="headingLink"
         :url="post.path">
         {{post.title}}
       </un-link>
@@ -43,7 +43,7 @@
   export default {
     props: {
       post: { type: Object, default: null },
-      linkHeadingToPost: { type: Boolean, default: false },
+      headingLink: { type: Boolean, default: false },
     },
     computed: {
       category() {
@@ -56,7 +56,21 @@
 <style lang="scss">
 
   .un-post-intro {
-    // intentionally blank
+
+    & + .un-content {
+
+      @include max-screen(breakpoint(xs, max)) {
+        margin-top: (dim(pageSection, xs) * 1/2);
+      }
+
+      @include min-screen(breakpoint(sm)) {
+        margin-top: (dim(pageSection, sm) * 1/2);
+      }
+
+      @include min-screen(breakpoint(md)) {
+        margin-top: (dim(pageSection, md) * 1/2);
+      }
+    }
   }
 
   .un-post-intro__heading {
@@ -82,12 +96,20 @@
     letter-spacing: 0; // override
     line-height: line-height(base);
 
+    &, &:hover {
+      text-decoration: none;
+    }
+
     border-radius: 4px;
 
     @each $palette, $value in $UCpalettes {
 
       &[data-color="#{$palette}"] {
         background-color: palette($palette);
+
+        &:hover {
+          background-color: palette($palette, bright);
+        }
       }
     }
   }

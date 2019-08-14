@@ -73,14 +73,17 @@ hr {
 }
 
 code {
-  display: inline;
+  display: inline-block;
 
+  margin-right: (em(0) * 1/8);
+  margin-left: (em(0) * 1/8);
   padding-right: (em(0) * 1/4);
   padding-left: (em(0) * 1/4);
 
   color: palette(gray, dark);
   font-family: font(mono);
+  font-size: em(-1);
 
   border-radius: (em(-2) * 1/4);
-  background-color: palette(gray, xxx-light);
+  background-color: rgba(palette(black), 0.05);
 }

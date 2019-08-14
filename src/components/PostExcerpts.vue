@@ -1,19 +1,20 @@
 <template>
-  <div class="un-post-excerpts">
+  <ul class="un-post-excerpts">
+    <li v-for="(post, i) in posts" :key="i">
 
-    <un-post-intro
-      v-for="(post, i) in posts" :key="i"
-      :post="post"
-      :link-heading-to-post="true">
-      <p v-text="post.description" />
-      <un-link
-        class="u-inline-block u-margin--top u-color--lightpurple u-bold"
-        :url="post.path">
-        Read More &rarr;
-      </un-link>
-    </un-post-intro>
+      <un-post-intro
+        :post="post"
+        :heading-link="true">
+        <p v-text="post.description" />
+        <un-link
+          class="u-inline-block u-margin--top u-color--lightpurple u-bold"
+          :url="post.path">
+          Read More &rarr;
+        </un-link>
+      </un-post-intro>
 
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -32,7 +33,33 @@
 <style lang="scss">
 
   .un-post-excerpts {
-    // intentionally blank
+
+    @at-root ul#{&} {
+      // <ul> reset
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      > li {
+        // <li> reset
+        margin: 0;
+
+        &:not(:last-child) {
+
+          @include max-screen(breakpoint(xs, max)) {
+            margin-bottom: dim(pageSection, xs);
+          }
+
+          @include min-screen(breakpoint(sm)) {
+            margin-bottom: dim(pageSection, sm);
+          }
+
+          @include min-screen(breakpoint(md)) {
+            margin-bottom: dim(pageSection, md);
+          }
+        }
+      }
+    }
   }
 
 </style>
