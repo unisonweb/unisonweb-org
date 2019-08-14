@@ -43,6 +43,7 @@ const codeExtraOptions = {
 const plugins = [
   'remark-code-frontmatter',
   [ 'remark-code-extra', codeExtraOptions ],
+  'remark-unwrap-images',
 ]
 
 module.exports = plugins
