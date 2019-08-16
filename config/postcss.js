@@ -30,12 +30,12 @@ function getPlugins() {
         ],
         whitelist: [
           'body',
-          'token',
         ],
         whitelistPatterns: [
           /(un-).*/,
           /(is-).*/,
           /(line-numbers).*/,
+          /(token).*/,
           /(medium-zoom).*/,
         ],
         keyframes: true,
