@@ -7,11 +7,11 @@
     &.comment { color: palette(gray, light); }
     &.char {}
     &.string { color: palette(black); }
-    &.keyword { color: palette(green); }
+    &.keyword { color: palette(aqua); }
     &.import_statement {}
     &.builtin { color: palette(blue); }
-    &.number { color: palette(green); }
-    &.operator { color: palette(green); }
+    &.number { color: palette(aqua); }
+    &.operator { color: palette(aqua); }
     &.hvariable { color: palette(gray, xx-dark); }
     &.constant { color: palette(purple); }
     &.punctuation { color: palette(pink); }

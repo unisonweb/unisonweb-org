@@ -125,8 +125,8 @@
   }
 
   .un-form__success-message {
-    color: palette(green, xx-dark);
-    background-color: palette(green, x-light);
+    color: palette(aqua, xx-dark);
+    background-color: palette(aqua, x-light);
   }
 
 </style>
