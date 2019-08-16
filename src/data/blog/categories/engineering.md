@@ -4,5 +4,3 @@ title: Engineering
 emoji: ⚛️
 color: pink
 ---
-
-placeholder

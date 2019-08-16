@@ -4,5 +4,3 @@ title: News
 emoji: 📰
 color: purple
 ---
-
-placeholder

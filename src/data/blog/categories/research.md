@@ -4,5 +4,3 @@ title: Research
 emoji: 🔬
 color: green
 ---
-
-placeholder
