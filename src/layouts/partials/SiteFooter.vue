@@ -3,7 +3,7 @@
     <un-page-section tag="div" size="small">
       <div class="container">
 
-        <vue-simple-markdown :source="componentContent.meta" />
+        <vue-markdown :source="componentContent.meta" />
 
       </div>
     </un-page-section>

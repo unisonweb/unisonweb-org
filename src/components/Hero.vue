@@ -16,7 +16,7 @@
               v-html="heading"
             />
 
-            <vue-simple-markdown
+            <vue-markdown
               class="un-hero__blurb"
               :source="blurb"
             />

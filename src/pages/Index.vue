@@ -15,7 +15,7 @@
         <div class="row center-xs u-align--left">
           <div class="col-xs-12 col-sm-10 col-md-12">
 
-            <vue-simple-markdown
+            <vue-markdown
               :source="pageContent.intro"
               class="u-drop-cap"
               data-font-size="2"

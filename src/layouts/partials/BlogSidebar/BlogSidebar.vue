@@ -20,7 +20,7 @@
           data-font-size="2"
           v-text="componentContent.subscribeForm.heading"
         />
-        <vue-simple-markdown
+        <vue-markdown
           class="u-margin--bottom"
           data-font-size="-2"
           :source="componentContent.subscribeForm.blurb"

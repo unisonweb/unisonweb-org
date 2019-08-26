@@ -1,6 +1,6 @@
 import '~/assets/styles/main.scss'
 
-import VueSimpleMarkdown from 'vue-simple-markdown'
+import VueMarkdown from 'vue-markdown'
 import VueScrollTo from 'vue-scrollto'
 import VeeValidate from 'vee-validate'
 
@@ -29,7 +29,7 @@ export default function (Vue, {router, head, isClient, isServer, appOptions}) {
   Vue.component('inline-svg', InlineSvg)
 
   // 3rd party components/libraries
-  Vue.use(VueSimpleMarkdown)
+  Vue.component('vue-markdown', VueMarkdown)
   Vue.use(VueScrollTo)
   Vue.use(VeeValidate, formOptions)
 

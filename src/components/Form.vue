@@ -3,7 +3,7 @@
     ref="formWrapper"
     class="un-form__wrapper u-invisible animated fadeIn">
 
-    <vue-simple-markdown
+    <vue-markdown
       v-show="showErrorMessage && errorMessage"
       class="un-form__error-message"
       :source="errorMessage"
@@ -30,7 +30,7 @@
 
     </ValidationObserver>
 
-    <vue-simple-markdown
+    <vue-markdown
       v-show="showSuccessMessage && successMessage"
       class="un-form__success-message"
       :source="successMessage"

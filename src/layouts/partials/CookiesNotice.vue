@@ -21,7 +21,7 @@
         for="cookies-notice"
         v-text="'&times;'"
       />
-      <vue-simple-markdown
+      <vue-markdown
         class="un-cookies-notice"
         :source="componentContent.blurb"
       />
