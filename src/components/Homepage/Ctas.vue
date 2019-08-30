@@ -45,7 +45,7 @@
 
 <style lang="scss">
 
-  $headingFontSize: rem(6);
+  $headingFontSize: rem(8);
   $defaultFontSize: rem(0);
   $itemPadding: rem(4);
   $iconSize: rem(5);
@@ -83,6 +83,7 @@
     }
 
     font-size: $headingFontSize;
+    letter-spacing: -2px;
     line-height: line-height(base); // align top edge of text with top edge of parent element
   }
 
@@ -162,6 +163,7 @@
   .un-homepage-cta__label {
     color: palette(black);
     font-family: font(bold);
+    letter-spacing: 0;
   }
 
   .un-homepage-ctas__button {

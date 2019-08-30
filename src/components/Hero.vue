@@ -1,8 +1,8 @@
 <template>
-  <header class="un-hero">
-    <un-page-section tag="div" size="large">
+  <div class="container">
+    <header class="un-hero">
+      <un-page-section tag="div" size="large">
 
-      <div class="container">
         <div class="row center-xs start-md u-align--center@xs u-align--center@sm u-align--left">
           <div class="col-xs-12 col-sm-9 col-md-6">
 
@@ -31,12 +31,12 @@
 
           </div>
         </div>
-      </div>
 
-      <slot />
+        <slot />
 
-    </un-page-section>
-  </header>
+      </un-page-section>
+    </header>
+  </div>
 </template>
 
 <script>
