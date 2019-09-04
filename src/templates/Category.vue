@@ -1,7 +1,7 @@
 <template>
   <un-blog>
 
-    <un-post-excerpts :posts="posts" />
+    <un-post-excerpts :blog-posts="blogPosts" />
     <un-pagination :info="$page.category.belongsTo.pageInfo" />
 
   </un-blog>
@@ -26,7 +26,7 @@
       }
     },
     computed: {
-      posts() {
+      blogPosts() {
         return this.$page.category.belongsTo.edges.map(edge => edge.node)
       },
     },

@@ -1,14 +1,14 @@
 <template>
   <ul class="un-post-excerpts">
-    <li v-for="(post, i) in posts" :key="i">
+    <li v-for="(blogPost, i) in blogPosts" :key="i">
 
       <un-post-intro
-        :post="post"
+        :blog-post="blogPost"
         :heading-link="true">
-        <p v-text="post.description" />
+        <p v-text="blogPost.description" />
         <un-link
           class="u-inline-block u-margin--top u-color--lightpurple u-bold"
-          :url="post.path">
+          :url="blogPost.path">
           Read More &rarr;
         </un-link>
       </un-post-intro>
@@ -22,7 +22,7 @@
 
   export default {
     props: {
-      posts: { type: Array, default: null },
+      blogPosts: { type: Array, default: null },
     },
     components: {
       'un-post-intro': PostIntro,

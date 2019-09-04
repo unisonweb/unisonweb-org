@@ -1,7 +1,7 @@
 <template>
   <un-blog>
 
-    <un-post-excerpts :posts="posts" />
+    <un-post-excerpts :blog-posts="blogPosts" />
     <un-pagination :info="$page.allBlogPost.pageInfo" />
 
   </un-blog>
@@ -19,7 +19,7 @@
       pageContent() {
         return pageContent
       },
-      posts() {
+      blogPosts() {
         return this.$page.allBlogPost.edges.map(edge => edge.node)
       },
     },
@@ -53,11 +53,6 @@
           date (format: "MMMM D, YYYY")
           authors {
             title
-          }
-          categories {
-            path
-            title
-            color
           }
           content
         }

@@ -49,9 +49,6 @@
         return this.blogPost.categories[0]
       },
     },
-    mounted() {
-      console.log(this.blogPost.authors)
-    }
   }
 </script>
 
