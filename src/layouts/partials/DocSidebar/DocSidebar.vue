@@ -6,22 +6,6 @@
       class="un-doc-sidebar__stage"
       v-on-clickaway="closeSidebar">
 
-      <div class="un-doc-sidebar__page-title">
-        <label
-          class="un-doc-sidebar__mobile-sidebar-button"
-          for="sidebar-toggle">
-          <inline-svg
-            v-if="isVisible"
-            src="/media/x.svg"
-          />
-          <inline-svg
-            v-else
-            src="/media/menu.svg"
-          />
-        </label>
-        <span v-text="pageTitle" />
-      </div>
-
       <input
         ref="sidebarToggle"
         class="un-doc-sidebar__mobile-sidebar-toggle"
@@ -31,6 +15,16 @@
         hidden
         @change="handleChange"
       />
+
+      <div class="un-doc-sidebar__page-title">
+        <label
+          class="un-doc-sidebar__mobile-sidebar-button"
+          for="sidebar-toggle"
+          role="button">
+          <inline-svg src="/media/menu.svg" />
+        </label>
+        <span v-text="pageTitle" />
+      </div>
 
       <div class="un-doc-sidebar__wrapper">
         <div class="un-doc-sidebar">
@@ -88,7 +82,7 @@
       },
     },
     methods: {
-      closeSidebar() {
+      closeSidebar(e) {
 
         // check to prevent build errors
         if (process.isClient) {
@@ -97,12 +91,12 @@
         }
 
       },
-      handleChange() {
-        this.toggleSidebarVisbility()
+      handleChange(e) {
+        this.toggleSidebarVisbility(e.target.checked)
         this.preventBodyScrolling()
       },
-      toggleSidebarVisbility() {
-        this.isVisible = this.$refs['sidebarToggle'].checked
+      toggleSidebarVisbility(checked) {
+        this.isVisible = checked
       },
       preventBodyScrolling() {
 
@@ -179,6 +173,21 @@
     }
   }
 
+  .un-doc-sidebar__mobile-sidebar-toggle {
+    display: none;
+
+    &:checked {
+
+      & ~ .un-doc-sidebar__wrapper {
+
+        @include max-screen(breakpoint(sm, max)) {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+    }
+  }
+
   .un-doc-sidebar__page-title {
 
     @include max-screen(breakpoint(sm, max)) {
@@ -198,6 +207,23 @@
 
     @include min-screen(breakpoint(md)) {
       display: none;
+    }
+  }
+
+  .un-doc-sidebar__mobile-sidebar-button {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate3d(0, -50%, 0);
+
+    &, & > svg {
+      display: block;
+      width: $iconSize;
+      height: $iconSize;
+    }
+
+    > svg {
+      fill: currentColor;
     }
   }
 
@@ -235,38 +261,6 @@
 
     @include max-screen(breakpoint(sm, max)) {
       padding: rem(4) rem(3);
-    }
-  }
-
-  .un-doc-sidebar__mobile-sidebar-button {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate3d(0, -50%, 0);
-
-    &, & > svg {
-      display: block;
-      width: $iconSize;
-      height: $iconSize;
-    }
-
-    > svg {
-      fill: currentColor;
-    }
-  }
-
-  .un-doc-sidebar__mobile-sidebar-toggle {
-    display: none;
-
-    &:checked {
-
-      & ~ .un-doc-sidebar__wrapper {
-
-        @include max-screen(breakpoint(sm, max)) {
-          opacity: 1;
-          transform: translate3d(0, 0, 0);
-        }
-      }
     }
   }
 

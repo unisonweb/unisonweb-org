@@ -7,6 +7,7 @@
     <div
       class="un-search-box__wrapper animated fadeIn"
       v-on-clickaway="closeSearchBox">
+
       <div
         class="un-search-box"
         @click="openSearchBox">
@@ -81,6 +82,7 @@
 
         </AisInstantSearchSsr>
       </div>
+
     </div>
 
     <span
@@ -124,12 +126,34 @@
   export default {
     data() {
       return {
+        isSidebarVisible: false,
         isLoading: true,
         isOpen: false,
         algoliaState: null,
       }
     },
+    computed: {
+      pageTitle() {
+        // const currentLink = find(this.links, link => {
+        //   return link.url === this.currentPath
+        // })
+
+        // return currentLink ? currentLink.label : null
+        return 'some page title'
+      },
+      forAttributeValue() {
+        return !this.isSidebarVisible ? 'sidebar-toggle' : false
+      },
+    },
     methods: {
+      toggleSidebarVisibility() {
+
+        // this.$nextTick(() => {
+        setTimeout(() => {
+          this.isSidebarVisible = !this.isSidebarVisible
+        }, 0)
+        // })
+      },
       openSearchBox() {
         this.isOpen = true
       },

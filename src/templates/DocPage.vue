@@ -40,7 +40,7 @@
   .un-doc-page {
 
     @include min-screen(breakpoint(md)) {
-      position: absolute; // for positioning __sidebar
+      position: relative; // for positioning __sidebar
 
       padding-right: (1/12 * 100%);
       padding-left: (4/12 * 100%);

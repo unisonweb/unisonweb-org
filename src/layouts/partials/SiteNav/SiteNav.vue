@@ -109,6 +109,7 @@
   .un-site-nav {
     position: relative;
 
+    height: dim(siteNav, logoHeight);
     line-height: line-height(base);
 
     @include min-screen(breakpoint(sm)) {
