@@ -1,6 +1,8 @@
 <template>
   <div class="un-site-main__stage">
 
+    <un-announcement-bar />
+
     <un-site-nav
       :with-search="withSearch"
       :is-inverted="isInverted"
@@ -24,12 +26,14 @@
 
 <script>
   import siteNavProps from '~/mixins/siteNavProps'
+  import AnnouncementBar from '~/components/AnnouncementBar'
   import SiteNav from './partials/SiteNav/SiteNav'
   import SiteFooter from './partials/SiteFooter'
   import CookiesNotice from './partials/CookiesNotice'
 
   export default {
     components: {
+      'un-announcement-bar': AnnouncementBar,
       'un-site-nav': SiteNav,
       'un-site-footer': SiteFooter,
       'un-cookies-notice': CookiesNotice,
@@ -47,6 +51,7 @@
   }
 
   .un-site-main__wrapper {
+    position: relative; // for positioning .un-doc-sidebar components
 
     @include max-screen(breakpoint(sm, max)) {
       min-height: calc(100vh - #{(

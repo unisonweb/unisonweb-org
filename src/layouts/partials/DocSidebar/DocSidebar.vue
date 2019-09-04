@@ -139,8 +139,8 @@
 
       @include max-screen(breakpoint(sm, max)) {
         content: '';
-        position: absolute;
-        top: ($mobileSearchHeight * 2);
+        position: absolute; // relataive to .un-site-main__stage
+        top: 0;
         bottom: 0;
         left: 50%;
         transform: translate3d(-50%, 0, 0);
@@ -190,10 +190,18 @@
 
   .un-doc-sidebar__page-title {
 
+    // @include max-screen(breakpoint(xs, max)) {
+    //   top: 0;
+    // }
+
+    // @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
+    //   top: -#{$mobileSearchHeight * 1/2};
+    // }
+
     @include max-screen(breakpoint(sm, max)) {
-      position: absolute;
+      position: absolute; // relataive to .un-site-main__wrapper
+      top: -#{$mobileSearchHeight * 1/2};
       z-index: layers(docSidebarTitle);
-      top: ($mobileSearchHeight + ($mobileSearchHeight * 1/2));
       left: rem(3);
       transform: translate3d(0, -50%, 0);
 
@@ -238,8 +246,8 @@
     }
 
     @include max-screen(breakpoint(sm, max)) {
-      position: absolute; // relative to <body>
-      top: ($mobileSearchHeight * 2);
+      position: absolute; // relataive to .un-site-main__wrapper
+      top: 0;
       left: 0;
 
       height: calc(100vh - #{$mobileSearchHeight * 2});
