@@ -2,7 +2,7 @@
 title: March Update
 description: placeholder
 date: 2019-03-29
-author: Arya Irani
+authors: ["arya-irani"]
 categories: ["news"]
 ---
 Hi all — it's been 464 commits since our last update post, and I hardly know where to start...

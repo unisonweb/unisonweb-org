@@ -22,7 +22,7 @@ module.exports = {
       route: ':slug',
       remark: true
     }
-  },{
+  }, {
     // blog posts
     use: '@gridsome/source-filesystem',
     options: {
@@ -32,8 +32,18 @@ module.exports = {
       route: '/:year/:month/:day/:slug',
       remark: true,
       refs: {
-        categories: 'Category'
+        authors: 'Author',
+        categories: 'Category',
       }
+    }
+  }, {
+    // author references
+    use: '@gridsome/source-filesystem',
+    options: {
+      typeName: 'Author',
+      baseDir: './src/data/blog/authors',
+      path: '*.md',
+      route: '/author/:id'
     }
   }, {
     // category indexes

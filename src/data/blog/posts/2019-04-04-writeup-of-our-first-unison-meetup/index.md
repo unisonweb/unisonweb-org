@@ -2,8 +2,8 @@
 title: Writeup of our first Unison meetup
 description: placeholder
 date: 2019-04-04
-author: Paul Chuisano
-categories: ["news"]
+authors: ["paul-chiusano"]
+categories: ["news", "announcements"]
 ---
 We had our [first ever Unison meetup last Tuesday](https://www.meetup.com/Boston-Unison/events/259532783/)! If you missed it or just want to look back on it fondly (or if like me you struggle to remember anything from more than 2 days ago..), this post is for you!! Myself, Arya, and Rúnar planned the agenda and presented. Overall: it was a lot of fun and I found it meaningful and motivating, thanks to everyone who came and who helped make it a success!
 

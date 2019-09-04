@@ -58,7 +58,9 @@
               title
               description
               date (format: "MMMM D, YYYY")
-              author
+              authors {
+                title
+              }
               categories {
                 path
                 title
