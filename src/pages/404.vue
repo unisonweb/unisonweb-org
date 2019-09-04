@@ -41,12 +41,22 @@
 <style lang="scss">
 
   .un-404-hero {
-    min-height: calc(
-      100vh -
-      #{dim(siteNav, verticalPadding) +
-        dim(siteNav, logoHeight) +
-        dim(siteNav, verticalPadding)}
-    );
+
+    @include max-screen(breakpoint(sm, max)) {
+      min-height: calc(100vh - #{(
+        dim(siteNav, mobilePadding)
+      + dim(siteNav, logoHeight)
+      + dim(siteNav, mobilePadding)
+      )});
+    }
+
+    @include min-screen(breakpoint(md)) {
+      min-height: calc(100vh - #{(
+        dim(siteNav, padding)
+      + dim(siteNav, logoHeight)
+      + dim(siteNav, padding)
+      )});
+    }
 
     color: palette(white);
     text-align: center;

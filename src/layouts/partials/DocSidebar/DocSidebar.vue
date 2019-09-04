@@ -50,6 +50,7 @@
 
 <script>
   import find from 'lodash.find'
+  import flatten from 'lodash.flatten'
   import { mixin as clickaway } from 'vue-clickaway'
   import componentContent from '~/data/components/doc-sidebar.yml'
   import LinkSets from './LinkSets'
@@ -71,9 +72,16 @@
       currentPath() {
         return this.$route.matched[0].path
       },
+      links() {
+        const links = this.componentContent.linkSets.map(linkSet => {
+          return linkSet.links
+        })
+
+        return flatten(links)
+      },
       pageTitle() {
         const currentLink = find(this.links, link => {
-          return link.path === this.currentPath
+          return link.url === this.currentPath
         })
 
         return currentLink ? currentLink.label : null
@@ -125,24 +133,21 @@
 <style lang="scss">
 
   $iconSize: rem(3);
+  $mobileSearchHeight: (
+    dim(siteNav, mobilePadding)
+  + dim(siteNav, logoHeight)
+  + dim(siteNav, mobilePadding)
+  );
 
   .un-doc-sidebar__platform {
 
     &:before {
 
-      @include max-screen(breakpoint(xs, max)) {
-        top: -#{dim(pageSection, xs)};
-        bottom: -#{dim(pageSection, xs)};
-      }
-
-      @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
-        top: -#{dim(pageSection, sm)};
-        bottom: -#{dim(pageSection, sm)};
-      }
-
       @include max-screen(breakpoint(sm, max)) {
         content: '';
         position: absolute;
+        top: ($mobileSearchHeight * 2);
+        bottom: 0;
         left: 50%;
         transform: translate3d(-50%, 0, 0);
         width: 100vw;
@@ -167,7 +172,7 @@
   .un-doc-sidebar__stage {
 
     @include min-screen(breakpoint(md)) {
-      position: absolute;
+      position: absolute; // relative to .un-doc-page
       top: 0;
       left: 0;
       width: (2.5/12 * 100%);
@@ -175,27 +180,14 @@
   }
 
   .un-doc-sidebar__page-title {
-    $searchHeight: (
-      dim(siteNav, fontSize)
-    + dim(siteNav, logoHeight)
-    + dim(siteNav, fontSize)
-    );
-
-    @include max-screen(breakpoint(xs, max)) {
-      top: -#{dim(pageSection, xs) + ($searchHeight * 1/2)};
-    }
-
-    @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
-      top: -#{dim(pageSection, sm) + ($searchHeight * 1/2)};
-    }
 
     @include max-screen(breakpoint(sm, max)) {
       position: absolute;
-      z-index: layers(sidebar);
-      left: 0;
+      z-index: layers(docSidebarTitle);
+      top: ($mobileSearchHeight + ($mobileSearchHeight * 1/2));
+      left: rem(3);
       transform: translate3d(0, -50%, 0);
 
-      // 
       padding-left: (rem(3) + rem(0));
 
       color: palette(black);
@@ -212,37 +204,36 @@
   .un-doc-sidebar__wrapper {
 
     @include max-screen(breakpoint(xs, max)) {
-      top: -#{dim(pageSection, xs)};
-      width: (8/12 * 100%);
+      width: calc(#{8/12 * 100%} + #{dim(boxShadow, blur)});
     }
 
     @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
-      top: -#{dim(pageSection, sm)};
-      width: (4/12 * 100%);
+      width: calc(#{4/12 * 100%} + #{dim(boxShadow, blur)});
     }
 
     @include max-screen(breakpoint(sm, max)) {
-      position: absolute;
-      z-index: layers(sidebar);
-      bottom: 0;
-      left: -#{rem(3)};
+      position: absolute; // relative to <body>
+      top: ($mobileSearchHeight * 2);
+      left: 0;
 
-      background-color: palette(white);
-      @include drop-shadow;
+      height: calc(100vh - #{$mobileSearchHeight * 2});
 
       transition:
         opacity .5s ease-in-out,
         transform .5s ease-in-out;
       opacity: 0;
       transform: translate3d(-100%, 0, 0);
+
+      overflow-x: hidden;
+      overflow-y: scroll;
+
+      background-color: palette(white);
     }
   }
 
   .un-doc-sidebar {
 
     @include max-screen(breakpoint(sm, max)) {
-      overflow: scroll;
-
       padding: rem(4) rem(3);
     }
   }

@@ -139,7 +139,7 @@
     }
 
     h1 {
-      font-size: responsive rem(5) rem(7);
+      font-size: responsive rem(6) rem(7);
       font-range: breakpoint(xs, max) breakpoint(xl);
       letter-spacing: dim(letterSpacing, -3);
 
@@ -164,7 +164,8 @@
 
     > p:first-of-type {
       font-family: font(light);
-      font-size: rem(2);
+      font-size: responsive rem(1) rem(2);
+      font-range: breakpoint(xs, max) breakpoint(xl);
       letter-spacing: dim(letterSpacing, -2);
     }
 

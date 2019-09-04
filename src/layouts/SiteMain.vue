@@ -47,13 +47,22 @@
   }
 
   .un-site-main__wrapper {
-    $siteNavHeight: (
-      dim(siteNav, verticalPadding)
-    + dim(siteNav, logoHeight)
-    + dim(siteNav, verticalPadding)
-    );
 
-    min-height: calc(100vh - #{$siteNavHeight});
+    @include max-screen(breakpoint(sm, max)) {
+      min-height: calc(100vh - #{(
+        dim(siteNav, mobilePadding)
+      + dim(siteNav, logoHeight)
+      + dim(siteNav, mobilePadding)
+      )});
+    }
+
+    @include min-screen(breakpoint(md)) {
+      min-height: calc(100vh - #{(
+        dim(siteNav, padding)
+      + dim(siteNav, logoHeight)
+      + dim(siteNav, padding)
+      )});
+    }
 
     display: flex;
     flex-direction: column;

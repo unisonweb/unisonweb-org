@@ -1,9 +1,10 @@
 $UClayers: (
-  mediumZoom: 9999,
-  cookiesNotice: 4000,
-  searchBox: 3000,
-  siteNav: 2000,
-  sidebar: 1000
+  cookiesNotice: 9999,
+  mediumZoom: 9998,
+  searchBoxOpen: 5000,
+  docSidebarTitle: 4000,
+  siteNav: 3000,
+  docSidebar: 2000
 );
 
 @function layers($index) {

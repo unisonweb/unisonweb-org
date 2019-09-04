@@ -1,88 +1,100 @@
 <template>
   <div
     v-if="!isLoading"
-    class="un-search-box__stage animated fadeIn"
-    :class="{ 'is-open' : isOpen }"
-    v-on-clickaway="closeSearchBox">
+    class="un-search-box__stage"
+    :class="{ 'is-open' : isOpen }">
 
     <div
-      class="un-search-box"
-      @click="openSearchBox">
-      <AisInstantSearchSsr>
+      class="un-search-box__wrapper animated fadeIn"
+      v-on-clickaway="closeSearchBox">
+      <div
+        class="un-search-box"
+        @click="openSearchBox">
+        <AisInstantSearchSsr>
 
-        <label
-          class="un-search-box__search-icon"
-          for="search">
-          <inline-svg src="/media/icon-search.svg" />
-        </label>
+          <label
+            class="un-search-box__search-icon"
+            for="search">
+            <inline-svg src="/media/icon-search.svg" />
+          </label>
 
-        <AisSearchBox placeholder="Search" />
+          <AisSearchBox placeholder="Search" />
 
-        <AisStateResults>
-          <template slot-scope="{ query, hits }">
+          <AisStateResults>
+            <template slot-scope="{ query, hits }">
 
-            <div
-              v-if="query"
-              class="un-search-box__results">
+              <div
+                v-if="query"
+                class="un-search-box__results">
 
-              <p
-                v-if="hits.length === 0"
-                class="un-search-box__no-results-message">
-                No results found matching <em>{{ query }}</em>
-              </p>
+                <p
+                  v-if="hits.length === 0"
+                  class="un-search-box__no-results-message">
+                  No results found matching <em>{{ query }}</em>
+                </p>
 
-              <AisHits :escape-HTML="true">
-                <template slot="item" slot-scope="{ item }">
+                <AisHits :escape-HTML="true">
+                  <template slot="item" slot-scope="{ item }">
 
-                  <h1>
-                    <g-link
-                      :to="item.path">
-                      <AisHighlight
-                        :hit="item"
-                        attribute="title"
-                      />
-                    </g-link>
-                  </h1>
+                    <span class="un-search-box__results__item">
+                      <g-link
+                        class="u-font--bold"
+                        :to="item.path">
+                        <AisHighlight
+                          :hit="item"
+                          attribute="title"
+                        />
+                      </g-link>
+                    </span>
 
-                  <p
-                    v-for="(heading, i) in item._highlightResult.headings" :key="i"
-                    v-if="heading.value.matchLevel !== 'none'">
-                    <a
-                      v-if="item.path === $route.path"
-                      href="#"
-                      v-scroll-to="{
-                        el: item.headings[i].anchor,
-                        onStart: closeSearchBox,
-                      }">
-                      <span v-html="heading.value.value" />
-                    </a>
-                    <g-link
-                      v-else
-                      :to="`${item.path}${item.headings[i].anchor}`">
-                      <span v-html="heading.value.value" />
-                    </g-link>
-                  </p>
+                    <span
+                      v-for="(heading, i) in item._highlightResult.headings" :key="i"
+                      v-if="heading.value.matchLevel !== 'none'"
+                      class="un-search-box__results__item u-color--gray"
+                      data-font-size="-2">
+                      <a
+                        v-if="item.path === $route.path"
+                        href="#"
+                        v-scroll-to="{
+                          el: item.headings[i].anchor,
+                          onStart: closeSearchBox,
+                        }">
+                        <span v-html="heading.value.value" />
+                      </a>
+                      <g-link
+                        v-else
+                        :to="`${item.path}${item.headings[i].anchor}`">
+                        <span v-html="heading.value.value" />
+                      </g-link>
+                    </span>
 
-                </template>
-              </AisHits>
+                  </template>
+                </AisHits>
 
-            </div>
+              </div>
 
-            <!-- span to fill `ais-search-results` default slot -->
-            <span v-else />
+              <!-- span to fill `ais-search-results` default slot -->
+              <span v-else />
 
-          </template>
-        </AisStateResults>
+            </template>
+          </AisStateResults>
 
-      </AisInstantSearchSsr>
+        </AisInstantSearchSsr>
+      </div>
     </div>
 
-    <button
-      v-if="isOpen"
-      class="un-search__close-button"
-      @click="closeSearchBox">
-      <inline-svg src="/media/icon-times.svg" />
-    </button>
+    <span
+      class="un-search-box__close-button animated"
+      :class="[ isOpen ? 'fadeIn' : 'fadeOut' ]">
+      <button @click="closeSearchBox">
+        <inline-svg src="/media/icon-times.svg" />
+      </button>
+    </span>
+
+    <span
+      class="un-search-box__faux-bg animated"
+      :class="[ isOpen ? 'fadeIn' : 'fadeOut' ]"
+    />
 
   </div>
 </template>
@@ -152,42 +164,100 @@
 
 <style lang="scss">
 
-  $iconSize: rem(2);
+  $animationSpeed: .25s;
+  $iconSize: rem(3);
+  $iconGap: rem(0);
+  $resultsBorderRadius: 8px;
+  $mobileSearchHeight: (
+    dim(siteNav, mobilePadding)
+  + dim(siteNav, logoHeight)
+  + dim(siteNav, mobilePadding)
+  );
   $layers: (
-    closeButton: 6,
-    icon: 5,
-    input: 4,
-    bg: 3,
-    results: 2,
-    shadow: 1
+    closeButton: 8,
+    searchIcon: 7,
+    searchBox: 6,
+    searchBoxWrapper: 5,
+    results: 4,
+    searchBoxStage: 2,
+    fauxBg: 1
   );
 
   .un-search-box__stage {
+
+    &.is-open {
+
+      @include max-screen(breakpoint(xs, max)) {
+        position: relative;
+      }
+
+      @include max-screen(breakpoint(sm, max)) {
+        z-index: layers(searchBoxOpen);
+      }
+
+      .un-search-box__wrapper {
+
+        @include min-screen(breakpoint(md)) {
+          top: -#{dim(siteNav, padding)};
+          bottom: -#{dim(siteNav, padding)};
+          right: $iconSize; // make room for the __close-button
+          left: ($iconSize + $iconGap);
+
+          padding-top: dim(siteNav, padding);
+          padding-bottom: dim(siteNav, padding);
+
+          color: palette(black);
+        }
+      }
+
+      .un-search-box {
+
+        @include max-screen(breakpoint(sm, max)) {
+          right: (rem(3) + $iconSize + $iconGap);
+          left: (rem(3) + $iconSize + $iconGap);
+
+          margin-right: unset;
+        }
+      }
+
+      .un-search-box__results {
+        opacity: 1;
+      }
+
+      .un-search-box__results,
+      .un-search-box__faux-bg,
+      .un-search-box__close-button {
+        pointer-events: auto;
+      }
+    }
+  }
+
+  .un-search-box__wrapper {
     position: absolute;
+    z-index: map-get($layers, searchBoxWrapper);
 
     @include max-screen(breakpoint(sm, max)) {
-      top: 100%;
-      right: 0;
-      left: 0;
+      top: calc(100% + #{dim(siteNav, mobilePadding)});
+      right: -#{rem(3)};
+      left: -#{rem(3)};
 
-      height: (
-        dim(siteNav, fontSize)
-      + dim(siteNav, logoHeight)
-      + dim(siteNav, fontSize)
-      );
+      height: $mobileSearchHeight;
 
-      margin-top: dim(siteNav, verticalPadding);
+      padding-right: rem(3);
+      padding-left: rem(3);
 
       color: palette(black);
+      background-color: palette(white);
+
+      @include drop-shadow;
     }
 
     @include min-screen(breakpoint(md)) {
       top: 0;
       bottom: 0;
       right: (4/12 * 100%);
-      background-color: palette(black);
 
-      transition: all .5s ease-in-out;
+      transition: all $animationSpeed ease-in-out;
     }
 
     // calculate the left-edge to align with the
@@ -204,122 +274,27 @@
     @include min-screen(container(lg)) {
       left: (3/12 * container(lg));
     }
-
-    &.is-open {
-      z-index: layers(searchBox);
-
-      @include min-screen(breakpoint(md)) {
-        top: -#{dim(siteNav, verticalPadding)};
-        bottom: -#{dim(siteNav, verticalPadding)};
-        right: 0;
-        left: 0;
-
-        padding-top: dim(siteNav, verticalPadding);
-        padding-bottom: dim(siteNav, verticalPadding);
-
-        // this calculation keeps the left-edge of
-        // the text aligned with the left-edge of
-        // the links in the sidebar
-        padding-left: $iconSize;
-
-        color: palette(black);
-        background-color: palette(white);
-
-        &:before,
-        &:after {
-          display: block;
-        }
-      }
-
-      .un-search-box {
-
-        @include max-screen(breakpoint(sm, max)) {
-          max-width: 100vw;
-          margin-right: unset;
-        }
-      }
-
-      .un-search-box__results {
-        opacity: 1;
-        pointer-events: auto;
-      }
-    }
-
-    // faux background-color and drop shadow
-    // that spans the entire width of the
-    // screen. this becomes visible when the
-    // search input is clicked and on
-    // mobile/tablet screens
-    &:before,
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translate3d(-50%, 0, 0);
-      width: 100vw;
-      height: 100%;
-
-      display: none;
-
-      @include max-screen(breakpoint(sm, max)) {
-        display: block;
-      }
-    }
-
-    &:before {
-      z-index: map-get($layers, bg);
-      background-color: palette(white);
-    }
-
-    &:after {
-      z-index: map-get($layers, shadow);
-      @include drop-shadow;
-    }
   }
 
   .un-search-box {
-    position: relative; // for positioning __icon
-
-    width: 100%;
+    z-index: map-get($layers, searchBox);
     height: dim(siteNav, logoHeight);
-    padding-left: (rem(3) + rem(0));
-
-    @include max-screen(breakpoint(xs, max)) {
-      margin-right: -#{rem(0)};
-    }
 
     @include max-screen(breakpoint(sm, max)) {
       position: absolute;
-      top: dim(siteNav, fontSize);
-      right: 0;
+      top: dim(siteNav, mobilePadding);
+      right: (rem(3) - $iconGap);
 
       // when open, prevent __page-title
       // from peeking through from underneath
       background-color: palette(white);
 
-      transition: max-width .5s ease-in-out;
-      max-width: 0;
-    }
-
-    @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
-      margin-right: -#{$iconSize * 1/2};
+      transition: left .5s ease-in-out;
+      left: calc(100% - #{rem(3) - $iconGap});
     }
 
     @include min-screen(breakpoint(md)) {
-      // align the left-edge of the __label with
-      // the left-edge of the faux border between
-      // the sidebar and content
-      margin-left: -#{rem(3)};
-    }
-
-    .ais-SearchBox {
-      position: relative;
-      z-index: map-get($layers, input);
-
-      @include max-screen(breakpoint(xs, max)) {
-        padding-right: $iconSize;
-      }
+      position: relative; // for positioning __icon
     }
 
     .ais-SearchBox-input {
@@ -327,6 +302,10 @@
 
       height: dim(siteNav, logoHeight);
       width: 100%;
+
+      &::-webkit-search-cancel-button {
+        appearance: none;
+      }
     }
 
     .ais-SearchBox-reset {
@@ -344,29 +323,14 @@
       // <li> reset
       margin: 0;
 
-      @include max-screen(breakpoint(xs, max)) {
-         padding: $iconSize;
-       }
-
-      @include min-screen(breakpoint(sm)) {
-        padding: $iconSize (rem(3) + rem(0));
+      &:last-child {
+        overflow: hidden;
+        border-bottom-right-radius: $resultsBorderRadius;
+        border-bottom-left-radius: $resultsBorderRadius;
       }
 
       border-top: 1px solid palette(gray, xxx-light);
       background-color: palette(white);
-
-      &:hover {
-        color: palette(white);
-        background-color: palette(purple);
-      }
-
-      a {
-        display: block;
-
-        &, &:hover {
-          color: inherit;
-        }
-      }
 
       mark {
         background-color: palette(yellow);
@@ -384,62 +348,118 @@
     z-index: map-get($layers, results);
     top: 100%;
 
-    @include max-screen(breakpoint(xs, max)) {
-      right: -#{rem(3)};
-      left: -#{rem(3)};
-      margin-top: dim(siteNav, fontSize);
+    @include max-screen(breakpoint(sm, max)) {
+      right: -#{rem(3) + $iconSize + $iconGap};
+      left: -#{rem(3) + $iconSize + $iconGap};
+      margin-top: dim(siteNav, mobilePadding);
     }
 
-    @include min-screen(breakpoint(sm)) {
-      left: 0;
-      width: (9/12 * 100%);
-      margin-top: dim(siteNav, verticalPadding);
+    @include min-screen(breakpoint(md)) {
+      left: -#{dim(boxShadow, blur)};
+      width: calc(#{9/12 * 100%} - #{dim(boxShadow, blur)});
+      margin-top: dim(siteNav, padding);
+
+      padding-right: dim(boxShadow, blur);
+      padding-left: dim(boxShadow, blur);
+
+      &, &:after {
+        border-bottom-right-radius: $resultsBorderRadius;
+        border-bottom-left-radius: $resultsBorderRadius;
+      }
     }
 
-    border-bottom-right-radius: rem(-3);
-    border-bottom-left-radius: rem(-3);
-    @include drop-shadow;
+    overflow: hidden;
+    padding-bottom: dim(boxShadow, blur);
 
-    transition: opacity 0 0.5s ease-in-out;
-    opacity: 0;
-    pointer-events: none;
-
+    // faux shadow
     &:after {
       content: '';
       position: absolute;
-      top: 100%;
-      right: 0;
+      z-index: -1; // keep this below the result items
+      top: 0;
+      bottom: dim(boxShadow, blur);
 
-      display: block;
-      width: (168px * 2/3);
-      height: (24px * 2/3);
-      padding: 4px 6px;
+      @include max-screen(breakpoint(sm, max)) {
+        right: 0;
+        left: 0;
+      }
 
-      background-color: palette(white);
-      background-image: url('/media/search-by-algolia-light-background.svg');
-      background-repeat: no-repeat;
-      background-size: (168px * 2/3) (24px * 2/3);
-      background-position: center center;
+      @include min-screen(breakpoint(md)) {
+        right: dim(boxShadow, blur);
+        left: dim(boxShadow, blur);
+      }
+
+      @include drop-shadow;
     }
+
+    transition: opacity $animationSpeed ease-in-out;
+    opacity: 0;
   }
 
   .un-search-box__no-results-message {
 
-    @include max-screen(breakpoint(xs, max)) {
+    @include max-screen(breakpoint(sm, max)) {
       padding: $iconSize;
     }
 
-    @include min-screen(breakpoint(sm)) {
+    @include min-screen(breakpoint(md)) {
       padding: $iconSize (rem(3) + rem(0));
     }
 
     background-color: palette(white);
   }
 
-  .un-search-box__search-icon,
-  .un-search__close-button {
+  .un-search-box__results__item {
+    display: block;
+
+    > a {
+      display: block;
+      padding-top: ($iconSize * 1/3);
+      padding-bottom: ($iconSize * 1/3);
+
+      @include max-screen(breakpoint(sm, max)) {
+        padding-right: rem(3);
+        padding-left: rem(3);
+      }
+
+      @include min-screen(breakpoint(md)) {
+        padding-right: (rem(3) + rem(0));
+        padding-left: (rem(3) + rem(0));
+      }
+
+      line-height: line-height(half);
+
+      &, &:hover {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      &:hover {
+        color: palette(white);
+        background-color: palette(purple);
+      }
+    }
+
+    &:first-child {
+
+      > a {
+        padding-top: $iconSize;
+      }
+    }
+
+    &:last-child {
+
+      > a {
+        padding-bottom: $iconSize;
+      }
+    }
+  }
+
+  .un-search-box__search-icon {
     position: absolute;
+    z-index: map-get($layers, searchIcon);
     top: 50%;
+    left: -#{$iconSize + $iconGap};
     transform: translate3d(0, -50%, 0);
 
     &, & > svg {
@@ -453,22 +473,109 @@
     }
   }
 
-  .un-search-box__search-icon {
-    z-index: map-get($layers, icon);
-    left: 0;
-  }
+  .un-search-box__close-button {
 
-  .un-search__close-button {
-    @include reset-button;
+    @include max-screen(breakpoint(xs, max)) {
+      position: absolute; // relative to .un-search-box__stage
+      top: (
+        dim(siteNav, mobilePadding)
+      + dim(siteNav, mobilePadding)
+      + (dim(siteNav, logoHeight) * 1/2)
+      );
+    }
+
+    @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
+      top: (
+        dim(siteNav, logoHeight)
+      + dim(siteNav, mobilePadding)
+      + dim(siteNav, mobilePadding)
+      + (dim(siteNav, logoHeight) * 1/2)
+      );
+    }
+
+    @include min-screen(breakpoint(sm)) {
+      position: absolute; // relative to .un-site-nav
+    }
+
+    @include min-screen(breakpoint(md)) {
+      top: 50%;
+    }
 
     z-index: map-get($layers, closeButton);
     right: 0;
+    transform: translate3d(#{rem(0) / $iconSize * 1/4 * 100%}, -50%, 0);
 
-    opacity: 0.5;
+    animation-duration: $animationSpeed;
 
-    &:hover {
-      opacity: 1;
+    > button {
+      @include reset-button;
+
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &, & > svg {
+        display: block;
+        width: $iconSize;
+        height: $iconSize;
+      }
+
+      > svg {
+        transform: scale(#{rem(0) / $iconSize});
+
+        fill: currentColor;
+      }
     }
+  }
+
+  .un-search-box__faux-bg {
+
+    @include max-screen(breakpoint(sm, max)) {
+      position: absolute; // relative to .un-site-nav
+      z-index: map-get($layers, fauxBg);
+      top: calc(100% + #{dim(siteNav, mobilePadding)});
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+
+      height: (
+        dim(siteNav, mobilePadding)
+      + dim(siteNav, logoHeight)
+      + dim(siteNav, mobilePadding)
+      );
+    }
+
+    @include min-screen(breakpoint(md)) {
+      position: absolute; // relative to .un-site-nav
+      z-index: map-get($layers, fauxBg);
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+
+      height: (
+        dim(siteNav, padding)
+      + dim(siteNav, logoHeight)
+      + dim(siteNav, padding)
+      );
+    }
+
+    display: block;
+    width: 100vw;
+    background-color: palette(white);
+
+    animation-duration: $animationSpeed;
+  }
+
+  .un-search-box__results,
+  .un-search-box__faux-bg,
+  .un-search-box__close-button {
+    // by default, visitors shouldn't be able to
+    // interact with these elements until the
+    // search box is open. this will prevent
+    // issues where links cannot be clicked
+    // because these are sitting on top of them
+    pointer-events: none;
   }
 
 </style>

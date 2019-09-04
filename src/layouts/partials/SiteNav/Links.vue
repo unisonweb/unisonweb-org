@@ -30,7 +30,7 @@
   .un-site-nav__links__stage {
 
     @include max-screen(breakpoint(xs, max)) {
-      transform: translate3d(0, #{dim(siteNav, verticalPadding)}, 0);
+      transform: translate3d(0, #{dim(siteNav, mobilePadding)}, 0);
 
       // hidden by default
       pointer-events: none;

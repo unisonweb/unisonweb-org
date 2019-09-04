@@ -58,8 +58,16 @@
 <style lang="scss">
 
   .un-site-nav__stage {
-    padding-top: dim(siteNav, verticalPadding);
-    padding-bottom: dim(siteNav, verticalPadding);
+
+    @include max-screen(breakpoint(sm, max)) {
+      padding-top: dim(siteNav, mobilePadding);
+      padding-bottom: dim(siteNav, mobilePadding);
+    }
+
+    @include min-screen(breakpoint(md)) {
+      padding-top: dim(siteNav, padding);
+      padding-bottom: dim(siteNav, padding);
+    }
 
     color: palette(black);
     background-color: palette(white);
@@ -90,9 +98,9 @@
 
       @include max-screen(breakpoint(sm, max)) {
         margin-bottom: (
-          dim(siteNav, fontSize)
+          dim(siteNav, mobilePadding)
         + dim(siteNav, logoHeight)
-        + dim(siteNav, fontSize)
+        + dim(siteNav, mobilePadding)
         );
       }
     }

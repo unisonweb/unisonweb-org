@@ -16,7 +16,7 @@
 
   export default {
     metaInfo() {
-      const { title, headings, description } = this.$page.doc
+      const { title, headings, description } = this.$page.docPage
 
       return {
         title: title || (headings.length ? headings[0].value : undefined),
@@ -38,9 +38,10 @@
 <style lang="scss">
 
   .un-doc-page {
-    position: relative; // for positioning the sidebar
 
     @include min-screen(breakpoint(md)) {
+      position: absolute; // for positioning __sidebar
+
       padding-right: (1/12 * 100%);
       padding-left: (4/12 * 100%);
     }
