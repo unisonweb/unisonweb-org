@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <header class="un-hero">
-      <un-page-section tag="div" size="large">
+  <header class="un-hero">
+    <un-page-section tag="div" size="large">
+      <div class="container">
 
         <div class="row center-xs start-md u-align--center@xs u-align--center@sm u-align--left">
           <div class="col-xs-12 col-sm-9 col-md-6">
@@ -34,9 +34,9 @@
 
         <slot />
 
-      </un-page-section>
-    </header>
-  </div>
+      </div>
+    </un-page-section>
+  </header>
 </template>
 
 <script>
@@ -62,6 +62,13 @@
     overflow: hidden;
     position: relative; // for positioning the __eyebrow and __graphic
 
+    // TODO: figure out how to calculate the max-width so the pink
+    // box underneath intersects the top right corner (yikes)
+    // width: 100%;
+    // max-width: calc(#{container(lg)} + #{dim(pageSection, lg) * 3});
+    // margin-right: auto;
+    // margin-left: auto;
+
     color: palette(white);
     background-color: palette(purple);
   }
@@ -74,8 +81,8 @@
 
     padding: rem(-3) rem(-2);
 
+    font-family: font(semibold);
     font-size: rem(-1);
-    // letter-spacing: 0;
     line-height: line-height(base);
 
     border-radius: 99px; // big number to force rounded edges
@@ -83,15 +90,17 @@
   }
 
   .un-hero__heading {
-    font-size: responsive rem(6) rem(10);
+    font-size: responsive rem(6) rem(11);
     font-range: breakpoint(xs, max) breakpoint(xl);
-    letter-spacing: -#{3/100 * em(0)};
+    letter-spacing: dim(letterSpacing, -4);
     line-height: line-height(base);
   }
 
   .un-hero__blurb {
     margin-top: dim(pageSection, xs);
     margin-bottom: dim(pageSection, sm);
+
+    letter-spacing: dim(letterSpacing, -1);
   }
 
 </style>

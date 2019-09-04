@@ -1,28 +1,28 @@
 <template>
-  <div class="un-homepage-ctas__stage">
+  <div class="un-homepage-links__stage">
 
     <h2
-      class="un-homepage-ctas__heading"
+      class="un-homepage-links__heading"
       v-text="heading"
     />
 
-    <ul class="un-homepage-ctas__container u-list--unstyled">
+    <ul class="un-homepage-links__container u-list--unstyled">
       <li
         v-for="(item, i) in items" :key="i"
-        class="un-homepage-cta">
+        class="un-homepage-link">
         <span
-          class="un-homepage-cta__icon"
+          class="un-homepage-link__icon"
           aria-hidden="true"
         />
         <un-link
-          class="un-homepage-cta__label"
+          class="un-homepage-link__label"
           :url="item.url">
           {{item.label}}
         </un-link>
       </li>
     </ul>
 
-    <div class="un-homepage-ctas__button">
+    <div class="un-homepage-links__button">
       <a
         class="un-button un-button--purple"
         :href="button.url">
@@ -45,12 +45,12 @@
 
 <style lang="scss">
 
-  $headingFontSize: rem(8);
+  $headingFontSize: (rem(3) * 2);
   $defaultFontSize: rem(0);
   $itemPadding: rem(4);
   $iconSize: rem(5);
 
-  .un-homepage-ctas__stage {
+  .un-homepage-links__stage {
     position: relative;
 
     @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
@@ -60,7 +60,7 @@
     }
   }
 
-  .un-homepage-ctas__heading {
+  .un-homepage-links__heading {
 
     @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
       // increase font size so the __heading
@@ -68,7 +68,7 @@
       // way, the left-edge of the __icons
       // will align with the left-edge of
       // the __heading
-      font-size: rem(7);
+      font-size: $headingFontSize;
     }
 
     @include max-screen(breakpoint(sm, max)) {
@@ -83,11 +83,11 @@
     }
 
     font-size: $headingFontSize;
-    letter-spacing: -2px;
+    letter-spacing: dim(letterSpacing, -4);
     line-height: line-height(base); // align top edge of text with top edge of parent element
   }
 
-  .un-homepage-ctas__container {
+  .un-homepage-links__container {
 
     @at-root ul#{&} {
       margin-top: -#{$itemPadding};     // compensate for padding-top/bottom
@@ -106,7 +106,7 @@
     }
   }
 
-  .un-homepage-cta {
+  .un-homepage-link {
     padding-top: $itemPadding;
     padding-bottom: $itemPadding;
     padding-left: ($iconSize + $itemPadding);
@@ -114,7 +114,7 @@
     text-align: left;
 
     &:not(:last-child) {
-      border-bottom: 1px solid palette(gray, x-light);
+      border-bottom: 1px solid palette(gray, xx-light);
     }
 
     color: palette(yellow);
@@ -134,7 +134,7 @@
     position: relative;
   }
 
-  .un-homepage-cta__icon {
+  .un-homepage-link__icon {
     position: absolute;
     top: 50%;
     left: 0;
@@ -160,13 +160,12 @@
     }
   }
 
-  .un-homepage-cta__label {
+  .un-homepage-link__label {
     color: palette(black);
-    font-family: font(bold);
-    letter-spacing: 0;
+    font-family: font(semibold);
   }
 
-  .un-homepage-ctas__button {
+  .un-homepage-links__button {
     margin-top: ($itemPadding * 2);
 
     @include min-screen(breakpoint(md)) {

@@ -16,9 +16,8 @@
           <div class="col-xs-12 col-sm-10 col-md-12">
 
             <vue-markdown
+              class="sb-homepage-intro u-drop-cap"
               :source="pageContent.intro"
-              class="u-drop-cap"
-              data-font-size="2"
             />
 
           </div>
@@ -29,10 +28,10 @@
     <un-page-section size="large" class="u-bg--gray--xxx-light">
       <div class="container u-align--center@xs u-align--center@sm">
 
-        <un-homepage-ctas
-          :heading="pageContent.ctas.heading"
-          :items="pageContent.ctas.items"
-          :button="pageContent.ctas.button"
+        <un-homepage-links
+          :heading="pageContent.links.heading"
+          :items="pageContent.links.items"
+          :button="pageContent.links.button"
         />
 
       </div>
@@ -45,7 +44,7 @@
   import pageContent from '~/data/pages/index.yml'
   import Hero from '~/components/Hero'
   import HeroGraphic from '~/components/Homepage/HeroGraphic'
-  import Ctas from '~/components/Homepage/Ctas'
+  import Links from '~/components/Homepage/Links'
   import pageMetaInfo from '~/mixins/pageMetaInfo'
 
   export default {
@@ -57,7 +56,7 @@
     components: {
       'un-hero': Hero,
       'un-hero-graphic': HeroGraphic,
-      'un-homepage-ctas': Ctas,
+      'un-homepage-links': Links,
     },
     mixins: [
       pageMetaInfo,
@@ -66,5 +65,18 @@
 </script>
 
 <style lang="scss">
-  // intentionally blank
+
+  .sb-homepage-intro {
+    font-family: font(light);
+    letter-spacing: dim(letterSpacing, -2);
+
+    > p {
+
+      &:first-of-type {
+        font-size: rem(2);
+        letter-spacing: dim(letterSpacing, -3);
+      }
+    }
+  }
+
 </style>
