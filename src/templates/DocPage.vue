@@ -2,8 +2,8 @@
   <un-docs>
 
     <div class="un-doc-page">
-      <un-content :content="$page.doc.content" />
-      <un-doc-sidebar :headings="$page.doc.headings" />
+      <un-content :content="$page.docPage.content" />
+      <un-doc-sidebar :headings="$page.docPage.headings" />
     </div>
 
   </un-docs>
@@ -78,7 +78,7 @@
 
 <page-query>
   query DocPage ($path: String!) {
-    doc: docPage (path: $path) {
+    docPage: docPage (path: $path) {
       path
       title
       content
