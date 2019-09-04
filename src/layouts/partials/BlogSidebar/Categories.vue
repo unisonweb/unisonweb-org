@@ -19,7 +19,7 @@
       return {
         latestCategory: {
           path: '/blog',
-          emoji: '🕰',
+          emoji: '⚡️',
           title: 'Latest'
         }
       }

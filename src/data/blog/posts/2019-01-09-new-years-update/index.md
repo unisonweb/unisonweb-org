@@ -2,7 +2,7 @@
 title: New Years Update
 description: placeholder
 date: 2019-01-09
-author: Rúnar Bjarnason
+authors: ["runar-bjarnason"]
 categories: ["news"]
 ---
 Hey everyone, Rúnar here. It's been a while since our last update. We've been busy.

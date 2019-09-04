@@ -46,12 +46,15 @@
 
   .un-category-link__emoji {
     position: absolute;
-    top: 1px; // for pixel-perfect alignment
+    top: -#{($emojiSize - rem(0)) * 1/2};
     left: 0;
 
     display: inline-block;
     width: $emojiSize;
 
+    margin-top: 2px; // for pixel-perfect alignment
+
+    font-size: $emojiSize;
     text-align: center;
   }
 

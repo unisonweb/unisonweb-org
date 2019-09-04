@@ -8,7 +8,7 @@
             <slot />
 
           </div>
-          <div class="col-xs-12 col-sm-9 col-md-3 first-md">
+          <div class="col-xs-12 col-sm-9 col-md-4 first-md">
 
             <un-blog-sidebar />
 
@@ -30,5 +30,5 @@
 </script>
 
 <style lang="scss">
-  // 
+  // intentionally blank
 </style>

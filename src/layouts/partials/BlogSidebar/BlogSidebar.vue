@@ -4,7 +4,7 @@
 
       <un-page-section tag="div" class="u-padding--top--none@md u-padding--top--none@lg u-padding--top--none@xl">
         <h2
-          class="u-margin--bottom"
+          class="u-margin--bottom u-tight"
           data-font-size="2"
           v-text="componentContent.categories.heading"
         />
@@ -16,7 +16,7 @@
 
       <un-page-section tag="div" class="u-padding--top--none@md u-padding--top--none@lg u-padding--top--none@xl">
         <h2
-          class="u-margin--bottom"
+          class="u-margin--bottom u-tight"
           data-font-size="2"
           v-text="componentContent.subscribeForm.heading"
         />
