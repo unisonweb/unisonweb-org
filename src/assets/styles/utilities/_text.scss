@@ -28,7 +28,7 @@
 .u-lowercase       { text-transform: lowercase; }
 
 // text emphasis
-.u-normal          { font-weight: weight(normal); letter-spacing: 0; font-style: normal; }
+.u-normal          { font-weight: weight(normal); font-style: normal; }
 .u-bold, strong    { font-family: font(bold); font-weight: weight(normal); }
 .u-italic, em      { font-family: font(italic); font-style: normal; font-weight: normal; }
 .u-underline       { text-decoration: underline !important; }
@@ -45,11 +45,11 @@
 }
 
 // text formatting
-.u-expanded     { letter-spacing:  3px; }
-.u-extended     { letter-spacing:  1px; }
-.u-tight        { letter-spacing: -.25px; }
-.u-condensed    { letter-spacing: -1px; }
-.u-compressed   { letter-spacing: -2px; }
+.u-expanded     { letter-spacing: dim(letterSpacing,  2); }
+.u-extended     { letter-spacing: dim(letterSpacing,  3); }
+.u-tight        { letter-spacing: dim(letterSpacing, -1); }
+.u-condensed    { letter-spacing: dim(letterSpacing, -2); }
+.u-compressed   { letter-spacing: dim(letterSpacing, -3); }
 .u-nowrap       { white-space: nowrap; }
 .u-pre-wrap     { white-space: pre-wrap; }
 .u-truncate     { @include mix-ellipsis; }
@@ -57,9 +57,6 @@
 // text sizing
 @each $scale, $value in $UCmodularscales {
   [data-font-size="#{$scale}"] {
-    @if ($scale < 0) {
-      letter-spacing: 0;
-    }
     @if (($scale - 3) < 10) {
       font-size: rem($scale) !important;
     } @else {

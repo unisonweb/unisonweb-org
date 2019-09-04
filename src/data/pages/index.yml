@@ -13,10 +13,10 @@ hero:
     label: Install
     url: '#'
 intro: |
-  Unison is an _open source functional programming language_ based on a simplifying core idea: code in Unison is content-addressed, identified by a hash of its syntax tree. The idea is used to simplify codebase management (Unison has no builds, code sharing without dependency conflicts, instant renames, and more). And it forms the basis for a runtime that robustly supports dynamic code deployment, and allows a single Unison program to describe entire elastic distributed systems.
+  Unison is an open source functional programming language based on a simplifying core idea: code in Unison is content-addressed, identified by a hash of its syntax tree. The idea is used to simplify codebase management (Unison has no builds, code sharing without dependency conflicts, instant renames, and more). And it forms the basis for a runtime that robustly supports dynamic code deployment, and allows a single Unison program to describe entire elastic distributed systems.
 
-  Though a lot of the work on Unison is still experimental and ongoing, we’re sharing an early release of the language for people to try out. You can read the [Roadmap and Project Status](#) or click below to get started in 3 minutes.
-ctas:
+  Though a lot of the work on Unison is still experimental and ongoing, we're sharing an early release of the language for people to try out. You can read the [Roadmap and Project Status](#) or click below to get started in 3 minutes.
+links:
   heading: Documentation
   items:
     - label: Get started with Unison in 3 minutes

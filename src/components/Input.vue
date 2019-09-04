@@ -130,16 +130,16 @@
     // default styling
     width: 100%;
     padding:
-      ($verticalPadding + ($labelSize * 1/2))
+      ($verticalPadding + ($labelSize * 2/3))
       $horizontalPadding
-      ($verticalPadding - ($labelSize * 1/2));
+      ($verticalPadding - ($labelSize * 2/3));
 
     color: palette(black);
     font-family: font(system);
     font-size: $fontSize;
 
-    border-radius: 4px;
-    border-width: 1px;
+    border-radius: 8px;
+    border-width: 0;
     border-style: solid;
     border-color: palette(gray, x-light);
     background-color: palette(gray, xxx-light);
@@ -160,7 +160,6 @@
 
     color: palette(gray);
     font-family: font(sans);
-    letter-spacing: 0; // override
     line-height: line-height(base);
 
     transition:
@@ -173,7 +172,7 @@
 
       .un-input:focus ~ &,
       .un-input.is-dirty ~ & {
-        transform: translate3d(0, -#{$labelSize * 1/2}, 0);
+        transform: translate3d(0, -#{$labelSize * 2/3}, 0);
         font-size: $labelSize;
       }
     }
@@ -191,7 +190,6 @@
       line-height: line-height(base);
 
       font-size: $labelSize;
-      letter-spacing: 0; // override
       text-align: left;
 
       &:empty {

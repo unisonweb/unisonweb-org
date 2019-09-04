@@ -1,0 +1,11 @@
+$UClayers: (
+  mediumZoom: 9999,
+  cookiesNotice: 4000,
+  searchBox: 3000,
+  siteNav: 2000,
+  sidebar: 1000
+);
+
+@function layers($index) {
+  @return map-get($UClayers, $index);
+}

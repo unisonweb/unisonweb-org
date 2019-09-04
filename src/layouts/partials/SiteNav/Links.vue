@@ -97,8 +97,8 @@
 
     display: block;
 
+    font-family: font(semibold);
     font-size: dim(siteNav, fontSize);
-    font-family: font(bold);
     line-height: line-height(base);
 
     &, &:hover {
@@ -110,10 +110,6 @@
     @include max-screen(breakpoint(xs, max)) {
       padding-top: em(0);
       padding-bottom: em(0);
-
-      // &, &:hover {
-      //   color: palette(black);
-      // }
     }
 
     @include min-screen(breakpoint(sm)) {

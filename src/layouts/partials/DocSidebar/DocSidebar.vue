@@ -191,7 +191,7 @@
 
     @include max-screen(breakpoint(sm, max)) {
       position: absolute;
-      z-index: z-index(sidebar);
+      z-index: layers(sidebar);
       left: 0;
       transform: translate3d(0, -50%, 0);
 
@@ -223,7 +223,7 @@
 
     @include max-screen(breakpoint(sm, max)) {
       position: absolute;
-      z-index: z-index(sidebar);
+      z-index: layers(sidebar);
       bottom: 0;
       left: -#{rem(3)};
 

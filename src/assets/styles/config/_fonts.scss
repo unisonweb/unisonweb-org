@@ -1,6 +1,9 @@
-$UCsans: 'Inter-Light', sans-serif;
-$UCitalic: 'Inter-Italic', sans-serif;
-$UCbold: 'Inter-Bold', sans-serif;
+$UCsans: 'sans', sans-serif;
+$UCitalic: 'italic', sans-serif;
+$UClight: 'light', sans-serif;
+$UCsemibold: 'semibold', sans-serif;
+$UCbold: 'bold', sans-serif;
+$UCextrabold: 'extrabold', sans-serif;
 $UCmono: 'Roboto Mono', monospace;
 
 $UCfonts: (
@@ -10,6 +13,7 @@ $UCfonts: (
     capHeight: .68,
     xHeight: .455,
     descent: .215,
+    bottom: .5,
     ascent: .685
   ),
   'italic': (
@@ -18,6 +22,25 @@ $UCfonts: (
     capHeight: .68,
     xHeight: .455,
     descent: .215,
+    bottom: .5,
+    ascent: .685
+  ),
+  'light': (
+    family: $UClight,
+    weight: weight(normal),
+    capHeight: .68,
+    xHeight: .455,
+    descent: .215,
+    bottom: .5,
+    ascent: .685
+  ),
+  'semibold': (
+    family: $UCsemibold,
+    weight: weight(normal),
+    capHeight: .68,
+    xHeight: .455,
+    descent: .215,
+    bottom: .5,
     ascent: .685
   ),
   'bold': (
@@ -26,6 +49,16 @@ $UCfonts: (
     capHeight: .68,
     xHeight: .455,
     descent: .215,
+    bottom: .5,
+    ascent: .685
+  ),
+  'extrabold': (
+    family: $UCextrabold,
+    weight: weight(normal),
+    capHeight: .68,
+    xHeight: .455,
+    descent: .215,
+    bottom: .5,
     ascent: .685
   ),
   'mono': (
@@ -34,13 +67,16 @@ $UCfonts: (
     capHeight: .67,
     xHeight: .455,
     descent: .215,
+    bottom: .5,
     ascent: .685
   ),
   'system': (
     family: mix-system-fonts(),
-    weight: weight(normal),
+    weight: 500,
     capHeight: .01,
+    xHeight: .01,
     descent: .01,
+    bottom: .5,
     ascent: .01
    )
 );

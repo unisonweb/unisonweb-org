@@ -12,6 +12,17 @@ $UCdimensions: (
   ),
   boxShadow: (
     blur: rem(3)
+  ),
+  letterSpacing: (
+    -5: -2px,
+    -4: -1.5px,
+    -3: -.68px,
+    -2: -.25px,
+    -1: -.05px,
+     0: 0,
+     1: 1px,
+     2: 2px,
+     3: 3px
   )
 );
 

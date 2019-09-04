@@ -1,21 +1,39 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:500&display=swap');
 
 @font-face {
-  font-family: 'Inter-Light';
+  font-family: 'sans';
+  src: url('../fonts/Inter/Inter-Regular.woff2') format('woff2'),
+       url('../fonts/Inter/Inter-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'italic';
+  src: url('../fonts/Inter/Inter-Italic.woff2') format('woff2'),
+       url('../fonts/Inter/Inter-Italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'light';
   src: url('../fonts/Inter/Inter-Light-BETA.woff2') format('woff2'),
        url('../fonts/Inter/Inter-Light-BETA.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Inter-Italic';
-  src: url('../fonts/Inter/Inter-LightItalic-BETA.woff2') format('woff2'),
-       url('../fonts/Inter/Inter-LightItalic-BETA.woff') format('woff');
+  font-family: 'semibold';
+  src: url('../fonts/Inter/Inter-SemiBold.woff2') format('woff2'),
+       url('../fonts/Inter/Inter-SemiBold.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Inter-Bold';
+  font-family: 'bold';
   src: url('../fonts/Inter/Inter-Bold.woff2') format('woff2'),
        url('../fonts/Inter/Inter-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'extrabold';
+  src: url('../fonts/Inter/Inter-ExtraBold.woff2') format('woff2'),
+       url('../fonts/Inter/Inter-ExtraBold.woff') format('woff');
 }
 
 @import

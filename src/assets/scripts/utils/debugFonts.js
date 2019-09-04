@@ -2,7 +2,7 @@ import FontMetrics from 'fontmetrics'
 import FontFaceObserver from 'fontfaceobserver'
 
 const fonts = [
-  'Inter-Light',
+  'Inter-Regular',
   'Roboto Mono'
 ]
 

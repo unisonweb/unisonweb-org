@@ -23,7 +23,7 @@
       // this ensures the tallest element in
       // .site-nav is the __logo
       position: absolute;
-      z-index: z-index(mobileNavButton);
+      z-index: layers(mobileNavButton);
       top: 0;
       right: 0;
       transform: translate3d(

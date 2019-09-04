@@ -206,7 +206,7 @@
     }
 
     &.is-open {
-      z-index: z-index(searchBox);
+      z-index: layers(searchBox);
 
       @include min-screen(breakpoint(md)) {
         top: -#{dim(siteNav, verticalPadding)};

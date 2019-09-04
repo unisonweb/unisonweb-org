@@ -10,7 +10,6 @@ body {
   font-family: font(sans);
   font-weight: weight(normal);
   font-size: rem(0);
-  letter-spacing: -#{1/20 * em(0)};
   line-height: line-height(default);
 
   background: transparent; // overridden by bg utility classes as needed

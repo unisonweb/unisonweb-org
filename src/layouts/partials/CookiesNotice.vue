@@ -76,7 +76,7 @@
 
   .un-cookies-notice__stage {
     position: fixed;
-    z-index: z-index(cookies-notice);
+    z-index: layers(cookiesNotice);
     bottom: 0;
     left: 0;
     width: 100%;
