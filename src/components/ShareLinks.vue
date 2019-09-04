@@ -1,41 +1,46 @@
 <template>
-  <div class="un-share-links__container">
-    <a
-      class="un-share-link un-share-link--facebook"
-      title="Share on Facebook"
-      :href="facebook"
-      target="_blank">
-      <inline-svg src="/media/share-facebook.svg" />
-    </a>
-    <a
-      class="un-share-link un-share-link--twitter"
-      title="Share on Twitter"
-      :href="twitter"
-      target="_blank">
-      <inline-svg src="/media/share-twitter.svg" />
-    </a>
-    <a
-      class="un-share-link un-share-link--linked-in"
-      title="Share on LinkedIn"
-      :href="linkedIn"
-      target="_blank">
-      <inline-svg src="/media/share-linked-in.svg" />
-    </a>
-    <a
-      class="un-share-link un-share-link--hacker-news"
-      title="Share on Hacker News"
-      :href="hackerNews"
-      target="_blank">
-      <inline-svg src="/media/share-hacker-news.svg" />
-    </a>
+  <div class="un-share-links__stage">
+    <p
+      class="un-share-links__heading"
+      v-text="heading"
+    />
+    <div class="un-share-links__container">
+      <a
+        class="un-share-link un-share-link--facebook"
+        title="Share on Facebook"
+        :href="facebook"
+        target="_blank">
+        <inline-svg src="/media/emblem-facebook.svg" />
+      </a>
+      <a
+        class="un-share-link un-share-link--twitter"
+        title="Share on Twitter"
+        :href="twitter"
+        target="_blank">
+        <inline-svg src="/media/emblem-twitter.svg" />
+      </a>
+      <a
+        class="un-share-link un-share-link--linked-in"
+        title="Share on LinkedIn"
+        :href="linkedIn"
+        target="_blank">
+        <inline-svg src="/media/emblem-linked-in.svg" />
+      </a>
+      <a
+        class="un-share-link un-share-link--hacker-news"
+        title="Share on Hacker News"
+        :href="hackerNews"
+        target="_blank">
+        <inline-svg src="/media/emblem-hacker-news.svg" />
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
     props: {
-      title: { type: String, default: null },
-      path: { type: String, default: null },
+      heading: { type: String, default: null },
     },
     computed: {
       encodedUrl() {
@@ -62,20 +67,17 @@
 
 <style lang="scss">
 
+  .un-share-links__stage {
+    margin-top: dim(pageSection, sm);
+  }
+
+  .un-share-links__heading {
+    margin-bottom: rem(0);
+
+    color: palette(gray);
+  }
+
   .un-share-links__container {
-
-    @include max-screen(breakpoint(xs, max)) {
-      margin-top: (dim(pageSection, xs) * 2);
-      margin-bottom: dim(pageSection, xs);
-    }
-
-    @include min-screen(breakpoint(sm)) {
-      margin-top: dim(pageSection, sm);
-    }
-
-    @include min-screen(breakpoint(md)) {
-      margin-top: dim(pageSection, md);
-    }
 
     display: flex;
     align-items: center;
@@ -93,16 +95,16 @@
     border-radius: 99px; // large number to force rounded corneres
 
     &--facebook {
-      background-color: #3b5998;
+      background-color: #3b5999;
     }
     &--twitter {
-      background-color: #1da1f2;
+      background-color: #1ba1f3;
     }
     &--linked-in {
-      background-color: #0077b5;
+      background-color: #0a66c2;
     }
     &--hacker-news {
-      background-color: #ff4000;
+      background-color: #ff6600;
     }
 
     display: flex;

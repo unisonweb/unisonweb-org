@@ -1,13 +1,22 @@
 <template>
   <un-blog>
 
-    <un-post-intro :post="$page.post" />
+    <un-post-intro :blog-post="$page.blogPost" />
 
-    <un-content :content="$page.post.content" />
+    <un-content :content="$page.blogPost.content" />
+
+    <un-post-categories
+      :categories="$page.blogPost.categories"
+    />
 
     <un-share-links
-      :title="$page.post.title"
-      :path="$page.post.path"
+      heading="Enjoy this post? Let others know."
+      :title="$page.blogPost.title"
+      :path="$page.blogPost.path">
+    </un-share-links>
+
+    <un-post-authors
+      :authors="$page.blogPost.authors"
     />
 
     <!-- prev/next posts -->
@@ -18,12 +27,14 @@
 <script>
   import Blog from '~/layouts/Blog'
   import PostIntro from '~/components/PostIntro'
+  import PostCategories from '~/components/PostCategories'
+  import PostAuthors from '~/components/PostAuthors'
   import Content from '~/components/Content'
   import ShareLinks from '~/components/ShareLinks'
 
   export default {
     metaInfo() {
-      const { title, description } = this.$page.post
+      const { title, description } = this.$page.blogPost
 
       return {
         title: title,
@@ -37,6 +48,8 @@
     components: {
       'un-blog': Blog,
       'un-post-intro': PostIntro,
+      'un-post-categories': PostCategories,
+      'un-post-authors': PostAuthors,
       'un-content': Content,
       'un-share-links': ShareLinks,
     },
@@ -49,12 +62,19 @@
 
 <page-query>
   query BlogPost ($path: String!) {
-    post: blogPost (path: $path) {
+    blogPost: blogPost (path: $path) {
       path
       title
       description
       date (format: "MMMM D, YYYY")
-      author
+      authors {
+        title
+        position
+        photo
+        content
+        twitter
+        linkedin
+      }
       categories {
         path
         title
