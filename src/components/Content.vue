@@ -77,7 +77,7 @@
 
         // make the right-edge of codeblocks
         // touch the right edge of .un-content
-        margin-right: -#{2/12 * 100%};
+        margin-right: -#{1/12 * 100%};
         padding-right: (rem(3) * 1/2);
       }
     }
