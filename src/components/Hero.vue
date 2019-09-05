@@ -1,41 +1,43 @@
 <template>
-  <header class="un-hero">
-    <un-page-section tag="div" size="large">
-      <div class="container">
+  <header class="un-hero__wrapper">
+    <div class="un-hero">
+      <un-page-section tag="div" size="large">
+        <div class="container">
 
-        <div class="row center-xs start-md u-align--center@xs u-align--center@sm u-align--left">
-          <div class="col-xs-12 col-sm-9 col-md-6">
+          <div class="row center-xs start-md u-align--center@xs u-align--center@sm u-align--left">
+            <div class="col-xs-12 col-sm-9 col-md-6">
 
-            <strong
-              class="un-hero__eyebrow"
-              v-html="eyebrow"
-            />
+              <strong
+                class="un-hero__eyebrow"
+                v-html="eyebrow"
+              />
 
-            <h1
-              class="un-hero__heading"
-              v-html="heading"
-            />
+              <h1
+                class="un-hero__heading"
+                v-html="heading"
+              />
 
-            <vue-markdown
-              class="un-hero__blurb"
-              :source="blurb"
-            />
+              <vue-markdown
+                class="un-hero__blurb"
+                :source="blurb"
+              />
 
-            <div class="un-hero__cta">
-              <un-link
-                class="un-button un-button--orange un-button--large u-nowrap"
-                :url="cta.url">
-                <strong v-html="`${cta.label}&nbsp;&nbsp;&rarr;`" />
-              </un-link>
+              <div class="un-hero__cta">
+                <un-link
+                  class="un-button un-button--orange un-button--large u-nowrap"
+                  :url="cta.url">
+                  <strong v-html="`${cta.label}&nbsp;&nbsp;&rarr;`" />
+                </un-link>
+              </div>
+
             </div>
-
           </div>
+
+          <slot />
+
         </div>
-
-        <slot />
-
-      </div>
-    </un-page-section>
+      </un-page-section>
+    </div>
   </header>
 </template>
 
@@ -58,16 +60,23 @@
 
 <style lang="scss">
 
+  .un-hero__wrapper {
+
+    @include min-screen(breakpoint(lg)) {
+      $siteNavHeight: (
+        dim(siteNav, padding)
+      + dim(siteNav, logoHeight)
+      + dim(siteNav, padding)
+      );
+
+      padding-right: $siteNavHeight;
+      padding-left: $siteNavHeight;
+    }
+  }
+
   .un-hero {
     overflow: hidden;
     position: relative; // for positioning the __eyebrow and __graphic
-
-    // TODO: figure out how to calculate the max-width so the pink
-    // box underneath intersects the top right corner (yikes)
-    // width: 100%;
-    // max-width: calc(#{container(lg)} + #{dim(pageSection, lg) * 3});
-    // margin-right: auto;
-    // margin-left: auto;
 
     color: palette(white);
     background-color: palette(purple);
