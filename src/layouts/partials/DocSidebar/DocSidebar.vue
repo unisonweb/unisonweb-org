@@ -30,7 +30,7 @@
         <div class="un-doc-sidebar">
 
           <LinkSets
-            :link-sets="componentContent.linkSets"
+            :link-sets="layoutContent.linkSets"
             :headings="headings"
             :current-path="currentPath"
           />
@@ -46,7 +46,7 @@
   import find from 'lodash.find'
   import flatten from 'lodash.flatten'
   import { mixin as clickaway } from 'vue-clickaway'
-  import componentContent from '~/data/components/doc-sidebar.yml'
+  import layoutContent from '~/data/layouts/partials/doc-sidebar.yml'
   import LinkSets from './LinkSets'
   import triggerEvent from '~/assets/scripts/utils/triggerEvent'
 
@@ -60,14 +60,14 @@
       }
     },
     computed: {
-      componentContent() {
-        return componentContent
+      layoutContent() {
+        return layoutContent
       },
       currentPath() {
         return this.$route.matched[0].path
       },
       links() {
-        const links = this.componentContent.linkSets.map(linkSet => {
+        const links = this.layoutContent.linkSets.map(linkSet => {
           return linkSet.links
         })
 

@@ -1,18 +1,18 @@
 <template>
   <vue-markdown
     class="un-announcement-bar"
-    :data-color="componentContent.color"
-    :source="componentContent.blurb"
+    :data-color="layoutContent.color"
+    :source="layoutContent.blurb"
   />
 </template>
 
 <script>
-  import componentContent from '~/data/components/announcement-bar.yml'
+  import layoutContent from '~/data/layouts/partials/announcement-bar.yml'
 
   export default {
     computed: {
-      componentContent() {
-        return componentContent
+      layoutContent() {
+        return layoutContent
       },
     },
   }

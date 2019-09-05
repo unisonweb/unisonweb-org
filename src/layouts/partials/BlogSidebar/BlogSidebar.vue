@@ -6,7 +6,7 @@
         <h2
           class="u-margin--bottom u-tight"
           data-font-size="2"
-          v-text="componentContent.categories.heading"
+          v-text="layoutContent.categories.heading"
         />
         <Categories />
       </un-page-section>
@@ -18,15 +18,15 @@
         <h2
           class="u-margin--bottom u-tight"
           data-font-size="2"
-          v-text="componentContent.subscribeForm.heading"
+          v-text="layoutContent.subscribeForm.heading"
         />
         <vue-markdown
           class="u-margin--bottom"
           data-font-size="-2"
-          :source="componentContent.subscribeForm.blurb"
+          :source="layoutContent.subscribeForm.blurb"
         />
         <SubscribeForm
-          :content="componentContent.subscribeForm"
+          :content="layoutContent.subscribeForm"
         />
       </un-page-section>
 
@@ -37,12 +37,12 @@
 <script>
   import Categories from './Categories'
   import SubscribeForm from './SubscribeForm'
-  import componentContent from '~/data/components/blog-sidebar.yml'
+  import layoutContent from '~/data/layouts/partials/blog-sidebar.yml'
 
   export default {
     computed: {
-      componentContent() {
-        return componentContent
+      layoutContent() {
+        return layoutContent
       },
     },
     components: {

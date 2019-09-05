@@ -64,20 +64,20 @@
           return
         }
 
-        // fetch('/', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        //   body: this.encode({
-        //     'form-name': this.formName,
-        //     ...this.payload
-        //   })
-        // }).then(() => {
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: this.encode({
+            'form-name': this.formName,
+            ...this.payload
+          })
+        }).then(() => {
           this.showSuccessMessage = true
           this.$emit('success')
-        // }).catch((err) => {
-        //   console.err(err)
-        //   this.showErrorMessage = true
-        // })
+        }).catch((err) => {
+          console.err(err)
+          this.showErrorMessage = true
+        })
 
       },
       encode(data) {

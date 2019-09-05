@@ -27,7 +27,7 @@
 
 <script>
   import siteNavProps from '~/mixins/siteNavProps'
-  import AnnouncementBar from '~/components/AnnouncementBar'
+  import AnnouncementBar from './partials/AnnouncementBar'
   import SiteNav from './partials/SiteNav/SiteNav'
   import SiteFooter from './partials/SiteFooter'
   import CookiesNotice from './partials/CookiesNotice'

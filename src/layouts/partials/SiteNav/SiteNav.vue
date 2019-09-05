@@ -21,7 +21,7 @@
 
         <MobileNavButton />
 
-        <Links :links="componentContent.links" />
+        <Links :links="layoutContent.links" />
 
         <SearchBox v-if="withSearch" />
 
@@ -35,13 +35,13 @@
   import Logo from './Logo'
   import MobileNavButton from './MobileNavButton'
   import SearchBox from './SearchBox'
-  import componentContent from '~/data/components/site-nav.yml'
+  import layoutContent from '~/data/layouts/partials/site-nav.yml'
   import siteNavProps from '~/mixins/siteNavProps'
 
   export default {
     computed: {
-      componentContent() {
-        return componentContent
+      layoutContent() {
+        return layoutContent
       },
     },
     components: {

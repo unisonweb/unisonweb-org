@@ -23,7 +23,7 @@
       />
       <vue-markdown
         class="un-cookies-notice"
-        :source="componentContent.blurb"
+        :source="layoutContent.blurb"
       />
     </div>
 
@@ -32,7 +32,7 @@
 
 <script>
   import Cookies from 'js-cookie'
-  import componentContent from '~/data/components/cookies-notice.yml'
+  import layoutContent from '~/data/layouts/partials/cookies-notice.yml'
 
   export default {
     data() {
@@ -41,8 +41,8 @@
       }
     },
     computed: {
-      componentContent() {
-        return componentContent
+      layoutContent() {
+        return layoutContent
       },
     },
     methods: {
@@ -160,8 +160,7 @@
   .un-cookies-notice {
     user-select: none;
 
-    font-size: responsive rem(-2) rem(-1);
-    font-range: breakpoint(xs, max) breakpoint(xl);
+    font-size: rem(-2);
     line-height: line-height(half);
 
     a {

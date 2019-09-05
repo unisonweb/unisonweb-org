@@ -3,7 +3,7 @@
     <un-page-section tag="div" size="small">
       <div class="container">
 
-        <vue-markdown :source="componentContent.meta" />
+        <vue-markdown :source="layoutContent.meta" />
 
       </div>
     </un-page-section>
@@ -11,12 +11,12 @@
 </template>
 
 <script>
-  import componentContent from '~/data/components/site-footer.yml'
+  import layoutContent from '~/data/layouts/partials/site-footer.yml'
 
   export default {
     computed: {
-      componentContent() {
-        return componentContent
+      layoutContent() {
+        return layoutContent
       },
     },
   }
