@@ -66,6 +66,7 @@
                 title
                 color
               }
+              featuredImage
             }
           }
         }

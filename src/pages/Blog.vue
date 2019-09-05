@@ -54,6 +54,7 @@
           authors {
             title
           }
+          featuredImage
           content
         }
       }

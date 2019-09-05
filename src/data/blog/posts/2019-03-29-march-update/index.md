@@ -4,6 +4,7 @@ description: placeholder
 date: 2019-03-29
 authors: ["arya-irani"]
 categories: ["news"]
+featuredImage: "https://placehold.it/580x436"
 ---
 Hi all — it's been 464 commits since our last update post, and I hardly know where to start...
 

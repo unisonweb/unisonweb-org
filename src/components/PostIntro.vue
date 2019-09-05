@@ -15,7 +15,6 @@
     </h1>
 
     <div class="un-post-intro__meta">
-
       <span
         class="u-color--gray--mid u-medium u-line-height--base"
         data-font-size="-2">
@@ -23,8 +22,16 @@
         &nbsp;&bull;&nbsp;
         <span v-text="blogPost.date" />
       </span>
-
     </div>
+
+    <un-link
+      v-if="blogPost.featuredImage"
+      :url="blogPost.path"
+      class="un-post-intro__featured-image">
+      <g-image
+        :src="blogPost.featuredImage"
+      />
+    </un-link>
 
     <slot />
 
@@ -87,6 +94,16 @@
 
     display: flex;
     align-items: center;
+  }
+
+  .un-post-intro__featured-image {
+    display: block;
+    margin-top: rem(3);
+
+    > img {
+      display: block;
+      width: 100%;
+    }
   }
 
 </style>

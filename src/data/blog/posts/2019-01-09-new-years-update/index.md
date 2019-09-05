@@ -4,6 +4,7 @@ description: placeholder
 date: 2019-01-09
 authors: ["runar-bjarnason"]
 categories: ["news"]
+featuredImage: "https://placehold.it/580x436"
 ---
 Hey everyone, Rúnar here. It's been a while since our last update. We've been busy.
 

@@ -80,6 +80,7 @@
         title
         color
       }
+      featuredImage
       content
     }
   }
