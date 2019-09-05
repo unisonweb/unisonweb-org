@@ -1,5 +1,5 @@
 <template>
-  <un-site-main>
+  <un-site-main :has-shadow="true">
     <un-page-section>
       <div class="container">
         <div class="row center-xs u-align--left">

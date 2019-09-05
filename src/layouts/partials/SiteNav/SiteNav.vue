@@ -4,6 +4,7 @@
     :class="{
       'is-inverted': isInverted,
       'with-search': withSearch,
+      'has-shadow': hasShadow,
     }">
     <div class="container">
       <div class="un-site-nav">
@@ -71,7 +72,6 @@
 
     color: palette(black);
     background-color: palette(white);
-    @include drop-shadow;
 
     .un-site-nav__links__container {
 
@@ -103,6 +103,10 @@
         + dim(siteNav, mobilePadding)
         );
       }
+    }
+
+    &.has-shadow {
+      @include drop-shadow;
     }
   }
 

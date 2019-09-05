@@ -6,6 +6,7 @@
     <un-site-nav
       :with-search="withSearch"
       :is-inverted="isInverted"
+      :has-shadow="hasShadow"
     />
 
     <div class="un-site-main__wrapper">
