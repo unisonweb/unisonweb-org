@@ -271,9 +271,19 @@
       padding-left: rem(3);
 
       color: palette(black);
-      background-color: palette(white);
 
-      @include drop-shadow;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translate3d(-50%, 0, 0);
+        width: 100vw;
+
+        background-color: palette(white);
+        @include drop-shadow;
+      }
     }
 
     @include min-screen(breakpoint(md)) {
