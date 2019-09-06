@@ -190,27 +190,26 @@
 
   .un-doc-sidebar__page-title {
 
-    // @include max-screen(breakpoint(xs, max)) {
-    //   top: 0;
-    // }
-
-    // @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
-    //   top: -#{$mobileSearchHeight * 1/2};
-    // }
-
     @include max-screen(breakpoint(sm, max)) {
       position: absolute; // relataive to .un-site-main__wrapper
       top: -#{$mobileSearchHeight * 1/2};
       z-index: layers(docSidebarTitle);
-      left: rem(3);
       transform: translate3d(0, -50%, 0);
 
-      padding-left: (rem(3) + rem(0));
+      padding-left: ($iconSize + rem(0));
 
       color: palette(black);
       font-family: font(bold);
       font-size: rem(1);
       line-height: line-height(base);
+    }
+
+    @include max-screen(contaienr(sm)) {
+      left: rem(3);
+    }
+
+    @include screen(container(sm), breakpoint(sm, max)) {
+      left: calc(50% - #{container(sm) * 1/2} + #{rem(3)});
     }
 
     @include min-screen(breakpoint(md)) {
