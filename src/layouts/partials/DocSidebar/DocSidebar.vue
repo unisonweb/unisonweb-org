@@ -135,13 +135,18 @@
 
   .un-doc-sidebar__platform {
 
-    &:before {
+    @include max-screen(breakpoint(sm, max)) {
 
-      @include max-screen(breakpoint(sm, max)) {
+      &:before,
+      &:after {
         content: '';
         position: absolute; // relataive to .un-site-main__stage
         top: 0;
         bottom: 0;
+      }
+
+      &:before {
+        z-index: 1;
         left: 50%;
         transform: translate3d(-50%, 0, 0);
         width: 100vw;
@@ -152,11 +157,42 @@
         opacity: 0;
         pointer-events: none;
       }
+
+      &:after {
+        z-index: 2;
+        left: 0;
+
+        @include max-screen(#{container(sm) - 1}) {
+          width: (4/12 * 100%);
+        }
+
+        @include screen(container(sm), breakpoint(sm, max)) {
+          // right: 50%;
+          right: calc(50% + #{4/12 * container(sm) * 1/2});
+          // right: calc(#{8/12 * 100%});
+        }
+
+        background-color: palette(white);
+        @include drop-shadow;
+
+        transition:
+          transform .5s ease-in-out,
+          opacity .5s ease-in-out;
+        transform: translate3d(-100%, 0, 0);
+        opacity: 0;
+        pointer-events: none;
+      }
     }
 
     &--show-mobile-bg {
 
       &:before {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      &:after {
+        transform: translate3d(0, 0, 0);
         opacity: 1;
         pointer-events: auto;
       }
@@ -204,7 +240,7 @@
       line-height: line-height(base);
     }
 
-    @include max-screen(contaienr(sm)) {
+    @include max-screen(#{container(sm) - 1}) {
       left: rem(3);
     }
 
@@ -237,17 +273,21 @@
   .un-doc-sidebar__wrapper {
 
     @include max-screen(breakpoint(xs, max)) {
-      width: calc(#{8/12 * 100%} + #{dim(boxShadow, blur)});
+      width: (8/12 * 100%);
     }
 
-    @include screen(breakpoint(sm, min), breakpoint(sm, max)) {
-      width: calc(#{4/12 * 100%} + #{dim(boxShadow, blur)});
+    @include screen(breakpoint(sm, min), #{container(sm) - 1}) {
+      width: (4/12 * 100%);
+    }
+
+    @include screen(container(sm), breakpoint(sm, max)) {
+      width: (4/12 * container(sm));
     }
 
     @include max-screen(breakpoint(sm, max)) {
       position: absolute; // relataive to .un-site-main__wrapper
+      z-index: 3;
       top: 0;
-      left: 0;
 
       height: calc(100vh - #{$mobileSearchHeight * 2});
 
@@ -259,8 +299,14 @@
 
       overflow-x: hidden;
       overflow-y: scroll;
+    }
 
-      background-color: palette(white);
+    @include max-screen(container(sm)) {
+      left: 0;
+    }
+
+    @include screen(container(sm), breakpoint(sm, max)) {
+      left: calc(50% - #{container(sm) * 1/2});
     }
   }
 
