@@ -15,5 +15,5 @@ There are very few libraries in this M1 release and the distributed programming 
 
 ## What's next?
 
-* See the [install and quickstart guide](/quickstart) to get going.
-* Also, if you're curious about where the project is headed, see [this roadmap](/roadmap).
+* See the [install and quickstart guide](/docs/quickstart) to get going.
+* Also, if you're curious about where the project is headed, see [this roadmap](/docs/roadmap).
