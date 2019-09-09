@@ -43,7 +43,7 @@
 <script>
   import pageContent from '~/data/pages/index.yml'
   import Hero from '~/components/Hero'
-  import HeroGraphic from '~/components/homepage/HeroGraphic'
+  import HeroGraphic from '~/components/Homepage/HeroGraphic'
   import Links from '~/components/homepage/Links'
   import pageMetaInfo from '~/mixins/pageMetaInfo'
 
