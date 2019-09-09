@@ -162,14 +162,16 @@
         z-index: 2;
         left: 0;
 
-        @include max-screen(#{container(sm) - 1}) {
+        @include max-screen(breakpoint(xs, max)) {
+          width: (8/12 * 100%);
+        }
+
+        @include screen(breakpoint(sm, min), #{container(sm) - 1}) {
           width: (4/12 * 100%);
         }
 
         @include screen(container(sm), breakpoint(sm, max)) {
-          // right: 50%;
           right: calc(50% + #{4/12 * container(sm) * 1/2});
-          // right: calc(#{8/12 * 100%});
         }
 
         background-color: palette(white);
