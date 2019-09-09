@@ -44,7 +44,7 @@
   import pageContent from '~/data/pages/index.yml'
   import Hero from '~/components/Hero'
   import HeroGraphic from '~/components/Homepage/HeroGraphic'
-  import Links from '~/components/homepage/Links'
+  import Links from '~/components/Homepage/Links'
   import pageMetaInfo from '~/mixins/pageMetaInfo'
 
   export default {
