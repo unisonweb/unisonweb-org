@@ -5,19 +5,20 @@ description: placeholder
 
 # A tour of Unison
 
-This document introduces "the big idea" behind Unison and walks through the basics of using the Unison codebase manager to develop and publish your first Unison library. We will introduce bits and pieces of the core Unison language and its syntax as we go. The [Unison language reference][/language-reference] is a more in-depth resource on this if you have questions or want to learn more.
+This document introduces "the big idea" behind Unison and walks through the basics of using the Unison codebase manager to develop and publish your first Unison library. We will introduce bits and pieces of the core Unison language and its syntax as we go. The [Unison language reference][langref] is a more in-depth resource on this if you have questions or want to learn more.
 
-If you want to follow along with this document (highly recommended), this guide assumes you've already gone through the steps in [the quickstart guide](/quickstart).
+If you want to follow along with this document (highly recommended), this guide assumes you've already gone through the steps in [the quickstart guide](quickstart.html).
 
 The source for this document is [on GitHub][on-github]. Feedback and improvements are most welcome!
 
 [repoformat]: https://github.com/unisonweb/unison/blob/master/docs/repoformats/v1-DRAFT.markdown
-[on-github]: todo
-[roadmap]: /roadmap
-[quickstart]: /quickstart
-[/language-reference]: /languagereference
+[on-github]: https://github.com/unisonweb/docsite/blob/gh-pages/_includes/unisontour.markdown
+[roadmap]: roadmap.html
+[quickstart]: quickstart.html
+[langref]: /docs/language-reference
+[editorsetup]: editorsetup.html
 
-## 🧠 The big idea
+### 🧠 The big idea
 
 If there is one motivating idea behind Unison, it's this: the technology for creating software should be _thoughtfully crafted_ in all aspects. Needless complexity and difficulties should be stripped away, leaving only that exhilarating creative essence of programming that made many of us want to learn this subject in the first place. Or at the very least, if we can't have this, let's have programming be _reasonable_. The fact that things were done a certain way in the 1970s is not a good reason to keep doing them, especially if they make programming worse.
 
@@ -33,7 +34,7 @@ Part of the fun in building Unison was in working through the implications of wh
 
 We __do__ need something else to make it nice to work with content-addressed code. In Unison we call this something else the _Unison Codebase Manager_.
 
-## 👋 to the Unison codebase manager
+### 👋 to the Unison codebase manager
 
 When first launching Unison in a new directory, we get a message like:
 
@@ -49,11 +50,12 @@ The Unison codebase format has a few key properties:
 * It is _append-only_: once a file in the `.unison` directory is created, it is never modified or deleted, and files are always named uniquely and deterministically based on their content.
 * As a result, a Unison codebase can be versioned and synchronized with Git or any similar tool and will never generate a conflict in those tools.
 
-> 🐘 Remember that `pull git@github.com:unisonweb/unisonbase.git` we used in the [quickstart guide][/quickstart]. This command uses git behind the scenes to sync new definitions from the remote Unison codebase to the local codebase.
+> 🐘 Remember that `pull git@github.com:unisonweb/unisonbase.git` we used in the [quickstart guide][quickstart]. This command uses git behind the scenes to sync new definitions from the remote Unison codebase to the local codebase.
 
 Because of the append-only nature of the codebase format, we can cache all sorts of interesting information about definitions in the codebase and _never have to worry about cache invalidation_. For instance, Unison is a statically-typed language and we know the type of all definitions in the codebase--the codebase is always in a well-typed state. So one thing that's useful and easy to maintain is an index that lets us search for definitions in the codebase by their type. Try out the following commands (new syntax is explained below):
 
-```unison
+__unison__
+```
 .> find : [a] -> [a]
 
   1. base.Heap.sort : [a] -> [a]
@@ -65,29 +67,29 @@ Because of the append-only nature of the codebase format, we can cache all sorts
 
   base.List.reverse : [a] -> [a]
   base.List.reverse as =
-    use base.List cons
-    base.List.foldl (acc a -> cons a acc) [] as
+    use base.List +:
+    base.List.foldl (acc a -> a +: acc) [] as
 ```
 
 Here, we did a type-based search for functions of type `[a] -> [a]`, got a list of results, and then used the `view` command to look at the nicely formatted source code of one of these results. Let's introduce some Unison syntax:
 
-* `base.List.reverse : [a] -> [a]` is the syntax for giving a type signature to a definition. We pronounce the `:` symbol as "has type", as in "reverse has the type `[a] -> [a]`".
-* `[Nat]` is the syntax for the type which is lists of natural numbers (terms like `[0,1,2]` and `[3,4,5]`, and `[]` will have this type), and more generally `[Foo]` is the type of lists whose elements have type `Foo`.
-* Any lowercase variable in a type signature is assumed to be _universally quantified_, so `[a] -> [a]` really means and could be written `forall a . [a] -> [a]`, which is the type of functions that take a list whose elements are any type, and return a list of elements of that same type.
-* `base.List.reverse` takes one parameter, called `as`. The stuff after the `=` is called the _body_ of the function, and here it's a _block_, which is an indentation demarcated  gives one parameter.
+* `base.List.reverse : [a] -> [a]` is the syntax for giving a [type signature](languagereference.html#type-signature) to a definition. We pronounce the `:` symbol as "has type", as in "reverse has the type `[a] -> [a]`".
+* `[Nat]` is the syntax for the type consisting of lists of natural numbers (terms like `[0,1,2]` and `[3,4,5]`, and `[]` will have this type), and more generally `[Foo]` is the type of lists whose elements have some type `Foo`.
+* Any lowercase variable in a type signature is assumed to be [universally quantified](languagereference.html#polymorphic-types), so `[a] -> [a]` really means and could be written `forall a . [a] -> [a]`, which is the type of functions that take a list whose elements are some (but any) type, and return a list of elements of that same type.
+* `base.List.reverse` takes one parameter, called `as`. The stuff after the `=` is called the _body_ of the function, and here it's a [block](languagereference.html#blocks-and-statements), which is demarcated by whitespace.
 * `acc a -> ..` is the syntax for an anonymous function.
 * Function arguments are separated by spaces and function application binds tighter than any operator, so `f x y + g p q` parses as `(f x y) + (g p q)`. You can always use parentheses to control grouping more explicitly.
-* `use base.List cons` lets us reference `base.List.cons` using just `cons`. Import statements like this can be placed in any Unison block; they don't need to go at the top of your file.
+* The declaration `use base.List +:` lets us reference the function `base.List.+:` using just `+:`. (This function prepends an element to the front of a list.) [Use clauses](languagereference.html#use-clauses) like this can be placed in any Unison block; they don't need to go at the top of your file.
 
 > Try doing `view base.List.foldl` if you're curious to see how it's defined.
 
-## Names are stored separately from definitions so renaming is fast and 100% accurate
+### Names are stored separately from definitions so renaming is fast and 100% accurate
 
 The Unison codebase, in its definition for `reverse`, doesn't store names for the definitions it depends on (like the `foldl` function); it references these definitions via their hash. As a result, changing the name(s) associated with a definition is easy.
 
 Let's try this out. `reverse` is defined using `List.foldl`, where `l` is a needless abbreviation for `left`. Let's rename that to `List.foldLeft` to make things clearer. Try out the following command (you can use tab completion here if you like):
 
-```unison
+```
 .> move.term base.List.foldl base.List.foldLeft
 
   Done.
@@ -96,8 +98,8 @@ Let's try this out. `reverse` is defined using `List.foldl`, where `l` is a need
 
   base.List.reverse : [a] -> [a]
   base.List.reverse as =
-    use base.List cons
-    base.List.foldLeft (acc a -> cons a acc) [] as
+    use base.List +:
+    base.List.foldLeft (acc a -> a +: acc) [] as
 ```
 
 Notice that `view` shows the `foldLeft` name now, so the rename has taken effect. Nice!
@@ -106,44 +108,57 @@ To make this happen, Unison just changed the name associated with the hash of `f
 
 This is important: Unison __isn't__ doing a bunch of text mutation on your behalf, updating possibly thousands of files, generating a huge textual diff, and also breaking a bunch of downstream library users who are still expecting that definition to be called by the old name. That would be crazy, right?
 
-So rename and move things around as much as you want. Don't worry about picking a perfect name the first time. Give the same definition multiple names if you want, it's all good!
+So rename and move things around as much as you want. Don't worry about picking a perfect name the first time. Give the same definition multiple names if you want. It's all good!
 
 > ☝️ Using `alias.term` instead of `move.term` introduces a new name for a definition without removing the old name(s).
 
 > 🤓 If you're curious to learn about the guts of the Unison codebase format, you can check out the [v1 codebase format specification][repoformat].
 
-Drink some water and then let's learn more about Unison's interactive way of writing and editing code.
+OK, go drink some water, and then let's learn more about Unison's interactive way of writing and editing code.
 
-## Unison scratch files are like spreadsheets and replace the usual read-eval-print-loop
+### Unison scratch files are like spreadsheets and replace the usual read-eval-print-loop
 
 The codebase manager lets you make changes to your codebase and explore the definitions it contains, but it also listens for changes to any file ending in `.u` in the current directory (including any subdirectories). When any such file is saved (which we call a "scratch file"), Unison parses and typechecks that file. Let's try this out.
 
-Keep your `unison` terminal running and open up a file, `scratch.u` (or `foo.u`, or whatever you like) in your preferred editor, and put the following in your scratch file:
+Keep your `ucm` terminal running and open up a file, `scratch.u` (or `foo.u`, or whatever you like) in your preferred text editor (if you want syntax highlighting for Unison files, [follow this link][editorsetup] for instructions on setting up your editor).
 
-```unison scratch.u
+Now put the following in your scratch file:
+
+**scratch.u**
+```
+use .base
+
+square : Nat -> Nat
 square x = x * x
 ```
 
 This defines a function called `square`. It takes an argument called `x` and it returns `x` multiplied by itself.
 
+The first line, `use .base`, tells Unison that you want to use short names for the base libraries in this file (which allows you to say `Nat` instead of having to say `base.Nat`).
+
 When you save the file, Unison replies:
 
-```unison
+**unison**
+```
 ✅
 
-I found and typechecked these definitions in ~/Dropbox/projects/unison/scratch.u. If you do an
+I found and typechecked these definitions in ~/unisoncode/scratch.u. If you do an
 `add` or `update` , here's how your codebase would change:
 
   ⍟ These new definitions are ok to `add`:
 
-    square : Nat -> Nat
+    square : base.Nat -> base.Nat
 
 Now evaluating any watch expressions (lines starting with `>`)... Ctrl+C cancels.
 ```
 
 It typechecked the `square` function and inferred that it takes a natural number and returns a natural number, so it has the type `Nat -> Nat`. It also tells us that `square` is "ok to `add`". We'll do that shortly, but first, let's try calling our function right in the `scratch.u` file, just by starting a line with `>`:
 
-```unison scratch.u
+**scratch.u**
+```
+use .base
+
+square : Nat -> Nat
 square x = x * x
 
 > square 4
@@ -151,13 +166,16 @@ square x = x * x
 
 And Unison replies:
 
-```unison
-3 | > square 4
+**unison**
+```
+6 | > square 4
       ⧩
       16
 ```
 
-The line `> square 4` starting with a `>` is called a "watch expression", and Unison uses these watch expressions instead of having a separate read-eval-print-loop (REPL). The code you are editing can be run interactively, right in the same spot as you are doing the editing, with a full text editor at your disposal, with the same imports all in scope, all without needing to switch to a separate tool.
+That `6 |` is the line number from the file. The `> square 4` on line 6 of the file, starting with a `>` is called a "watch expression", and Unison uses these watch expressions instead of having a separate read-eval-print-loop (REPL). The code you are editing can be run interactively, right in the same spot as you are doing the editing, with a full text editor at your disposal, with the same definitions all in scope, without needing to switch to a separate tool.
+
+The `use .base` is a _wildcard use clause_. This lets us use anything from the `base` namespace under the root unqualified. For example we refer to `base.Nat` as simply `Nat`.
 
 __Question:__ do we really want to reevaluate all watch expressions on every file save? What if they're expensive? Luckily, Unison keeps a cache of results for expressions it evaluates, keyed by the hash of the expression, and you can clear this cache at any time without ill effects. If a result for a hash is in the cache, Unison returns that instead of evaluating the expression again. So you can think of and use your `.u` scratch files a bit like spreadsheets, which only recompute the minimal amount when dependencies change.
 
@@ -165,7 +183,8 @@ __Question:__ do we really want to reevaluate all watch expressions on every fil
 
 Let's try out a few more examples:
 
-```unison scratch.u
+**scratch.u**
+```
 -- A comment, ignored by Unison
 
 > base.List.reverse [1,2,3,4]
@@ -174,7 +193,8 @@ Let's try out a few more examples:
 > not true
 ```
 
-```unison
+**unison**
+```
 ✅
 
 ~/unisoncode/scratch.u changed.
@@ -199,21 +219,26 @@ Now evaluating any watch expressions (lines starting with
         false
 ```
 
-## Testing
+### Testing
 
 Let's add add a test for our `square` function:
 
-```unison scratch.u
+**scratch.u**
+```
+use .base
+
+square : Nat -> Nat
 square x = x * x
 
 use test.v1
 
-test> tests.square.ex1 = run (expect (4 == 16))
+test> tests.square.ex1 = run (expect (square 4 == 16))
 ```
 
 Save the file, and Unison comes back with:
 
-```unison
+**unison**
+```
 7 | test> tests.square.ex1 = run (expect (square 4 == 16))
 
 ✅ Passed : Passed 1 tests.
@@ -221,14 +246,17 @@ Save the file, and Unison comes back with:
 
 Some syntax notes:
 
-* `use test.v1` is a _wildcard use clause_. This lets us use anything from the `test.v1` namespace unqualified. For example we refer to `test.v1.run` as simply `run`.
 * The `test>` prefix tells Unison that what follows is a test watch expression. Note that we're also giving a name to this expression, `tests.square.ex1`.
 
 The `expect` function has type `Boolean -> Test`. It takes a `Boolean` expression and gives back a `Test`, which can be `run` to produce a list of test results, of type `[base.Test.Result]` (try `view base.Test.Result`). In this case there was only one result, and it was a passed test.
 
 Let's test this a bit more thoroughly. `square` should have the property that `square a * square b == square (a * b)` for all choices of `a` and `b`. The testing library supports writing property-based tests like this. There's some new syntax here, explained afterwards:
 
-```unison scratch.u
+**scratch.u**
+```
+use .base
+
+square : Nat -> Nat
 square x = x * x
 
 use test.v1
@@ -242,7 +270,8 @@ test> tests.square.prop1 =
   runs 100 go
 ```
 
-```unison
+**Unison**
+```
 8 |   go _ = a = !nat
 
 ✅ Passed : Passed 100 tests. (cached)
@@ -251,11 +280,11 @@ test> tests.square.prop1 =
 This will test our function with a bunch of different inputs. Syntax notes:
 
 * The Unison block which begins after an `=` begins a Unison block, which can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
-* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; it's just a delayed computation that will be evaluated multiple times by the `runs` function.
-* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the delayed computation `expr`.
+* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](languagereference.html#delayed-computations) so it can be run multiple times by the `runs` function.
+* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](languagereference.html#delayed-computations) `expr`.
 * Note: there's nothing special about the names `tests.square.ex1` or `tests.square.prop1`; we could call those bindings anything we wanted. Here we just picked some uncreative names based on the function being tested. Use whatever naming convention you prefer.
 
-`nat` is imported from `test.v1` - `test.v1.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
+`nat` comes from `test.v1` - `test.v1.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
 
 The `square` function and the tests we've written for it are not yet part of the codebase. So far they only exists in our scratch file. Let's add it now. Switch to the Unison console and type `add`. You should get something like:
 
@@ -273,7 +302,8 @@ You've just added a new function and some tests to your Unison codebase. Try typ
 
 If you type `test` at the Unison prompt, it will "run" your test suite:
 
-```unison
+**Unison**
+```
 .> test
 
   Cached test results (`help testcache` to learn more)
@@ -288,15 +318,15 @@ If you type `test` at the Unison prompt, it will "run" your test suite:
 
 But actually, it didn't need to run anything! All the tests had been run previously and cached according to their Unison hash. In a purely functional language like Unison, tests like these are deterministic and can be cached and never run again. No more running the same tests over and over again!
 
-## Unison namespaces and use clauses
+### Unison namespaces and use clauses
 
 Now that we've added our `square` function to the codebase, how do we reference it elsewhere?
 
 The _Unison namespace_ is the mapping from names to definitions. Names in Unison look like this: `math.sqrt`, `.base.Int`, `base.Nat`, `base.Nat.*`, `++`, or `foo`. That is: an optional `.`, followed by one or more segments separated by a `.`, with the last segment allowed to be an operator name like `*` or `++`.
 
-We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. _Absolute_ names (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` command:
+We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. [Absolute names](languagereference.html#absolutely-qualified-identifiers) (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` (or equivalently `cd`) command:
 
-```unison
+```
 .> namespace mylibrary
 
   ☝️  The namespace .mylibrary is empty.
@@ -310,14 +340,14 @@ Notice the prompt changes to `.mylibrary>`, indicating your current namespace is
 
 When we added `square`, we were at the root, so `square` and its tests are directly under the root. To keep our root namespace a bit tidier, let's go ahead and move our definitions into the `mylibrary` namespace:
 
-```unison
+```
 .mylibrary> move.term .square square
 
   Done.
 
 .mylibrary> find
 
-  1.  square  : .base.Nat -> .base.Nat
+  1.  square : .base.Nat -> .base.Nat
 
 .mylibrary> move.namespace .tests tests
 
@@ -326,17 +356,17 @@ When we added `square`, we were at the root, so `square` and its tests are direc
 
 We're using `.square` to refer to the `square` definition directly under the root, and then moving it to the _relative_ name `square`. When you're done shuffling some things around, you can use `find` with no arguments to view all the definitions under the current namespace:
 
-```unison
+```
 .mylibrary> find
 
-  1.  tests.square.ex1  : [.base.Test.Result]
-  2.  tests.square.prop1  : [.base.Test.Result]
-  3.  square  : .base.Nat -> .base.Nat
+  1.  tests.square.ex1 : [.base.Test.Result]
+  2.  tests.square.prop1 : [.base.Test.Result]
+  3.  square : .base.Nat -> .base.Nat
 ```
 
 Also notice that we don't need to rerun our tests after this reshuffling. The tests are still cached:
 
-```unison
+```
 .mylibrary> test
 
   Cached test results (`help testcache` to learn more)
@@ -351,19 +381,19 @@ Also notice that we don't need to rerun our tests after this reshuffling. The te
 
 We get this for free because the test cache is keyed by the hash of the test, not by what the test is called.
 
-> ☝️  The `use` statement can do absolute imports as well, for instance `use .base.List map`.
+> ☝️  The `use` statement can do absolute names as well, for instance `use .base.List map`.
 
 When you're starting out writing some code, it can be nice to just put it in a temporary namespace, perhaps called `temp` or `scratch`. Later, without breaking anything, you can move that namespace or bits and pieces of it elsewhere, using the `move.term`, `move.type`, and `move.namespace` commands.
 
 ## Modifying an existing definition
 
-Instead of starting a function from scratch, often you just want to slightly modify something that already exists. Here we'll make a trivial change to our `square` function. Try doing `edit square` from your prompt (note you can use tab completion):
+Instead of starting a function from scratch, often you just want to slightly modify something that already exists. Here we'll make a change to the implementation of our `square` function. Try doing `edit square` from your prompt (note you can use tab completion):
 
-```unison
+```
 .mylibrary> edit square
   ☝️
 
-  I added these definitions to the top of ~/scratch.u
+  I added these definitions to the top of ~/unisoncode/scratch.u
 
     square : .base.Nat -> .base.Nat
     square x =
@@ -377,47 +407,60 @@ This copies the pretty-printed definition of `square` into you scratch file "abo
 
 > Notice that Unison has put the correct type signature on `square`. The absolute names `.base.Nat` look a bit funny. We will often do `use .base` at the top of our file to refer to all the basic functions and types in `.base` without a fully qualified name.
 
-Let's edit `square` and instead define `square x` (just for fun) as the sum of the odd numbers less than `x * 2`:
+Let's edit `square` and instead define `square x` (just for fun) as the sum of the first `x` odd numbers (here's a [nice geometric illustration of why this gives the same results](https://math.stackexchange.com/a/639079)):
 
-```unison scratch.u
-use Nat >
+**scratch.u**
+```Haskell
+use .base
 
-square : .base.Nat -> .base.Nat
-square x = 
-  go k acc = 
-    if k > 0 then go (k + 1) (k * 2 `drop` 1 + acc) else acc
-  go x 0
+square : Nat -> Nat
+square x =
+  sum (map (x -> x * 2 + 1) (range 0 x))
+
+sum : [Nat] -> Nat
+sum = foldLeft (+) 0
 ```
 
-```unison
+**Unison**
+```
 ✅
 
-I found and typechecked these definitions in ~/Dropbox/projects/unison/scratch.u. If you do an
+I found and typechecked these definitions in ~/unisoncode/scratch.u. If you do an
 `add` or `update` , here's how your codebase would change:
 
   ⍟ These new definitions will replace existing ones of the same name and are ok to `update`:
 
-    square  : .base.Nat -> .base.Nat
+    square : .base.Nat -> .base.Nat
 
 Now evaluating any watch expressions (lines starting with `>`)... Ctrl+C cancels.
 ```
 
 Notice the message says that `square` is "ok to `update`". Let's try that:
 
-```unison
+```
 .mylibrary> update
+
+  ⍟ I've added these definitions:
+
+    sum : [.base.Nat] -> .base.Nat
 
   ⍟ I've updated to these definitions:
 
-    square  : .base.Nat -> .base.Nat
+    square             : .base.Nat -> .base.Nat
 ```
 
 If we rerun the tests, the tests won't be cached this time, since one of their dependencies has actually changed:
 
-```unison
-.mylibrary> test
+**Unison**
+```
+New test results:
 
-TODO: fixme - update doesn't propagate
+◉ tests.square.prop1    : Passed 100 tests.
+◉ tests.square.ex1      : Passed 1 tests.
+
+✅ 2 test(s) passing
+
+Tip: Use view tests.square.prop1 to view the source of a test.
 ```
 
 Notice the message indicates that the tests weren't cached. If we do `test` again, we'll get the newly cached results.
@@ -426,18 +469,18 @@ Notice the message indicates that the tests weren't cached. If we do `test` agai
 
 Unison code is published just by virtue of it being pushed to github; there's no separate publication step. You might choose to make a copy of your namespace. Let's go ahead and do this:
 
-```unison
-.mylibrary> path .
-.> copy.path mylibrary mylibrary.releases.v1
+```
+.mylibrary> cd .
+.> copy.namespace mylibrary mylibrary.releases.v1
 
   Done.
 
 .> cd mylibrary.releases.v1
 .mylibrary.releases.v1> find
 
-  1.  tests.square.ex1  : [.base.Test.Result]
-  2.  tests.square.prop1  : [.base.Test.Result]
-  3.  square  : .base.Nat -> .base.Nat
+  1.  tests.square.ex1 : [.base.Test.Result]
+  2.  tests.square.prop1 : [.base.Test.Result]
+  3.  square : .base.Nat -> .base.Nat
 ```
 
 But this is just a naming convention, there's nothing magic happening here.
@@ -445,34 +488,37 @@ But this is just a naming convention, there's nothing magic happening here.
 Now let's publish our `mylibrary` to a fresh Unison repo. First, fork the Unison base library, using the button below (you'll need a GitHub account to do this). This creates a valid minimal Unison codebase repo that you can push to:
 
 <iframe src="https://ghbtns.com/github-btn.html?user=unisonweb&repo=unisonbase&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
+<br/>
 
 > ☝️ There's nothing special about using GitHub here; you can also host your Unison git repos elsewhere. Just use whatever git URL you'd use on your git hosting provider for a `git push`.
 
-After you've forked the base repo, you can push to it:
+After you've forked the base repo, feel free to rename it to anything you like, or keep the name `unisonbase`. You can then push to it:
 
-```unison
-.mylibrary.releases.v1> path .
+**Unison**
+```
+.mylibrary.releases.v1> cd .
 .> push git@github.com:<yourgithubuser>/unisonbase.git
 ```
 
 You'll see some git logging output. Your code is now live on the internet!
 
-## Installing libraries written by others
+### Installing libraries written by others
 
 This section is under construction.
 
 From the root, do:
 
-```unison
+```
 .> pull git@github.com:<github-username>/unisonbase.git temp
 ..
-.> move.path temp.myfirstlibrary.releases.v1 myfirstlibrary
-.> delete.path temp
+.> move.namespace temp.myfirstlibrary.releases.v1 myfirstlibrary
+.> delete.namespace temp
 ```
 
 The namespace you created is now available under `.myfirstlibrary`, so `.myfirstlibrary.square` will resolve to the function you wrote.
 
-## What next?
+### What next?
 
-* [The core language reference][/language-reference] describes Unison's core language and current syntax in more detail.
+* [The core language reference][langref] describes Unison's core language and current syntax in more detail.
 * TODO: writing a more interesting library
+

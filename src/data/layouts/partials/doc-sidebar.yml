@@ -1,36 +1,22 @@
 linkSets:
 
-  - heading: Headline 1
+  - heading: Start Here 
     icon: /media/icon-code.svg
     links:
-      - label: Introduction
+      - label: Welcome
         url: /docs
-
-  - heading: Headline 2
-    icon: /media/icon-code.svg
-    links:
+      - label: Roadmap
+        url: /docs/roadmap
       - label: Quickstart
         url: /docs/quickstart
 
-  - heading: Headline 3
-    icon: /media/icon-code.svg
-    links:
-      - label: Getting Started
-        url: /docs/getting-started
-
-  - heading: Headline 4
+  - heading: A Tour of Unison
     icon: /media/icon-code.svg
     links:
       - label: Tour
         url: /docs/tour
 
-  - heading: Headline 5
-    icon: /media/icon-code.svg
-    links:
-      - label: Roadmap
-        url: /docs/roadmap
-
-  - heading: Headline 6
+  - heading: Language Reference
     icon: /media/icon-code.svg
     links:
       - label: Language Reference

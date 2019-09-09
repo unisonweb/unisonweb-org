@@ -1,152 +1,19 @@
 ---
-title: Introduction
-description: placeholder
+title: Start here
+description: Read this first if you would like to help us with alpha testing of Unison
 ---
 
-# Introduction
+# Welcome and project status
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium pretium tempor. Ut eget imperdiet neque. In volutpat ante semper diam molestie, et aliquam erat laoreet. Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
+Welcome! If you are interested in helping to alpha test Unison, you are in the right place. This document has a quick project status update and rough roadmap for future work so you have some idea of what to expect.
 
-Mauris non tempor quam, et lacinia sapien. Mauris accumsan eros eget libero posuere vulputate. Etiam elit elit, elementum sed varius at, adipiscing vitae est. Sed nec felis pellentesque, lacinia dui sed, ultricies sapien. Pellentesque orci lectus, consectetur vel posuere posuere, rutrum eu ipsum..
+## What's in this release?
 
-## Subsection A
+This alpha release (which we're calling "Milestone 1" or "M1") is mostly focused on the core Unison language and its tooling. With this release, you should be able to to write new Unison code using other Unison libraries and publish new code yourself. The tools you'll use for this are just your preferred text editor and the _Unison codebase manager_. The codebase manager is an all-in-one tool you'll get to know well that handles everything other than text editing related to working with Unison code: typechecking it, running it, browsing the codebase, refactoring, publishing, and so on.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium pretium tempor. Ut eget imperdiet neque. In volutpat ante semper diam molestie, et aliquam erat laoreet. Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh. Suspendisse luctus mattis cursus. Nam consectetur ante at nisl hendrerit gravida. Donec vehicula rhoncus mattis. Mauris dignissim semper mattis. Fusce porttitor a mi at suscipit. Praesent facilisis dolor sapien, vel sodales augue mollis ut. Mauris venenatis magna eu tortor posuere luctus. Aenean tincidunt turpis sed dui aliquam vehicula. Praesent nec elit non dolor consectetur tincidunt sed in felis. Donec elementum, lacus at mattis tincidunt, eros magna faucibus sem, in condimentum est augue tristique risus.
+There are very few libraries in this M1 release and the distributed programming example you'll run to get started is just a toy that simulates execution locally. You will not hear us claiming that we've solved distributed programming or anything like that. Over the next 6 months, with the foundations of the language and tooling now laid down, we do plan to start rolling out real libraries for doing distributed programming in Unison, and that will be pretty exciting. 😀
 
-### Subheading 1
+## What's next?
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium pretium tempor. Ut eget imperdiet neque. In volutpat ante semper diam molestie, et aliquam erat laoreet. Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
-
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-2. Ut pretium pretium tempor. Ut pretium pretium tempor. Ut pretium pretium tempor. Ut pretium pretium tempor.
-3. Ut eget imperdiet neque. Ut eget imperdiet neque. Ut eget imperdiet neque. Ut eget imperdiet neque.
-4. In volutpat ante semper diam molestie, et aliquam erat laoreet.
-5. Sed sit amet arcu aliquet, molestie justo at, auctor nunc.
-6. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-- Ut pretium pretium tempor.
-- Ut eget imperdiet neque.
-- In volutpat ante semper diam molestie, et aliquam erat laoreet.
-- Sed sit amet arcu aliquet, molestie justo at, auctor nunc.
-- Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
-
-### Subheading 2
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium pretium tempor. Ut eget imperdiet neque. In volutpat ante semper diam molestie, et aliquam erat laoreet. Sed sit `amet arcu aliquet`, molestie justo at, auctor nunc. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
-
-```unison
----
-title: output
-filename: filename
----
--- A comment. Extends to end of line.
-
--- Keywords:
---   if, then, else, forall, ∀, handle, in, unique, where, use, and, or, true, false,
---   with, type, ability, alias, let, namespace, case, of
-
--- Other notable tokens:
-
-42, 9.7, 1e100, "hello", +99, -42, true, false -- various literals
-
-->
-  (x -> x + 1) -- used for anonymous functions:
-  Nat -> Nat -- used in type signatures:
-
-{}
-  Nat ->{Async, IO} () -- used for ability lists, color should match ->
-
-: -- Start of a type signature
-  List.map : (a ->{e} b) -> [a] ->{e} [b]
-
-[x, y, z] -- syntax for lists
-(x,y) -- syntax for tuples
-
-elems `drop` 1 -- any function can be used infix by putting it in backticks:
-
-'x -- delays a computation
-!x -- forces a delayed computation, so !('x) == x
-
-> 1 + 1 -- A watch expression - line starting with >
-
--- A test watch, line starts with test>
-test> runs 100 ' let
-  x = !nat  --
-  y = !nat
-  expect (isEven (2 * (x + y)))
-
-use base.Optional None Some -- import statement
-
--- handle blocks
-handle state 0 in
-  x = State.get + 1
-  State.set x
-
--- More examples:
-
-List.map : (a ->{e} b) -> [a] ->{e} [b]
-List.map f a =
-  go i as acc = case List.at i as of
-    None -> acc
-    Some a -> go (i + 1) as (acc :+ f a)
-  go 0 a []
-
-b = if true then 1 else false
-
-ability Remote where
-  spawn : Node
-  at : Node -> '{Remote} a -> Future a
-  force : Future a -> a
-
-type Optional a = None | Some a
-
---- Three dashes marks 'the fold'. Anything below the fold is ignored by Unison.
-```
-
-```unison
----
-title: output
-filename: filename
----
-factorial n =
-    product (range 1(n+1))
-
-factorial-at bob n =
-    at bob {factorial n}
-```
-
-```unison
----
-title: output
----
-factorial n =
-    product (range 1(n+1))
-
-factorial-at bob n =
-    at bob {factorial n}
-```
-
-```unison
-factorial n =
-    product (range 1(n+1))
-
-factorial-at bob n =
-    at bob {factorial n}
-```
-
-```unison
----
-filename: filename
----
-factorial n =
-    product (range 1(n+1))
-
-factorial-at bob n =
-    at bob {factorial n}
-```
-
-### Subheading 3
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium pretium tempor. Ut eget imperdiet neque. In volutpat ante semper diam molestie, et aliquam erat laoreet. Sed sit amet arcu aliquet, molestie justo at, auctor nunc. Phasellus ligula ipsum, volutpat eget semper id, viverra eget nibh.
-
+* See the [install and quickstart guide](/quickstart) to get going.
+* Also, if you're curious about where the project is headed, see [this roadmap](/roadmap).
