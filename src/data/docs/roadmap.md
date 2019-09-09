@@ -1,11 +1,15 @@
 ---
 title: Roadmap
-description: Plans for the next 6 months of Unison development
+description: Plans for future work on Unison
 ---
 
 # Roadmap
 
-* Ongoing bugfixes and quality of life improvements for Unison, driven by what gets surfaced by alpha testing.
+Here's what you can expect in the coming months for Unison. If you're interested in using Unison and think you'll need something that's not on this list, you can let us know in Slack.
+
+## In the coming months
+
+* Ongoing bugfixes and quality of life improvements for Unison, driven by what gets surfaced by alpha testing. We're tracking many of these items [here](https://github.com/unisonweb/unison/projects/2).
 * New primitive functions for hashing and serialization of arbitrary Unison values. This is the basic building block of actual distributed execution as well as typed durable storage.
 * Core library: concurrency and I/O. There's a super early version of this in M1.
 * Core library: typed durable storage, with pluggable storage backends (local file system, IPFS, or your favorite cloud storage). This is a typed, durable storage library for Unison which lets you save any value and read it back later. No more parsing untyped blobs of bytes! Durable values can also be nested so this can be used to build lazily loaded durable data structures.
@@ -14,8 +18,10 @@ description: Plans for the next 6 months of Unison development
 * A new runtime: we'll be starting first with a faster bytecode interpreter but would like to eventually move to an LLVM backend. Sam Griffin has done some early work on the LLVM side.
 * Other core libraries that for whatever reason can't be implemented in pure Unison, though generally we would prefer to keep new primitives in language to a minimum so that innovation can be done by anyone in pure Unison libraries. The distributed programming support is an example of this: it will be built on top of a few primitives for code hashing and serialization so that anyone can innovate on new libraries and protocols without needing a language upgrade.
 
+## Longer-term projects
+
 Longer term, we expect to be starting up work again on the [Unison semantic editor](http://unisonweb.org/2016-03-16/semantic-vs-text.html). This will basically be a different front-end for the codebase manager which talks to the same model and shares much of the same code, and Unison code could be written using the current command line interface + text editor, the semantic editor, or both.
 
-### What's next?
+## What's next?
 
 Go to the [install and quickstart guide](/quickstart) to get started.
