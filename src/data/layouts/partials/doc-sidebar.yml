@@ -13,8 +13,16 @@ linkSets:
   - heading: A Tour of Unison
     icon: /media/icon-code.svg
     links:
-      - label: Tour
+      - label: Introduction and the big idea
         url: /docs/tour
+      - label: Hello to the codebase manager
+        url: /docs/tour/hello-ucm
+      - label: Testing your code 
+        url: /docs/tour/testing
+      - label: Making edits to your code
+        url: /docs/tour/updating
+      - label: Publishing code
+        url: /docs/tour/sharing
 
   - heading: Language Reference
     icon: /media/icon-code.svg
