@@ -95,7 +95,7 @@ module.exports = {
       squeezeParagraphs: true,
       externalLinks: true,
       externalLinksTarget: '_blank',
-      plugins: CONFIG.remarkPlugins
+      plugins: CONFIG.remarkPlugins,
     }
   },
 
@@ -108,7 +108,7 @@ module.exports = {
 
   chainWebpack: config => {
 
-    // config.mode('development')
+    // config.mode('production')
 
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
