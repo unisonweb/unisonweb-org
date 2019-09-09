@@ -48,6 +48,7 @@ function getPlugins() {
           extensions: ['vue', 'md', 'html']
         }]
       }),
+      require('cssnano')(),
     ]
 
     plugins.push.apply(plugins, prodPlugins)
