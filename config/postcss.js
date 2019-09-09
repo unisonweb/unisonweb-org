@@ -48,11 +48,7 @@ function getPlugins() {
           extensions: ['vue', 'md', 'html']
         }]
       }),
-      require('cssnano')({
-        zindex: false,
-        svgo: false,
-        mergeRules: true,
-      }),
+      require('cssnano')(),
     ]
 
     plugins.push.apply(plugins, prodPlugins)
