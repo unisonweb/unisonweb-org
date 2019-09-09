@@ -7,18 +7,13 @@
       class="un-site-nav__logo"
       src="/media/logo-unison.svg"
     />
-    <!-- <Logo class="un-site-nav__logo" /> -->
   </un-link>
 </template>
 
 <script>
-  // import Logo from '~/../static/media/logo-unison.svg'
   import links from '~/mixins/links'
 
   export default {
-    // components: {
-    //   Logo,
-    // },
     mixins: [
       links,
     ],
