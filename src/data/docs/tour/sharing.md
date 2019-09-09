@@ -3,7 +3,13 @@ title: Publishing code and installing Unison libraries
 description: placeholder
 ---
 
-Unison code is published just by virtue of it being pushed to github; there's no separate publication step. You might choose to make a copy of your namespace. Let's go ahead and do this:
+# Publishing code and installing Unison libraries
+
+Unison code is published just by virtue of it being pushed to github; there's no separate publication step.
+
+## Publishing your code
+
+You might choose to make a copy of your namespace. Let's go ahead and do this:
 
 ```
 .mylibrary> cd .
@@ -38,7 +44,7 @@ After you've forked the base repo, feel free to rename it to anything you like, 
 
 You'll see some git logging output. Your code is now live on the internet!
 
-### Installing libraries written by others
+## Installing libraries written by others
 
 This section is under construction.
 
