@@ -193,10 +193,6 @@
       // reset
       padding: 0;
 
-      & {
-        margin-top: (rem(-2) * 1/2);
-      }
-
       > li {
         margin-left: rem(2);
         padding-left: (rem(0) * 1/2);
