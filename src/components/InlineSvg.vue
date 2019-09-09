@@ -1,45 +1,27 @@
 <template>
-  <component
-    v-if="inlineSvg"
-    :is="inlineSvg"
-  />
+  <component :is="loadSVG" />
 </template>
 
 <script>
   export default {
     props: {
-      src: { type: String, default: null },
-    },
-    data() {
-      return {
-        inlineSvg: null,
-      }
+      src: { type: String, default: () => null },
     },
     computed: {
       isSvg() {
-
-        if (!this.src) {
-          return false
-        }
-
         const filename = this.src.split('/').pop()
         const ext = filename.split('.').pop()
         return (ext === 'svg')
       },
-      loader() {
-
-        if (!this.isSvg) {
-          return null
-        }
-
-        return () => import(`~/../static${this.src}?inline`)
+      loadSVG() {
+        return () => import(`~/../static${this.src}`)
       },
     },
     mounted() {
 
-      this.loader().then(() => {
-        this.inlineSvg = () => this.loader()
-      })
+      if (this.src && this.isSvg) {
+        this.loadSVG()
+      }
 
     },
   }
