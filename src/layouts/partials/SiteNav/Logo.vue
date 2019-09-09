@@ -3,18 +3,22 @@
     class="un-site-nav__logo__wrapper"
     title="Unison"
     url="/">
-    <Logo class="un-site-nav__logo" />
+    <inline-svg
+      class="un-site-nav__logo"
+      src="/media/logo-unison.svg"
+    />
+    <!-- <Logo class="un-site-nav__logo" /> -->
   </un-link>
 </template>
 
 <script>
-  import Logo from '~/../static/media/logo-unison.svg'
+  // import Logo from '~/../static/media/logo-unison.svg'
   import links from '~/mixins/links'
 
   export default {
-    components: {
-      Logo,
-    },
+    // components: {
+    //   Logo,
+    // },
     mixins: [
       links,
     ],
