@@ -134,6 +134,7 @@
   );
 
   .un-doc-sidebar__platform {
+    $this: &;
 
     @include max-screen(breakpoint(sm, max)) {
 
@@ -184,20 +185,21 @@
         opacity: 0;
         pointer-events: none;
       }
-    }
 
-    &--show-mobile-bg {
+      &#{$this}--show-mobile-bg {
 
-      &:before {
-        opacity: 1;
-        pointer-events: auto;
+        &:before {
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        &:after {
+          transform: translate3d(0, 0, 0);
+          opacity: 1;
+          pointer-events: auto;
+        }
       }
 
-      &:after {
-        transform: translate3d(0, 0, 0);
-        opacity: 1;
-        pointer-events: auto;
-      }
     }
   }
 
