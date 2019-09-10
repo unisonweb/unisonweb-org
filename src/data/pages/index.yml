@@ -1,32 +1,33 @@
-title: Unison Computing
-description: placeholder
+title: The Unison language
+description: A friendly programming language from the future.
 hero:
   eyebrow: Unison is in public alpha
   heading: A friendly programming language from the future.
   blurb: |
-    Unison is experimental as the moment and under active development. It's not quite ready for production use, but you could have a huge impact on how Unison develops. It's easy to jump in!
+    Unison is an open source functional programming language based on a simple idea with big implications: code in Unison is content-addressed, identified by a hash of its syntax tree. See below for more.
   graphic:
     alt: placeholder
     title: placeholder
     path: /media/graphic-homepage-hero.svg
   cta:
-    label: Install
-    url: '#'
+    label: Help with alpha testing
+    url: '/docs'
 intro: |
-  Unison is an open source functional programming language based on a simplifying core idea: code in Unison is content-addressed, identified by a hash of its syntax tree. The idea is used to simplify codebase management (Unison has no builds, code sharing without dependency conflicts, instant renames, and more). And it forms the basis for a runtime that robustly supports dynamic code deployment, and allows a single Unison program to describe entire elastic distributed systems.
+  It may not seem like much, but the simple idea of content-addressed code affects almost every aspect of how a programming language works. It is used to simplify codebase management (Unison has no builds, has code sharing without dependency conflicts, instant renames, and more). And the same core idea forms the basis for a runtime that robustly supports dynamic code deployment, allowing a single Unison program to describe entire elastic distributed systems.
 
-  Though a lot of the work on Unison is still experimental and ongoing, we're sharing an early release of the language for people to try out. You can read the [Roadmap and Project Status](#) or click below to get started in 3 minutes.
+  Though a lot of the work on Unison is still experimental and ongoing, we're sharing an early release of the language for people to test out. We'll be making a release more generally available soon but if you'd like to help participate in alpha testing, go to [the docs site](/docs).
+
 links:
   heading: Documentation
   items:
-    - label: Get started with Unison in 3 minutes
-      url: '#'
-    - label: Tutorials
-      url: '#'
-    - label: API Documentation
-      url: '#'
-    - label: What to help us create Unison?
-      url: '#'
+    - label: A Tour of Unison
+      url: /docs/tour
+    - label: Language Reference
+      url: /docs/language-reference
+    - label: Open Source on GitHub
+      url: 'https://github.com/unisonweb/unison'
+    - label: Talks about Unison
+      url: /talks
   button:
-    label: Install
-    url: '#'
+    label: Help with alpha testing
+    url: /docs

@@ -3,5 +3,5 @@ links:
     url: '/docs'
   - label: Community
     url: '/community'
-  - label: Blog
-    url: '/blog'
+#  - label: Blog
+#    url: '/blog'
