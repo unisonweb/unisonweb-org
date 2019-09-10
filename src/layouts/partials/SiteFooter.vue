@@ -31,6 +31,10 @@
 
     border-top: 1px solid palette(gray, xx-light);
     background-color: palette(gray, xxx-light);
+
+    a {
+      text-decoration: underline;
+    }
   }
 
 </style>
