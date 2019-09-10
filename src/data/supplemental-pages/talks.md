@@ -1,6 +1,7 @@
 ---
 title: Talks about Unison
 description: Presentations about Unison
+slug: talks
 ---
 
 # Talks about Unison
