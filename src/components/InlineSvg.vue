@@ -1,6 +1,6 @@
 <template>
   <component
-    v-if="loadSVG"
+    v-if="!isLoading"
     :is="loadSVG"
   />
 </template>
@@ -9,6 +9,11 @@
   export default {
     props: {
       src: { type: String, default: () => null },
+    },
+    data() {
+      return {
+        isLoading: true,
+      }
     },
     computed: {
       isSvg() {
@@ -23,7 +28,9 @@
     mounted() {
 
       if (this.src && this.isSvg) {
-        this.loadSVG()
+        this.loadSVG().then(() => {
+          this.isLoading = false
+        })
       }
 
     },
