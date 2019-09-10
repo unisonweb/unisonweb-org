@@ -20,7 +20,7 @@
       <un-site-footer />
     </div>
 
-    <un-cookies-notice />
+    <!-- <un-cookies-notice /> -->
 
   </div>
 </template>
