@@ -13,11 +13,33 @@ linkSets:
   - heading: A Tour of Unison
     icon: /media/icon-code.svg
     links:
-      - label: Tour
+      - label: Introduction and the big idea
         url: /docs/tour
+      - label: Hello to the codebase manager
+        url: /docs/tour/hello-ucm
+      - label: Testing your code 
+        url: /docs/tour/testing
+      - label: Making edits to your code
+        url: /docs/tour/updating
+      - label: Publishing code
+        url: /docs/tour/sharing
 
   - heading: Language Reference
     icon: /media/icon-code.svg
     links:
-      - label: Language Reference
+      - label: Introduction
         url: /docs/language-reference
+      - label: Term declarations
+        url: /docs/language-reference/term-declarations
+      - label: Type declarations
+        url: /docs/language-reference/type-declarations
+      - label: Expressions 
+        url: /docs/language-reference/expressions
+      - label: Hashes 
+        url: /docs/language-reference/hashes
+      - label: Types 
+        url: /docs/language-reference/types
+      - label: Abilities and handlers 
+        url: /docs/language-reference/abilities
+      - label: Name resolution 
+        url: /docs/language-reference/name-resolution

@@ -7,42 +7,21 @@ More in-depth guides follow this one.
 If you have any trouble with the process, or have ideas about how to improve this document, [come talk to us in the #alphatesting Slack channel][slack]! Also this document is [on GitHub][on-github].
 
 [slack]: https://join.slack.com/t/unisonlanguage/shared_invite/enQtNzAyMTQ4ODA0MDM4LWYxZTNkMGUxMDEzNTg3NTMxNjMxOGM2Zjg4ODFjM2RhNGY0OGU2NTMzYmQ1YWIwN2Y0YTc1NjQ1NjgzYzEzOWI
-[mac-dl]: https://github.com/unisonweb/unison/releases/download/release%2FM1c/unison-osx.tar.gz
-[linux-dl]: https://github.com/unisonweb/unison/releases/download/release%2FM1c/unison-linux64.tar.gz
-[windows-dl]: todo
 [on-github]: https://github.com/unisonweb/docsite/edit/gh-pages/_includes/quickstart.markdown
-[guide]: /unisontour
-[homebrew]: https://brew.sh/
+[guide]: /docs/tour
 
-### Step 1: Install Unison
+## Step 1: Install Unison
 
-Note: This alpha release is for Mac OS X and 64-bit Linux only. Windows users, there will be a Unison release for you some day soon.
+If you haven't already, please join the [#alphatesting channel on Slack][slack]. Once you're logged in, [this Slack post](https://unisonlanguage.slack.com/files/TLL09QC85/FMT7TDDDY?origin_team=TLL09QC85) gives the (very brief and simple) install instructions.
 
-#### Option 1: Using Homebrew
+When Unison is further along and ready for more general availability we'll just include those instructions here. For now, given the many rough edges that exist, we are really hoping that if you are trying out Unison you'll come talk to us, ask questions, and report bugs!
 
-First [install homebrew][homebrew] if you haven't already.
-
-Then from the command line enter these commands (or better yet, paste them into your console):
-
-```
-brew tap unisonweb/unison
-brew install unison-language
-```
-
-This will install the Unison codebase manager executable `ucm`. If you're upgrading from a previous version, just do `brew upgrade unison-language`.
-
-Note: if you get prompted for a GitHub username and password at this point, make sure you spelled `unisonweb/unison` correctly.
-
-#### Option 2: Install manually
-
-Download the Unison tarball for [Mac][mac-dl] or [Linux][linux-dl], decompress the tarball to find the delicious `ucm` binary inside, and then optionally copy or link `ucm` somewhere on your path.
-
-### Step 2: Create your Unison codebase
+## Step 2: Create your Unison codebase
 
 Create a new directory, `unisoncode` (or any name you choose), then run the `ucm` binary from within that directory. You'll see a note about "No codebase exists here so I'm initializing one..." and a welcome screen.
 <script id="asciicast-dvwP7oXFwf0qwQWds1ShFXMP8" src="https://asciinema.org/a/dvwP7oXFwf0qwQWds1ShFXMP8.js" data-speed="1.4" data-cols="65" async></script>
 
-### Step 3: Fetch and run a distributed mergesort example
+## Step 3: Fetch and run a distributed mergesort example
 
 __Prerequisites for this step:__ you'll need to have Git installed and on your path.
 
@@ -74,7 +53,7 @@ You should see your watch expression evaluate to a sorted list. You are now up a
 
 _Disclaimer:_ This example is a toy that simulates execution locally and does no error handling. It's just meant to be suggestive of the general idea of being able to test Unison distributed programs locally (perhaps with simulated latency and failures injected) and then run them unchanged atop an actual elastic source of distributed compute. This _will_ be something you'll be able to do in Unison in not too long (see [the roadmap](/roadmap)).
 
-### What next?
+## What next?
 
 * Come [say hello in Slack][slack], tell us what you thought about this guide, and ask questions. 👋
-* A [more leisurely guide][guide] to the Unison language and the `ucm` command line tool. (25 minutes)
+* A [more leisurely tour][guide] of the Unison language and the `ucm` command line tool. (25 minutes)
