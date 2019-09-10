@@ -1,5 +1,6 @@
 <template>
   <vue-markdown
+    v-if="layoutContent.show"
     class="un-announcement-bar"
     :data-color="layoutContent.color"
     :source="layoutContent.blurb"
