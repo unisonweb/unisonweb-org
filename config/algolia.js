@@ -24,10 +24,15 @@ const collections = [
         title: item.title,
         path: item.path,
         headings: item.headings,
-        content: item.content,
+        // content: item.content,
       }
     },
-    matchFields: ['title', 'path', 'headings', 'content'],
+    matchFields: [
+      'title',
+      'path',
+      'headings',
+      // 'content',
+    ],
   },
 ]
 
