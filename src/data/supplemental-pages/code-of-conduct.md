@@ -3,9 +3,11 @@ title: Code of Conduct
 description: Values, expectations and rules for Unison community spaces
 ---
 
-**TL/DR:** just be nice.
+# Code of Conduct
 
 Unison community spaces are welcoming environments where everyone can seek help and discussion on any Unison-related topic. To ensure that our community remains as friendly as possible, this Code of Conduct documents our rules, values, and expectations.
+
+**TL;DR:** just be nice.
 
 The members and moderators of Unison community spaces are committed to providing a friendly, safe and welcoming environment for all, regardless of age, disability, gender, nationality, race, religion, sexuality, or similar personal characteristic. We do not tolerate harassment or abuse in any form.
 
