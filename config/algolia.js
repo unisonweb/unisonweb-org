@@ -11,6 +11,7 @@ const collections = [
               value
               anchor
             }
+            content
           }
         }
       }
@@ -23,9 +24,10 @@ const collections = [
         title: item.title,
         path: item.path,
         headings: item.headings,
+        content: item.content,
       }
     },
-    matchFields: ['title', 'path', 'headings'],
+    matchFields: ['title', 'path', 'headings', 'content'],
   },
 ]
 
