@@ -1,5 +1,8 @@
 <template>
-  <component :is="loadSVG" />
+  <component
+    v-if="loadSVG"
+    :is="loadSVG"
+  />
 </template>
 
 <script>
