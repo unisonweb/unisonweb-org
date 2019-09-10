@@ -41,6 +41,10 @@
         background-color: palette($palette);
       }
     }
+
+    a {
+      text-decoration: underline;
+    }
   }
 
 </style>
