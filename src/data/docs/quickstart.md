@@ -28,12 +28,18 @@ __Prerequisites for this step:__ you'll need to have Git installed and on your p
 At the Unison `.>` prompt, before doing anything else, do:
 
 ```
+---
+title: output
+---
 .> pull https://github.com/unisonweb/unisonbase.git
 ```
 
 to fetch a base library with the first example. You'll see some output from `git` in the background, and once that's done you can do:
 
 ```
+---
+title: output
+---
 .> edit quickstart.dsort
 ```
 
@@ -44,6 +50,9 @@ to add the `dsort` distributed mergesort function to the top of a newly created 
 Open that file and add the following _watch expression_ (a line starting with `>`) to the top, then save the file:
 
 ```
+---
+title: output
+---
 > runLocal '(quickstart.dsort (<) [8,2,3,1,4,5,6,7])
 ```
 
