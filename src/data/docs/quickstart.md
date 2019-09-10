@@ -8,7 +8,7 @@ If you have any trouble with the process, or have ideas about how to improve thi
 
 [slack]: https://join.slack.com/t/unisonlanguage/shared_invite/enQtNzAyMTQ4ODA0MDM4LWYxZTNkMGUxMDEzNTg3NTMxNjMxOGM2Zjg4ODFjM2RhNGY0OGU2NTMzYmQ1YWIwN2Y0YTc1NjQ1NjgzYzEzOWI
 [on-github]: https://github.com/unisonweb/docsite/edit/gh-pages/_includes/quickstart.markdown
-[guide]: /unisontour
+[guide]: /docs/tour
 
 ## Step 1: Install Unison
 
