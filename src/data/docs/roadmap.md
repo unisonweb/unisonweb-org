@@ -24,4 +24,4 @@ Longer term, we expect to be starting up work again on the [Unison semantic edit
 
 ## What's next?
 
-Go to the [install and quickstart guide](/quickstart) to get started.
+Go to the [install and quickstart guide](/docs/quickstart) to get started.
