@@ -23,9 +23,10 @@ test> tests.square.ex1 = run (expect (square 4 == 16))
 
 Save the file, and Unison comes back with:
 
-```unison
+```
 ---
-title: output
+title: ucm
+line-numbers: false
 ---
 7 | test> tests.square.ex1 = run (expect (square 4 == 16))
 
@@ -62,9 +63,10 @@ test> tests.square.prop1 =
   runs 100 go
 ```
 
-```unison
+```
 ---
-title: output
+title: ucm
+line-numbers: false
 ---
 8 |   go _ = a = !nat
 
@@ -76,17 +78,18 @@ This will test our function with a bunch of different inputs.
 ### Syntax notes
 
 * The Unison block which begins after an `=` begins a Unison block, which can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
-* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](languagereference.html#delayed-computations) so it can be run multiple times by the `runs` function.
-* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](languagereference.html#delayed-computations) `expr`.
+* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference/expressions#delayed-computations) so it can be run multiple times by the `runs` function.
+* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference/expressions#delayed-computations) `expr`.
 * Note: there's nothing special about the names `tests.square.ex1` or `tests.square.prop1`; we could call those bindings anything we wanted. Here we just picked some uncreative names based on the function being tested. Use whatever naming convention you prefer.
 
 `nat` comes from `test.v1` - `test.v1.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
 
 The `square` function and the tests we've written for it are not yet part of the codebase. So far they only exists in our scratch file. Let's add it now. Switch to the Unison console and type `add`. You should get something like:
 
-```unison
+```
 ---
-title: output
+title: ucm
+carets: true
 ---
 .> add
 
@@ -103,7 +106,8 @@ If you type `test` at the Unison prompt, it will "run" your test suite:
 
 ```
 ---
-title: output
+title: ucm
+carets: true
 ---
 .> test
 
@@ -127,9 +131,10 @@ The _Unison namespace_ is the mapping from names to definitions. Names in Unison
 
 We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. [Absolute names](languagereference.html#absolutely-qualified-identifiers) (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` (or equivalently `cd`) command:
 
-```unison
+```
 ---
-title: output
+title: ucm
+carets: true
 ---
 .> namespace mylibrary
 
@@ -144,9 +149,9 @@ Notice the prompt changes to `.mylibrary>`, indicating your current namespace is
 
 When we added `square`, we were at the root, so `square` and its tests are directly under the root. To keep our root namespace a bit tidier, let's go ahead and move our definitions into the `mylibrary` namespace:
 
-```unison
+```
 ---
-title: output
+title: ucm
 ---
 .mylibrary> move.term .square square
 
@@ -164,6 +169,10 @@ title: output
 We're using `.square` to refer to the `square` definition directly under the root, and then moving it to the _relative_ name `square`. When you're done shuffling some things around, you can use `find` with no arguments to view all the definitions under the current namespace:
 
 ```
+---
+title: ucm
+carets: true
+---
 .mylibrary> find
 
   1.  tests.square.ex1 : [.base.Test.Result]
@@ -174,6 +183,10 @@ We're using `.square` to refer to the `square` definition directly under the roo
 Also notice that we don't need to rerun our tests after this reshuffling. The tests are still cached:
 
 ```
+---
+title: ucm
+carets: true
+---
 .mylibrary> test
 
   Cached test results (`help testcache` to learn more)

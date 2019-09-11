@@ -12,6 +12,10 @@ Unison code is published just by virtue of it being pushed to github; there's no
 You might choose to make a copy of your namespace. Let's go ahead and do this:
 
 ```
+---
+title: ucm
+carets: true
+---
 .mylibrary> cd .
 .> copy.namespace mylibrary mylibrary.releases.v1
 
@@ -36,8 +40,11 @@ Now let's publish our `mylibrary` to a fresh Unison repo. First, fork the Unison
 
 After you've forked the base repo, feel free to rename it to anything you like, or keep the name `unisonbase`. You can then push to it:
 
-**Unison**
 ```
+---
+title: ucm
+line-numbers: false
+---
 .mylibrary.releases.v1> cd .
 .> push git@github.com:<yourgithubuser>/unisonbase.git
 ```
@@ -50,9 +57,10 @@ This section is under construction.
 
 From the root, do:
 
-```unison
+```
 ---
-title:output
+title: ucm
+line-numbers: false
 ---
 .> pull git@github.com:<github-username>/unisonbase.git temp
 .> move.namespace temp.myfirstlibrary.releases.v1 myfirstlibrary

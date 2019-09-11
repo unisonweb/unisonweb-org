@@ -12,6 +12,10 @@ Instead of starting a function from scratch, often you just want to slightly mod
 Try doing `edit square` from your prompt (note you can use tab completion):
 
 ```
+---
+title: ucm
+carets: true
+---
 .mylibrary> edit square
   ☝️
 
@@ -31,8 +35,7 @@ This copies the pretty-printed definition of `square` into you scratch file "abo
 
 Let's edit `square` and instead define `square x` (just for fun) as the sum of the first `x` odd numbers (here's a [nice geometric illustration of why this gives the same results](https://math.stackexchange.com/a/639079)):
 
-**scratch.u**
-```Haskell
+```unison
 use .base
 
 square : Nat -> Nat
@@ -43,8 +46,11 @@ sum : [Nat] -> Nat
 sum = foldLeft (+) 0
 ```
 
-**Unison**
 ```
+---
+title: ucm
+carets: true
+---
 ✅
 
 I found and typechecked these definitions in ~/unisoncode/scratch.u. If you do an
@@ -62,6 +68,10 @@ Now evaluating any watch expressions (lines starting with `>`)... Ctrl+C cancels
 Notice the message says that `square` is "ok to `update`". Let's try that:
 
 ```
+---
+title: ucm
+carets: true
+---
 .mylibrary> update
 
   ⍟ I've added these definitions:
@@ -77,8 +87,11 @@ Notice the message says that `square` is "ok to `update`". Let's try that:
 
 If we rerun the tests, the tests won't be cached this time, since one of their dependencies has actually changed:
 
-**Unison**
 ```
+---
+title: ucm
+carets: true
+---
 New test results:
 
 ◉ tests.square.prop1    : Passed 100 tests.

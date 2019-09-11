@@ -28,7 +28,11 @@ When you start up `unison`, it watches for changes to `.u` files (which contain 
 
 After saving the file, `unison` instantly responded with:
 
-```unison
+```
+---
+title: ucm
+carets: true
+---
 master>
 
 ┌
@@ -66,7 +70,11 @@ Once he was satisfied with that, he typed `add` in the command line tool to add 
 
 Rúnar showed a few other features of the `unison` tool: you can easily search for and view definitions that exist in the codebase, and you can trivially rename definitions. So for instance, he took a look at the `Optional` type, which is used by `unfold`:
 
-```unison
+```
+---
+title: ucm
+carets: true
+---
 > view Optional
 
   type Optional a = None | Some a
@@ -111,7 +119,7 @@ We pointed out that you can also give multiple names to the same hash and you ca
 
 Rúnar then handed it over to me to implement something a little less trivial. I used his `unfold` function to implement a fuzzy text matching algorithm. Before prepping the talk, I was only familiar with using edit distance for this purpose, but I recently learned a nifty little algorithm, called [Strike A Match](http://www.catalysoft.com/articles/StrikeAMatch.html), which I implemented. The algorithm just _compares the overlap in the set of adjacent character pairs_. So, for instance, the text `"Alice"` and `"Alicia"` can be broken up into the character pairs:
 
-```unison
+```
 "Alice"  -> {"Al", "li", "ic", "ce"}
 "Alicia" -> {"Al", "li", "ic", "ci", "ia"}
 ```
@@ -163,9 +171,10 @@ similarity t1 t2 =
 
 Here's the output:
 
-```unison
+```
 ---
 title: output
+carets: true
 ---
 ┌
 │  8 | > sliding "Alicia"
