@@ -1,22 +1,45 @@
 const find = require('lodash.find')
+const flatten = require('lodash.flatten')
+const has = require('lodash.has')
 
 const codeExtraOptions = {
   transform: node => ({
 
     transform: node => {
+
       // add custom properties to wrapping element
       node.data.hProperties = {
         className: 'un-codeblock__wrapper',
       }
+
       // add custom properties to the `<pre>` tag
       const $pre = find(node.data.hChildren, child => child.tagName === 'pre')
+
+      const showNumbers = (
+        has(node.frontmatter, 'show-numbers') &&
+        node.frontmatter['show-numbers'] === false
+      ) ? false : true
+
+      const showCarets = (
+        has(node.frontmatter, 'show-carets') &&
+        node.frontmatter['show-carets'] === true
+      )
+
+      const classNames = [
+        'un-codeblock',
+        'line-numbers',
+        (showNumbers ? ['un-codeblock--show-numbers'] : null),
+        (showCarets ? ['un-codeblock--show-carets'] : null),
+      ]
+
       $pre.properties = {
-        className: 'un-codeblock line-numbers',
-        'data-title': node.frontmatter.title ? node.frontmatter.title : 'Code',
+        className: flatten(classNames).join(' '),
+        'data-title': node.frontmatter['title'] ? node.frontmatter['title'] : 'Code',
       }
+
     },
 
-    before: node.frontmatter.filename && [{
+    before: node.frontmatter['filename'] && [{
       type: 'element',
       tagName: 'span',
       properties: {
@@ -24,7 +47,7 @@ const codeExtraOptions = {
       },
       children: [{
         type: 'text',
-        value: node.frontmatter.filename,
+        value: node.frontmatter['filename'],
       }]
     }],
 
