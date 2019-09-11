@@ -93,7 +93,7 @@ An expression can appear _delayed_ as `'e`, which is the same as `_ -> e`. If `e
 
 If `c` is a delayed computation, it can be _forced_ with `!c`, which is the same as `c ()`. The expression `c` must conform to a type `() -> t` for some type `t`, in which case `!c` has type `t`.
 
-Delayed computations are important for writing expressions that require [abilities](#abilities-and-ability-handlers). For example:
+Delayed computations are important for writing expressions that require [abilities](/docs/language-reference/abilities). For example:
 
 ``` unison
 use io
@@ -105,7 +105,7 @@ program = 'let
   printLine ("Hello, " ++ name)
 ```
 
-This example defines a small I/O program. The type `{IO} ()` by itself is not allowed as the type of a top-level definition, since the `IO` ability must be provided by a handler, see [abilities and ability handlers](#abilities-and-ability-handlers)). Instead, `program` has the type `'{IO} ()` (note the `'` indicating a delayed computation). Inside a handler for `IO`, this computation can be forced with `!program`.
+This example defines a small I/O program. The type `{IO} ()` by itself is not allowed as the type of a top-level definition, since the `IO` ability must be provided by a handler, see [abilities and ability handlers](/docs/language-reference/abilities)). Instead, `program` has the type `'{IO} ()` (note the `'` indicating a delayed computation). Inside a handler for `IO`, this computation can be forced with `!program`.
 
 Inside the program, `!readLine` has to be forced, as the type of `io.readLine` is `'{IO} Text`, a delayed computation which, when forced, reads a line from standard input.
 

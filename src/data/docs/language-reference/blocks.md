@@ -76,6 +76,6 @@ let x = 1
 
 Keywords that introduce blocks bind more tightly than [function application](#function-application). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`.
 
-Block keywords bind more tightly than [delayed computations](#delayed-computation) syntax. So `'let x` is the same as `_ -> let x` and `!if b then p else q` is the same as `(if b then p else q) ()`.
+Block keywords bind more tightly than [delayed computations](/docs/language-reference/expressions#delayed-computations) syntax. So `'let x` is the same as `_ -> let x` and `!if b then p else q` is the same as `(if b then p else q) ()`.
 
 Blocks eagerly consume expressions, so `if b then p else q + r` is the same as `if b then p else (q + r)`.
