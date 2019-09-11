@@ -31,7 +31,7 @@ When you save the file, Unison replies:
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 ✅
 
@@ -92,7 +92,7 @@ Let's try out a few more examples:
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 ✅
 
