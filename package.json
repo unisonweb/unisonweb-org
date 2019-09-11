@@ -14,6 +14,7 @@
     "js-cookie": "^2.2.0",
     "lodash.find": "^4.6.0",
     "lodash.flatten": "^4.4.0",
+    "lodash.has": "^4.5.2",
     "lodash.isempty": "^4.4.0",
     "lodash.set": "^4.3.2",
     "medium-zoom": "^1.0.4",

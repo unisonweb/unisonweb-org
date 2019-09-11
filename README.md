@@ -13,7 +13,7 @@
 3. **Clone this repository**
 
    ```shell
-   git clone https://github.com/unisoncomputing/unisonweb-org.git
+   git clone https://github.com/unisonweb/unisonweb-org.git
    ```
 4. **Install dependencies**
 
@@ -101,20 +101,6 @@ All editable content is located in `src/data/`.
   description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   ---
   ```
-
-  Codeblocks also have (optional) frontmatter for altering how they are rendered:
-
-  ````md
-  ```unison
-  ---
-  title: output
-  filename: filename
-  ---
-  42, 9.7, 1e100, "hello", +99, -42, true, false -- various literals
-  ````
-
-  `title` can be any value with eight (8) characters or less.
-  `filename` can be any value with fifty (50) characters or less.
 - **Blog Posts**
   Post content is stored as markdown in `src/data/blog/posts/`. Each markdown file should be named `index.md` and placed into folder (along with related images) named like so:
 
@@ -180,7 +166,25 @@ All available tones are defined in [`src/assets/styles/config/_palettes.scss`](h
 - `xx-light`: 75% light
 - `xxx-light`: 90% light
 
-## Syntax Highlighting
+## Codeblocks
+
+Codeblocks may include (optional) frontmatter for altering their appearance:
+
+````md
+```unison
+---
+title: output
+filename: filename
+---
+42, 9.7, 1e100, "hello", +99, -42, true, false -- various literals
+```
+````
+
+`title` can be any value with eight (8) characters or less. If the value of the `title` is set to `output` or `ucm`, the codeblock will be rendered with an alternate icon.
+
+`filename` can be any value with fifty (50) characters or less.
+
+By default, codeblocks are rendered with line numbers. Line numbers may optionally be changed to carets with `show-carets: true`, or hidden altogether with `show-numbers: false`.
 
 Colors for syntax highlighting in codeblocks are defined in `src/assets/styles/common/codeblock/_tokens.scss`:
 

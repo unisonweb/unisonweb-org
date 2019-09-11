@@ -14,7 +14,7 @@ You might choose to make a copy of your namespace. Let's go ahead and do this:
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .mylibrary> cd .
 .> copy.namespace mylibrary mylibrary.releases.v1
@@ -43,7 +43,7 @@ After you've forked the base repo, feel free to rename it to anything you like, 
 ```
 ---
 title: ucm
-line-numbers: false
+show-numbers: false
 ---
 .mylibrary.releases.v1> cd .
 .> push git@github.com:<yourgithubuser>/unisonbase.git
@@ -60,7 +60,7 @@ From the root, do:
 ```
 ---
 title: ucm
-line-numbers: false
+show-numbers: false
 ---
 .> pull git@github.com:<github-username>/unisonbase.git temp
 .> move.namespace temp.myfirstlibrary.releases.v1 myfirstlibrary

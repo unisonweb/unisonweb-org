@@ -30,7 +30,7 @@ At the Unison `.>` prompt, before doing anything else, do:
 ```
 ---
 title: ucm
-line-numbers: false
+show-numbers: false
 ---
 .> pull https://github.com/unisonweb/unisonbase.git
 ```
@@ -40,7 +40,7 @@ to fetch a base library with the first example. You'll see some output from `git
 ```
 ---
 title: ucm
-line-numbers: false
+show-numbers: false
 ---
 .> edit quickstart.dsort
 ```
