@@ -7,10 +7,7 @@ description: placeholder
 
 When first launching Unison in a new directory, we get a message like:
 
-```
-No codebase exists here so I'm initializing one in:
-.unison/v1
-```
+> No codebase exists here so I'm initializing one in: .unison/v1
 
 What's happening here? This is the Unison Codebase Manager starting up and initializing a fresh codebase. We're used to thinking about our codebase as a bag of text files that's mutated as we make changes to our code, but in Unison the codebase is represented as a collection of serialized syntax trees, identified by a hash of their content and stored in a collection of files inside of that `.unison/v1` directory.
 
@@ -23,8 +20,11 @@ The Unison codebase format has a few key properties:
 
 Because of the append-only nature of the codebase format, we can cache all sorts of interesting information about definitions in the codebase and _never have to worry about cache invalidation_. For instance, Unison is a statically-typed language and we know the type of all definitions in the codebase--the codebase is always in a well-typed state. So one thing that's useful and easy to maintain is an index that lets us search for definitions in the codebase by their type. Try out the following commands (new syntax is explained below):
 
-__unison__
 ```
+---
+title: ucm
+carets: true
+---
 .> find : [a] -> [a]
 
   1. base.Heap.sort : [a] -> [a]
@@ -59,6 +59,10 @@ The Unison codebase, in its definition for `reverse`, doesn't store names for th
 Let's try this out. `reverse` is defined using `List.foldl`, where `l` is a needless abbreviation for `left`. Let's rename that to `List.foldLeft` to make things clearer. Try out the following command (you can use tab completion here if you like):
 
 ```
+---
+title: ucm
+carets: true
+---
 .> move.term base.List.foldl base.List.foldLeft
 
   Done.

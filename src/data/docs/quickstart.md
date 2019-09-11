@@ -29,7 +29,8 @@ At the Unison `.>` prompt, before doing anything else, do:
 
 ```
 ---
-title: output
+title: ucm
+line-numbers: false
 ---
 .> pull https://github.com/unisonweb/unisonbase.git
 ```
@@ -38,7 +39,8 @@ to fetch a base library with the first example. You'll see some output from `git
 
 ```
 ---
-title: output
+title: ucm
+line-numbers: false
 ---
 .> edit quickstart.dsort
 ```
@@ -49,9 +51,9 @@ to add the `dsort` distributed mergesort function to the top of a newly created 
 
 Open that file and add the following _watch expression_ (a line starting with `>`) to the top, then save the file:
 
-```
+```unison
 ---
-title: output
+filename: scratch.u
 ---
 > runLocal '(quickstart.dsort (<) [8,2,3,1,4,5,6,7])
 ```
