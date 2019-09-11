@@ -13,7 +13,7 @@ hero:
     label: Install
     url: '/docs'
 intro: |
-  Unison uses this simple idea of content-addressed code to rebuild and improve on many aspects of how a programming language works. We simplify codebase management (Unison has no builds, no dependency conflicts, instant renames, and more), and the same core idea forms the basis for a runtime that robustly supports dynamic code deployment, allowing a single Unison program to describe entire elastic distributed systems.
+  Unison uses this simple idea of content-addressed code to rebuild and improve on many aspects of how a programming language works. We simplify codebase management (Unison has no builds, no dependency conflicts, instant renames, and more). The same core idea forms the basis for a runtime that robustly supports dynamic code deployment, allowing a single Unison program to describe entire elastic distributed systems.
 
   Though a lot of the work on Unison is still experimental and ongoing, we're sharing an early release of the language for people to test out. We'll be making a release more generally available soon; and anyone is welcome to [help with alpha testing](/docs).
 
