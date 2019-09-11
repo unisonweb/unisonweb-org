@@ -26,7 +26,7 @@ Save the file, and Unison comes back with:
 ```
 ---
 title: ucm
-line-numbers: false
+show-numbers: false
 ---
 7 | test> tests.square.ex1 = run (expect (square 4 == 16))
 
@@ -66,7 +66,7 @@ test> tests.square.prop1 =
 ```
 ---
 title: ucm
-line-numbers: false
+show-numbers: false
 ---
 8 |   go _ = a = !nat
 
@@ -89,7 +89,7 @@ The `square` function and the tests we've written for it are not yet part of the
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .> add
 
@@ -107,7 +107,7 @@ If you type `test` at the Unison prompt, it will "run" your test suite:
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .> test
 
@@ -134,7 +134,7 @@ We often think of these names as forming a tree, much like a directory of files,
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .> namespace mylibrary
 
@@ -171,7 +171,7 @@ We're using `.square` to refer to the `square` definition directly under the roo
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .mylibrary> find
 
@@ -185,7 +185,7 @@ Also notice that we don't need to rerun our tests after this reshuffling. The te
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .mylibrary> test
 

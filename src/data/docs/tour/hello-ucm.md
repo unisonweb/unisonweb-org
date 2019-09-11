@@ -23,7 +23,7 @@ Because of the append-only nature of the codebase format, we can cache all sorts
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .> find : [a] -> [a]
 
@@ -61,7 +61,7 @@ Let's try this out. `reverse` is defined using `List.foldl`, where `l` is a need
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .> move.term base.List.foldl base.List.foldLeft
 

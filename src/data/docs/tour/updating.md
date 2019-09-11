@@ -14,7 +14,7 @@ Try doing `edit square` from your prompt (note you can use tab completion):
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .mylibrary> edit square
   ☝️
@@ -49,7 +49,7 @@ sum = foldLeft (+) 0
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 ✅
 
@@ -70,7 +70,7 @@ Notice the message says that `square` is "ok to `update`". Let's try that:
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 .mylibrary> update
 
@@ -90,7 +90,7 @@ If we rerun the tests, the tests won't be cached this time, since one of their d
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 New test results:
 

@@ -31,7 +31,7 @@ After saving the file, `unison` instantly responded with:
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 master>
 
@@ -73,7 +73,7 @@ Rúnar showed a few other features of the `unison` tool: you can easily search f
 ```
 ---
 title: ucm
-carets: true
+show-carets: true
 ---
 > view Optional
 
@@ -174,7 +174,7 @@ Here's the output:
 ```
 ---
 title: output
-carets: true
+show-carets: true
 ---
 ┌
 │  8 | > sliding "Alicia"

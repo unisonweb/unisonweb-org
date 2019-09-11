@@ -41,7 +41,8 @@
     @extend %un-codeblock__title;
   }
 
-  &[data-title="output"] {
+  &[data-title="output"],
+  &[data-title="ucm"] {
 
     &:before {
       background-image: url('/media/icon-terminal.svg');
