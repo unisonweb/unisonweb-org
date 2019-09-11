@@ -13,7 +13,7 @@ hero:
     label: Help with alpha testing
     url: '/docs'
 intro: |
-  # The implications of content-addressed code
+  # ⊙
 
   Unison uses this simple idea of content-addressed code to rebuild and improve on many aspects of how a programming language works. We simplify codebase management (Unison has no builds, no dependency conflicts, instant renames, and more). And the same core idea forms the basis for a runtime that robustly supports dynamic code deployment, allowing a single Unison program to describe entire elastic distributed systems.
 
