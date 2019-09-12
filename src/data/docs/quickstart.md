@@ -9,6 +9,7 @@ If you have any trouble with the process, or have ideas about how to improve thi
 [slack]: https://join.slack.com/t/unisonlanguage/shared_invite/enQtNzAyMTQ4ODA0MDM4LWYxZTNkMGUxMDEzNTg3NTMxNjMxOGM2Zjg4ODFjM2RhNGY0OGU2NTMzYmQ1YWIwN2Y0YTc1NjQ1NjgzYzEzOWI
 [on-github]: https://github.com/unisonweb/docsite/edit/gh-pages/_includes/quickstart.markdown
 [guide]: /docs/tour
+[roadmap]: /docs/roadmap
 
 ## Step 1: Install Unison
 
@@ -62,7 +63,7 @@ filename: scratch.u
 
 You should see your watch expression evaluate to a sorted list. You are now up and running!
 
-_Disclaimer:_ This example is a toy that simulates execution locally and does no error handling. It's just meant to be suggestive of the general idea of being able to test Unison distributed programs locally (perhaps with simulated latency and failures injected) and then run them unchanged atop an actual elastic source of distributed compute. This _will_ be something you'll be able to do in Unison in not too long (see [the roadmap](/roadmap)).
+_Disclaimer:_ This example is a toy that simulates execution locally and does no error handling. It's just meant to be suggestive of the general idea of being able to test Unison distributed programs locally (perhaps with simulated latency and failures injected) and then run them unchanged atop an actual elastic source of distributed compute. This _will_ be something you'll be able to do in Unison in not too long (see [the roadmap][roadmap])).
 
 ## What next?
 
