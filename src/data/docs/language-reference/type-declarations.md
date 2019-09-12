@@ -19,7 +19,7 @@ The left-hand side is the data type being defined. It gives a name for the data 
 
 The right-hand side consists of zero or more data constructors separated by `|`. These are _data constructors_ for the type, or ways in which values of the type can be constructed. Each case declares a name for a data constructor (here the data constructors are `None` and `Some`), followed by the **types** of the arguments to the constructor.
 
-When Unison compiles a type definition, it generates a term for each data constructor. Here they are the terms `Optional.Some : a -> Optional a`, and `Optional.None : Optional a`. It also generates _patterns_ for matching on data (see [Pattern Matching](#pattern-matching)).
+When Unison compiles a type definition, it generates a term for each data constructor. Here they are the terms `Optional.Some : a -> Optional a`, and `Optional.None : Optional a`. It also generates _patterns_ for matching on data (see [Pattern Matching](/docs/language-reference/pattern-matching)).
 
 Note that these terms and patterns receive qualified names: if the type named `x.y.Z` has a data constructor `C`, the generated term and pattern for `C` will be named `x.y.Z.C`.
 
@@ -33,11 +33,11 @@ The general form of a type declaration is as follows:
   | DataConstructor_n
 ```
 
-The optional `unique` keyword introduces a [unique type](#unique-types), explained in the next section.
+The optional `unique` keyword introduces a [unique type](/docs/language-reference/type-declarations/#unique-types), explained in the next section.
 
 ## Unique types
 
-A type declaration gives a name to a type, but Unison does not uniquely identify a type by its name. Rather, the [hash](#hashes) of a type's definition identifies the type. The hash is based on the _structure_ of the type definition, with all identifiers removed.
+A type declaration gives a name to a type, but Unison does not uniquely identify a type by its name. Rather, the [hash](/docs/language-reference/hashes) of a type's definition identifies the type. The hash is based on the _structure_ of the type definition, with all identifiers removed.
 
 For example, Unison considers these type declarations to declare _the exact same type_, even though they give different names to both the type constructor and the data constructors:
 

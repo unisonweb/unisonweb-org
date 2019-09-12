@@ -3,14 +3,14 @@ title: Term declarations
 description: placeholder
 ---
 
-A Unison term declaration (or "term binding") consists of an optional [type signature](#type-signature), and a [term definition](#term-definition). For example:
+A Unison term declaration (or "term binding") consists of an optional [type signature](#type-signatures), and a [term definition](#term-definition). For example:
 
 ```unison
 timesTwo : Nat -> Nat
 timesTwo x = x * 2
 ```
 
-The first line in the above is a type signature. The type signature `timesTwo : Nat -> Nat` declares that the term named `timesTwo` is a function accepting an argument of type `Nat` and computes a value of type `Nat`. The type `Nat` is the type of 64-bit natural numbers starting from zero. See [Unison types](#unison-types) for details.
+The first line in the above is a type signature. The type signature `timesTwo : Nat -> Nat` declares that the term named `timesTwo` is a function accepting an argument of type `Nat` and computes a value of type `Nat`. The type `Nat` is the type of 64-bit natural numbers starting from zero. See [Unison types](/docs/language-reference/types) for details.
 
 The second line is the term definition. The `=` sign splits the definition into a _left-hand side_, which is the term being defined, and the _right-hand side_, which is the definition of the term.
 
@@ -23,15 +23,15 @@ name p_1 p_2 … p_n = expression
 
 ## Type signatures
 
-`name : Type` is a type signature, where `name` is the name of the term being defined and `Type` is a [type](#unison-types) for that term. The `name` given in the type signature and the `name` given in the definition must be the same.
+`name : Type` is a type signature, where `name` is the name of the term being defined and `Type` is a [type](/docs/language-reference/types) for that term. The `name` given in the type signature and the `name` given in the definition must be the same.
 
 Type signatures are optional. In the absence of a type signature, Unison will automatically infer the type of a term declaration. If a type signature is present, Unison will verify that the term has the type given in the signature.
 
 ## Term definition
 
-A term definition has the form `f p_1 p_2 … p_n = e` where `f` is the name of the term being defined. The parameters `p_1` through `p_n` are the names of parameters, if any (if the term is a function), separated by spaces. The right-hand side of the `=` sign is any [Unison expression](#unison-expressions).
+A term definition has the form `f p_1 p_2 … p_n = e` where `f` is the name of the term being defined. The parameters `p_1` through `p_n` are the names of parameters, if any (if the term is a function), separated by spaces. The right-hand side of the `=` sign is any [Unison expression](/docs/language-reference/expressions).
 
-The names of the parameters as well as the name of the term are bound as local variables in the expression on the right-hand side (also known as the _body_ of the function). When the function is called, the parameter names are bound to any arguments passed in the call. See [function application](#function-application) for details on the call semantics of functions.
+The names of the parameters as well as the name of the term are bound as local variables in the expression on the right-hand side (also known as the _body_ of the function). When the function is called, the parameter names are bound to any arguments passed in the call. See [function application](/docs/language-reference/expressions/#function-application) for details on the call semantics of functions.
 
 If the term takes no arguments, the term has the value of the fully evaluated expression on the right-hand side and is not a function.
 
@@ -50,7 +50,7 @@ Note: The expression `drop n 1` on line 4 above subtracts one from the natural n
 
 ## Operator definitions
 
-[Operator identifiers](#identifiers) are valid names for Unison definitions, but the syntax for defining them is slightly different. For example, we could define a binary operator `|`:
+[Operator identifiers](/docs/language-reference/identifiers) are valid names for Unison definitions, but the syntax for defining them is slightly different. For example, we could define a binary operator `|`:
 
 ``` unison
 (|) x y = if x == 0 then y else x
@@ -74,6 +74,6 @@ Or if defining it infix:
 x MyNamespace.| y = if x == 0 then y else x
 ```
 
-The operator can be applied using either notation, no matter which way it's defined. See [function application](#function-application) for details.
+The operator can be applied using either notation, no matter which way it's defined. See [function application](/docs/language-reference/expressions/#function-application) for details.
 
 __Next:__ [Type declarations](/docs/language-reference/type-declarations)
