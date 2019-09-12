@@ -7,14 +7,14 @@ description: placeholder
 
 This document introduces "the big idea" behind Unison and walks through the basics of using the Unison codebase manager to develop and publish your first Unison library. We will introduce bits and pieces of the core Unison language and its syntax as we go. The [Unison language reference][langref] is a more in-depth resource on this if you have questions or want to learn more.
 
-If you want to follow along with this document (highly recommended), this guide assumes you've already gone through the steps in [the quickstart guide](quickstart.html).
+If you want to follow along with this document (highly recommended), this guide assumes you've already gone through the steps in [the quickstart guide][quickstart].
 
 The source for this document is [on GitHub][on-github]. Feedback and improvements are most welcome!
 
 [repoformat]: https://github.com/unisonweb/unison/blob/master/docs/repoformats/v1-DRAFT.markdown
 [on-github]: https://github.com/unisonweb/docsite/blob/gh-pages/_includes/unisontour.markdown
 [roadmap]: roadmap.html
-[quickstart]: quickstart.html
+[quickstart]: /docs/quickstart
 [langref]: /docs/language-reference
 [editorsetup]: editorsetup.html
 [manager]: /docs/tour/hello-ucm
