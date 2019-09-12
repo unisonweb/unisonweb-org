@@ -5,7 +5,7 @@ description: Read this first if you would like to help us with alpha testing of 
 
 # Welcome and project status
 
-Welcome! If you are interested in helping to alpha test Unison, you are in the right place. This document has a quick project status update and rough roadmap for future work so you have some idea of what to expect.
+Welcome! If you are interested in helping to alpha test Unison, you are in the right place. This document gives a quick project status update and rough roadmap for future work, so you have some idea of what to expect.
 
 ## What's in this release?
 
