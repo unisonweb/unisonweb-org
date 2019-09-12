@@ -4,7 +4,7 @@ hero:
   eyebrow: Unison is in public alpha
   heading: A friendly programming language from the future.
   blurb: |
-    Unison is an open source functional programming language based on a simple idea with big implications: code in Unison is content-addressed, and immutable. Read on for more.
+    Unison is an open source functional programming language based on a simple idea with big implications: code in Unison is content-addressed and immutable. Read on for more.
   graphic:
     alt: placeholder
     title: placeholder
