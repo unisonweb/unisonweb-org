@@ -19,7 +19,7 @@ A function type in Unison like `A -> B` is really syntactic sugar for a type `A 
 
 If a function `f` calls in its implementation another function requiring ability set `{A}`, then `f` will require `A` in its ability set as well. If `f` also calls a function requiring abilities `{B}`, then `f` will require abilities `{A,B}`.
 
-Stated the other way around, `f` can only be called in contexts where the abilities `{A,B}` are available. Abilities are provided by `handle` blocks. See the [Ability Handlers](f) section below. The only exception to abilities being provided by handlers is the built-in provider of the `IO` ability in the Unison runtime.
+Stated the other way around, `f` can only be called in contexts where the abilities `{A,B}` are available. Abilities are provided by `handle` blocks. See the [Ability Handlers](/docs/language-reference/abilities/#ability-handlers) section below. The only exception to abilities being provided by handlers is the built-in provider of the `IO` ability in the Unison runtime.
 
 ## User-defined abilities
 

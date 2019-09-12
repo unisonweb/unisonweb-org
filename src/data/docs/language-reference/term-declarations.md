@@ -76,4 +76,4 @@ x MyNamespace.| y = if x == 0 then y else x
 
 The operator can be applied using either notation, no matter which way it's defined. See [function application](#function-application) for details.
 
-__Next:__ [Type declarations](/docs/language-reference/type-declaration)
+__Next:__ [Type declarations](/docs/language-reference/type-declarations)

@@ -129,7 +129,7 @@ Now that we've added our `square` function to the codebase, how do we reference 
 
 The _Unison namespace_ is the mapping from names to definitions. Names in Unison look like this: `math.sqrt`, `.base.Int`, `base.Nat`, `base.Nat.*`, `++`, or `foo`. That is: an optional `.`, followed by one or more segments separated by a `.`, with the last segment allowed to be an operator name like `*` or `++`.
 
-We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. [Absolute names](languagereference.html#absolutely-qualified-identifiers) (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` (or equivalently `cd`) command:
+We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. [Absolute names](/docs/languagereference/identifiers/#absolutely-qualified-identifiers) (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` (or equivalently `cd`) command:
 
 ```
 ---

@@ -42,13 +42,13 @@ show-carets: true
 
 Here, we did a type-based search for functions of type `[a] -> [a]`, got a list of results, and then used the `view` command to look at the nicely formatted source code of one of these results. Let's introduce some Unison syntax:
 
-* `base.List.reverse : [a] -> [a]` is the syntax for giving a [type signature](languagereference.html#type-signature) to a definition. We pronounce the `:` symbol as "has type", as in "reverse has the type `[a] -> [a]`".
+* `base.List.reverse : [a] -> [a]` is the syntax for giving a [type signature](/docs/language-reference/term-declarations/#type-signatures) to a definition. We pronounce the `:` symbol as "has type", as in "reverse has the type `[a] -> [a]`".
 * `[Nat]` is the syntax for the type consisting of lists of natural numbers (terms like `[0,1,2]` and `[3,4,5]`, and `[]` will have this type), and more generally `[Foo]` is the type of lists whose elements have some type `Foo`.
-* Any lowercase variable in a type signature is assumed to be [universally quantified](languagereference.html#polymorphic-types), so `[a] -> [a]` really means and could be written `forall a . [a] -> [a]`, which is the type of functions that take a list whose elements are some (but any) type, and return a list of elements of that same type.
-* `base.List.reverse` takes one parameter, called `as`. The stuff after the `=` is called the _body_ of the function, and here it's a [block](languagereference.html#blocks-and-statements), which is demarcated by whitespace.
+* Any lowercase variable in a type signature is assumed to be [universally quantified](/docs/language-reference/types/#polymorphic-types), so `[a] -> [a]` really means and could be written `forall a . [a] -> [a]`, which is the type of functions that take a list whose elements are some (but any) type, and return a list of elements of that same type.
+* `base.List.reverse` takes one parameter, called `as`. The stuff after the `=` is called the _body_ of the function, and here it's a [block](/docs/languagereference/blocks), which is demarcated by whitespace.
 * `acc a -> ..` is the syntax for an anonymous function.
 * Function arguments are separated by spaces and function application binds tighter than any operator, so `f x y + g p q` parses as `(f x y) + (g p q)`. You can always use parentheses to control grouping more explicitly.
-* The declaration `use base.List +:` lets us reference the function `base.List.+:` using just `+:`. (This function prepends an element to the front of a list.) [Use clauses](languagereference.html#use-clauses) like this can be placed in any Unison block; they don't need to go at the top of your file.
+* The declaration `use base.List +:` lets us reference the function `base.List.+:` using just `+:`. (This function prepends an element to the front of a list.) [Use clauses](/docs/languagereference/use) like this can be placed in any Unison block; they don't need to go at the top of your file.
 
 > Try doing `view base.List.foldl` if you're curious to see how it's defined.
 

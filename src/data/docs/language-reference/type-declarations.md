@@ -119,4 +119,6 @@ ability A p_1 p_2 … p_n where
 
 This declares an _ability type constructor_ `A` with type parameters `p_1` through `p_n`, and _request constructors_ `Request_1` through `Request_n`.
 
-See [Abilities and Ability Handlers](#abilities-and-ability-handlers) for more on user-defined abilities.
+See [Abilities and Ability Handlers](/docs/language-reference/abilities) for more on user-defined abilities.
+
+Next: [Expressions](/docs/language-reference/expressions)
