@@ -78,8 +78,8 @@ This will test our function with a bunch of different inputs.
 ### Syntax notes
 
 * The Unison block which begins after an `=` begins a Unison block, which can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
-* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference/expressions#delayed-computations) so it can be run multiple times by the `runs` function.
-* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference/expressions#delayed-computations) `expr`.
+* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference/expressions/#delayed-computations) so it can be run multiple times by the `runs` function.
+* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference/expressions/#delayed-computations) `expr`.
 * Note: there's nothing special about the names `tests.square.ex1` or `tests.square.prop1`; we could call those bindings anything we wanted. Here we just picked some uncreative names based on the function being tested. Use whatever naming convention you prefer.
 
 `nat` comes from `test.v1` - `test.v1.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.

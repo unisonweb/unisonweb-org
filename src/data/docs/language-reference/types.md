@@ -102,7 +102,7 @@ The nullary tuple type `()` is the type of the unique value also written `()` an
 
 In the standard Unison syntax, tuples of arity 2 and higher are actually of a type `Tuple a b` for some types `a` and `b`. For example, `(X,Y)` is syntactic shorthand for the type `Tuple X (Tuple Y ())`.
 
-Tuples are either constructed with the syntactic shorthand `(a,b)` (see [tuple literals](/docs/language-reference/literals/)) or with the built-in `Tuple.Cons` data constructor: `Tuple.Cons a (Tuple.Cons b ())`.
+Tuples are either constructed with the syntactic shorthand `(a,b)` (see [tuple literals](/docs/language-reference/literals)) or with the built-in `Tuple.Cons` data constructor: `Tuple.Cons a (Tuple.Cons b ())`.
 
 ## Built-in types
 Unison provides the following built-in types:

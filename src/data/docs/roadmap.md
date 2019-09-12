@@ -20,7 +20,7 @@ Here's what you can expect in the coming months for Unison. If you're interested
 
 ## Longer-term projects
 
-Longer term, we expect to be starting up work again on the [Unison semantic editor](http://unisonweb.org/2016-03-16/semantic-vs-text.html). This will basically be a different front-end for the codebase manager which talks to the same model and shares much of the same code, and Unison code could be written using the current command line interface + text editor, the semantic editor, or both.
+Longer term, we expect to be starting up work again on the Unison semantic editor. This will basically be a different front-end for the codebase manager which talks to the same model and shares much of the same code, and Unison code could be written using the current command line interface + text editor, the semantic editor, or both.
 
 ## What's next?
 
