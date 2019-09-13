@@ -7,7 +7,7 @@ description: Set up your text editor for Unison development
 
 This document is a collection of user-submitted instructions for setting up a text editor for Unison development. This document is [on github][githublink] and contributions are welcome!
 
-[githublink]: https://github.com/unisonweb/unisonweb-org/master/src/data/docs/editor-setup.md
+[githublink]: https://github.com/unisonweb/unisonweb-org/blob/master/src/data/docs/editor-setup.md
 [vimplug]: https://github.com/junegunn/vim-plug
 
 ## Vim
