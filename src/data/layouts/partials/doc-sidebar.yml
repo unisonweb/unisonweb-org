@@ -17,6 +17,8 @@ linkSets:
         url: /docs/tour
       - label: Hello to the codebase manager
         url: /docs/tour/hello-ucm
+      - label: Unison's interactive scratch files
+        url: /docs/tour/scratch-files
       - label: Testing your code 
         url: /docs/tour/testing
       - label: Making edits to your code
