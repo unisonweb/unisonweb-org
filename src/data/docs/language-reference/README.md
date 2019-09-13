@@ -7,7 +7,7 @@ description: placeholder
 
 This document is an informal reference for the Unison language meant as an aid for Unison programmers as well as authors of implementations of the language. This isn't meant to be a tutorial or introductory guide to the language; it's more like a dry and unexciting tome you consult when you have questions about some aspect of the language. 🧐
 
-This language reference, like the language it describes, is a work in progress and will be improved over time ([GitHub link](https://github.com/unisonweb/unisonweb-org/master/src/data/docs/language-reference/README.md). Contributions and corrections are welcome!
+This language reference, like the language it describes, is a work in progress and will be improved over time ([GitHub link](https://github.com/unisonweb/unisonweb-org/blob/master/src/data/docs/language-reference/README.md). Contributions and corrections are welcome!
 
 ## A note on syntax
 Unison is a language in which _programs are not text_. That is, the source of truth for a program is not its textual representation as source code, but its structured representation as an abstract syntax tree.
