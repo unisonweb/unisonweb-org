@@ -7,7 +7,7 @@ description: placeholder
 # Abilities and ability handlers
 Unison provides a system of _abilities_ and _ability handlers_ as a means of modeling computational effects in a purely functional language.
 
-Unison is a purely functional language, so no expressions are allowed to have _side effects_, meaning they are evaluated to a result and nothing else. But we still need to be able to write programs that have _effects_, for example writing to disk, communicating over a network, generating randomness, looking at the clock, and so on. Ability types are Unison's way of allowing an expression to request effects it would like to have. Handlers then interpret those requests, often by translating them in turn to a computation that uses the built-in `IO` ability. Unison has a built-in handler for the `IO` ability which cannot be invoked in Unison programs (it can only be invoked by the Unison runtime). This allows Unison to provide I/O effects in a purely functional setting. See [input and output](#input-and-output) for details on the `IO` ability.
+Unison is a purely functional language, so no expressions are allowed to have _side effects_, meaning they are evaluated to a result and nothing else. But we still need to be able to write programs that have _effects_, for example writing to disk, communicating over a network, generating randomness, looking at the clock, and so on. Ability types are Unison's way of allowing an expression to request effects it would like to have. Handlers then interpret those requests, often by translating them in turn to a computation that uses the built-in `IO` ability. Unison has a built-in handler for the `IO` ability which cannot be invoked in Unison programs (it can only be invoked by the Unison runtime). This allows Unison to provide I/O effects in a purely functional setting.
 
 Unison's system of abilities is based on the Frank language by Sam Lindley, Conor McBride, and Craig McLaughlin (https://arxiv.org/pdf/1611.09259.pdf). Unison diverges slightly from the scheme detailed in this paper. In particular, Unison's ability polymorphism is provided by ordinary polymorphic types, and a Unison type with an empty ability set explicitly disallows any abilities. In Frank, the empty ability set implies an ability-polymorphic type.
 
@@ -19,7 +19,7 @@ A function type in Unison like `A -> B` is really syntactic sugar for a type `A 
 
 If a function `f` calls in its implementation another function requiring ability set `{A}`, then `f` will require `A` in its ability set as well. If `f` also calls a function requiring abilities `{B}`, then `f` will require abilities `{A,B}`.
 
-Stated the other way around, `f` can only be called in contexts where the abilities `{A,B}` are available. Abilities are provided by `handle` blocks. See the [Ability Handlers](f) section below. The only exception to abilities being provided by handlers is the built-in provider of the `IO` ability in the Unison runtime.
+Stated the other way around, `f` can only be called in contexts where the abilities `{A,B}` are available. Abilities are provided by `handle` blocks. See the [Ability Handlers](/docs/language-reference/abilities/#ability-handlers) section below. The only exception to abilities being provided by handlers is the built-in provider of the `IO` ability in the Unison runtime.
 
 ## User-defined abilities
 
@@ -114,7 +114,7 @@ Note that the `storeHandler` has a `handle` clause that uses `storeHandler` itse
 
 In the pattern for `Store.get`, the continuation `k` expects a `v`, since the return type of `get` is `v`. In the pattern for `Store.put`, the continuation `k` expects `()`, which is the return type of `put`.
 
-It's worth noting that this is a mutual recursion between `storeHandler` and the various continuations (all named `k`). This is no cause for concern, as they call each other in tail position and the Unison compiler performs [tail call elimination](#function-application).
+It's worth noting that this is a mutual recursion between `storeHandler` and the various continuations (all named `k`). This is no cause for concern, as they call each other in tail position and the Unison compiler performs [tail call elimination](/docs/language-reference/expressions/#function-application).
 
 An example use of the above handler:
 
