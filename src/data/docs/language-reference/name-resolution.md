@@ -5,11 +5,11 @@ description: placeholder
 
 # Name resolution and the environment
 
-During typechecking, Unison substitutes free variables in an expression by looking them up in an environment populated from a _codebase_ of available definitions. A Unison codebase is a database of term and type definitions, indexed by [hashes](#hashes) and names.
+During typechecking, Unison substitutes free variables in an expression by looking them up in an environment populated from a _codebase_ of available definitions. A Unison codebase is a database of term and type definitions, indexed by [hashes](/docs/language-reference/hashes) and names.
 
 A name in the environment can refer to either terms or types, or both (a type name can never be confused with a term name). If a name is unambiguous (refers to only one term and/or type in the environment), Unison substitutes that name in the expression with a reference to the definition.
 
-[Hash literals](#hashes) in the program are substituted with references to the definitions in the environment whose hashes they match.
+[Hash literals](/docs/language-reference/hashes) in the program are substituted with references to the definitions in the environment whose hashes they match.
 
 If a free term variable in the program cannot be found in the environment and is not the name of another term in scope in the program itself, or if an free variable matches more than one name (it’s ambiguous), Unison tries _type-directed name resolution_.
 

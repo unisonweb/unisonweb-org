@@ -8,7 +8,7 @@ This section describes informally the structure of types in Unison.
 
 Formally, Unison’s type system is an implementation of the system described by Joshua Dunfield and Neelakantan R. Krishnaswami in their 2013 paper [Complete and Easy Bidirectional Typechecking for Higher-Rank Polymorphism](https://arxiv.org/abs/1306.6032).
 
-Unison extends that type system with, [pattern matching](#pattern-matching), [scoped type variables](#scoped-type-variables), _ability types_ (also known as _algebraic effects_). See the section titled [Abilities and Ability Handlers](#abilities-and-ability-handlers) for details on ability types.
+Unison extends that type system with, [pattern matching](/docs/language-reference/pattern-matching), [scoped type variables](#scoped-type-variables), _ability types_ (also known as _algebraic effects_). See the section titled [Abilities and Ability Handlers](/docs/language-reference/abilities) for details on ability types.
 
 ## Types in Unison
 
@@ -26,12 +26,12 @@ A full treatise on types is beyond the scope of this document. In short, types h
 
 * `[1,2,3]` is well typed, since lists require all elements to be of the same type.
 * `42 + "hello"` is not well typed, since the type of `+` disallows adding numbers and text together.
-* `printLine "Hello, World!"` is well typed in some contexts and not others. It's a type error for instance to use I/O functions where an `IO` [ability](#abilities-and-ability-handlers) is not provided.
+* `printLine "Hello, World!"` is well typed in some contexts and not others. It's a type error for instance to use I/O functions where an `IO` [ability](/docs/language-reference/abilities-and-ability-handlers) is not provided.
 
 Types are of the following general forms.
 
 ## Type variables
-Type variables are [regular identifiers](#identifiers) beginning with a lowercase letter. For example `a`, `x0`, and `foo` are valid type variables.
+Type variables are [regular identifiers](/docs/language-reference/identifiers) beginning with a lowercase letter. For example `a`, `x0`, and `foo` are valid type variables.
 
 ## Polymorphic types
 A _universally quantified_ or _polymorphic_ type has the form `forall v1 v2 vn. t`, where `t` is a type. The type `t` may involve the variables `v1` through `vn`.
@@ -102,7 +102,7 @@ The nullary tuple type `()` is the type of the unique value also written `()` an
 
 In the standard Unison syntax, tuples of arity 2 and higher are actually of a type `Tuple a b` for some types `a` and `b`. For example, `(X,Y)` is syntactic shorthand for the type `Tuple X (Tuple Y ())`.
 
-Tuples are either constructed with the syntactic shorthand `(a,b)` (see [tuple literals](#tuple-literals)) or with the built-in `Tuple.Cons` data constructor: `Tuple.Cons a (Tuple.Cons b ())`.
+Tuples are either constructed with the syntactic shorthand `(a,b)` (see [tuple literals](/docs/language-reference/literals)) or with the built-in `Tuple.Cons` data constructor: `Tuple.Cons a (Tuple.Cons b ())`.
 
 ## Built-in types
 Unison provides the following built-in types:
@@ -115,7 +115,7 @@ Unison provides the following built-in types:
 * `.base.Text` is the type of arbitrary-length strings of Unicode text.
 * The trivial type `()` (pronounced “unit”) is the type of the nullary tuple. There is a single data constructor of type `()` and it’s also written `()`.
 
-See [literals](#literals) for more on how values of some of these types are constructed.
+See [literals](/docs/language-reference/literals) for more on how values of some of these types are constructed.
 
 ## Built-in type constructors
 Unison has the following built-in type constructors.

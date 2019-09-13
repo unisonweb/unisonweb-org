@@ -25,7 +25,7 @@ Note that [operator identifiers](#identifiers) may contain the character `.`. In
 if `.` is followed by whitespace or another operator character, the `.` is treated like an operator character. If it's followed by a [regular identifier](#identifiers) character, it's treated as a namespace separator.
 
 ## Hash-qualified identifiers
-Any identifier, including a namespace-qualified one, can appear _hash-qualified_. A hash-qualified identifier has the form `x#h` where `x` is an identifier and `#h` is a [hash literal](#hashes). The hash disambiguates names that may refer to more than one thing.
+Any identifier, including a namespace-qualified one, can appear _hash-qualified_. A hash-qualified identifier has the form `x#h` where `x` is an identifier and `#h` is a [hash literal](/docs/language-reference/hashes). The hash disambiguates names that may refer to more than one thing.
 
 ## Reserved words
 The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `if`, `then`, `else`, `forall`, `handle`, `in`, `unique`, `where`, `use`, `and`, `or`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `case`, `of`, `with`.

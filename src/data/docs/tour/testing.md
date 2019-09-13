@@ -78,8 +78,8 @@ This will test our function with a bunch of different inputs.
 ### Syntax notes
 
 * The Unison block which begins after an `=` begins a Unison block, which can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
-* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference/expressions#delayed-computations) so it can be run multiple times by the `runs` function.
-* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference/expressions#delayed-computations) `expr`.
+* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference/expressions/#delayed-computations) so it can be run multiple times by the `runs` function.
+* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference/expressions/#delayed-computations) `expr`.
 * Note: there's nothing special about the names `tests.square.ex1` or `tests.square.prop1`; we could call those bindings anything we wanted. Here we just picked some uncreative names based on the function being tested. Use whatever naming convention you prefer.
 
 `nat` comes from `test.v1` - `test.v1.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
@@ -129,7 +129,7 @@ Now that we've added our `square` function to the codebase, how do we reference 
 
 The _Unison namespace_ is the mapping from names to definitions. Names in Unison look like this: `math.sqrt`, `.base.Int`, `base.Nat`, `base.Nat.*`, `++`, or `foo`. That is: an optional `.`, followed by one or more segments separated by a `.`, with the last segment allowed to be an operator name like `*` or `++`.
 
-We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. [Absolute names](languagereference.html#absolutely-qualified-identifiers) (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` (or equivalently `cd`) command:
+We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. [Absolute names](/docs/languagereference/identifiers/#absolutely-qualified-identifiers) (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` (or equivalently `cd`) command:
 
 ```
 ---

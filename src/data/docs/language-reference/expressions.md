@@ -6,7 +6,7 @@ description: placeholder
 # Unison expressions
 This section describes the syntax and informal semantics of Unison expressions.
 
-Unison's evaluation strategy for expressions is [Applicative Order Call-by-Value](https://en.wikipedia.org/wiki/Evaluation_strategy#Applicative_order). See [Function application](#function-application) for details.
+Unison's evaluation strategy for expressions is [Applicative Order Call-by-Value](https://en.wikipedia.org/wiki/Evaluation_strategy#Applicative_order). See [Function application](/docs/language-reference/expressions/#function-application) for details.
 
 ## Basic lexical forms
 
@@ -36,7 +36,7 @@ Any expression can appear in parentheses, and an expression `(e)` is the same as
 
 A function application `f a1 a2 an` applies the function `f` to the arguments `a1` through `an`.
 
-The above syntax is valid where `f` is a [regular identifier](#identifiers). If the function name is an operator such as `*`, then the syntax for application is infix :  `a1 * a2`. Any operator can be used in prefix position by surrounding it in parentheses: `(*) a1 a2`. Any [regular identifier](#identifiers) can be used infix by surrounding it in backticks: ``a1 `f` a2``.
+The above syntax is valid where `f` is a [regular identifier](/docs/language-reference/identifiers). If the function name is an operator such as `*`, then the syntax for application is infix :  `a1 * a2`. Any operator can be used in prefix position by surrounding it in parentheses: `(*) a1 a2`. Any [regular identifier](/docs/language-reference/identifiers) can be used infix by surrounding it in backticks: ``a1 `f` a2``.
 
 All Unison functions are of arity 1. That is, they take exactly one argument. An n-ary function is modeled either as a unary function that returns a further function (a partially applied function) which accepts the rest of the arguments, or as a unary function that accepts a tuple.
 
@@ -44,7 +44,7 @@ Function application associates to the left, so the expression `f a b` is the sa
 
 The evaluation semantics of function application is applicative order [Call-by-Value](https://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_value). In the expression `f x y`, `x` and `y` are fully evaluated in left-to-right order, then `f` is fully evaluated, then `x` and `y` are substituted into the body of `f`, and lastly the body is evaluated.
 
-An exception to the evaluation semantics is [Boolean expressions](#boolean-expressions), which have non-strict semantics.
+An exception to the evaluation semantics is [Boolean expressions](/docs/language-reference/expressions/#boolean-expressions), which have non-strict semantics.
 
 Unison supports [proper tail calls](https://en.wikipedia.org/wiki/Tail_call) so function calls in tail position do not grow the call stack.
 
@@ -53,8 +53,8 @@ Unison supports [proper tail calls](https://en.wikipedia.org/wiki/Tail_call) so 
 Prefix function application:
 
 * Binds more tightly than infix operators. So `f x + g y` is the same as `(f x) + (g y)`.
-* Binds less tightly than keywords that introduce [blocks](#blocks-and-statements). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`
-* Binds less tightly than `'` and `!` (see [delayed computations](#delayed-computations)), so `'f x y` is the same as `(_ -> f) x y` and `!f x y` is the same as `f () x y`.
+* Binds less tightly than keywords that introduce [blocks](/docs/language-reference/blocks). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`
+* Binds less tightly than `'` and `!` (see [delayed computations](docs/language-reference/expressions/#delayed-computations)), so `'f x y` is the same as `(_ -> f) x y` and `!f x y` is the same as `f () x y`.
 
 ## Boolean expressions
 A Boolean expression has type `Boolean` which has two values, `true` and `false`.
@@ -67,7 +67,7 @@ Evaluation of conditional expressions is non-strict. The evaluation semantics of
 * If `c` evaluates to `true`, the expression `t`  is evaluated and `f` remains unevaluated. The whole expression reduces to the value of `t`.
 * If `c` evaluates to `false`, the expression `f` is evaluated and `t` remains unevaluated. The whole expression reduces to the value of `f`.
 
-The keywords `if`, `then`, and `else` each introduce a [Block](#blocks-and-statements)  as follows:
+The keywords `if`, `then`, and `else` each introduce a [Block](docs/language-reference/expressions/blocks)  as follows:
 
 ``` unison
 if

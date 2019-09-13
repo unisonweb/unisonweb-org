@@ -15,7 +15,7 @@ case e of
   pattern_n -> block_n
 ```
 
-Where `e` is an expression, called the _scrutinee_ of the case expression, and each _case_ has a [pattern to match against the value of the scrutinee](#pattern-matching) and a [block](#blocks-and-statements) to evaluate in case it matches.
+Where `e` is an expression, called the _scrutinee_ of the case expression, and each _case_ has a [pattern to match against the value of the scrutinee](#pattern-matching) and a [block](/docs/language-reference/blocks) to evaluate in case it matches.
 
 The evaluation semantics of case expressions are as follows:
 1. The scrutinee is evaluated.
@@ -51,7 +51,7 @@ case 2 + 2 of
 ```
 
 ### Variable patterns
-A _variable pattern_ is a [regular identifier](#identifiers) and matches any expression. The expression that it matches will be bound to that identifier as a variable in the match body.
+A _variable pattern_ is a [regular identifier](/docs/language-reference/identifiers) and matches any expression. The expression that it matches will be bound to that identifier as a variable in the match body.
 
 For example, this expression evaluates to `3`:
 
@@ -61,7 +61,7 @@ case 1 + 1 of
 ```
 
 ### As-patterns
-An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](#identifiers) and `p` is a pattern. This pattern matches if `p` matches, and the variable `v` will be bound in the body to the value matching `p`.
+An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](/docs/language-reference/identifiers) and `p` is a pattern. This pattern matches if `p` matches, and the variable `v` will be bound in the body to the value matching `p`.
 
 For example, this expression evaluates to `3`:
 
@@ -121,12 +121,12 @@ case (1,2,3) of
 ```
 
 ### Ability patterns
-An _ability pattern_ only appears in an _ability handler_ and has one of two forms (see [Abilities and ability handlers](#abilities-and-ability-handlers) for details):
+An _ability pattern_ only appears in an _ability handler_ and has one of two forms (see [Abilities and ability handlers](/docs/language-reference/abilities) for details):
 
 1. `{C p1 p2 ... pn -> k}` where `C` is the name of an ability constructor in scope, and `p1` through `pn` are patterns such that `n` is the arity of `C`. Note that `n` may be zero. This pattern matches if the scrutinee reduces to a fully applied invocation of the ability constructor `C` and the patterns `p1` through `pn` match the arguments to the constructor.  The scrutinee must be of type `Request A T` for some ability `{A}` and type `T`. The variable `k` will be bound to the continuation of the program. If the scrutinee has type `Request A T` and `C` has type `X ->{A} Y`, then `k` has type `Y -> {A} T`.
 2. `{p}` where `p` is a pattern. This matches the case where the computation is _pure_ (the value of type `Request A T` calls none of the constructors of the ability `{A}`). A pattern match on an `Request` is not complete unless this case is handled.
 
-See the section on [abilities and ability handlers](#abilities-and-ability-handlers) for examples of ability patterns.
+See the section on [abilities and ability handlers](/docs/language-reference/abilities) for examples of ability patterns.
 
 ### Guard patterns
 A _guard pattern_ has the form `p | g` where `p` is a pattern and `g` is a Boolean expression that may reference any variables bound in `p`. The pattern matches if `p` matches and `g` evaluates to `true`.
