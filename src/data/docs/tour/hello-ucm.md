@@ -17,7 +17,15 @@ The Unison codebase format has a few key properties:
 * It is _append-only_: once a file in the `.unison` directory is created, it is never modified or deleted, and files are always named uniquely and deterministically based on their content.
 * As a result, a Unison codebase can be versioned and synchronized with Git or any similar tool and will never generate a conflict in those tools.
 
-> 🐘 Remember that `pull git@github.com:unisonweb/unisonbase.git` we used in the [quickstart guide][quickstart]. This command uses git behind the scenes to sync new definitions from the remote Unison codebase to the local codebase.
+If you haven't already worked through the [quickstart guide][quickstart], let's download the Unison base library to the `.base` namespace:
+```
+---
+title: ucm
+---
+.> pull https://github.com/unisonweb/base .base
+```
+
+This command uses git behind the scenes to sync new definitions from the remote Unison codebase to the local codebase.
 
 Because of the append-only nature of the codebase format, we can cache all sorts of interesting information about definitions in the codebase and _never have to worry about cache invalidation_. For instance, Unison is a statically-typed language and we know the type of all definitions in the codebase--the codebase is always in a well-typed state. So one thing that's useful and easy to maintain is an index that lets us search for definitions in the codebase by their type. Try out the following commands (new syntax is explained below):
 
