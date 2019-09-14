@@ -9,7 +9,7 @@ Unison code is published just by virtue of it being pushed to github; there's no
 
 ## Publishing your code
 
-You might choose to make a copy of your namespace. Let's go ahead and do this:
+You might choose to make a copy of your namespace, similar to how you might tag a release in Git. Let's go ahead and do this:
 
 ```
 ---
@@ -31,14 +31,9 @@ show-carets: true
 
 But this is just a naming convention, there's nothing magic happening here.
 
-Now let's publish our `mylibrary` to a fresh Unison repo. First, fork the Unison base library, using the button below (you'll need a GitHub account to do this). This creates a valid minimal Unison codebase repo that you can push to:
+Now let's publish our `mylibrary` to a fresh Unison repo. First, create an empty Git repository on GitHub or wherever you prefer to host your Git repositories.
 
-<iframe src="https://ghbtns.com/github-btn.html?user=unisonweb&repo=unisonbase&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
-<br/>
-
-> ☝️ There's nothing special about using GitHub here; you can also host your Unison git repos elsewhere. Just use whatever git URL you'd use on your git hosting provider for a `git push`.
-
-After you've forked the base repo, feel free to rename it to anything you like, or keep the name `unisonbase`. You can then push to it:
+After you've created this empty repo, you can then push to it, using `push <giturl>` (to push the current namespace) or `push <giturl> .mystuff` (to push the `.mystuff` namespace):
 
 ```
 ---
@@ -46,7 +41,7 @@ title: ucm
 show-numbers: false
 ---
 .mylibrary.releases.v1> cd .
-.> push git@github.com:<yourgithubuser>/unisonbase.git
+.> push git@github.com:<yourgithubuser>/myunisonrepo.git
 ```
 
 You'll see some git logging output. Your code is now live on the internet!
@@ -62,12 +57,10 @@ From the root, do:
 title: ucm
 show-numbers: false
 ---
-.> pull git@github.com:<github-username>/unisonbase.git temp
-.> move.namespace temp.myfirstlibrary.releases.v1 myfirstlibrary
-.> delete.namespace temp
+.> pull git@github.com:<github-username>/myunisonrepo.git .myfirstlibrary
 ```
 
-The namespace you created is now available under `.myfirstlibrary`, so `.myfirstlibrary.square` will resolve to the function you wrote.
+The namespace you created is now available under `.myfirstlibrary`. Try `cd .myfirstlibrary` after the pull to look around.
 
 ## What next?
 
