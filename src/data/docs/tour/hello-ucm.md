@@ -2,6 +2,7 @@
 title: Hello to the Unison codebase manager
 description: placeholder
 ---
+[quickstart]: /docs/quickstart
 
 ### 👋 to the Unison codebase manager
 
@@ -87,6 +88,26 @@ So rename and move things around as much as you want. Don't worry about picking 
 
 > 🤓 If you're curious to learn about the guts of the Unison codebase format, you can check out the [v1 codebase format specification][repoformat].
 
-OK, go drink some water, and then let's learn more about Unison's interactive way of writing and editing code.
+Use `undo` to back up a step.  (We don't have a `redo` yet, though).
+
+```
+---
+title: ucm
+---
+.> undo
+
+  ⏪
+
+  Here's the changes I undid:
+
+  > Moves:
+
+    Original name   New name
+    base.List.foldl base.List.foldLeft
+
+.>
+```
+
+Great!  OK, go drink some water, and then let's learn more about Unison's interactive way of writing and editing code.
 
 __Next:__ [Unison's interactive scratch files](/docs/tour/scratch-files)
