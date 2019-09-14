@@ -33,10 +33,22 @@ At the Unison `.>` prompt, before doing anything else, do:
 title: ucm
 show-numbers: false
 ---
-.> pull https://github.com/unisonweb/unisonbase.git
+.> pull https://github.com/unisonweb/quickstart quickstart
 ```
 
-to fetch a base library with the first example. You'll see some output from `git` in the background, and once that's done you can do:
+to fetch a base library with the first example. You'll see some output from `git` in the background, and once that's done you'll see a big list of definitions that the `pull` added.  Press `q` to exit the list of definitions.
+
+First, we'll unpack the new code we just got, to help configure your codebase to match the other examples on the documentation site. 😄
+
+```
+---
+title: ucm
+show-numbers: false
+---
+.> move.namespace quickstart.base .base
+```
+
+Next:
 
 ```
 ---
