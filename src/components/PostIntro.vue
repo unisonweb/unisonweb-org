@@ -84,6 +84,10 @@
     font-size: responsive rem(5) rem(7);
     font-range: breakpoint(xs, max) breakpoint(xl);
     letter-spacing: dim(letterSpacing, -4);
+
+    a {
+      color: inherit;
+    }
   }
 
   .un-post-intro__meta {

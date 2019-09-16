@@ -69,6 +69,10 @@
     position: relative; // for positioning the __icon
 
     padding-left: ($iconSize + $iconSpacing);
+
+    a {
+      color: inherit;
+    }
   }
 
   .un-doc-sidebar__link-set__icon {

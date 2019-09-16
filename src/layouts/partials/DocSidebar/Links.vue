@@ -64,9 +64,11 @@
   }
 
   .un-doc-sidebar__link {
+    $this: &;
+
     display: block;
 
-    &--active {
+    &#{$this}--active {
       color: palette(lightpurple);
       font-family: font(bold);
       position: relative;
@@ -129,7 +131,6 @@
 
   .un-doc-sidebar__sub-link {
     display: inline-block;
-    color: inherit;
 
     &:hover {
       color: palette(lightpurple);
