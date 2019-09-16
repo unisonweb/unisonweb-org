@@ -17,9 +17,9 @@ expression
 
 A block can have zero or more statements, and the value of the whole block is the value of the final `expression`. A statement is either:
 
-1. A [term definition](#term-definition) which defines a term within the scope of the block. The definition is not visible outside this scope, and is bound to a local name. Unlike top-level definitions, a block-level definition does not result in a hash, and cannot be referenced with a [hash literal](#hashes).
-2. A [Unison expression](#unison-expressions). In particular, blocks often contain _action expressions_, which are expressions evaluated solely for their effects. An action expression has type `{A} T` for some ability `A` (see [Abilities and Ability Handlers](#abilities-and-ability-handlers)) and some type `T`.
-3. A [`use` clause](#use-clauses).
+1. A [term definition](/docs/language-reference/term-declarations/#term-definition) which defines a term within the scope of the block. The definition is not visible outside this scope, and is bound to a local name. Unlike top-level definitions, a block-level definition does not result in a hash, and cannot be referenced with a [hash literal](/docs/language-reference/hashes).
+2. A [Unison expression](/docs/language-reference/expressions). In particular, blocks often contain _action expressions_, which are expressions evaluated solely for their effects. An action expression has type `{A} T` for some ability `A` (see [Abilities and Ability Handlers](/docs/language-reference/abilities)) and some type `T`.
+3. A [`use` clause](/docs/language-reference/use).
 
 An example of a block (this evaluates to `16`):
 
@@ -74,7 +74,7 @@ let x = 1
 
 ### Syntactic precedence
 
-Keywords that introduce blocks bind more tightly than [function application](#function-application). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`.
+Keywords that introduce blocks bind more tightly than [function application](/docs/language-reference/expressions/#function-application). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`.
 
 Block keywords bind more tightly than [delayed computations](/docs/language-reference/expressions#delayed-computations) syntax. So `'let x` is the same as `_ -> let x` and `!if b then p else q` is the same as `(if b then p else q) ()`.
 

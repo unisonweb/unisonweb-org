@@ -4,7 +4,7 @@ hero:
   eyebrow: Unison is in public alpha
   heading: A friendly programming language from the future.
   blurb: |
-    Unison is an open source functional programming language based on a simple idea with big implications: code in Unison is content-addressed and immutable. Read on for more.
+    Unison is an open source functional programming language based on a simple idea with big implications: code is content-addressed and immutable.
   graphic:
     alt: placeholder
     title: placeholder
@@ -13,9 +13,9 @@ hero:
     label: Install
     url: '/docs'
 intro: |
-  Unison uses this simple idea of content-addressed code to rebuild and improve on many aspects of how a programming language works. We simplify codebase management (Unison has no builds, no dependency conflicts, instant renames, and more). The same core idea forms the basis for a runtime that robustly supports dynamic code deployment, allowing a single Unison program to describe entire elastic distributed systems.
+  Unison's core idea is that code is immutable and identified by its content. This lets us reimagine many aspects of how a programming language works. We simplify codebase management — Unison has no builds, no dependency conflicts, and renaming things is trivial. The same core idea forms the basis for a runtime that robustly supports dynamic code deployment, allowing a single Unison program to describe entire elastic distributed systems.
 
-  Though a lot of the work on Unison is still experimental and ongoing, we're sharing an early release of the language for people to test out. We'll be making a release more generally available soon; and anyone is welcome to [help with alpha testing](/docs).
+  Though a lot of the work on Unison is still experimental and ongoing, we're sharing an early alpha release of the language for you to test out. We'll make a more finished release generally available soon. In the meantime, anyone is welcome to [help with alpha testing](/docs).
 
 links:
   heading: Documentation
