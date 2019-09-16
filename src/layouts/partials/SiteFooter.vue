@@ -33,6 +33,7 @@
     background-color: palette(gray, xxx-light);
 
     a {
+      color: inherit;
       text-decoration: underline;
     }
   }
