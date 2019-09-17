@@ -54,7 +54,7 @@ Prefix function application:
 
 * Binds more tightly than infix operators. So `f x + g y` is the same as `(f x) + (g y)`.
 * Binds less tightly than keywords that introduce [blocks](/docs/language-reference/blocks). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`
-* Binds less tightly than `'` and `!` (see [delayed computations](docs/language-reference/expressions/#delayed-computations)), so `'f x y` is the same as `(_ -> f) x y` and `!f x y` is the same as `f () x y`.
+* Binds less tightly than `'` and `!` (see [delayed computations](#delayed-computations)), so `'f x y` is the same as `(_ -> f) x y` and `!f x y` is the same as `f () x y`.
 
 ## Boolean expressions
 A Boolean expression has type `Boolean` which has two values, `true` and `false`.
@@ -67,7 +67,7 @@ Evaluation of conditional expressions is non-strict. The evaluation semantics of
 * If `c` evaluates to `true`, the expression `t`  is evaluated and `f` remains unevaluated. The whole expression reduces to the value of `t`.
 * If `c` evaluates to `false`, the expression `f` is evaluated and `t` remains unevaluated. The whole expression reduces to the value of `f`.
 
-The keywords `if`, `then`, and `else` each introduce a [Block](docs/language-reference/expressions/blocks)  as follows:
+The keywords `if`, `then`, and `else` each introduce a [Block](/docs/language-reference/blocks)  as follows:
 
 ``` unison
 if

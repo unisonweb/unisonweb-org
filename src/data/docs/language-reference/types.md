@@ -26,7 +26,7 @@ A full treatise on types is beyond the scope of this document. In short, types h
 
 * `[1,2,3]` is well typed, since lists require all elements to be of the same type.
 * `42 + "hello"` is not well typed, since the type of `+` disallows adding numbers and text together.
-* `printLine "Hello, World!"` is well typed in some contexts and not others. It's a type error for instance to use I/O functions where an `IO` [ability](/docs/language-reference/abilities-and-ability-handlers) is not provided.
+* `printLine "Hello, World!"` is well typed in some contexts and not others. It's a type error for instance to use I/O functions where an `IO` [ability](/docs/language-reference/abilities) is not provided.
 
 Types are of the following general forms.
 
