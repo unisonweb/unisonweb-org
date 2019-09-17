@@ -93,7 +93,7 @@ Point.x.modify : (Nat -> Nat) -> Point -> Point
 Point.x.set    : Nat -> Point -> Point
 Point.y        : Point -> Nat
 Point.y.modify : (Nat -> Nat) -> Point -> Point
-Point.y.set    : Nat -> Point -> Poin
+Point.y.set    : Nat -> Point -> Point
 ```
 
 > 👉 Note that `set` and `modify` are returning new, modified copies of the input record - there's no mutation of values in Unison.
