@@ -40,8 +40,8 @@ After you've created this empty repo, you can then push to it, using `push <gitu
 title: ucm
 show-numbers: false
 ---
-.mylibrary.releases.v1> cd .
-.> push git@github.com:<yourgithubuser>/myunisonrepo.git
+.mylibrary.releases.v1> cd .mylibrary
+.mylibrary> push git@github.com:<yourgithubuser>/myunisonrepo
 ```
 
 You'll see some git logging output. Your code is now live on the internet!
