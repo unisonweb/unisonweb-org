@@ -43,7 +43,7 @@ square x =
   sum (map (x -> x * 2 + 1) (range 0 x))
 
 sum : [Nat] -> Nat
-sum = foldLeft (+) 0
+sum = foldl (+) 0
 ```
 
 ```
