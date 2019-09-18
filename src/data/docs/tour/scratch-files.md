@@ -1,10 +1,10 @@
 ---
-title: Interactive scratch files, not a REPL
-description: Unison scratch files replace the traditional REPL for interactive development
+title: Unison's interactive scratch files
+description: Unison's interactive scratch files are used instead of a REPL
 slug: scratch-files
 ---
 
-# Unison scratch files are like spreadsheets and replace the usual read-eval-print-loop
+# Unison's interactive scratch files
 
 The codebase manager lets you make changes to your codebase and explore the definitions it contains, but it also listens for changes to any file ending in `.u` in the current directory (including any subdirectories). When any such file is saved (which we call a "scratch file"), Unison parses and typechecks that file. Let's try this out.
 
