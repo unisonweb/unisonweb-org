@@ -43,7 +43,7 @@ square x =
   sum (map (x -> x * 2 + 1) (range 0 x))
 
 sum : [Nat] -> Nat
-sum = foldLeft (+) 0
+sum = foldl (+) 0
 ```
 
 ```
@@ -92,14 +92,16 @@ If we rerun the tests, the tests won't be cached this time, since one of their d
 title: ucm
 show-carets: true
 ---
-New test results:
+.mylibrary> test
 
-◉ tests.square.prop1    : Passed 100 tests.
-◉ tests.square.ex1      : Passed 1 tests.
+  New test results:
 
-✅ 2 test(s) passing
+  ◉ tests.square.prop1    : Passed 100 tests.
+  ◉ tests.square.ex1      : Passed 1 tests.
 
-Tip: Use view tests.square.prop1 to view the source of a test.
+  ✅ 2 test(s) passing
+
+  Tip: Use view tests.square.prop1 to view the source of a test.
 ```
 
 Notice the message indicates that the tests weren't cached. If we do `test` again, we'll get the newly cached results.
