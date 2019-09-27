@@ -14,7 +14,7 @@ Now put the following in your scratch file:
 
 ```unison
 ---
-filename: scratch.u
+title: scratch.u
 ---
 use .base
 
@@ -49,7 +49,7 @@ It typechecked the `square` function and inferred that it takes a natural number
 
 ```unison
 ---
-filename: scratch.u
+title: scratch.u
 ---
 use .base
 

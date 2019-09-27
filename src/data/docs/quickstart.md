@@ -66,7 +66,7 @@ Open that file and add the following _watch expression_ (a line starting with `>
 
 ```unison
 ---
-filename: scratch.u
+title: scratch.u
 ---
 > runLocal '(quickstart.dsort (<) [8,2,3,1,4,5,6,7])
 ```
