@@ -12,8 +12,10 @@
   import 'prismjs/plugins/line-numbers/prism-line-numbers'
   import mediumZoom from 'medium-zoom'
   import Vue from 'vue'
+  import Codeblock from '~/components/Codeblock/Codeblock'
   import AsciiPlayer from '~/components/AsciiPlayer'
 
+  const CodeblockClass = Vue.extend(Codeblock)
   const AsciiPlayerClass = Vue.extend(AsciiPlayer)
 
   export default {
@@ -21,26 +23,42 @@
       content: { type: String, default: null },
     },
     methods: {
-      processAsciiPlayers() {
-        const vm = this
-
-        vm.$refs['content'].querySelectorAll('script').forEach($script => {
-
-          if ($script.id.includes('asciicast')) {
-            // create a new instance of the AsciiPlayer component
-            const instance = new AsciiPlayerClass({
-              propsData: { id: $script.id.split('-').pop() }
+      processCodeblocks() {
+        this.$refs['content']
+          .querySelectorAll('.un-codeblock')
+          .forEach($codeblock => {
+            const $codeblockWrapper = $codeblock.parentNode
+            const instance = new CodeblockClass({
+              propsData: { HTML: $codeblock.cloneNode(true) }
             })
-            // mount it
+
             instance.$mount()
-            // insert it where the `<script>` the script
-            $script.parentNode.insertBefore(instance.$el, $script)
-            // lastly, remove the script
-            $script.remove()
-          }
+            this.$refs['content'].insertBefore(instance.$el, $codeblockWrapper)
+            $codeblockWrapper.remove()
+          })
+      },
+      processAsciiPlayers() {
+        this.$refs['content']
+          .querySelectorAll('script')
+          .forEach($script => {
+            if ($script.id.includes('asciicast')) {
+              const instance = new AsciiPlayerClass({
+                propsData: { id: $script.id.split('-').pop() }
+              })
 
+              instance.$mount()
+              this.$refs['content'].insertBefore(instance.$el, $script)
+              $script.remove()
+            }
+          })
+      },
+      refreshContent() {
+
+        this.$nextTick(() => {
+          this.processCodeblocks()
+          this.processAsciiPlayers()
+          Prism.highlightAllUnder(this.$refs['content'])
         })
-
       },
     },
     created() {
@@ -51,18 +69,12 @@
 
     },
     mounted() {
-      const vm = this
-
-      Prism.highlightAllUnder(vm.$refs['content'])
-      vm.processAsciiPlayers()
-
-      mediumZoom(vm.$refs['content'].querySelectorAll('.g-image'))
+      this.refreshContent()
+      mediumZoom(this.$refs['content'].querySelectorAll('.g-image'))
     },
     updated() {
-      const vm = this
-
-      Prism.highlightAllUnder(vm.$refs['content'])
-      vm.processAsciiPlayers()
+      this.refreshContent()
+      this.processAsciiPlayers()
     },
   }
 </script>
