@@ -1,32 +1,21 @@
 %un-codeblock__title {
-  position: absolute; // relative to `.un-codeblock`
-  left: 0;
-
   content: attr(data-title);
 
-  @include max-screen(breakpoint(xs, max)) {
-    top: -#{$verticalSpacing * 1/2};
-    transform: translate3d(0, -50%, 0);
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  transform: translate3d(0, -#{$titleIconSize * 1/2}, 0);
 
-    margin-top: 1px; // for pixel-perfect alignment
-
-    padding-top: ($titleIconSize * 1/2);
-    padding-bottom: ($titleIconSize * 1/2);
-    padding-left: ($titleIconSize + ($titleIconSize * 1/4));
-
-    line-height: 0;
-  }
-
-  @include min-screen(breakpoint(sm)) {
-    top: 0;
-    width: $titleWidth;
-    padding-top: $titleIconSize;
-  }
+  display: block;
+  padding-top: ($titleIconSize * 1/2);
+  padding-bottom: ($titleIconSize * 1/2);
+  padding-left: ($titleIconSize + ($titleIconSize * 1/4));
 
   color: palette(gray, mid);
   font-size: em(-2);
   font-weight: weight(bold);
   @extend .u-expanded;
+  line-height: 0;
   text-transform: uppercase;
 
   background-image: url('/media/icon-code.svg');

@@ -5,14 +5,7 @@
   z-index: 2; // keep this above subsequent code blocks
   transform: translate3d(-50%, 0, 0);
   bottom: 100%;
-
-  @include max-screen(breakpoint(xs, max)) {
-    left: calc(50% + #{($lineNumbersWidth - $horizontalPadding) * 1/2});
-  }
-
-  @include min-screen(breakpoint(sm)) {
-    left: calc(50% + #{($titleWidth + $lineNumbersWidth - $horizontalPadding) * 1/2});
-  }
+  left: calc(50% + #{($lineNumbersWidth - $horizontalPadding) * 1/2});
 
   width: 1px;
   height: $verticalSpacing;
