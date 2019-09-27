@@ -23,9 +23,11 @@
 </template>
 
 <script>
+  const { Element } = require('global-object')
+
   export default {
     props: {
-      HTML: { type: Element, default: null }
+      HTML: { type: Element, default: null },
     },
     data() {
       return {

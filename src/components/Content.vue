@@ -53,24 +53,21 @@
           })
       },
       refreshContent() {
-
-        this.$nextTick(() => {
-          this.processCodeblocks()
-          this.processAsciiPlayers()
-          Prism.highlightAllUnder(this.$refs['content'])
-        })
+        this.processCodeblocks()
+        this.processAsciiPlayers()
+        Prism.highlightAllUnder(this.$refs['content'])
       },
     },
     created() {
-
       Prism.hooks.add('before-highlightall', function(env) {
         env.selector += ", .un-codeblock code"
       })
-
     },
     mounted() {
-      this.refreshContent()
-      mediumZoom(this.$refs['content'].querySelectorAll('.g-image'))
+      if (process.isClient) {
+        this.refreshContent()
+        mediumZoom(this.$refs['content'].querySelectorAll('.g-image'))
+      }
     },
     updated() {
       this.refreshContent()
