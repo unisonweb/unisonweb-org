@@ -32,6 +32,7 @@ At the Unison `.>` prompt, before doing anything else, do:
 ---
 title: ucm
 show-numbers: false
+show-copy-button: false
 ---
 .> pull https://github.com/unisonweb/quickstart quickstart
 ```

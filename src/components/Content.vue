@@ -27,14 +27,18 @@
         this.$refs['content']
           .querySelectorAll('.un-codeblock')
           .forEach($codeblock => {
-            const $codeblockWrapper = $codeblock.parentNode
-            const instance = new CodeblockClass({
-              propsData: { HTML: $codeblock.cloneNode(true) }
-            })
+            const showCopyButton = parseInt($codeblock.dataset.showCopyButton)
 
-            instance.$mount()
-            this.$refs['content'].insertBefore(instance.$el, $codeblockWrapper)
-            $codeblockWrapper.remove()
+            if (showCopyButton) {
+              const $codeblockWrapper = $codeblock.parentNode
+              const instance = new CodeblockClass({
+                propsData: { HTML: $codeblock.cloneNode(true) }
+              })
+
+              instance.$mount()
+              this.$refs['content'].insertBefore(instance.$el, $codeblockWrapper)
+              $codeblockWrapper.remove()
+            }
           })
       },
       processAsciiPlayers() {
