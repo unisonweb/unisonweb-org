@@ -30,13 +30,14 @@
             const showCopyButton = parseInt($codeblock.dataset.showCopyButton)
 
             if (showCopyButton) {
+              const $content = $codeblock.parentNode.parentNode
               const $codeblockWrapper = $codeblock.parentNode
               const instance = new CodeblockClass({
                 propsData: { HTML: $codeblock.cloneNode(true) }
               })
 
               instance.$mount()
-              this.$refs['content'].insertBefore(instance.$el, $codeblockWrapper)
+              $content.insertBefore(instance.$el, $codeblockWrapper)
               $codeblockWrapper.remove()
             }
           })
@@ -46,20 +47,24 @@
           .querySelectorAll('script')
           .forEach($script => {
             if ($script.id.includes('asciicast')) {
+              const $content = $script.parentNode
               const instance = new AsciiPlayerClass({
                 propsData: { id: $script.id.split('-').pop() }
               })
 
               instance.$mount()
-              this.$refs['content'].insertBefore(instance.$el, $script)
+              $content.insertBefore(instance.$el, $script)
               $script.remove()
             }
           })
       },
       refreshContent() {
-        this.processCodeblocks()
-        this.processAsciiPlayers()
-        Prism.highlightAllUnder(this.$refs['content'])
+
+        this.$nextTick(() => {
+          this.processCodeblocks()
+          this.processAsciiPlayers()
+          Prism.highlightAllUnder(this.$refs['content'])
+        })
       },
     },
     created() {
