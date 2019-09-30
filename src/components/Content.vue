@@ -89,17 +89,6 @@
 
   .un-content {
 
-    @include min-screen(breakpoint(md)) {
-
-      .un-codeblock__wrapper {
-
-        // make the right-edge of codeblocks
-        // touch the right edge of .un-content
-        margin-right: -#{1/12 * 100%};
-        padding-right: (rem(3) * 1/2);
-      }
-    }
-
     h1, h2, h3, h4, h5, h6 {
       margin-top: em(3);
 
