@@ -45,3 +45,23 @@ linkSets:
         url: /docs/language-reference/abilities
       - label: Name resolution 
         url: /docs/language-reference/name-resolution
+
+  - heading: Introducing Abilities
+    icon: /media/icon-code.svg
+    links:
+      - label: Introduction
+        url: /docs/language-reference
+      - label: Motivation
+        url: /docs/language-reference/motivation
+      - label: Using abilities
+        url: /docs/language-reference/using-abilities
+      - label: Examples of abilities
+        url: /docs/language-reference/examples-of-abilities
+      - label: More on abilities in type signatures
+        url: /docs/language-reference/ability-signatures
+      - label: Invoking handlers
+        url: /docs/language-reference/invoking-handlers
+      - label: Writing handlers
+        url: /docs/language-reference/writing-handlers
+      - label: Conclusion and exercises
+        url: /docs/language-reference/conclusion
