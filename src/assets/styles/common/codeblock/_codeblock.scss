@@ -1,9 +1,9 @@
 @import
   './variables',
-  './filename',
+  './copy-button',
   './flair',
   './line-number-rows',
-  './titles',
+  './title',
   './tokens';
 
 .un-codeblock__wrapper {
@@ -31,15 +31,6 @@
   hyphens: none;
 
   position: relative; // for positioning `.line-numbers-rows`
-
-  @include min-screen(breakpoint(sm)) {
-    padding-left: $titleWidth;
-  }
-
-  &::selection {
-    color: palette(white);
-    background-color: palette(purple);
-  }
 
   > code {
     color: unset; // reset

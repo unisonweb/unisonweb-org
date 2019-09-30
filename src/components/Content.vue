@@ -12,8 +12,10 @@
   import 'prismjs/plugins/line-numbers/prism-line-numbers'
   import mediumZoom from 'medium-zoom'
   import Vue from 'vue'
+  import Codeblock from '~/components/Codeblock/Codeblock'
   import AsciiPlayer from '~/components/AsciiPlayer'
 
+  const CodeblockClass = Vue.extend(Codeblock)
   const AsciiPlayerClass = Vue.extend(AsciiPlayer)
 
   export default {
@@ -21,48 +23,64 @@
       content: { type: String, default: null },
     },
     methods: {
+      processCodeblocks() {
+        this.$refs['content']
+          .querySelectorAll('.un-codeblock')
+          .forEach($codeblock => {
+            const showCopyButton = parseInt($codeblock.dataset.showCopyButton)
+
+            if (showCopyButton) {
+              const $content = $codeblock.parentNode.parentNode
+              const $codeblockWrapper = $codeblock.parentNode
+              const instance = new CodeblockClass({
+                propsData: { HTML: $codeblock.cloneNode(true) }
+              })
+
+              instance.$mount()
+              $content.insertBefore(instance.$el, $codeblockWrapper)
+              $codeblockWrapper.remove()
+            }
+          })
+      },
       processAsciiPlayers() {
-        const vm = this
+        this.$refs['content']
+          .querySelectorAll('script')
+          .forEach($script => {
+            if ($script.id.includes('asciicast')) {
+              const $content = $script.parentNode
+              const instance = new AsciiPlayerClass({
+                propsData: { id: $script.id.split('-').pop() }
+              })
 
-        vm.$refs['content'].querySelectorAll('script').forEach($script => {
+              instance.$mount()
+              $content.insertBefore(instance.$el, $script)
+              $script.remove()
+            }
+          })
+      },
+      refreshContent() {
 
-          if ($script.id.includes('asciicast')) {
-            // create a new instance of the AsciiPlayer component
-            const instance = new AsciiPlayerClass({
-              propsData: { id: $script.id.split('-').pop() }
-            })
-            // mount it
-            instance.$mount()
-            // insert it where the `<script>` the script
-            $script.parentNode.insertBefore(instance.$el, $script)
-            // lastly, remove the script
-            $script.remove()
-          }
-
+        this.$nextTick(() => {
+          this.processCodeblocks()
+          this.processAsciiPlayers()
+          Prism.highlightAllUnder(this.$refs['content'])
         })
-
       },
     },
     created() {
-
       Prism.hooks.add('before-highlightall', function(env) {
         env.selector += ", .un-codeblock code"
       })
-
     },
     mounted() {
-      const vm = this
-
-      Prism.highlightAllUnder(vm.$refs['content'])
-      vm.processAsciiPlayers()
-
-      mediumZoom(vm.$refs['content'].querySelectorAll('.g-image'))
+      if (process.isClient) {
+        this.refreshContent()
+        mediumZoom(this.$refs['content'].querySelectorAll('.g-image'))
+      }
     },
     updated() {
-      const vm = this
-
-      Prism.highlightAllUnder(vm.$refs['content'])
-      vm.processAsciiPlayers()
+      this.refreshContent()
+      this.processAsciiPlayers()
     },
   }
 </script>

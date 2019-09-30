@@ -21,7 +21,7 @@
           class="un-doc-sidebar__mobile-sidebar-button"
           for="sidebar-toggle"
           role="button">
-          <inline-svg src="/media/menu.svg" />
+          <inline-svg src="/media/icon-menu.svg" />
         </label>
         <span v-text="pageTitle" />
       </div>

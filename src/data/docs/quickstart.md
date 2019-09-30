@@ -32,6 +32,7 @@ At the Unison `.>` prompt, before doing anything else, do:
 ---
 title: ucm
 show-numbers: false
+show-copy-button: false
 ---
 .> pull https://github.com/unisonweb/quickstart quickstart
 ```
@@ -66,7 +67,7 @@ Open that file and add the following _watch expression_ (a line starting with `>
 
 ```unison
 ---
-filename: scratch.u
+title: scratch.u
 ---
 > runLocal '(quickstart.dsort (<) [8,2,3,1,4,5,6,7])
 ```

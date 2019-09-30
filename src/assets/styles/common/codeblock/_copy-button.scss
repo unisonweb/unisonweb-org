@@ -1,0 +1,36 @@
+.un-codeblock__copy-button {
+  @include reset-button;
+
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  transform: translate3d(0, -#{$titleIconSize * 1/2}, 0);
+
+  height: $titleIconSize;
+  width: rem(10);
+
+  font-family: font(semibold);
+  font-size: rem(-2);
+
+  border-radius: 4px;
+
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    background-color: palette(gray, xxx-light);
+  }
+
+  &.is-copied {
+    color: palette(white);
+    background-color: palette(purple);
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > svg {
+    display: inline-block;
+    margin-right: ($titleIconSize * 1/4);
+  }
+}

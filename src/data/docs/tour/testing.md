@@ -9,7 +9,7 @@ Let's add a test for our `square` function:
 
 ```unison
 ---
-filename: scratch.u
+title: scratch.u
 ---
 use .base
 
@@ -45,7 +45,7 @@ Let's test this a bit more thoroughly. `square` should have the property that `s
 
 ```unison
 ---
-filename: scratch.u
+title: scratch.u
 ---
 use .base
 

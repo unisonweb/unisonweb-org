@@ -25,6 +25,11 @@ const codeExtraOptions = {
         node.frontmatter['show-carets'] === true
       )
 
+      const showCopyButton = (
+        has(node.frontmatter, 'show-copy-button') &&
+        node.frontmatter['show-copy-button'] === false
+      ) ? 0 : 1
+
       const classNames = [
         'un-codeblock',
         'line-numbers',
@@ -35,6 +40,7 @@ const codeExtraOptions = {
       $pre.properties = {
         className: flatten(classNames).join(' '),
         'data-title': node.frontmatter['title'] ? node.frontmatter['title'] : 'Code',
+        'data-show-copy-button': showCopyButton,
       }
 
     },

@@ -8,14 +8,7 @@
       & #{$this} {
         position: absolute; // relative to `.un-codeblock <pre>`
         top: 0;
-
-        @include max-screen(breakpoint(xs, max)) {
-          left: 0;
-        }
-
-        @include min-screen(breakpoint(sm)) {
-          left: $titleWidth;
-        }
+        left: 0;
 
         width: ($lineNumbersWidth + dim(boxShadow, blur));
         height: 100%;

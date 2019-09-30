@@ -1,5 +1,6 @@
 import '~/assets/styles/main.scss'
 
+import VueClipboard from 'vue-clipboard2'
 import VueMarkdown from 'vue-markdown'
 import VueScrollTo from 'vue-scrollto'
 import VeeValidate from 'vee-validate'
@@ -30,6 +31,7 @@ export default function (Vue, {router, head, isClient, isServer, appOptions}) {
 
   // 3rd party components/libraries
   Vue.component('vue-markdown', VueMarkdown)
+  Vue.use(VueClipboard)
   Vue.use(VueScrollTo)
   Vue.use(VeeValidate, formOptions)
 
