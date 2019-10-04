@@ -41,7 +41,8 @@ We can combine requests to different abilities in the same function.  For exampl
 use .base
 use .base.io
 
--- We'll explain the usage of ' and ! in the section 'Using abilities'.
+-- We'll explain the usage of ' and ! in the 
+-- section 'Using abilities'.
 printTomorrow : '{IO, SystemTime} ()
 printTomorrow = '(printLine (Nat.toText !tomorrow))
 ```
@@ -71,7 +72,8 @@ systemTimeToIO : Request SystemTime a ->{IO} a
 systemTimeToIO r =
   case r of
     { SystemTime.systemTime -> k } -> 
-      handle systemTimeToIO in k (epochTimeToNat !.base.io.systemTime) 
+      handle systemTimeToIO in 
+        k (epochTimeToNat !.base.io.systemTime) 
     { a } -> a
 ```
 
