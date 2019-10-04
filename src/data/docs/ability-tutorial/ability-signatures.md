@@ -7,7 +7,7 @@ description: placeholder
 
 ## Pure functions vs inferred abilities
 
-You can use an empty ability list to declare a pure function - that is, one that doesn't require any abilities.  For example:
+You can use an empty ability list to declare a pure function — that is, one that doesn't require any abilities.  For example:
 
 ``` unison
 inverse : Matrix ->{} Matrix
@@ -78,7 +78,7 @@ Unison can see, from the use of `io.printLine`, that `incrementP` requires the `
 
 When you do `add incrementP`, Unison will report the actual inferred type, `Nat ->{io.IO} Nat`.
 
-So what does a plain `->` or `'` mean, when you see it after doing an `add`?  In this context it *does* mean a pure function - it's equivalent to `->{}` or `'{}`.
+So what does a plain `->` or `'` mean, when you see it after doing an `add`?  In this context it *does* mean a pure function — it's equivalent to `->{}` or `'{}`.
 
 👉 When you *give* Unison a plain `->` or `'` (with no `{…}`) you're asking it to infer some abilities.  When Unison gives *you* a plain `->` or `'`, it means `->{}` or `'{}`.
 
@@ -86,7 +86,7 @@ So in particular, this means that
 - if you type `->{}`, Unison can render it back to you as just `->`
 - if you want Unison to enforce that the function you are writing is pure, then specify a signature for it that uses a `->{}` or a `'{}`.
 
-🚧 This dual meaning of a plan `->` arrow ('infer' or 'pure' depending on context) is a bit confusing.  The pure case may get its own style of arrow notation in future, to address this - Unison issue [#738](https://github.com/unisonweb/unison/issues/738).
+🚧 This dual meaning of a plan `->` arrow ('infer' or 'pure' depending on context) is a bit confusing.  The pure case may get its own style of arrow notation in future, to address this — Unison issue [#738](https://github.com/unisonweb/unison/issues/738).
 
 > 🐞 Note, Unison can currently sometimes fail to output its inferred abilities when you do `view` or `edit` (although it does correctly output them at the `ucm` command line when you typecheck your code or do `add`/`update`.)  This is due to Unison issue [#703](https://github.com/unisonweb/unison/issues/703).  However, it will re-run its inference again when you next add the code.
 
@@ -101,16 +101,17 @@ base.List.map : (a -> b) -> [a] -> [b]
 
 It's added ability lists including a type variable, `𝕖`, in a process called **ability generalization**.  This is saying that, whatever the required abilities of the input function, the overall invocation of `map` will have the same requirements.
 
-So for example, `'(base.List.map base.io.printLine ["Hello", "world!"])` has type `'{IO} [()]` - it requires `IO`, because it calls `printLine` which requires `IO`.  
+So for example, `'(base.List.map base.io.printLine ["Hello", "world!"])` has type `'{IO} [()]` — it requires `IO`, because it calls `printLine` which requires `IO`.  
 
 We say that `base.List.map` is **ability polymorphic**: even though the function itself is in a sense pure, it can be used in a side-effecting way, depending on the ability requirements of its argument.  
 
-The generalization process can work in tandem with inferring concrete abilities - for example:
+The generalization process can work in tandem with inferring concrete abilities — for example:
 
 ``` unison
 applyP f x = .base.io.printLine "applyP"
              f x
--- inferred type: (i ->{𝕖, .base.io.IO} o) -> i ->{𝕖, .base.io.IO} o
+-- inferred type: 
+--   (i ->{𝕖, .base.io.IO} o) -> i ->{𝕖, .base.io.IO} o
 ```
 
 This is saying that `applyP` requires `IO`, combined with whatever other abilities (`𝕖`) are required by its first argument.  (The combination process is a set union, so if `𝕖` also includes `IO`, then `IO` still only appears once in the resulting type.)
@@ -130,7 +131,7 @@ nowIfPast t = now : Nat
 
 The outer signature, on the top-level binding for `nowIfPast`, is what we'd expect.  But the signature on the inner binding for `now` is surprising.  Why doesn't it have to be something like `'{SystemTime} Nat`?  After all, the definition of `now` uses the `SystemTime` ability.  
 
-The answer is that functions and lambdas define _computations_, and it is computations that can involve abilities.  The body of `now` involves a computation, but that computation is happening in the context of the outer function binding (which is where the `SystemTime` ability is mentioned).  The type signature on `now` is just talking about the _value_ that results from the computation - a plain `Nat`.
+The answer is that functions and lambdas define _computations_, and it is computations that can involve abilities.  The body of `now` involves a computation, but that computation is happening in the context of the outer function binding (which is where the `SystemTime` ability is mentioned).  The type signature on `now` is just talking about the _value_ that results from the computation — a plain `Nat`.
 
 So, the signatures where abilities are relevant are just those for functions and lambdas.  Let's see what that looks like.
 
@@ -138,9 +139,12 @@ So, the signatures where abilities are relevant are just those for functions and
 -- doesn't compile
 nowIfPast' : [Nat] ->{SystemTime} [Nat]
 nowIfPast' ts = f : Nat ->{} Nat
-                f = t -> if t < SystemTime.systemTime then SystemTime.systemTime else t
+                f = t -> if t < SystemTime.systemTime 
+                         then SystemTime.systemTime 
+                         else t
                 List.map f ts
--- also note that we're checking the system clock up to (2 * List.size ts) times in this example!
+-- also note that we're checking the system clock up 
+-- to (2 * List.size ts) times in this example!
 ```  
 
 In `nowIfPast'`, we've defined an inner lambda, `f`.  But we've made a mistake: the computation inside `f` involves the `SystemTime` ability, but `f`'s signature claims that `f` is pure (the empty braces `{}`).  Unison only accepts this function once we've removed the `{}` (to get ability inference) or replaced it with `{SystemTime}`.  
@@ -160,18 +164,19 @@ nowIfPast'' ts = now : Nat
                  f : Nat ->{} Nat
                  f = t -> if t < now then now else t
                  List.map f ts
--- this time we check the system clock exactly once - much better! (unless `ts` was empty...)
+-- this time we check the system clock exactly 
+-- once — much better! (unless `ts` was empty...)
 ```
 
-`f` is now pure, which is nice - even though it's captured the value `now` which was produced in an effectful computation.  
+`f` is now pure, which is nice — even though it's captured the value `now` which was produced in an effectful computation.  
 
 The gotcha is that Unison will accept other signatures for `now` and `f` than those given above.
 - For `f`, for example, it will accept `f : Nat ->{SystemTime} Nat`, saying that `f` is _allowed_ to use `SystemTime` even though it doesn't.  
-- For `now`, it will accept `now : {SystemTime} Nat`, since (in the underlying type theory) `{SystemTime} Nat` is a subtype of `Nat`.  (🐞 This unhelpful permissiveness is Unison issue [#665](https://github.com/unisonweb/unison/issues/665).)
+- For `now`, it will accept `now : {SystemTime} Nat`, since (in the underlying type theory) `Nat` is a subtype of `{SystemTime} Nat`.  (🐞 This unhelpful permissiveness is Unison issue [#665](https://github.com/unisonweb/unison/issues/665).)
 
 ## Defining functions with different ability lists on different arguments
 
-In an [earlier section][#Ability-lists-can-appear-before-each-function-argument], we saw the following function signature:
+In an [earlier section](#Ability-lists-can-appear-before-each-function-argument), we saw the following function signature:
 
 ``` unison
 orderServer' : ServerConfig ->{Log} '{.base.IO} ()
@@ -185,14 +190,16 @@ use .base.IO
 
 -- doesn't compile
 orderServer' : ServerConfig ->{Log} '{IO} ()
--- remember this signature is equivalent to ServerConfig ->{Log} () -> {IO} ()
+-- remember this signature is equivalent to 
+-- ServerConfig ->{Log} () -> {IO} ()
 orderServer' sc unit = 
   log (ServerConfig.toText sc)
   startServer sc
-  -- so this supposes we have a function startServer : ServerConfig ->{IO} ()
+  -- so this supposes we have a function 
+  -- startServer : ServerConfig ->{IO} ()
 ```
 
-The problem with this is that by the time we've given `orderServer'` that `unit` argument, we've got on to the second arrow - the one that only allows us the `IO` ability.  So we can't use `log` in the function definition.  (If Unison allowed this, then partially applying `orderServer'` would yield a function of type `'{IO} ()` that uses the `Log` ability.)
+The problem with this is that by the time we've given `orderServer'` that `unit` argument, we've got on to the second arrow — the one that only allows us the `IO` ability.  So we can't use `log` in the function definition.  (If Unison allowed this, then partially applying `orderServer'` would yield a function of type `'{IO} ()` that uses the `Log` ability.)
 
 🐞 Umm, actually at the moment the above does compile, wrongly ☹️  This is due to Unison issue [#745](https://github.com/unisonweb/unison/issues/745).
 

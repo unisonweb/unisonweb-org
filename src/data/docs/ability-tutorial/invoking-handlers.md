@@ -12,7 +12,8 @@ They do this by allowing us to _eliminate_ an ability from a type signature, inc
 First let's see what the type signature of a handler looks like.  We'll see some implementations in [Writing handlers](/docs/ability-tutorial/writing-handlers).  
 
 ``` unison
-systemTimeToIO : .base.Request SystemTime a ->{.base.io.IO} a
+systemTimeToIO : 
+  .base.Request SystemTime a ->{.base.io.IO} a
 ```
 
 First observation: we can treat a handler just like a regular function.  The only magic in its signature is the fact that `.base.Request` is a special built-in type.  We'll unpack the signature more later, but for now we can just read it as a function that takes `SystemTime` requests, and handles them using `IO`.  
@@ -41,41 +42,45 @@ We can't run `printTomorrow` yet.
 ```
 .> execute !printTomorrow
 
-  The expression in red needs these abilities: {.base.io.IO, SystemTime}, but this location only has access to the {.base.io.IO} ability,
+  The expression in red needs these abilities: {.base.io.IO,
+  SystemTime}, but this location only has access to the 
+  {.base.io.IO} ability,
   
       1 | main_ = !printTomorrow
 ```
 
-`execute` can only help us eliminate `IO` - any other ability we need to `handle` ourselves.  Here's how...
+`execute` can only help us eliminate `IO` — any other ability we need to `handle` ourselves.  Here's how...
 
 ``` unison
 printTomorrow' : '{IO} ()
 printTomorrow' = '(handle systemTimeToIO in !printTomorrow)
 ```
 
-That works! 😎
+That works! 👍
 
 ```
 .> execute !printTomorrow'
 5638144744800
 ```
 
-Notice in the function definition, we needed to force `printTomorrow`, turning it into `{IO, SystemTime} ()`, then delay the result again to get a `'{IO} ()`.  The intuition here is that you need to make `printTomorrow` actually _do_ its stuff, in order to handle the `SystemTime` requests it throws out - but that you need to delay the result because you can't have `printTomorrow'` doing `IO` requests except under a delay.  
+Notice in the function definition, we needed to force `printTomorrow`, turning it into `{IO, SystemTime} ()`, then delay the result again to get a `'{IO} ()`.  The intuition here is that you need to make `printTomorrow` actually _do_ its stuff, in order to handle the `SystemTime` requests it throws out — but that you need to delay the result because you can't have `printTomorrow'` doing `IO` requests except under a delay.  
 
 ❔ Would it be better for `handle` to take a delayed function, so you could just write `printTomorrow' = handle systemTimeToIO in printTomorrow`?  Feedback welcome... 📨
 
 So now we can use a handler to execute code that uses abilities!  
 
-There's something slightly unsatisfying about our definition of `printTomorrow` - its signature `'{IO, SystemTime} ()` tells us it needs _both_ abilities, but we wanted to _swap_ out `SystemTime` and replace it with `IO`.  We can smarten it up a bit by splicing the definition of `printTomorrow` into `printTomorrow'`.
+There's something slightly unsatisfying about our definition of `printTomorrow` — its signature `'{IO, SystemTime} ()` tells us it needs _both_ abilities, but we wanted to _swap_ out `SystemTime` and replace it with `IO`.  We can smarten it up a bit by splicing the definition of `printTomorrow` into `printTomorrow'`.
 
 ``` unison
 printTomorrow'' : '{IO} ()
-printTomorrow'' = '(handle systemTimeToIO in printLine (Nat.toText !tomorrow))
+printTomorrow'' = '(handle systemTimeToIO in 
+	                printLine (Nat.toText !tomorrow))
 
 -- or, we can also do:
 
 printTomorrow'' : '{IO} ()
-printTomorrow'' = '(printLine (Nat.toText (handle systemTimeToIO in !tomorrow)))
+printTomorrow'' = '(printLine (Nat.toText 
+  (handle systemTimeToIO in !tomorrow)))
 ```
 
 ## Trying out a test handler
@@ -89,17 +94,18 @@ use .base
 systemTimeToPure : [Nat] -> Request SystemTime a -> a
 ```
 
-We can feed this handler a list of values we'd like it to return to each successive `systemTime` request.  And the resultant handled expression is pure - it doesn't need to map through to `.base.io.systemTime`.  
+We can feed this handler a list of values we'd like it to return to each successive `systemTime` request.  And the resultant handled expression is pure — it doesn't need to map through to `.base.io.systemTime`.  
 
 Let's test `tomorrow`:
 
 ``` unison
 use test.v1
 
-test> tests.square.ex1 = run (expect ((handle (systemTimeToPure [0]) in !tomorrow) == 86400))
+test> tests.square.ex1 = run (expect ((handle 
+	    (systemTimeToPure [0]) in !tomorrow) == 86400))
 ```
 
-Awesome! 💥 😀
+Awesome! 💥 
 
 ## Stacking handlers
 
@@ -116,8 +122,8 @@ And suppose we have the following.
 -- Handlers for each ability.
 logHandler : [Text] -> Request Log a -> (a, [Text])
 storeHandler : v -> Request (Store v) a -> a
--- The first arguments to each of these are the initial values of 
--- the log and the store, respectively.  
+-- The first arguments to each of these are the initial  
+-- values of the log and the store, respectively.  
 
 -- Some data to work on.
 tree : Tree Text
@@ -131,7 +137,8 @@ Then here's how we run `labelTree`, eliminating both abilities.  We just need tw
 
 ``` unison
 labelledTree : Tree (Text, Nat)
-labelledTree = fst (handle logHandler [] in (handle storeHandler 0 in (labelTree tree)))
+labelledTree = fst (handle logHandler [] in 
+  (handle storeHandler 0 in (labelTree tree)))
 -- The call to fst just discards the log output.
 ```
 
