@@ -8,8 +8,8 @@ We now know how to use and handle abilities.  The last piece of the puzzle is wr
 Here's an example.  We'll unpack this piece by piece.  
 
 ``` unison
-use .base
-use .base.io
+use .builtin
+use .builtin.io
 
 systemTimeToIO : Request SystemTime a ->{IO} a
 systemTimeToIO r =
@@ -19,14 +19,14 @@ systemTimeToIO r =
     { a } -> a
 
 -- We've switched here to having SystemTime.systemTime
--- return a .base.io.EpochTime, to match what 
--- .base.io.systemTime returns and so make things 
+-- return a .builtin.io.EpochTime, to match what 
+-- .builtin.io.systemTime returns and so make things 
 -- convenient.  
 ```
 
 What's going on here?  Let's start with a recap of the type signature.  
 
-* A `Request A T` is a value representing a computation that requires ability `A` and has return type `T`.  `.base.Request` is a built-in type constructor that ties in to Unison's `handle` mechanism: `handle h in k` is taking the computation `k` which has type `T` and uses ability `A`, building a `Request A T` for it, and passing that to `h`.
+* A `Request A T` is a value representing a computation that requires ability `A` and has return type `T`.  `.builtin.Request` is a built-in type constructor that ties in to Unison's `handle` mechanism: `handle h in k` is taking the computation `k` which has type `T` and uses ability `A`, building a `Request A T` for it, and passing that to `h`.
 
 * A handler is a function `Request A T -> R` — it takes the computation and boils it down into some return value.  Common cases:
 
@@ -67,7 +67,7 @@ And that's it!  So now let's take a look at some more examples.
 Let's revisit the `systemTimeToPure` handler which we were using for testing back in [Trying out a test handler](/docs/ability-tutorial/invoking-handlers#trying-out-a-test-handler).  Here's the implementation:
 
 ``` unison
-use .base
+use .builtin
 systemTimeToPure : [Nat] -> Request SystemTime a -> a
 systemTimeToPure xs r = case r of
   { SystemTime.systemTime -> k } -> case xs of
@@ -84,7 +84,7 @@ The interesting thing here is that the handler is taking a `[Nat]` argument, to 
 Now let's see a handler for our ability, `ability Log where log : Text -> ()`, which we met back [here](/docs/ability-tutorial/examples-of-abilities#log).  This one doesn't try to map it down to file I/O — it's just collecting the log lines and returning them in the handle expression's return value.
 
 ``` unison
-use .base
+use .builtin
 logHandler : [Text] -> Request Log a -> (a, [Text])
 logHandler ts r =
   case r of
@@ -111,7 +111,7 @@ ability Store v where
 Here's the handler for it.
 
 ``` unison
-use .base
+use .builtin
 storeHandler : v -> Request (Store v) a -> a
 storeHandler storedValue s = case s of 
   { Store.get -> k } -> 
@@ -131,7 +131,7 @@ Now let's take a look at a couple of handlers for abilities that affect the prog
 Here's the handler for `ability Abort where abort : a`, which we met in [Abort and Exception](/docs/ability-tutorial/examples-of-abilities#abort-and-exception):
 
 ``` unison
-use .base
+use .builtin
 abortToPure : Request Abort a -> Optional a
 abortToPure r = case r of
   { Abort.abort -> k } -> None
@@ -145,7 +145,7 @@ The key point here is that the case for `abort` *does not use `k`*.  Whatever th
 So if that was a handler calling the continuation 0 times, what about 2 times?  Let's see a handler for `ability Choice where choose : Boolean`, which we met [here](/docs/ability-tutorial/examples-of-abilities#choice).  This handler runs through a whole tree of possible evolutions of the computation, with a fork at each `choose`, and collects the results in a list.
 
 ``` unison
-use .base
+use .builtin
 choiceToPure : Request Choice a -> [a]
 choiceToPure r = case r of 
   { Choice.choose -> k } -> 
@@ -163,7 +163,7 @@ Sometimes, you want to handle an ability without eliminating it — so, passing 
 For example, suppose we want a handler that logs the values that a `Store` computation `put`s.
 
 ``` unison
-use .base
+use .builtin
 storeProxyLog : 
   (v -> Text) -> Request (Store v) a ->{Store v, Log} a
 storeProxyLog print r = case r of

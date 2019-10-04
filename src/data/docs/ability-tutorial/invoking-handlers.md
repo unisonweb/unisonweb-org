@@ -13,23 +13,23 @@ First let's see what the type signature of a handler looks like.  We'll see some
 
 ``` unison
 systemTimeToIO : 
-  .base.Request SystemTime a ->{.base.io.IO} a
+  .builtin.Request SystemTime a ->{.builtin.io.IO} a
 ```
 
-First observation: we can treat a handler just like a regular function.  The only magic in its signature is the fact that `.base.Request` is a special built-in type.  We'll unpack the signature more later, but for now we can just read it as a function that takes `SystemTime` requests, and handles them using `IO`.  
+First observation: we can treat a handler just like a regular function.  The only magic in its signature is the fact that `.builtin.Request` is a special built-in type.  We'll unpack the signature more later, but for now we can just read it as a function that takes `SystemTime` requests, and handles them using `IO`.  
 
 Now let's remember our simple function from earlier, which uses `SystemTime`.
 
 ``` unison
-tomorrow : '{SystemTime} .base.Nat
+tomorrow : '{SystemTime} .builtin.Nat
 tomorrow = '(SystemTime.systemTime + 24 * 60 * 60)
 ```
 
 And now suppose we want to print the result to the console.  How can we do that?  Here's a good start:
 
 ``` unison
-use .base
-use .base.io
+use .builtin
+use .builtin.io
 
 printTomorrow : '{IO, SystemTime} ()
 printTomorrow = '(printLine (Nat.toText !tomorrow))
@@ -42,9 +42,9 @@ We can't run `printTomorrow` yet.
 ```
 .> execute !printTomorrow
 
-  The expression in red needs these abilities: {.base.io.IO,
+  The expression in red needs these abilities: {.builtin.io.IO,
   SystemTime}, but this location only has access to the 
-  {.base.io.IO} ability,
+  {.builtin.io.IO} ability,
   
       1 | main_ = !printTomorrow
 ```
@@ -90,11 +90,11 @@ We started this tutorial by singing the praises of handlers, and how the decoupl
 Suppose we have a handler like this:
 
 ``` unison
-use .base
+use .builtin
 systemTimeToPure : [Nat] -> Request SystemTime a -> a
 ```
 
-We can feed this handler a list of values we'd like it to return to each successive `systemTime` request.  And the resultant handled expression is pure — it doesn't need to map through to `.base.io.systemTime`.  
+We can feed this handler a list of values we'd like it to return to each successive `systemTime` request.  And the resultant handled expression is pure — it doesn't need to map through to `.builtin.io.systemTime`.  
 
 Let's test `tomorrow`:
 
@@ -112,7 +112,7 @@ Awesome! 💥
 Suppose our `labelTree` function from earlier reported its progress to a log.
 
 ``` unison
-use .base
+use .builtin
 labelTree : Tree a ->{Store Nat, Log} Tree (a, Nat)
 ```
 
