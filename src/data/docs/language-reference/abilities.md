@@ -11,6 +11,8 @@ Unison is a purely functional language, so no expressions are allowed to have _s
 
 Unison's system of abilities is based on the Frank language by Sam Lindley, Conor McBride, and Craig McLaughlin (https://arxiv.org/pdf/1611.09259.pdf). Unison diverges slightly from the scheme detailed in this paper. In particular, Unison's ability polymorphism is provided by ordinary polymorphic types, and a Unison type with an empty ability set explicitly disallows any abilities. In Frank, the empty ability set implies an ability-polymorphic type.
 
+See also the in-depth tutorial, [Introducing abilities](/docs/ability-tutorial).
+
 ## Abilities in function types
 
 The general form for a function type in Unison is `I ->{A} O`, where `I` is the input type of the function, `O` is the output type, and `A` is the set of _abilities_ that the function requires.
