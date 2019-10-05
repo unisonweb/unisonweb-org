@@ -25,7 +25,7 @@ Great work! 👍
 
 Here are some ideas for exercises to get you fluent in working with abilities.  In each case, be sure to actually try running your code!
 
-1. Write an ability `ConsoleIO`, and a handler for it of type `Request ConsoleIO a ->{IO} a` that uses `getLine` and `putLine` from `.builtin.io`.  Write a program of type `'{ConsoleIO} Text`.  
+1. Write an ability `ConsoleIO`, and a handler for it of type `Request ConsoleIO a ->{IO} a` that uses `getLine` and `putLine` from `.base.io`.  Write a program of type `'{ConsoleIO} Text`.  
 
 2. Write a handler for `Log` that writes to file.  Write a program of type `'{Log} ()` and try running it first with your handler, and then with the `logHandler` from [Handling Log](/docs/ability-tutorial/writing-handlers#handling-log).
 

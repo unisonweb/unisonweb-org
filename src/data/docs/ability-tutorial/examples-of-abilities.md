@@ -24,12 +24,12 @@ Here's an example, using `Store` to help label a binary tree with numerical indi
 ``` unison
 type Tree a = Branch (Tree a) a (Tree a) | Leaf
 
-labelTree : Tree a ->{Store .builtin.Nat} Tree (a, .builtin.Nat)
+labelTree : Tree a ->{Store .base.Nat} Tree (a, .base.Nat)
 labelTree t =
   use Tree Branch Leaf
   case t of
     Branch l v r ->
-      use .builtin.Nat +
+      use .base.Nat +
       l' = labelTree l
       n = Store.get
       Store.put (n + 1)
@@ -47,36 +47,36 @@ labelTree t =
 The main reason for having abilities is to give our programs a way of having an effect on the world outside the program.  There is a special ability, called `IO` (for 'Input/Output'), which lets us do this.  It's built into the language and runtime, so it's not defined and implemented in the normal way, but we can take a look at its ability declaration.
 
 ``` unison
-.builtin.io> view IO
+.base.io> view IO
 
   ability IO where
     send_ :
       Socket
-      -> builtin.Bytes
-      ->{IO} builtin.Either Error builtin.()
+      -> base.Bytes
+      ->{IO} base.Either Error base.()
     getLine_ :
-      Handle ->{IO} builtin.Either Error builtin.Text
+      Handle ->{IO} base.Either Error base.Text
     openFile_ :
       FilePath
       -> Mode
-      ->{IO} builtin.Either Error Handle
+      ->{IO} base.Either Error Handle
     throw : Error ->{IO} a
     fork_ :
-      '{IO} a ->{IO} builtin.Either Error ThreadId
-    systemTime_ : {IO} (builtin.Either Error EpochTime)
+      '{IO} a ->{IO} base.Either Error ThreadId
+    systemTime_ : {IO} (base.Either Error EpochTime)
 
     -- ... and many more operations, omitted here for brevity.
 ```
 
 The `IO` ability spans many different types of I/O — the snippet above shows sockets, files, exceptions, and threads, as well as the system clock.  
 
-> Typically you access these operations via the helper functions in the `.builtin.io` namespace, e.g. `.builtin.IO.systemTime : '{IO} EpochTime`.
+> Typically you access these operations via the helper functions in the `.base.io` namespace, e.g. `.base.IO.systemTime : '{IO} EpochTime`.
 
 So, since all the ways in which we can interact with the world are captured in the `IO` ability, why do we ever need any other abilities?  There are several reasons.
 
-1. We don't want to write all our code in terms of low-level concepts like files and threads.  We want higher-level abstractions, for example persistent distributed stores for typed data, and stream-builtind concurrency.  The low-level stuff is what we're used to from traditional programming environments, but we want to hide it behind powerful libraries, written in Unison, that expose better abstractions.  
+1. We don't want to write all our code in terms of low-level concepts like files and threads.  We want higher-level abstractions, for example persistent distributed stores for typed data, and stream-based concurrency.  The low-level stuff is what we're used to from traditional programming environments, but we want to hide it behind powerful libraries, written in Unison, that expose better abstractions.  
 
-2. We don't want `{IO}` to feature too often in the type signatures of the functions we write, because it doesn't tell us much.  Since `IO` contains so many different types of I/O, it leaves the behavior of our functions very unconstrained.  We want to use our type signatures to document and enforce the ability requirements of our functions in a more fine-grained way.  For instance, it's useful that we know, just by looking at its signature, that `tomorrow : '{SystemTime} .builtin.Nat` isn't going to write to file or open a socket.  If we instead had `tomorrow : '{IO} .builtin.Nat`, then we'd have no such guarantee, without going and inspecting the code.  
+2. We don't want `{IO}` to feature too often in the type signatures of the functions we write, because it doesn't tell us much.  Since `IO` contains so many different types of I/O, it leaves the behavior of our functions very unconstrained.  We want to use our type signatures to document and enforce the ability requirements of our functions in a more fine-grained way.  For instance, it's useful that we know, just by looking at its signature, that `tomorrow : '{SystemTime} .base.Nat` isn't going to write to file or open a socket.  If we instead had `tomorrow : '{IO} .base.Nat`, then we'd have no such guarantee, without going and inspecting the code.  
 
 3. Some things can be expressed well using abilities, but *don't* require interaction with the outside world. `Store` is an example.  
 
@@ -84,7 +84,7 @@ This leads us to a common pattern:
 
 👉 Typically, one ability is implemented by building on top of another.  And often, when we get down to the bottom of the pile, we'll find `IO`.  
 
-For example, the handler for our `SystemTime` ability is going to require the `IO` ability, and it's going to call `.builtin.io.systemTime`.
+For example, the handler for our `SystemTime` ability is going to require the `IO` ability, and it's going to call `.base.io.systemTime`.
 
 In terms of the architecture of our programs, this typically means that the top level entry points for our 'business logic' are annotated with all the fine-grained abilities our program can use, like this:
 
@@ -120,7 +120,7 @@ Here's an example of an ability to let us append text to a log — for example a
 
 ``` unison
 ability Log where
-  log : .builtin.Text -> ()
+  log : .base.Text -> ()
 ```
 
 You could imagine the handler decorating the text with timestamps and other useful contextual information.  
@@ -141,7 +141,7 @@ ability Abort where
 Here's `Abort` in action:
 
 ``` unison
-use .builtin
+use .base
 
 getName : Input ->{Abort} Text
 getName i = name = if not (valid i)
@@ -173,7 +173,7 @@ Here's another example — shown here to demonstrate further the idea of an abil
 
 ``` unison
 ability Choice where
-  choose : .builtin.Boolean
+  choose : .base.Boolean
 ```
 
 There's a handler for this ability (which we'll see later), which gives the program not just one Boolean value after a call to `choose`, but both.  It then tries continuing the program under *both* conditions.  Each successive call to `choose` is a fork in the tree of possibilities.  The handler collects all the results from all the possible execution paths.  

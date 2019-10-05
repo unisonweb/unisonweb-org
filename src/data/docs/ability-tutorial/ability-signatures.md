@@ -58,13 +58,13 @@ Unison can do two levels of type inference for you.  The first is to infer the c
 
 ``` unison
 retries = 3
--- inferred type: .builtin.Nat
+-- inferred type: .base.Nat
 ```
 
 The second is to infer ability lists, wherever you have left them unspecified.  
 
 ``` unison
-use .builtin
+use .base
 
 incrementP : Nat -> Nat
 incrementP x = io.printLine "incrementP"
@@ -92,26 +92,26 @@ So in particular, this means that
 
 ### Higher-order functions and ability polymorphism
 
-Here's how Unison infers the type of `.builtin.List.map`, a higher-order function:
+Here's how Unison infers the type of `.base.List.map`, a higher-order function:
 
 ``` unison
-builtin.List.map : (a -> b) -> [a] -> [b]
+base.List.map : (a -> b) -> [a] -> [b]
 -- inferred type: (a ->{𝕖} b) -> [a] ->{𝕖} [b]
 ```
 
 It's added ability lists including a type variable, `𝕖`, in a process called **ability generalization**.  This is saying that, whatever the required abilities of the input function, the overall invocation of `map` will have the same requirements.
 
-So for example, `'(builtin.List.map builtin.io.printLine ["Hello", "world!"])` has type `'{IO} [()]` — it requires `IO`, because it calls `printLine` which requires `IO`.  
+So for example, `'(base.List.map base.io.printLine ["Hello", "world!"])` has type `'{IO} [()]` — it requires `IO`, because it calls `printLine` which requires `IO`.  
 
-We say that `builtin.List.map` is **ability polymorphic**: even though the function itself is in a sense pure, it can be used in a side-effecting way, depending on the ability requirements of its argument.  
+We say that `base.List.map` is **ability polymorphic**: even though the function itself is in a sense pure, it can be used in a side-effecting way, depending on the ability requirements of its argument.  
 
 The generalization process can work in tandem with inferring concrete abilities — for example:
 
 ``` unison
-applyP f x = .builtin.io.printLine "applyP"
+applyP f x = .base.io.printLine "applyP"
              f x
 -- inferred type: 
---   (i ->{𝕖, .builtin.io.IO} o) -> i ->{𝕖, .builtin.io.IO} o
+--   (i ->{𝕖, .base.io.IO} o) -> i ->{𝕖, .base.io.IO} o
 ```
 
 This is saying that `applyP` requires `IO`, combined with whatever other abilities (`𝕖`) are required by its first argument.  (The combination process is a set union, so if `𝕖` also includes `IO`, then `IO` still only appears once in the resulting type.)
@@ -121,7 +121,7 @@ This is saying that `applyP` requires `IO`, combined with whatever other abiliti
 Not all type signatures are sensitive to abilities.  For example:
 
 ``` unison
-use .builtin
+use .base
 
 nowIfPast : Nat ->{SystemTime} Nat
 nowIfPast t = now : Nat
@@ -179,14 +179,14 @@ The gotcha is that Unison will accept other signatures for `now` and `f` than th
 In an [earlier section](#Ability-lists-can-appear-before-each-function-argument), we saw the following function signature:
 
 ``` unison
-orderServer' : ServerConfig ->{Log} '{.builtin.IO} ()
+orderServer' : ServerConfig ->{Log} '{.base.IO} ()
 ```
 This sort of signature can be useful, to control exactly _when_ different effects take place.  
 
 But we didn't see how to define such a function!  Here's a first, unsuccessful attempt.
 
 ``` unison
-use .builtin.IO
+use .base.IO
 
 -- doesn't compile
 orderServer' : ServerConfig ->{Log} '{IO} ()

@@ -16,7 +16,7 @@ Here's an ability declaration.
 ``` unison
 ability SystemTime where
   -- Number of seconds since the start of 1970.
-  systemTime : .builtin.Nat
+  systemTime : .base.Nat
 ```
 
 It defines one **operation**, `systemTime`, which returns the system clock reading.
@@ -32,14 +32,14 @@ We'll come back to this function later (including explaining the use of `'`), in
 If we add this function to the codebase we see that its requirement to have the `SystemTime` ability available is tracked in the type system.
 
 ``` unison
-tomorrow : '{SystemTime} .builtin.Nat
+tomorrow : '{SystemTime} .base.Nat
 ```
 
 We can combine requests to different abilities in the same function.  For example...
 
 ``` unison
-use .builtin
-use .builtin.io
+use .base
+use .base.io
 
 -- We'll explain the usage of ' and ! in the 
 -- section 'Using abilities'.
