@@ -4,7 +4,7 @@ description: placeholder
 date: 2019-03-29
 authors: ["arya-irani"]
 categories: ["news"]
-featuredImage: /static/media/thing2.svg
+featuredImage: /media/thing2.svg
 ---
 Hi all — it's been 464 commits since our last update post, and I hardly know where to start...
 
