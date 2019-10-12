@@ -6,3 +6,4 @@ node_modules
 dist
 api/firebase-service-account-key.json
 .env
+*.swp
