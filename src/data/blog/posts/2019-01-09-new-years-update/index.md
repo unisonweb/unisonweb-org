@@ -4,7 +4,7 @@ description: placeholder
 date: 2019-01-09
 authors: ["runar-bjarnason"]
 categories: ["news"]
-featuredImage: /media/thing4.svg
+featuredImage: /media/thing5.svg
 ---
 Hey everyone, Rúnar here. It's been a while since our last update. We've been busy.
 
