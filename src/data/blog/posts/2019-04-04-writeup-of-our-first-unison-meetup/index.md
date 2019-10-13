@@ -1,6 +1,6 @@
 ---
 title: Writeup of our first Unison meetup
-description: placeholder
+description: We had our [first ever Unison meetup last Tuesday](https://www.meetup.com/Boston-Unison/events/259532783/)! If you missed it or just want to look back on it fondly (or if like me you struggle to remember anything from more than 2 days ago..), this post is for you!!
 date: 2019-04-04
 authors: ["paul-chiusano"]
 categories: ["news", "announcements"]

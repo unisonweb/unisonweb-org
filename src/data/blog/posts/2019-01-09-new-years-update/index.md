@@ -1,6 +1,6 @@
 ---
 title: New Years Update
-description: placeholder
+description: Hey everyone, Rúnar here. It's been a while since our last update. We've been busy.
 date: 2019-01-09
 authors: ["runar-bjarnason"]
 categories: ["news"]
