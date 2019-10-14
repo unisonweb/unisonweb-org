@@ -3,12 +3,13 @@
 
     <un-post-intro :blog-post="$page.blogPost" />
 
-    <un-content :content="$page.blogPost.content" />
-
     <un-post-categories
       :categories="$page.blogPost.categories"
     />
+    
+    <un-content :content="$page.blogPost.content" />
 
+    <!--
     <un-share-links
       heading="Enjoy this post? Let others know."
       :title="$page.blogPost.title"
@@ -18,6 +19,7 @@
     <un-post-authors
       :authors="$page.blogPost.authors"
     />
+    -->
 
     <!-- prev/next posts -->
 
