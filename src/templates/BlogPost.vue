@@ -6,6 +6,7 @@
     <un-post-categories
       :categories="$page.blogPost.categories"
     />
+    <br/>
     
     <un-content :content="$page.blogPost.content" />
 
