@@ -11,7 +11,7 @@ Since our last update official update here, we started alpha testing a first rel
 
 ## Strange Loop was great!
 
-<iframe width="966" height="543" src="https://www.youtube.com/embed/gCWtkvDQ2ZI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="580" height="436" src="https://www.youtube.com/embed/gCWtkvDQ2ZI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 The Strange Loop talk approached explaining Unison by just talking about how the core idea of content-addressed code (explained in the talk) leads to all these nice benefits, almost for free:
 
