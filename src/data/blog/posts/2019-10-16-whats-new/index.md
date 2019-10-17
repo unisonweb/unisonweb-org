@@ -21,16 +21,16 @@ The Strange Loop talk approached explaining Unison by just talking about how the
 * A nicer story for distributed execution and transparent code deployment
 * ... and I could have kept going!! My favorite benefit that I didn't cover is having a codebase which is always runnable, never broken, and having structured refactoring sessions rather than long lists of compile errors. 
 
-Content-addressed code is just one of those nice simple ideas that feels like it ought to become ubiquitous in languages of the future. But even though it feels like the right thing, it's also a fundamental change that affects just about everything about the developer experience. When Unison started as a research project based on this core idea, there were so many questions, like [if you can't ever modify a definition, only introduce new ones, how do you refactor or update a codebase?](https://twitter.com/unisonweb/status/1173942969726054401). What has been surprising and cool is that all the questions of "how do you do this in the Unison worldview" continued to have answers, answers that actually made a lot of sense (often MORE sense than what we do now) and we could uncover these answers just by actually thinking a little and keeping an open mind. That's been a lot of fun!
+Content-addressed code is just one of those nice simple ideas that feels like it ought to become ubiquitous in languages of the future. But even though it feels like the right thing, it's also a fundamental change that affects just about everything about the developer experience. When Unison started as a research project based on this core idea, there were so many questions, like [if you can't ever modify a definition, only introduce new ones, how do you refactor or update a codebase?](https://twitter.com/unisonweb/status/1173942969726054401). What has been surprising and cool is that all the questions of "how do you do this in the Unison worldview" continued to have answers, and these answers often made MORE sense than what is being done currently. Just by thinking through things with an open mind you could uncover this entirely consistent alternate reality of how programming could work, and it was there the whole time just waiting to be discovered. That's been a lot of fun!
 
 ## Working towards our next release
 
-In the months leading up to Strange Loop and since the conference, we've been really been focused on filling in some gaps in the developer experience. Some things we've added :
+In the months leading up to Strange Loop and since the conference, we've been really been focused on filling in some gaps in the developer experience. Some things we've already done:
 
 * You can view the history of your codebase (the `history` command)
-* You can move around in that history.
-* You can run `IO` programs without needing to add definitions to the codebase first.
-* Literate Unison transcripts, for producing tutorial style documentation, for instance much of [the docs site](/docs) could be moved over to be generated via the transcript runner, and we're also using these transcripts internally for integration testing of 
+* You can move around in that history (`undo`, `reflog`, and `reset-root` commands).
+* You can run `IO` programs without needing to add definitions to the codebase first, and you can run scripts that do `IO`
+* Literate Unison transcripts, for producing tutorial style documentation, for instance much of [the docs site](/docs) could be moved over to be generated via the transcript runner, and we're also using these transcripts internally for integration testing.
 
 Things we plan on getting done for our next major release:
 
@@ -38,9 +38,9 @@ Things we plan on getting done for our next major release:
 * Workflow for pull requests and code reviews
 * Workflow for publishing and using Unison libraries
 * A much better algorithm for refactoring types, which avoids manual propagation of edits
-* Bugfixes and general polish - thank you to alpha testers for uncovering and reporting issues, we will be cranking through these
+* Bugfixes and general polish - thank you to alpha testers for uncovering and reporting issues, we will be cranking through these.
 
-At this point the developer experience of using Unison will be pretty darn good and without major gaps.
+At this point the developer experience of using Unison will hopefully be pretty darn good and without major gaps, and anyone will be able to write and share Unison code without issue.
 
 ## In progress: an ecosystem-wide code viewer with click-through to definition 
 
@@ -54,7 +54,7 @@ I am very excited for this to come online and kudos to the team for putting this
 
 ## Wrapping up
 
-We will try to post updates more regularly than once every 6 months. 😀 In addition to this blog, feel free to come by the [Unison Slack](/community), which is a friendly spot to ask questions if you are trying out Unison. Besides GitHub, the #contrib channel is a good spot to follow along with Unison's development.
+We will try to post updates more regularly than once every 6 months. 😀 In addition to this blog, feel free to come by the [Unison Slack](/community), which is a friendly spot to ask questions if you are trying out Unison. Besides [the project on GitHub](https://github.com/unisonweb/unison), the #contrib channel is a good spot to follow along with Unison's development.
 
 One more thing: Arya and I will be at [Scale By the Bay](https://sched.co/RoSk) in a month, giving a talk on Unison. 
 
