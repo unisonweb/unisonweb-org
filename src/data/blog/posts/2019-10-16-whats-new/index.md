@@ -2,7 +2,6 @@
 title: Here's what's been happening with Unison
 description: Since our last official update here, we started alpha testing a first release of Unison, gave a talk at Strange Loop, and have been working towards an M2 release with lots of new features, bugfixes, and polish.
 date: 2019-10-16
-authors: ["paul-chiusano"]
 categories: ["news"]
 featuredImage: /media/thing9.svg
 ---
@@ -48,7 +47,7 @@ There's a cool project in the works that I wanted to mention here.
 
 One downside of the Unison codebase not just being a collection of text files is that we don't get to use rudimentary text-based tools to view that code. I prefer to see this as a feature, though, in that it creates a bit of a vacuum which can be filled by something that is _way better_ than the text based tool.
 
-Mitchell Rosen, Elliot Wu, and friends have started on a [codebase browser for Unison](https://github.com/unisonweb/elm-browser) which we are planning on hosting here at unisonweb.org/browse when it's a little further along. The idea is that you can hyperlink to any Unison definition, in any Git repo, and render that definition nicely with hyperlinks to all its dependencies. And rather than this being a build artifact that every library author must maintain and keep up to date, it's something that Just Works for all publicly hosted Unison code, without any action needed by library authors! It works by reading the underlying codebase format which has all the semantic information needed for this to be possible.
+Mitchell Rosen, Elliot Wu, [and friends](https://github.com/unisonweb/elm-browser/graphs/contributors) have started on a [codebase browser for Unison](https://github.com/unisonweb/elm-browser) which we are planning on hosting here at unisonweb.org/browse when it's a little further along. The idea is that you can hyperlink to any Unison definition, in any Git repo, and render that definition nicely with hyperlinks to all its dependencies. And rather than this being a build artifact that every library author must maintain and keep up to date, it's something that Just Works for all publicly hosted Unison code, without any action needed by library authors! It works by reading the underlying codebase format which has all the semantic information needed for this to be possible.
 
 I am very excited for this to come online. Kudos to the team for putting this together.
 
@@ -59,3 +58,5 @@ We will try to post updates more regularly than once every 6 months. 😀 In add
 One more thing: Arya and I will be at [Scale By the Bay](https://sched.co/RoSk) in a month, giving a talk on Unison. 
 
 That's all for now. 🌻
+
+_Thanks to all contributors to this post: Paul Chiusano, Rebecca Mark, Noah Haasis, Rúnar Bjarnason, and Arya Irani_
