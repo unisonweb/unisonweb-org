@@ -20,3 +20,4 @@ A term, type, data constructor, or ability constructor may be unambiguously refe
 
 ## Short hashes
 A hash literal may use a prefix of the base32Hex encoded SHA3 digest instead of the whole thing. For example the programmer may use a short hash like `#r1mtr0` instead of the much longer 104-character representation of the full 512-bit hash. If the short hash is long enough to be unambiguous given the [environment](/docs/language-reference/name-resolution), Unison will substitute the full hash at compile time. When rendering code as text, Unison may calculate the minimum disambiguating hash length before rendering a hash.
+__Next:__ [Types](/docs/language-reference/types)
