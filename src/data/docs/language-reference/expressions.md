@@ -122,4 +122,4 @@ Additional `'` and `!` combine in the obvious way:
 
 You can of course use parentheses to precisely control how `'` and `!` get applied.
 
-__Next:__ [Types](/docs/language-reference/hashes)
+__Next:__ [Hashes](/docs/language-reference/hashes)
