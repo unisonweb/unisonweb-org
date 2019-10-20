@@ -96,6 +96,8 @@ So rename and move things around as much as you want. Don't worry about picking 
 
 > 🤓 If you're curious to learn about the guts of the Unison codebase format, you can check out the [v1 codebase format specification][repoformat].
 
+[repoformat]: https://github.com/unisonweb/unison/blob/master/docs/repoformats/v1-DRAFT.markdown
+
 Use `undo` to back up a step.  (We don't have a `redo` yet, though).
 
 ```
