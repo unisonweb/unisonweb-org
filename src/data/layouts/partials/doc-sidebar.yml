@@ -31,6 +31,8 @@ linkSets:
     links:
       - label: Introduction
         url: /docs/language-reference
+      - label: Literal expressions
+        url: /docs/language-reference/literals
       - label: Term declarations
         url: /docs/language-reference/term-declarations
       - label: Type declarations
