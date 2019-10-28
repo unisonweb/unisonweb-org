@@ -16,10 +16,10 @@
 
     <div class="un-post-intro__meta">
       <span
-        class="u-color--gray--mid u-medium u-line-height--base"
+        class="u-color--gray--mid u-line-height--base"
         data-font-size="-2">
-        <span v-text="authors" />
-        &nbsp;&bull;&nbsp;
+        <!-- <span v-text="authors" /> -->
+        <!-- &nbsp;&bull;&nbsp; -->
         <span v-text="blogPost.date" />
       </span>
     </div>
