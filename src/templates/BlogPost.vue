@@ -1,14 +1,17 @@
 <template>
   <un-blog>
 
-    <un-post-intro :blog-post="$page.blogPost" />
+    <un-post-intro
+      :blog-post="$page.blogPost"
+    />
 
     <un-post-categories
       :categories="$page.blogPost.categories"
     />
-    <br/>
-    
-    <un-content :content="$page.blogPost.content" />
+
+    <un-content
+      :content="$page.blogPost.content"
+    />
 
     <!--
     <un-share-links

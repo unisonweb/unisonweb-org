@@ -30,6 +30,7 @@
       list-style: none;
 
       margin-top: dim(pageSection, sm);
+      margin-bottom: dim(pageSection, sm);
 
       display: flex;
       flex-wrap: wrap;
