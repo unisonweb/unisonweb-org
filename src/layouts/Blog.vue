@@ -26,6 +26,11 @@
     components: {
       'un-blog-sidebar': BlogSidebar,
     },
+    metaInfo: {
+      link: [
+        { rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: '/feed.xml' }
+      ]
+    },
   }
 </script>
 

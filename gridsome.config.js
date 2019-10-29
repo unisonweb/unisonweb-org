@@ -6,6 +6,8 @@ const CONFIG = {
   svgo: require('./config/svgo'),
 }
 
+const marked = require('marked');
+
 module.exports = {
 
   siteName: 'Unison Computing',
@@ -88,6 +90,20 @@ module.exports = {
       chunkSize: 10000, // default: 1000
       enablePartialUpdates: true, // default: false
     },
+  }, {
+    use: "gridsome-plugin-feed",
+    options: {
+      contentTypes: ['BlogPost'],
+      feedOptions: {
+        title: 'Unison',
+        description: 'Unison blog'
+      },
+      nodeToFeedItem: node => ({
+        title: node.title,
+        date: node.date || node.fields.date,
+        content: marked(node.content)
+      })
+    }
   }],
 
   transformers: {
