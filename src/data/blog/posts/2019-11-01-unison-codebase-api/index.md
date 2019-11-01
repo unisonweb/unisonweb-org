@@ -113,7 +113,9 @@ Using just these operations, we can perform the refactoring on our `MyAPI` type.
 
 ```haskell
 constructorMap 
-  : Namespace -> Link.Type -> Map Name Link.Term
+  : Namespace 
+  -> Link.Type
+  ->{Codebase} Map Name Link.Term
 constructorMap p typ = 
   go ctor map = 
     termNames = Codebase.termNamesAt p ctor
@@ -127,10 +129,16 @@ nameBasedUpgrade
   -> Link.Type
   -> Link.Type
   ->{Codebase} Patch 
+nameBasedUpgrade oldType newType
   newCtors = 
     constructorMap Codebase.constructorsOf newType
   oldCtors = 
-    constructorMap Codebase.constructorsOf (typeLink 
+    constructorMap Codebase.constructorsOf oldType
+  go ctor patch =
+    case ctor of (name, link) -> 
+      Patch.replaceTerm link
+                        (Map.lookup name oldCtors)
+                        patch
   foldr go Patch.empty (Map.toList newCtors)
 
 upgradeMyAPI = 
