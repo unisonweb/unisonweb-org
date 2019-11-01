@@ -11,6 +11,8 @@ The [Unison Codebase Manager, `ucm`](https://www.unisonweb.org/docs/tour/hello-u
 
 We already have the `Link.Term` and `Link.Type` types from [#901](https://github.com/unisonweb/unison/pull/901) to support documentation. These are first-class references (i.e. hashes) to Unison terms and types in the codebase, respectively. 
 
+This is a proposal for a Unison API that allows you to manage your Unison codebase from within Unison itself.
+
 ## Motivating example: refactor a type
 Say we have an ability type with a lot of constructors:
 
