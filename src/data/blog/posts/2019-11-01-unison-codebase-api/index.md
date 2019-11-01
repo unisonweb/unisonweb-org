@@ -40,7 +40,8 @@ To support this kind of thing, we need some operations on the codebase.
 For example, we want to get a list of constructors of a type:
 
 ```haskell
-Codebase.constructorsOf : Link.Type -> {Codebase} [Link.Term]
+Codebase.constructorsOf 
+  : Link.Type -> {Codebase} [Link.Term]
 ```
 
 And get the names of a term or type:
@@ -77,10 +78,12 @@ Codebase.putPatch : Name -> Patch ->{Codebase} ()
 ### What’s a patch?
 We’ll need `Patch` to support basic operations that allow us to replace or deprecate terms and types:
 ```haskell
-Patch.replaceTerm : Link.Term -> Link.Term -> Patch -> Patch
+Patch.replaceTerm 
+  : Link.Term -> Link.Term -> Patch -> Patch
+Patch.replaceType 
+  : Link.Type -> Link.Type -> Patch -> Patch
 Patch.deprecateTerm : Link.Term -> Patch -> Patch
 Patch.deprecateType : Link.Type -> Patch -> Patch
-Patch.replaceType : Link.Type -> Link.Type -> Patch -> Patch
 ```
 
 We also want to be able to combine patches, and we’ll need the empty patch:
@@ -105,7 +108,8 @@ Codebase.applyPatch : Namespace -> Patch ->{Codebase} ()
 Using just these operations, we can perform the refactoring on our `MyAPI` type.
 
 ```haskell
-constructorMap : Namespace -> Link.Type -> Map Name Link.Term
+constructorMap 
+  : Namespace -> Link.Type -> Map Name Link.Term
 constructorMap p typ = 
   go ctor map = 
     termNames = Codebase.termNamesAt p ctor
@@ -123,7 +127,8 @@ nameBasedUpgrade
   foldr go Patch.empty (Map.toList newCtors)
 
 upgradeMyAPI = 
-  nameBasedUpgrade (typeLink MyAPI#oldHash) (typeLink MyAPI)
+  nameBasedUpgrade (typeLink MyAPI#oldHash)
+                   (typeLink MyAPI)
 ```
 
 Here the syntax `typeLink T` is built-in Unison syntax for getting a `Link.Type`. The type  `MyAPI#oldHash` is not valid syntax but is supposed to represent whatever the actual hash-qualified name of the old version of `MyAPI` would be.
