@@ -1,7 +1,7 @@
 ---
 title: A Unison Codebase API
 description: A proposed combinator library for managing your Unison codebase from within Unison itself.
-date: 2019-01-09
+date: 2019-11-01
 authors: ["runar-bjarnason"]
 categories: ["research"]
 featuredImage: /media/thing10.svg
