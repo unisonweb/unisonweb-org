@@ -94,8 +94,10 @@ Patch.union : Patch -> Patch -> Patch
 
 It would be useful to be able to ask a patch for its contents:
 ```haskell
-Patch.termReplacements : Patch -> Map Link.Term Link.Term
-Patch.typeReplacements : Patch -> Map Link.Type Link.Type
+Patch.termReplacements 
+  : Patch -> Map Link.Term Link.Term
+Patch.typeReplacements 
+  : Patch -> Map Link.Type Link.Type
 ```
 
 And of course the whole point of a patch is to apply it to the codebase at a particular namespace:
@@ -118,8 +120,11 @@ constructorMap p typ =
     Map.insert termName ctor map
   foldr go Map.empty (Codebase.constructorsOf typ)
 
-nameBasedUpgrade 
-  : Namespace -> Link.Type -> Link.Type ->{Codebase} Patch 
+nameBasedUpgrade
+  : Namespace 
+  -> Link.Type
+  -> Link.Type
+  ->{Codebase} Patch 
   newCtors = 
     constructorMap Codebase.constructorsOf newType
   oldCtors = 
