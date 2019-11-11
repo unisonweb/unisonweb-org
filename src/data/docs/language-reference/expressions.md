@@ -79,13 +79,13 @@ else
 ```
 
 ### Boolean conjunction and disjunction
-A _Boolean conjunction expression_ is a `Boolean` expression of the form `and a b` where `a` and `b` are `Boolean` expressions. Note that `and` is not a function, but built-in syntax.
+A _Boolean conjunction expression_ is a `Boolean` expression of the form `a && b` where `a` and `b` are `Boolean` expressions. Note that `&&` is not a function, but built-in syntax.
 
-The evaluation semantics of `and a b` are equivalent to `if a then b else false`.
+The evaluation semantics of `a && b` are equivalent to `if a then b else false`.
 
-A _Boolean disjunction expression_ is a `Boolean` expression of the form `or a b` where `a` and `b` are `Boolean` expressions. Note that `or` is not a function, but built-in syntax.
+A _Boolean disjunction expression_ is a `Boolean` expression of the form `a || b` where `a` and `b` are `Boolean` expressions. Note that `||` is not a function, but built-in syntax.
 
-The evaluation semantics of `or a b` are equivalent to `if a then true else b`.
+The evaluation semantics of `a || b` are equivalent to `if a then true else b`.
 
 ## Delayed computations
 
@@ -122,4 +122,4 @@ Additional `'` and `!` combine in the obvious way:
 
 You can of course use parentheses to precisely control how `'` and `!` get applied.
 
-__Next:__ [Types](/docs/language-reference/types)
+__Next:__ [Hashes](/docs/language-reference/hashes)
