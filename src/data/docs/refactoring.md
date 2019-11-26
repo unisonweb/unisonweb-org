@@ -191,7 +191,7 @@ What's going on here? After commands like `update`, Unison does what is called "
 
 A Unison codebase _always typechecks and is never broken_. This raises a question: what happens if you make breaking changes to a definition? We will look at that next!
 
-## Adding new parameters to definitions (the easy way)
+## Adding new parameters (the easy way)
 
 Another common refactoring is adding a parameter to a definition. Right now, `pumpkinPie` has a hardcoded `pieCrust`. I feel like there a lot of different pie crust recipes (I fully anticipate adding `extraFlakyPieCrust` and `grahamCrackerPieCrust`), so let's rename that `regularPieCrust` (and notice that `pumpkinPie` picks up the new name):
 
@@ -243,7 +243,7 @@ pumpkinPie = pumpkinPie' regularPieCrust
   `>`)... Ctrl+C cancels.
 
 ```
-We'll make this update in a fork of our namespace. Forks are super cheap to make and don't require copying a bunch of code, so create them as often as you like:
+We'll make this update in a fork of our namespace. Forks are super cheap to make and don't require copying any code, so create them as often as you like:
 
 ```ucm
 .> fork .cooking .cooking2
@@ -273,13 +273,11 @@ We'll make this update in a fork of our namespace. Forks are super cheap to make
   No conflicts or edits in progress.
 
 ```
-Notice there's nothing `todo`. The refactoring is complete. We could `merge .cooking2 .cooking` (this merges `.cooking2` into `.cooking) if we were happy with this change.
-
-This strategy of adding new parameters to functions is what might be called _locally type preserving_.
+Notice there's nothing `todo`. The refactoring is complete. We could `merge .cooking2 .cooking` (this merges `.cooking2` into `.cooking`) if we were happy with this change.
 
 ## Changing type signatures
 
-But maybe that's not what we want... maybe we really want to be forced to review all the places that used the old `pumpkinPie` and decide there what kind of pie crust to use.
+But maybe we really want to be forced to review all the places that used the old `pumpkinPie` and decide there what kind of pie crust to use.
 
 Let's delete that experiment (note: it's still in the history that Unison keeps and can be resurrected at any time):
 
@@ -369,7 +367,7 @@ Now when we `update`, we are told that we have some work still `todo`:
 
 
 ```
-We've created a new definition, but Unison's well-typed propagation can't automatically update `thanksgivingDesert`, since it doesn't know what pie crust to supply to `pumpkinPie`. We call this state a partially completed refactoring. The remaining work on a refactoring shows up after each `update` and also in the `todo` command:
+We've created a new definition, but Unison's well-typed propagation can't automatically update `thanksgivingDessert`, since it doesn't know what pie crust to supply to `pumpkinPie`. We call this state a partially completed refactoring. The remaining work on a refactoring shows up after each `update` and also in the `todo` command:
 
 ```ucm
 .cooking> todo
@@ -390,7 +388,7 @@ We've created a new definition, but Unison's well-typed propagation can't automa
 ```
 ### A partially completed refactoring isn't a broken codebase
 
-When you have a partially completed refactoring, it's no big deal. Your codebase isn't broken, and you can still run all your code, introduce new definitions, whatever:
+When you have a partially completed refactoring, it's no big deal. Your codebase isn't broken, and you can still run all your code, add new code, etc.:
 
 ```unison
 someOtherDefinition = -92
@@ -426,7 +424,7 @@ someOtherDefinition = -92
 ```
 ### Using the `todo` command
 
-Rather than having a list of (possibly misleading) compile errors and a broken codebase that won't let you write new code or run anything, you get a nice tidy todo list, and a remaining work metric that only goes down (is there anything more demoralizing than when you are slogging through a long list of compile errors, you get it down to a reasonable number, then it starts going _up_ again?):
+Rather than having a list of (possibly misleading) compile errors and a broken codebase that won't let you write new code or run anything, you get a nice tidy todo list, and a remaining work metric that only goes down. (Is there anything more demoralizing than when you are slogging through a long list of compile errors, you get it down to a reasonable number, then it starts going _up_ again?):
 
 ```ucm
 .cooking> todo
@@ -445,9 +443,9 @@ Rather than having a list of (possibly misleading) compile errors and a broken c
 
 
 ```
-The `todo` command is telling you the total number of transitive dependents still left to update, and prompting you to visit them in dependency order. So it tells us to look at `thangsgivingDesert` first, and not `thanksgivingDinner`, which depends on `thanksgivingDesert`.
+The `todo` command is telling you the total number of transitive dependents still left to update, and prompting you to visit them in dependency order. So it tells us to look at `thanksgivingDessert` first, and not `thanksgivingDinner`, which depends on `thanksgivingDessert`.
 
-Here, we'll do something simple, which is that we'll bind this new parameter at the use site:
+Here, we'll apply a simple fix here, which is to bind the new parameter at the use site:
 
 ```unison
 thanksgivingDessert guestCount =
@@ -486,7 +484,7 @@ Let's now `update`:
   No conflicts or edits in progress.
 
 ```
-Notice there's nothing `todo` after the update. The well-typed propagation finished the rest for us, since we were able to preserve the type of `thanksgivingDessert` and `pumpkinPie` had no other direct dependents. If instead we also changed the type of `thanksgivingDesert` we'd then have to update _its dependents_.
+Notice there's nothing `todo` after the update. The well-typed propagation finished the rest for us, since we were able to preserve the type of `thanksgivingDessert` and `pumpkinPie` had no other direct dependents. If instead we also changed the type of `thanksgivingDessert` we'd then have to update _its dependents_.
 
 Summary: When you reach a "type-preserving frontier" of changes, Unison handles propagating that out the rest of the way.
 
