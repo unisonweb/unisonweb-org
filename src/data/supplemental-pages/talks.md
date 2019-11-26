@@ -10,7 +10,8 @@ Unison started years ago as an experimental project to revisit all aspect of the
 
 Here are the talks, newest first:
 
-* [Strange Loop 2019, by Paul Chiusano](https://www.youtube.com/watch?v=gCWtkvDQ2ZI) It's a longer (40 min) introduction to the core ideas of Unison.
+* [Scale By the Bay 2019, by Paul Chiusano](https://www.youtube.com/watch?v=IvENPX0MAZ4) This is a 32 minute talk that briefly covers the core ideas of Unison and talks about Unison's [approach to refactoring](/docs/refactoring).
+* [Strange Loop 2019, by Paul Chiusano](https://www.youtube.com/watch?v=gCWtkvDQ2ZI) This is a longer (40 min) introduction to the core ideas of Unison and probably the best talk to start with.
 * [Scale By the Bay 2018, by Paul Chiusano](https://www.youtube.com/watch?v=v7L-5AQQkbM).
 * [Lambda World 2018, by Rúnar Bjarnason](https://www.youtube.com/watch?v=rp_Eild1aq8) also presented at [Øredev 2018](https://vimeo.com/311512465).
 * [Scala World 2017, by Paul Chiusano](https://www.youtube.com/watch?v=knqlWboqf_U).
