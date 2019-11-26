@@ -61,7 +61,7 @@ Let's browse through the rest of the library and take a look at a few of the ing
   29. water               (Ingredients)
 
 ```
-Notice that `pieCrust` is used in `pumpkinPie`, which is used in `thanksgivingDessert`, which is used in `thanksgivingDinner`:
+Notice below that `pieCrust` is used in `pumpkinPie`, which is used in `thanksgivingDessert`, which is used in `thanksgivingDinner`:
 
 ```ucm
 .cooking> view pieCrust pumpkinPie thanksgivingDessert
@@ -98,7 +98,7 @@ Notice that `pieCrust` is used in `pumpkinPie`, which is used in `thanksgivingDe
 ```
 ## The easy case: a type preserving change
 
-First we'll do the easy case and change the implementation of a definition `pumpkinPie` without changing its type. This will create a new definition with a new hash and will automatically create a new definition for its dependents (such as  `thanksgivingDessert`).
+First we'll make a minor change by changing the implementation of a definition `pumpkinPie` without changing its type. This will create a new definition with a new hash and will automatically create updated versions of its dependents (such as  `thanksgivingDessert`).
 
 We first note the hashes of `pumpkinPie` and `thanksgivingDessert`:
 
@@ -167,7 +167,7 @@ Then let's `update`:
         amount 2.0 egg ]
 
 ```
-The definitions has "changed", but actually, what we've done is just introduce a new definition, with a new hash, and recorded this mapping from the old hash to the new hash in what's called a patch:
+The definition's contents appear to have "changed", but actually, what we've done is just introduce a new definition, with a new hash, and recorded this mapping from the old hash to the new hash in what's called a *patch*:
 
 ```ucm
 .cooking> view.patch
@@ -187,9 +187,9 @@ The patch only mentions the one edit we made. But notice that `thanksgivingDesse
 ```
 ### Well-typed patch propagation
 
-What's going on here? After commands like `update`, Unison does what is called "well-typed patch propagation": it visits the definitions in the namespace in "dependency order" (visiting `thanksgivingDessert` before visiting definitions like `thanksgivingDinner` that depend on it), applies the patch to each definition, and then typechecks the result. If the definition typechecks, that becomes the new definition and Unison visits the dependents of that definition, and so on. Once this propagation completes, we are left with a codebase that still typechecks!
+What's going on here? After commands like `update`, Unison does what is called "well-typed patch propagation": it visits the definitions in the namespace in dependency order (visiting `thanksgivingDessert` before visiting definitions like `thanksgivingDinner` that depend on it), applies the patch to each definition, and then typechecks the result. If the definition typechecks, the name is assigned to that new definition and Unison visits its dependents, and so on. Once this propagation completes, we are left with a codebase that still typechecks!
 
-A Unison codebase _always typechecks and is never broken_. This raises a question: what happens if you  make breaking changes to a definition? We will look at that next!
+A Unison codebase _always typechecks and is never broken_. This raises a question: what happens if you make breaking changes to a definition? We will look at that next!
 
 ## Adding new parameters to definitions (the easy way)
 
