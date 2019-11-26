@@ -623,7 +623,7 @@ That was a bit of a silly refactoring, so let's go back in time to before we mad
 
 
 ```
-Notice `thanksgivingDessert is back to having no ability requirements.
+Notice `thanksgivingDessert` is back to having no ability requirements.
 
 Lastly, we're going to look at an example of refactoring a _type_.
 
