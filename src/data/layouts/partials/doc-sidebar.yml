@@ -26,6 +26,14 @@ linkSets:
       - label: Publishing code
         url: /docs/tour/sharing
 
+  - heading: UCM usage topics
+    icon: /media/icon-code.svg
+    links:
+      - label: Refactoring and code updates 
+        url: /docs/refactoring
+      - label: Full command reference
+        url: /docs/commands
+
   - heading: Language Reference
     icon: /media/icon-code.svg
     links:
