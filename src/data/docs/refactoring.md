@@ -19,7 +19,6 @@ If you'd like to follow along, you can fetch the code via these commmands (the f
 .> pull git@github.com:unisonweb/refactoring-example.git:.base .base
 .> pull git@github.com:unisonweb/refactoring-example.git:.cooking .cooking
 ```
-
 The basic data type used in the `cooking` library is just a wrapper around a `Map Ingredient Float`, where the `Float` (a 64-bit floating point value) represents the quantity of the ingredient and `Ingredient` is just a wrapper around `Text`:
 
 ```ucm
@@ -111,7 +110,7 @@ We first note the hashes of `pumpkinPie` and `thanksgivingDessert`:
 .cooking> names pumpkinPie
 
   Term
-  Hash:   #kg14jk5qbol5m6sn7grbokhg35k1i2mk4se09r9au90chiul52577l1l1ejii1sq2nfht2g6d7mfeobl7792s1po63a6d69t0ugq7sg
+  Hash:   #kg14jk5qbo
   Names:  pumpkinPie
 
 ```
@@ -165,7 +164,7 @@ The patch only mentions the one edit we made. But notice that `thanksgivingDesse
 .cooking> names thanksgivingDessert
 
   Term
-  Hash:   #d9ve2qb77ksj8j0in1imalt9edeupgdt871mcj49758a19crigcc9s8ih9aje3hv0lvfnnb0mheitdv95vu7bup0bj3mjnkrqc8kr40
+  Hash:   #d9ve2qb77k
   Names:  thanksgivingDessert
 
 ```
@@ -245,6 +244,10 @@ Notice there's nothing `todo`. The refactoring is complete. We could `merge .coo
 But maybe we really want to be forced to review all the places that used the old `pumpkinPie` and decide there what kind of pie crust to use.
 
 Let's delete that experiment (note: it's still in the history that Unison keeps and can be resurrected at any time):
+
+```ucm
+.cooking> delete.namespace .cooking2
+```
 
 And let's instead directly add another parameter  to `pumpkinPie`:
 
@@ -352,10 +355,8 @@ Rather than having a list of (possibly misleading) compile errors and a broken c
   I recommend working on them in the following order:
 
   1. thanksgivingDessert : Float -> Ingredients
-
-
-
 ```
+
 The `todo` command is telling you the total number of transitive dependents still left to update, and prompting you to visit them in dependency order. So it tells us to look at `thanksgivingDessert` first, and not `thanksgivingDinner`, which depends on `thanksgivingDessert`.
 
 Here, we'll apply a simple fix here, which is to bind the new parameter at the use site:

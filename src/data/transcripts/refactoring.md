@@ -122,7 +122,7 @@ But maybe we really want to be forced to review all the places that used the old
 
 Let's delete that experiment (note: it's still in the history that Unison keeps and can be resurrected at any time):
 
-```ucm:hide
+```ucm
 .cooking> delete.namespace .cooking2
 ```
 
