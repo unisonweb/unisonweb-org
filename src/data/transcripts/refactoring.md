@@ -15,7 +15,7 @@ For more about the theory, [this talk on Unison may be of interest](https://www.
 
 If you'd like to follow along, you can fetch the code via these commmands (the first command which fetches the base library can be omitted if you already have a copy in your codebase):
 
-```ucm:hide
+```ucm
 .> pull git@github.com:unisonweb/refactoring-example.git:.base .base
 .> pull git@github.com:unisonweb/refactoring-example.git:.cooking .cooking
 ```
@@ -31,27 +31,24 @@ Let's browse through the rest of the library and take a look at a few of the ing
 ```ucm
 .cooking> ls
 ```
-
-Notice that `pieCrust` is used in `pumpkinPie`, which is used in `thanksgivingDessert`, which is used in `thanksgivingDinner`:
+Notice below that `pieCrust` is used in `pumpkinPie`, which is used in `thanksgivingDessert`, which is used in `thanksgivingDinner`:
 
 ```ucm
 .cooking> view pieCrust pumpkinPie thanksgivingDessert
 ```
-
 ## The easy case: a type preserving change
 
-First we'll do the easy case and change the implementation of a definition `pumpkinPie` without changing its type. This will create a new definition with a new hash and will automatically create a new definition for its dependents (such as  `thanksgivingDessert`).
+First we'll make a minor change by changing the implementation of a definition `pumpkinPie` without changing its type. This will create a new definition with a new hash and will automatically create updated versions of its dependents (such as  `thanksgivingDessert`).
 
 We first note the hashes of `pumpkinPie` and `thanksgivingDessert`:
 
 ```ucm
 .cooking> names pumpkinPie
-.cooking> names thanksgivingDessert
 ```
 
 Okay, now let's add extra pumpkin spices to the `pumpkinPie`:
 
-```unison
+```unison:hide
 pumpkinPie =
   sum [ amount 1.0 pieCrust
       -- "This one goes to 11"
@@ -68,7 +65,7 @@ Then let's `update`:
 .cooking> view pumpkinPie
 ```
 
-The definitions has "changed", but actually, what we've done is just introduce a new definition, with a new hash, and recorded this mapping from the old hash to the new hash in what's called a patch:
+The definition's contents appear to have "changed", but actually, what we've done is just introduce a new definition, with a new hash, and recorded this mapping from the old hash to the new hash in what's called a *patch*:
 
 ```ucm
 .cooking> view.patch
@@ -82,11 +79,11 @@ The patch only mentions the one edit we made. But notice that `thanksgivingDesse
 
 ### Well-typed patch propagation
 
-What's going on here? After commands like `update`, Unison does what is called "well-typed patch propagation": it visits the definitions in the namespace in "dependency order" (visiting `thanksgivingDessert` before visiting definitions like `thanksgivingDinner` that depend on it), applies the patch to each definition, and then typechecks the result. If the definition typechecks, that becomes the new definition and Unison visits the dependents of that definition, and so on. Once this propagation completes, we are left with a codebase that still typechecks!
+What's going on here? After commands like `update`, Unison does what is called "well-typed patch propagation": it visits the definitions in the namespace in dependency order (visiting `thanksgivingDessert` before visiting definitions like `thanksgivingDinner` that depend on it), applies the patch to each definition, and then typechecks the result. If the definition typechecks, the name is assigned to that new definition and Unison visits its dependents, and so on. Once this propagation completes, we are left with a codebase that still typechecks!
 
-A Unison codebase _always typechecks and is never broken_. This raises a question: what happens if you  make breaking changes to a definition? We will look at that next!
+A Unison codebase _always typechecks and is never broken_. This raises a question: what happens if you make breaking changes to a definition? We will look at that next!
 
-## Adding new parameters to definitions (the easy way)
+## Adding new parameters (the easy way)
 
 Another common refactoring is adding a parameter to a definition. Right now, `pumpkinPie` has a hardcoded `pieCrust`. I feel like there a lot of different pie crust recipes (I fully anticipate adding `extraFlakyPieCrust` and `grahamCrackerPieCrust`), so let's rename that `regularPieCrust` (and notice that `pumpkinPie` picks up the new name):
 
@@ -97,7 +94,7 @@ Another common refactoring is adding a parameter to a definition. Right now, `pu
 
 And why don't we make our `pumpkinPie` configurable! Here's one way to do that with minimal impact. We introduce a new function (`pumpkinPie'`) which takes `pieCrust` as a parameter, then define the original function in terms of this new generic function:
 
-```unison
+```unison:hide
 pumpkinPie' pieCrust =
   sum [ amount 1.0 pieCrust
       , amount 1.0 pumpkinSpices
@@ -108,7 +105,7 @@ pumpkinPie' pieCrust =
 pumpkinPie = pumpkinPie' regularPieCrust
 ```
 
-We'll make this update in a fork of our namespace. Forks are super cheap to make and don't require copying a bunch of code, so create them as often as you like:
+We'll make this update in a fork of our namespace. Forks are super cheap to make and don't require copying any code, so create them as often as you like:
 
 ```ucm
 .> fork .cooking .cooking2
@@ -117,23 +114,21 @@ We'll make this update in a fork of our namespace. Forks are super cheap to make
 .cooking2> todo
 ```
 
-Notice there's nothing `todo`. The refactoring is complete. We could `merge .cooking2 .cooking` (this merges `.cooking2` into `.cooking) if we were happy with this change.
-
-This strategy of adding new parameters to functions is what might be called _locally type preserving_.
+Notice there's nothing `todo`. The refactoring is complete. We could `merge .cooking2 .cooking` (this merges `.cooking2` into `.cooking`) if we were happy with this change.
 
 ## Changing type signatures
 
-But maybe that's not what we want... maybe we really want to be forced to review all the places that used the old `pumpkinPie` and decide there what kind of pie crust to use.
+But maybe we really want to be forced to review all the places that used the old `pumpkinPie` and decide there what kind of pie crust to use.
 
 Let's delete that experiment (note: it's still in the history that Unison keeps and can be resurrected at any time):
 
-```ucm
+```ucm:hide
 .cooking> delete.namespace .cooking2
 ```
 
 And let's instead directly add another parameter  to `pumpkinPie`:
 
-```unison
+```unison:hide
 pumpkinPie pieCrust =
   sum [ amount 1.0 pieCrust
       , amount 1.0 pumpkinSpices
@@ -148,7 +143,7 @@ Now when we `update`, we are told that we have some work still `todo`:
 .cooking> update
 ```
 
-We've created a new definition, but Unison's well-typed propagation can't automatically update `thanksgivingDesert`, since it doesn't know what pie crust to supply to `pumpkinPie`. We call this state a partially completed refactoring. The remaining work on a refactoring shows up after each `update` and also in the `todo` command:
+We've created a new definition, but Unison's well-typed propagation can't automatically update `thanksgivingDessert`, since it doesn't know what pie crust to supply to `pumpkinPie`. We call this state a partially completed refactoring. The remaining work on a refactoring shows up after each `update` and also in the `todo` command:
 
 ```ucm:error
 .cooking> todo
@@ -156,7 +151,7 @@ We've created a new definition, but Unison's well-typed propagation can't automa
 
 ### A partially completed refactoring isn't a broken codebase
 
-When you have a partially completed refactoring, it's no big deal. Your codebase isn't broken, and you can still run all your code, introduce new definitions, whatever:
+When you have a partially completed refactoring, it's no big deal. Your codebase isn't broken, and you can still run all your code, add new code, etc.:
 
 ```unison
 someOtherDefinition = -92
@@ -166,17 +161,17 @@ someOtherDefinition = -92
 
 ### Using the `todo` command
 
-Rather than having a list of (possibly misleading) compile errors and a broken codebase that won't let you write new code or run anything, you get a nice tidy todo list, and a remaining work metric that only goes down (is there anything more demoralizing than when you are slogging through a long list of compile errors, you get it down to a reasonable number, then it starts going _up_ again?):
+Rather than having a list of (possibly misleading) compile errors and a broken codebase that won't let you write new code or run anything, you get a nice tidy todo list, and a remaining work metric that only goes down. (Is there anything more demoralizing than when you are slogging through a long list of compile errors, you get it down to a reasonable number, then it starts going _up_ again?):
 
 ```ucm:error
 .cooking> todo
 ```
 
-The `todo` command is telling you the total number of transitive dependents still left to update, and prompting you to visit them in dependency order. So it tells us to look at `thangsgivingDesert` first, and not `thanksgivingDinner`, which depends on `thanksgivingDesert`.
+The `todo` command is telling you the total number of transitive dependents still left to update, and prompting you to visit them in dependency order. So it tells us to look at `thanksgivingDessert` first, and not `thanksgivingDinner`, which depends on `thanksgivingDessert`.
 
-Here, we'll do something simple, which is that we'll bind this new parameter at the use site:
+Here, we'll apply a simple fix here, which is to bind the new parameter at the use site:
 
-```unison
+```unison:hide
 thanksgivingDessert guestCount =
   piesPerPerson = 1.0 / 6.0
   totalPies = guestCount * piesPerPerson
@@ -190,7 +185,7 @@ Let's now `update`:
 .cooking> update
 ```
 
-Notice there's nothing `todo` after the update. The well-typed propagation finished the rest for us, since we were able to preserve the type of `thanksgivingDessert` and `pumpkinPie` had no other direct dependents. If instead we also changed the type of `thanksgivingDesert` we'd then have to update _its dependents_.
+Notice there's nothing `todo` after the update. The well-typed propagation finished the rest for us, since we were able to preserve the type of `thanksgivingDessert` and `pumpkinPie` had no other direct dependents. If instead we also changed the type of `thanksgivingDessert` we'd then have to update _its dependents_.
 
 Summary: When you reach a "type-preserving frontier" of changes, Unison handles propagating that out the rest of the way.
 

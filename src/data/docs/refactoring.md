@@ -15,6 +15,11 @@ For more about the theory, [this talk on Unison may be of interest](https://www.
 
 If you'd like to follow along, you can fetch the code via these commmands (the first command which fetches the base library can be omitted if you already have a copy in your codebase):
 
+```ucm
+.> pull git@github.com:unisonweb/refactoring-example.git:.base .base
+.> pull git@github.com:unisonweb/refactoring-example.git:.cooking .cooking
+```
+
 The basic data type used in the `cooking` library is just a wrapper around a `Map Ingredient Float`, where the `Float` (a 64-bit floating point value) represents the quantity of the ingredient and `Ingredient` is just a wrapper around `Text`:
 
 ```ucm
@@ -109,12 +114,6 @@ We first note the hashes of `pumpkinPie` and `thanksgivingDessert`:
   Hash:   #kg14jk5qbol5m6sn7grbokhg35k1i2mk4se09r9au90chiul52577l1l1ejii1sq2nfht2g6d7mfeobl7792s1po63a6d69t0ugq7sg
   Names:  pumpkinPie
 
-.cooking> names thanksgivingDessert
-
-  Term
-  Hash:   #ff0jt90qpsk0phao7ghttvo9bvogmsubot4tc1t3l4p23d356gbgo9e31ibs9h7uu5o5hq4i6rbrf1bdoi9lfl13eett9nn9sieo0v8
-  Names:  thanksgivingDessert
-
 ```
 Okay, now let's add extra pumpkin spices to the `pumpkinPie`:
 
@@ -128,21 +127,6 @@ pumpkinPie =
       ]
 ```
 
-```ucm
-
-  I found and typechecked these definitions in scratch.u. If you
-  do an `add` or `update`, here's how your codebase would
-  change:
-
-    ⍟ These new definitions will replace existing ones of the
-      same name and are ok to `update`:
-
-      pumpkinPie : Ingredients
-
-  Now evaluating any watch expressions (lines starting with
-  `>`)... Ctrl+C cancels.
-
-```
 Then let's `update`:
 
 ```ucm
@@ -224,25 +208,6 @@ pumpkinPie' pieCrust =
 pumpkinPie = pumpkinPie' regularPieCrust
 ```
 
-```ucm
-
-  I found and typechecked these definitions in scratch.u. If you
-  do an `add` or `update`, here's how your codebase would
-  change:
-
-    ⍟ These new definitions are ok to `add`:
-
-      pumpkinPie' : Ingredients -> Ingredients
-
-    ⍟ These new definitions will replace existing ones of the
-      same name and are ok to `update`:
-
-      pumpkinPie : Ingredients
-
-  Now evaluating any watch expressions (lines starting with
-  `>`)... Ctrl+C cancels.
-
-```
 We'll make this update in a fork of our namespace. Forks are super cheap to make and don't require copying any code, so create them as often as you like:
 
 ```ucm
@@ -281,43 +246,6 @@ But maybe we really want to be forced to review all the places that used the old
 
 Let's delete that experiment (note: it's still in the history that Unison keeps and can be resurrected at any time):
 
-```ucm
-.cooking> delete.namespace .cooking2
-
-  🆕
-
-  Here's what's changed after the delete:
-
-  - Deletes:
-
-    .cooking2.butter .cooking2.check .cooking2.cinnamon
-    .cooking2.cornSyrup .cooking2.docs.List.foldl .cooking2.egg
-    .cooking2.examples.List.foldl.ex1
-    .cooking2.examples.List.foldl.ex2
-    .cooking2.examples.List.foldr.ex1
-    .cooking2.examples.List.foldr.ex2 .cooking2.flour
-    .cooking2.ginger .cooking2.Ingredient
-    .cooking2.Ingredient.Ingredient .cooking2.Ingredient.name
-    .cooking2.Ingredient.name.modify
-    .cooking2.Ingredient.name.set .cooking2.Ingredients
-    .cooking2.Ingredients.amount .cooking2.Ingredients.elements
-    .cooking2.Ingredients.elements.modify
-    .cooking2.Ingredients.elements.set
-    .cooking2.Ingredients.empty
-    .cooking2.Ingredients.Ingredients .cooking2.Ingredients.one
-    .cooking2.Ingredients.plus .cooking2.Ingredients.sum
-    .cooking2.nutmeg .cooking2.pecanPie .cooking2.pecans
-    .cooking2.pumpkin .cooking2.pumpkinPie .cooking2.pumpkinPie'
-    .cooking2.pumpkinSpices .cooking2.regularPieCrust
-    .cooking2.salt .cooking2.shortening .cooking2.sugar
-    .cooking2.thanksgivingDessert .cooking2.thanksgivingDinner
-    .cooking2.turkey .cooking2.units.cans .cooking2.units.cups
-    .cooking2.units.tbsp .cooking2.units.tsp
-    .cooking2.vanillaExtract .cooking2.water
-
-  Tip: You can always `undo` if this wasn't what you wanted.
-
-```
 And let's instead directly add another parameter  to `pumpkinPie`:
 
 ```unison
@@ -329,21 +257,6 @@ pumpkinPie pieCrust =
       ]
 ```
 
-```ucm
-
-  I found and typechecked these definitions in scratch.u. If you
-  do an `add` or `update`, here's how your codebase would
-  change:
-
-    ⍟ These new definitions will replace existing ones of the
-      same name and are ok to `update`:
-
-      pumpkinPie : Ingredients -> Ingredients
-
-  Now evaluating any watch expressions (lines starting with
-  `>`)... Ctrl+C cancels.
-
-```
 Now when we `update`, we are told that we have some work still `todo`:
 
 ```ucm
@@ -455,21 +368,6 @@ thanksgivingDessert guestCount =
       , amount (totalPies / 2.0) pecanPie ]
 ```
 
-```ucm
-
-  I found and typechecked these definitions in scratch.u. If you
-  do an `add` or `update`, here's how your codebase would
-  change:
-
-    ⍟ These new definitions will replace existing ones of the
-      same name and are ok to `update`:
-
-      thanksgivingDessert : Float -> Ingredients
-
-  Now evaluating any watch expressions (lines starting with
-  `>`)... Ctrl+C cancels.
-
-```
 Let's now `update`:
 
 ```ucm
