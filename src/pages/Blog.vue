@@ -28,6 +28,11 @@
       'un-post-excerpts': PostExcerpts,
       'un-pagination': Pagination,
     },
+    metaInfo: {
+      link: [
+        { rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: '/feed.xml' }
+      ]
+    },
     mixins: [
       pageMetaInfo,
     ],
