@@ -2,7 +2,7 @@
 
 This document lists all the current UCM commands, gives basic usage instructions and links to further reading. Commands are listed alphabetically in this document.
 
-## `add`
+## I want to `undo` a partially completed `add` where some of the definitions fail
 
 This is how you add new definitions to the codebase. It tries to add all definitions from the most recent typechecked file.
 
