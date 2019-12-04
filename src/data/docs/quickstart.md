@@ -19,7 +19,7 @@ When Unison is further along and ready for more general availability we'll just 
 
 ## Step 2: Create your Unison codebase
 
-Create a new directory, `unisoncode` (or any name you choose), then run the `ucm` binary from within that directory. You'll see a note about "No codebase exists here so I'm initializing one..." and a welcome screen.
+Create a new directory, `unisoncode` (or any name you choose), then run the `ucm init` binary from within that directory. You'll see a note about "No codebase exists here so I'm initializing one..." and a welcome screen.
 <script id="asciicast-dvwP7oXFwf0qwQWds1ShFXMP8" src="https://asciinema.org/a/dvwP7oXFwf0qwQWds1ShFXMP8.js" data-speed="1.4" data-cols="65" async></script>
 
 ## Step 3: Fetch and run a distributed mergesort example
