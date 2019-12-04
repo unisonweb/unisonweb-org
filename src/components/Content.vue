@@ -87,6 +87,8 @@
 
 <style lang="scss">
 
+  $iconSize: rem(1);
+
   .un-content {
 
     h1, h2, h3, h4, h5, h6 {
@@ -98,24 +100,16 @@
     }
 
     h2, h3, h4, h5, h6 {
-      display: flex;
-      align-items: flex-start;
 
       > a {
-        // position this link after the text
-        order: 99;
-        flex: 0 0 auto;
-
         // overrides to prevent text from displaying
         color: transparent;
         line-height: 0;
 
-        $iconSize: rem(1);
-
         overflow: hidden;
-        display: block;
+        display: inline-block;
         width: $iconSize;
-        height: (em(0) * line-height(half));
+        height: em(-1);
 
         margin-left: ($iconSize * 1/2);
 
@@ -124,8 +118,6 @@
         &:hover {
           opacity: 1;
         }
-
-        position: relative;
 
         &:before {
           content: '';
@@ -136,7 +128,7 @@
 
           background-image: url('/media/icon-link.svg');
           background-repeat: no-repeat;
-          background-position: center center;
+          background-position: bottom left;
 
           // magic number to prevent display issues
           // with the icon appearing to be "cut off"
