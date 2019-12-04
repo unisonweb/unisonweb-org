@@ -13,6 +13,7 @@
     "gridsome": "^0.6.7",
     "instantsearch.css": "^7.3.1",
     "js-cookie": "^2.2.0",
+    "lodash.debounce": "^4.0.8",
     "lodash.find": "^4.6.0",
     "lodash.flatten": "^4.4.0",
     "lodash.has": "^4.5.2",
