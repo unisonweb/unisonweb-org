@@ -65,6 +65,7 @@ module.exports = {
       path: '**/*.md',
       remark: {
         autolinkHeadings: {
+          behavior: 'append',
           content: {
             type: 'text',
             value: '#'

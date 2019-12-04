@@ -3,6 +3,7 @@
     class="un-doc-sidebar__platform"
     :class="{ 'un-doc-sidebar__platform--show-mobile-bg': isVisible }">
     <div
+      ref="getSidebarHeight"
       class="un-doc-sidebar__stage"
       v-on-clickaway="closeSidebar">
 
