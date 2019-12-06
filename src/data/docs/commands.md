@@ -2,7 +2,7 @@
 
 This document lists all the current UCM commands, gives basic usage instructions and links to further reading. Commands are listed alphabetically in this document.
 
-## I want to `undo` a partially completed `add` where some of the definitions fail
+## `add`
 
 This is how you add new definitions to the codebase. It tries to add all definitions from the most recent typechecked file.
 
@@ -18,7 +18,7 @@ Adds `x` to the root namespace. If we first `cd foo.bar`, then the `add` creates
 
 ### FAQ about the `add` command
 
-> I got an error about "these definitions failed" on `add`
+#### I got an error about "these definitions failed" on `add`
 
 This message happens when some of the definitions couldn't be added to the codebase. UCM shows a table of definitions along with the reason why they didn't succeed, like this:
 
