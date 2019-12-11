@@ -61,5 +61,5 @@
 
 <style lang="scss">
   // intentionally blank
-  // styles are located in `src/assets/styles/codeblock/`
+  // styles are located in `src/assets/styles/common/codeblock/`
 </style>

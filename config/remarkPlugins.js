@@ -25,6 +25,13 @@ const codeExtraOptions = {
         node.frontmatter['show-carets'] === true
       )
 
+      // here, we're using `0` or `1` because this
+      // value will eventually be assigned to a
+      // `data-` attribute. when the value of the
+      // `data-` attribute is retrieved, we pass it
+      // to `parseInt()` for a truthy/falsey value.
+      // this ^ is better than coercing an actual
+      // Boolean value.
       const showCopyButton = (
         has(node.frontmatter, 'show-copy-button') &&
         node.frontmatter['show-copy-button'] === false
@@ -37,9 +44,12 @@ const codeExtraOptions = {
         (showCarets ? ['un-codeblock--show-carets'] : null),
       ]
 
+      const title = node.frontmatter['title'] ? node.frontmatter['title']
+        : node.lang && node.lang.toLowerCase() === 'ucm' ? 'UCM' : 'Code'
+
       $pre.properties = {
         className: flatten(classNames).join(' '),
-        'data-title': node.frontmatter['title'] ? node.frontmatter['title'] : 'Code',
+        'data-title': title,
         'data-show-copy-button': showCopyButton,
       }
 
