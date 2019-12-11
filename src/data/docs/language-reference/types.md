@@ -126,7 +126,7 @@ Unison has the following built-in type constructors.
 * `.base.Request` is the constructor of requests for abilities. A type `Request A T` is the type of values received by ability handlers for the ability `A` where current continuation requires a value of type `T`.
 
 ## User-defined types
-New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-references/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor.
+New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-reference/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor.
 
 __Next:__ [Abilities and ability handlers](/docs/language-reference/abilities)
 
