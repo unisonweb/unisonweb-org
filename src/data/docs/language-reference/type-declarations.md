@@ -5,7 +5,7 @@ description: placeholder
 
 # User-defined data types
 
-A user-defined data type is introduced with the `type` keyword.
+A user-defined data type is introduced with the `type` keyword. (See [Types](/docs/language-reference/types) for an informal description of Unison's type system.)
 
 For example:
 
@@ -15,7 +15,7 @@ type Optional a = None | Some a
 
 The `=` sign splits the definition into a _left-hand side_ and a _right-hand side_, much like term definitions.
 
-The left-hand side is the data type being defined. It gives a name for the data type and declares a new _type constructor_ with that name (here it’s named `Optional`), followed by names for any type arguments (here there is one and it’s called `a`). These names are bound as type variables in the right-hand side. The right-hand side may also refer to the name given to the type in the left-hand side, in which case it is a recursive type declaration. Note that the fully saturated type construction `Optional Nat` is a type, whereas `Optional` by itself is a type constructor, not a type (it requires a type argument in order to construct a type).
+The left-hand side is the data type being defined. It gives a name for the data type and declares a new [_type constructor_](/docs/language-reference/types#type-constructors) with that name (here it’s named `Optional`), followed by names for any type arguments (here there is one and it’s called `a`). These names are bound as type variables in the right-hand side. The right-hand side may also refer to the name given to the type in the left-hand side, in which case it is a recursive type declaration. Note that the fully saturated type construction `Optional Nat` is a type, whereas `Optional` by itself is a type constructor, not a type (it requires a type argument in order to construct a type).
 
 The right-hand side consists of zero or more data constructors separated by `|`. These are _data constructors_ for the type, or ways in which values of the type can be constructed. Each case declares a name for a data constructor (here the data constructors are `None` and `Some`), followed by the **types** of the arguments to the constructor.
 
