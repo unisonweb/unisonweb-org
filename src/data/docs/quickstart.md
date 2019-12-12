@@ -19,7 +19,7 @@ When Unison is further along and ready for more general availability we'll just 
 
 ## Step 2: Create your Unison codebase
 
-Run `ucm init` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. You can always go back to a clean slate by `rm -rf`. Now let's launch the Unison Codebase Manager:
+Run `ucm init` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. Now let's launch the Unison Codebase Manager:
 
 <script id="asciicast-vz5JHl6po4zmJ0rXb9SCITjB1" src="https://asciinema.org/a/vz5JHl6po4zmJ0rXb9SCITjB1.js" async></script>
 
