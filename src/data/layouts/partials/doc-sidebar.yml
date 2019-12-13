@@ -18,6 +18,20 @@ linkSets:
       - label: Refactoring and code updates
         url: /docs/refactoring
 
+  - heading: Usage topics (coming soon)
+    icon: /media/icon-code.svg
+    links:
+      - label: Concurrent work and resolving edit conflicts
+        url: /docs/concurrent-work
+      - label: Pull requests and collaboration
+        url: /docs/pull-requests
+      - label: Testing your code
+        url: /docs/testing
+      - label: First-class documentation with live examples
+        url: /docs/documenting-code
+      - label: Abilities and handlers
+        url: /docs/abilities
+
   - heading: References
     icon: /media/icon-code.svg
     links:
