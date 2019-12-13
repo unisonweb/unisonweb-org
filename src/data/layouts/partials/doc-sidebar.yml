@@ -1,6 +1,6 @@
 linkSets:
 
-  - heading: Start Here
+  - heading: Getting started 
     icon: /media/icon-code.svg
     links:
       - label: Welcome
@@ -9,49 +9,23 @@ linkSets:
         url: /docs/roadmap
       - label: Quickstart
         url: /docs/quickstart
-
-  - heading: A Tour of Unison
-    icon: /media/icon-code.svg
-    links:
-      - label: Introduction
+      - label: A tour of Unison
         url: /docs/tour
-      - label: Hello to the codebase manager
-        url: /docs/tour/hello-ucm
-      - label: Unison's interactive scratch files
-        url: /docs/tour/scratch-files
-      - label: Testing your code
-        url: /docs/tour/testing
-      - label: Making edits to your code
-        url: /docs/tour/updating
-      - label: Publishing code
-        url: /docs/tour/sharing
 
-  - heading: UCM usage topics
+  - heading: Usage topics
     icon: /media/icon-code.svg
     links:
       - label: Refactoring and code updates
         url: /docs/refactoring
-      - label: Full command reference
-        url: /docs/commands
 
-  - heading: Language Reference
+  - heading: References
     icon: /media/icon-code.svg
     links:
-      - label: Introduction
+      - label: Language reference
         url: /docs/language-reference
-      - label: Literal expressions
-        url: /docs/language-reference/literals
-      - label: Term declarations
-        url: /docs/language-reference/term-declarations
-      - label: Type declarations
-        url: /docs/language-reference/type-declarations
-      - label: Expressions
-        url: /docs/language-reference/expressions
-      - label: Hashes
-        url: /docs/language-reference/hashes
-      - label: Types
-        url: /docs/language-reference/types
-      - label: Abilities and handlers
-        url: /docs/language-reference/abilities
-      - label: Name resolution
-        url: /docs/language-reference/name-resolution
+      - label: Full `ucm` command reference
+        url: /docs/commands
+      - label: FAQ
+        url: /docs/faq
+      - label: An annotated bibliography
+        url: /docs/bibliography
