@@ -7,11 +7,10 @@ const collections = [
             id
             title
             path
-            headings (depth: h6) {
+            headings {
               value
               anchor
             }
-            content
           }
         }
       }
@@ -24,14 +23,12 @@ const collections = [
         title: item.title,
         path: item.path,
         headings: item.headings,
-        // content: item.content,
       }
     },
     matchFields: [
       'title',
       'path',
       'headings',
-      // 'content',
     ],
   },
 ]
