@@ -263,8 +263,6 @@ This creates two new hashes, `#ccc.0` and `#ccc.1`. Note that their definitions 
 
 ---
 
-# Roadmap
-
 # General
 
 ## How do I run a program that uses `IO`?
