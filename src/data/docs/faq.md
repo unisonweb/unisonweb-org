@@ -1,8 +1,13 @@
-This is a list of frequently asked questions about Unison, compiled and curated by the community.  The source of this doc is [here](https://github.com/unisonweb/unisonweb-org/tree/master/src/data/docs.faq.md) and contributions are welcome!
+---
+title: Frequently Asked Questions
+description: A list of frequently asked questions about Unison, compiled and curated by the community.
+---
 
-# Build/install
+This is a list of frequently asked questions about Unison, compiled and curated by the community.  The source of this doc is [here](https://github.com/unisonweb/unisonweb-org/tree/master/src/data/faq.md) and contributions are welcome!
 
-## Is there a nix expression for Unison?
+## Build/install
+
+### Is there a nix expression for Unison?
 
 Nix users can launch the Unison Codebase Manager with nix-shell like this:
 
@@ -31,7 +36,7 @@ nix is not officially supported, but there seems to be a substantial overlap bet
 
 - See [here](https://gist.github.com/matthewess/03d833431b5855a3bc212861242bfaca) for instructions on how to install the development environment in which Unison itself is built.
 
-## I get `error while loading shared libraries: libtinfo.so.5`
+### I get `error while loading shared libraries: libtinfo.so.5`
 
 Some people see the following error when they try to run the `ucm` executable for the first time.
 
@@ -49,9 +54,9 @@ sudo apt-get install libtinfo5
 
 (This issue is tracked under [#602](https://github.com/unisonweb/unison/issues/682).)
 
-# Language
+## Language
 
-## Does Unison have Haskell-style type classes?
+### Does Unison have Haskell-style type classes?
 
 No, or at least, not yet.  We're considering our options for how to allow people to express bounded polymorphism.  See [this post](https://www.unisonweb.org/2019/04/04/writeup-of-our-first-unison-meetup#other-questions) for some initial observations.
 
@@ -61,7 +66,7 @@ Currently there are two ideas which have been developed at least to some extent.
 
 Both of these would require a set of supporting language enhancements, for example to supply the `Monoid a` handlers/values automatically.
 
-## How similar is Unison to Haskell?
+### How similar is Unison to Haskell?
 
 As a programming language, Unison can be viewed as a descendant of Haskell, with many similarities including
 - type inference
@@ -74,9 +79,9 @@ Some key differences...
 - Unison supports algebraic effects, which it calls 'abilities', which replace monads and monad transformers for writing effectful code.
 - Unison uses a strict evaluation model, whereas Haskell's model is lazy.
 
-# Distributed computing
+## Distributed computing
 
-## How can Unison's distributed execution be made secure?
+### How can Unison's distributed execution be made secure?
 
 There are actually a bunch of questions here - some are listed below.  Some aspects of this need more research, but overall we believe that it will be possible to build secure systems using Unison.
 
@@ -98,13 +103,13 @@ For code, this is an active topic of research - see issue [#799](https://github.
 
 Certainly yes, and it will be fun to build out our understanding of these patterns as we gain experience with the distributed execution API!
 
-## What does each node need to run to enable distributed execution?
+### What does each node need to run to enable distributed execution?
 
 A Unison runtime environment must be running on each node.  This environment will accept network connections from Unison peers, and run the code syncing and distributed evaluation protocol.
 
 Details on how this environment looks are TBD.
 
-## Where can I learn more about Unison's support for distributed computation?
+### Where can I learn more about Unison's support for distributed computation?
 
 This area of Unison has had plenty of thought and research, but isn't built yet.  But here are some resources to give you a preview.
 
@@ -112,9 +117,9 @@ This area of Unison has had plenty of thought and research, but isn't built yet.
 - The 2015 [blog post](https://github.com/unisonweb/oldblog/blob/master/_posts/2015-06-02-distributed-evaluation.markdown) on distributed evaluation.
 - The current [API sketch](https://github.com/unisonweb/unison/blob/master/docs/distributed-programming-rfc.markdown).
 
-# Codebase model
+## Codebase model
 
-## If definitions never change, how do you fix a bug or refactor an old definition?
+### If definitions never change, how do you fix a bug or refactor an old definition?
 
 > You can also check out Paul's [Scale By The Bay 2019 talk](https://www.youtube.com/watch?v=IvENPX0MAZ4) on the Unison codebase model for an explanation!
 
@@ -134,7 +139,7 @@ Then I decide my code for `foo` is bugged, so I present Unison with a new defini
 
 So, no terms have *changed*, but a new term has been added, and a *name* has changed to point to a different term.
 
-### Propagation
+#### Propagation
 
 So that's all good, but what about the function `bar` which called `foo`?
 
@@ -194,7 +199,7 @@ Notice that even while we were in the transient state as reported by `todo`, our
 
 Another thing: the instruction to 'replace `#1krif5` with `#amrl61`' gets recorded by Unison in a 'patch'.  Suppose you publish `foo` in a library for other people to use.  Then your library users can take advantage of your patch to help them update their own code.
 
-## What happens if I hit a hash collision?
+### What happens if I hit a hash collision?
 
 Your name will go down in history!
 
@@ -202,19 +207,19 @@ Unison uses 512-bit SHA3 digests to hash terms and types. The chance of two Unis
 
 If it did happen, you could simply tweak your term so it gets a different hash. For example, you could wrap it in a call to the identity function (which does nothing).
 
-## Is it inefficient to have the codebase be a purely functional data structure? Won't that involve a lot of copying?
+### Is it inefficient to have the codebase be a purely functional data structure? Won't that involve a lot of copying?
 
 Since the codebase is an immutable data structure where the elements of the structure never change, we can get the same kind of structural sharing we’re used to getting with data structures in functional programming.
 
 In fact, Unison may waste a lot less disk space than traditional languages, since Unison does not have builds and therefore doesn’t generate build artifacts.
 
-## Does the codebase always keep getting bigger over time?  Is there any way to remove code?
+### Does the codebase always keep getting bigger over time?  Is there any way to remove code?
 
 The codebase stores its complete history - the same as git does.  That gives you a complete view of the operations that brought the codebase to its current state.  It also means that you can refer to a given definition in the codebase, by hash, and be sure that that reference will never become undefined.
 
 In future we may introduce a 'prune' operation, to allow you to remove definitions which have no inward references (from within the codebase).
 
-## How do I share my code?
+### How do I share my code?
 
 You use the Unison Codebase Manager's `push` command, to write it to a git repository - for example, one hosted on GitHub.
 
@@ -222,7 +227,7 @@ Currently git is the only supported VCS protocol, but it would be perfectly feas
 
 (There's also always the option of zipping up your `.unison` directory!  Its contents are free-standing and portable.)
 
-## How does hashing work for mutually recursive definitions?
+### How does hashing work for mutually recursive definitions?
 
 We treat a set of mutually recursive definitions as a single “cycle” for hashing purposes.
 
@@ -261,15 +266,13 @@ We then hash this structure. Let’s say that hash is `#ccc`. Each definition ge
 
 This creates two new hashes, `#ccc.0` and `#ccc.1`. Note that their definitions don’t refer to each other by hash, but by position in the overall cycle.
 
----
+## General
 
-# General
-
-## How do I run a program that uses `IO`?
+### How do I run a program that uses `IO`?
 
 In `ucm`, you can type `run myProgram`, where `myProgram` is some term of type `'{IO} ()`.
 
-## Does Unison have IDE support? Editor support? Language Server Protocol (LSP) support?
+### Does Unison have IDE support? Editor support? Language Server Protocol (LSP) support?
 
 We have editor support for the Unison syntax in Vim, Atom, and VS Code - see https://www.unisonweb.org/docs/editor-setup.
 
@@ -281,11 +284,11 @@ Since the Unison codebase is a structured object containing full type informatio
 
 A previous incarnation of the Unison project actually started with a structure editor, meaning that the 'input some freeform text' stage is bypassed entirely.  This is a direction we hope to come back to in future.
 
-## Does Unison compile to LLVM?
+### Does Unison compile to LLVM?
 
 Not yet!  We have done some exploratory work on this in the past, and expect to come back to it.  For the moment, we have a nice, clean, but unoptimized interpreter.  We definitely want to be able to compile Unison to native binaries in future.
 
-## Are you looking for help with developing Unison?
+### Are you looking for help with developing Unison?
 
 Yes!  Please come and get involved 😊
 
@@ -299,3 +302,4 @@ You can dip your toes by finding small ways to contribute a little piece:
 Once you've had your first PR merged and gotten to know how we work, have a think whether you want to take on a bigger project!  There's lots of cool stuff to do.  Get in touch with Paul Chiusano via the slack and give him an idea of your areas of interest and level of experience.  If you have your own suggestions for what you could work on then let him know!
 
 Also think about any Unison libraries you could write - that's a way to contribute which requires very little coordination with the compiler team, and can have a big impact on the usability of the overall Unison ecosystem.  Let us know in the slack what you're working on 😎
+
