@@ -41,6 +41,6 @@ Here's what these reasons mean:
 * __blocked:__ This definition couldn't be added because it dependended on another definition in the file that had a failed status.
 * __extra dependency:__ This definition was added because it was a dependency of a definition explicitly selected.
 
-> I want to `undo` a partially completed `add` where some of the definitions failed
+#### I want to `undo` a partially completed `add` where some of the definitions failed
 
 Just do [`undo`](#undo)!
