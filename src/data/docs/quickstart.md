@@ -19,8 +19,9 @@ When Unison is further along and ready for more general availability we'll just 
 
 ## Step 2: Create your Unison codebase
 
-Create a new directory, `unisoncode` (or any name you choose), then run the `ucm init` binary from within that directory. You'll see a note about "No codebase exists here so I'm initializing one..." and a welcome screen.
-<script id="asciicast-dvwP7oXFwf0qwQWds1ShFXMP8" src="https://asciinema.org/a/dvwP7oXFwf0qwQWds1ShFXMP8.js" data-speed="1.4" data-cols="65" async></script>
+Run `ucm init` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. Now let's launch the Unison Codebase Manager:
+
+<script id="asciicast-vz5JHl6po4zmJ0rXb9SCITjB1" src="https://asciinema.org/a/vz5JHl6po4zmJ0rXb9SCITjB1.js" async></script>
 
 ## Step 3: Fetch and run a distributed mergesort example
 

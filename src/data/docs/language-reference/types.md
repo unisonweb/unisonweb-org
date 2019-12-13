@@ -4,7 +4,7 @@ description: placeholder
 ---
 
 # Unison types
-This section describes informally the structure of types in Unison.
+This section describes informally the structure of types in Unison. See also the section titled [User-defined types](/docs/language-reference/type-declarations) for detailed information on how to define new data types.
 
 Formally, Unison’s type system is an implementation of the system described by Joshua Dunfield and Neelakantan R. Krishnaswami in their 2013 paper [Complete and Easy Bidirectional Typechecking for Higher-Rank Polymorphism](https://arxiv.org/abs/1306.6032).
 
@@ -124,6 +124,9 @@ Unison has the following built-in type constructors.
 *  `base.Tuple` is the constructor of tuple types. See [tuple types](#tuple-types) for details on tuples.
 * `.base.List` is the constructor of list types. A type `List T` is the type of arbitrary-length sequences of values of type `T`. The type `[T]` is an alias for `List T`.
 * `.base.Request` is the constructor of requests for abilities. A type `Request A T` is the type of values received by ability handlers for the ability `A` where current continuation requires a value of type `T`.
+
+## User-defined types
+New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-reference/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor.
 
 __Next:__ [Abilities and ability handlers](/docs/language-reference/abilities)
 
