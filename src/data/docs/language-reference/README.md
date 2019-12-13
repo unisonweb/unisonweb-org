@@ -3,6 +3,8 @@ title: Unison language reference
 description: An informal reference for the Unison language
 ---
 
+# Unison language reference
+
 ## Introduction
 
 This document is an informal reference for the Unison language meant as an aid for Unison programmers as well as authors of implementations of the language. This isn't meant to be a tutorial or introductory guide to the language; it's more like a dry and unexciting tome you consult when you have questions about some aspect of the language. 🧐
