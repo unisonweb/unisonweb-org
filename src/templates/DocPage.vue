@@ -109,7 +109,7 @@
       path
       title
       content
-      headings (depth: h5) {
+      headings (depth: h2) {
         value
         anchor
       }

@@ -7,7 +7,7 @@ const collections = [
             id
             title
             path
-            headings (depth: h2) {
+            headings (depth: h6) {
               value
               anchor
             }
