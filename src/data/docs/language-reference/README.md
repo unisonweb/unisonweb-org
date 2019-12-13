@@ -3,6 +3,8 @@ title: Unison language reference
 description: An informal reference for the Unison language
 ---
 
+# Unison language reference
+
 ## Introduction
 
 This document is an informal reference for the Unison language meant as an aid for Unison programmers as well as authors of implementations of the language. This isn't meant to be a tutorial or introductory guide to the language; it's more like a dry and unexciting tome you consult when you have questions about some aspect of the language. 🧐
@@ -162,7 +164,7 @@ The general form of a type declaration is as follows:
 
 The optional `unique` keyword introduces a [unique type](#unique-types), explained in the next section.
 
-### Unique types <a id="unique-type"/>
+### Unique types
 
 A type declaration gives a name to a type, but Unison does not uniquely identify a type by its name. Rather, the [hash](/docs/language-reference/hashes) of a type's definition identifies the type. The hash is based on the _structure_ of the type definition, with all identifiers removed.
 
@@ -196,7 +198,7 @@ unique type Direction = North | South | East | West
 
 When compiling these declarations, Unison will generate a [universally unique identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) for the type and use that identifier when generating the hash for the type. As a result, the type gets a hash that is universally unique.
 
-### Record types <a id="record-types"/>
+### Record types
 
 In the type declarations discussed above, the arguments to each data constructor are nameless.  For example:
 
@@ -246,9 +248,9 @@ ability A p_1 p_2 … p_n where
 
 This declares an _ability type constructor_ `A` with type parameters `p_1` through `p_n`, and _request constructors_ `Request_1` through `Request_n`.
 
-See [Abilities and Ability Handlers](/docs/language-reference#abilities) for more on user-defined abilities.
+See [Abilities and Ability Handlers](#abilities) for more on user-defined abilities.
 
-## Unison expressions <a id="expressions"/>
+## Expressions
 This section describes the syntax and informal semantics of Unison expressions.
 
 Unison's evaluation strategy for expressions is [Applicative Order Call-by-Value](https://en.wikipedia.org/wiki/Evaluation_strategy#Applicative_order). See [Function application](/docs/language-reference/expressions/#function-application) for details.
@@ -262,7 +264,7 @@ See the sections on:
 * [Literals](#literals), for example: `1`, `"hello"`, `[1,2,3]`.
 * [Comments](#comments), for example `-- this is a comment`.
 
-### Identifiers <a id="identifiers"></a>
+### Identifiers
 
 ---
 Unison identifiers come in two flavors:
@@ -270,10 +272,10 @@ Unison identifiers come in two flavors:
 1. _Regular identifiers_ start with an alphabetic unicode character, emoji (which is any unicode character between 1F400 and 1FAFF inclusive), or underscore (`_`), followed by any number of alphanumeric characters, emoji, or the characters `_`, `!`, or `'`. For example, `foo`, `_bar4`, `qux'`, and `set!` are valid regular identifiers.
 2. _Operators_ consist entirely of the characters `!$%^&*-=+<>.~\\/|:`. For example, `+`, `*`, `<>`, and `>>=` are valid operators.
 
-#### Namespace-qualified identifiers <a id="namespace-qualified-identifiers"></a>
+#### Namespace-qualified identifiers
 The above describes _unqualified_ identifiers. An identifier can also be _qualified_. A qualified identifier consists of a _qualifier_ or _namespace_, followed by a `.`, followed by either a regular identifier or an operator. The qualifier is one or more regular identifiers separated by `.`. For example `Foo.Bar.baz` is a qualified identifier where `Foo.Bar` is the qualifier.
 
-#### Absolutely qualified identifiers <a id="absolutely-qualified-identifiers"></a>
+#### Absolutely qualified identifiers
 Namespace-qualified identifiers described above are relative to a “current” namespace, which the programmer can set (and defaults to the root of the global namespace). To ignore the current namespace, an identifier can have an _absolute qualifier_. An absolutely qualified name begins with a `.`. For example, the name `.base.List` always refers to the name `.base.List`, regardless of the current namespace, whereas the name `base.List` will refer to `foo.base.List` if the current namespace is `foo`.
 
 Note that [operator identifiers](#identifiers) may contain the character `.`. In order for this to not create ambiguity, the rule is as follows:
@@ -297,7 +299,7 @@ During typechecking, Unison substitutes free variables in an expression by looki
 
 A name in the environment can refer to either terms or types, or both (a type name can never be confused with a term name). 
 
-#### Suffix-based name resolution <a id="suffix-based-name-resolution"></a>
+#### Suffix-based name resolution
 
 If the list of _segments_ of a name (`base.List.map` has the segments `[base,List,map]`)  is a suffix of exactly one fully qualified name in the environment, Unison substitutes that name in the expression with a reference to the definition. For example, the fully qualified name `.base.List.map` could be referenced via `base.List.map`, `List.map` as long as no other definitions end in `base.List.map` or `List.map`. This reduces the number of [imports](#use) needed and cuts down on needing to remember the fully qualified names for definitions. ("Was it `base.List.map` or `util.List.map`?")
 
@@ -305,16 +307,16 @@ If the list of _segments_ of a name (`base.List.map` has the segments `[base,Lis
 
 If a free term variable in the program cannot be found in the environment and is not the name of another term in scope in the program itself, or if an free variable matches more than one name (it’s ambiguous), Unison tries _type-directed name resolution_.
 
-#### Type-directed name resolution <a id="tdnr"></a>
+#### Type-directed name resolution
 
 During typechecking, if Unison encounters a free term variable that is not a term name in the environment, Unison attempts _type-directed name resolution_, which:
 
 1. Finds term definitions in the environment whose _unqualified_ name is the same as the free variable.
 2. If exactly one of those terms has a type that conforms to the expected type of the variable (the type system has always inferred this type already at this point), perform that substitution and resume typechecking.
 
-If name resolution is unable to find the definition of a name, or is unable to disambiguate an ambiguous name, Unison reports an error.
+If name resolution is unable to find the definition of a name, or is unable to disambiguate an ambiguous name, Unison reports an error.<a id="blocks"></a>
 
-### Blocks and statements <a id="blocks"></a>
+### Blocks and statements
 
 A block is an expression that has the general form:
 
@@ -391,7 +393,7 @@ Block keywords bind more tightly than [delayed computations](#delayed-computatio
 
 Blocks eagerly consume expressions, so `if b then p else q + r` is the same as `if b then p else (q + r)`.
 
-### Literals <a id="literals"></a>
+### Literals
 
 A literal expression is a basic form of Unison expression. Unison has the following types of literals:
 
@@ -404,9 +406,9 @@ A literal expression is a basic form of Unison expression. Unison has the follow
 * A _hash literal_ begins with the character `#`. See the section **Hashes** for details on the lexical form of hash literals. A hash literal is a reference to a term or type. The type or term that it references must have a definition whose hash digest matches the hash in the literal. The type of a hash literal is the same as the type of its referent. `#a0v829` is an example of a hash literal.
 * A _literal list_ has the general form `[v1, v2, ... vn]` where `v1` through `vn` are expressions. A literal list may be empty. For example, `[]`, `[x]`, and `[1,2,3]` are list literals. The expressions that form the elements of the list all must have the same type. If that type is `T`, then the type of the list literal is `.base.List T` or `[T]`.
 * A _function literal_ or _lambda_ has the form `p1 p2 ... pn -> e`, where `p1` through `pn` are [regular identifiers](/docs/language-reference/identifiers) and `e` is a Unison expression (the _body_ of the lambda). The variables `p1` through `pn` are local variables in `e`, and they are bound to any values passed as arguments to the function when it’s called (see the section [Function Application](/docs/language-reference/expressions/#function-application) for details on call semantics). For example `x -> x + 2` is a function literal.
-* A _tuple literal_ has the form `(v1,v2, ..., vn)` where `v1` through `vn` are expressions. A value `(a,b)` has type `(A,B)` if `a` has type `A` and `b` has type `B`. The expression `(a)` is the same as the expression `a`. The nullary tuple `()` (pronounced “unit”) is of the trivial type `()`. See [tuple types](/docs/language-reference/types/#tuple-types) for details on these types and more ways of constructing tuples.
+* A _tuple literal_ has the form `(v1,v2, ..., vn)` where `v1` through `vn` are expressions. A value `(a,b)` has type `(A,B)` if `a` has type `A` and `b` has type `B`. The expression `(a)` is the same as the expression `a`. The nullary tuple `()` (pronounced “unit”) is of the trivial type `()`. See [tuple types](#tuple-types) for details on these types and more ways of constructing tuples.
 
-#### Documentation literals <a id="documentation"></a>
+#### Documentation literals
 
 Documentation blocks have type `Doc` (documentation is a first-class value in the language).`[:` starts a documentation block and `:]` finishes it. For example:
 
@@ -454,7 +456,7 @@ Text literals can include the following escape sequences:
 * `\'` = literal `'` character
 * `\"` = literal `"` character
 
-### Comments <a id="comments"></a>
+### Comments
 
 A line comment starts with `--` and is followed by any sequence of characters. A line that contains a comment can’t contain anything other than a comment and whitespace. Line comments are currently ignored by Unison.
 
@@ -462,7 +464,7 @@ A line starting with `---` and containing no other characters is a _fold_. Any t
 
 Unison does not currently support block comments. A comment can span multiple lines by adding `--` to the front of each line of the comment.
 
-### Type annotations <a id="type-annotations"></a>
+### Type annotations
 
 A type annotation has the form `e:T` where `e` is an expression and `T` is a type. This tells Unison that `e` should be of type `T` (or a subtype of type `T`), and Unison will check whether this is true. It's a type error for the actual type of `e` to be anything other than a type that conforms to `T`.
 
@@ -470,7 +472,7 @@ A type annotation has the form `e:T` where `e` is an expression and `T` is a typ
 
 Any expression can appear in parentheses, and an expression `(e)` is the same as the expression `e`. Parentheses can be used to delimit where an expression begins and ends. For example `(f : P -> Q) y` is an application of the function `f` of type `P -> Q` to the argument `y`. The parentheses are needed to tell Unison that `y` is an argument to `f`, not a part of the type annotation expression.
 
-### Function application <a id="function-application"></a>
+### Function application
 
 A function application `f a1 a2 an` applies the function `f` to the arguments `a1` through `an`.
 
@@ -494,10 +496,12 @@ Prefix function application:
 * Binds less tightly than keywords that introduce [blocks](/docs/language-reference/blocks). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`
 * Binds less tightly than `'` and `!` (see [delayed computations](#delayed-computations)), so `'f x y` is the same as `(_ -> f) x y` and `!f x y` is the same as `f () x y`.
 
-### Boolean expressions <a id="boolean-expressions"></a>
+### Boolean expressions
+
 A Boolean expression has type `Boolean` which has two values, `true` and `false`.
 
 #### Conditional expressions
+
 A _conditional expression_ has the form `if c then t else f`, where `c` is an expression of type `Boolean`, and `t` and `f` are expressions of any type, but `t` and `f` must have the same type.
 
 Evaluation of conditional expressions is non-strict. The evaluation semantics of `if c then t else f` are:
@@ -525,7 +529,7 @@ A _Boolean disjunction expression_ is a `Boolean` expression of the form `a || b
 
 The evaluation semantics of `a || b` are equivalent to `if a then true else b`.
 
-### Delayed computations <a id="delayed-computations"></a>
+### Delayed computations
 
 An expression can appear _delayed_ as `'e`, which is the same as `_ -> e`. If `e` has type `T`, then `'e` has type `forall a. a -> T`.
 
@@ -560,7 +564,8 @@ Additional `'` and `!` combine in the obvious way:
 
 You can of course use parentheses to precisely control how `'` and `!` get applied.
 
-## Hashes <a id="hashes"></a>
+## Hashes
+
 A _hash_ in Unison is a 512-bit SHA3 digest of a term or a type's internal structure, excluding all names. The textual representation of a hash is its [base32Hex](https://github.com/multiformats/multibase#multibase-table-v100-rc-semver) Unicode encoding.
 
 Unison attributes a hash to every term and type declaration, and the hash may be used to unambiguously refer to that term or type in all contexts. As far as Unison is concerned, the hash of a term or type is its _true name_.
@@ -576,15 +581,16 @@ A term, type, data constructor, or ability constructor may be unambiguously refe
 * A _built-in reference_ to a Unison built-in term or type `n` has a hash of the form `##n`. `##Nat` is an example of a built-in reference.
 
 ### Short hashes
+
 A hash literal may use a prefix of the base32Hex encoded SHA3 digest instead of the whole thing. For example the programmer may use a short hash like `#r1mtr0` instead of the much longer 104-character representation of the full 512-bit hash. If the short hash is long enough to be unambiguous given the [environment](/docs/language-reference/name-resolution), Unison will substitute the full hash at compile time. When rendering code as text, Unison may calculate the minimum disambiguating hash length before rendering a hash.
-## Unison types <a id="types"></a>
+
+## Types
+
 This section describes informally the structure of types in Unison. See also the section titled [User-defined types](#type-declarations) for detailed information on how to define new data types.
 
 Formally, Unison’s type system is an implementation of the system described by Joshua Dunfield and Neelakantan R. Krishnaswami in their 2013 paper [Complete and Easy Bidirectional Typechecking for Higher-Rank Polymorphism](https://arxiv.org/abs/1306.6032).
 
-Unison extends that type system with, [pattern matching](/docs/language-reference/pattern-matching), [scoped type variables](#scoped-type-variables), _ability types_ (also known as _algebraic effects_). See the section titled [Abilities and Ability Handlers](/docs/language-reference/abilities) for details on ability types.
-
-### Types in Unison
+Unison extends that type system with, [pattern matching](/docs/language-reference/pattern-matching), [scoped type variables](#scoped-type-variables), _ability types_ (also known as _algebraic effects_). See the section titled [Abilities and Ability Handlers](#abilities) for details on ability types.
 
 Unison attributes a type to every valid expression. For example:
 
@@ -600,14 +606,16 @@ A full treatise on types is beyond the scope of this document. In short, types h
 
 * `[1,2,3]` is well typed, since lists require all elements to be of the same type.
 * `42 + "hello"` is not well typed, since the type of `+` disallows adding numbers and text together.
-* `printLine "Hello, World!"` is well typed in some contexts and not others. It's a type error for instance to use I/O functions where an `IO` [ability](/docs/language-reference/abilities) is not provided.
+* `printLine "Hello, World!"` is well typed in some contexts and not others. It's a type error for instance to use I/O functions where an `IO` [ability](#abilities) is not provided.
 
 Types are of the following general forms.
 
 ### Type variables
+
 Type variables are [regular identifiers](#identifiers) beginning with a lowercase letter. For example `a`, `x0`, and `foo` are valid type variables.
 
 ### Polymorphic types
+
 A _universally quantified_ or _polymorphic_ type has the form `forall v1 v2 vn. t`, where `t` is a type. The type `t` may involve the variables `v1` through `vn`.
 
 The symbol `∀` is an alias for `forall`.
@@ -618,7 +626,8 @@ A polymorphic type may be _instantiated_ at any given type. For example, the emp
 
 Likewise the identity function `(x -> x)`, which simply returns its argument, has a polymorphic type `forall t. t -> t`. It has type `t -> t` for all choices of `t`.
 
-### Scoped type variables <a id="scoped-type-variables"></a>
+### Scoped type variables
+
 Type variables introduced by a type signature for a term remain in scope throughout the definition of that term.
 
 For example in the following snippet, the type annotation `temp:x` is telling Unison that `temp` has the type `x` which is bound in the type signature, so `temp` and `a` have the same type.
@@ -646,10 +655,12 @@ ex2 a b =
 
 Note that here the type variable `x` in the type of `id` gets instantiated to two different types. First `id 42` instantiates it to `Nat`, then `id a`, instantiates it to the outer scope's type `x`.
 
-### Type constructors <a id="type-constructors"></a>
+### Type constructors
+
 Just as values are built using data constructors, types are built from _type constructors_. Nullary type constructors like `Nat`, `Int`, `Float` are already types, but other type constructors like `List` and `->` (see [built-in type constructors](#built-in-type-constructors)) take type parameters in order to yield types. `List` is a unary type constructor, so it takes one type (the type of the list elements), and `->` is a binary type constructor. `List Nat` is a type and `Nat -> Int` is a type.
 
-### Kinds of Types <a id="kinds"></a>
+### Kinds of Types
+
 Types are to values as _kinds_ are to type constructors. Unison attributes a kind to every type constructor, which is determined by its number of type parameters and the kinds of those type parameters.
 
 A type must be well kinded, just like an expression must be well typed, and for the same reason. However, there is currently no syntax for kinds and they do not appear in Unison programs (this will certainly change in a future version of Unison).
@@ -661,13 +672,16 @@ Unison’s kinds have the following forms:
 
 For example `List`, a unary type constructor, has kind `Type -> Type` as it takes a type and yields a type. A binary type constructor like `->` has kind `Type -> Type -> Type`, as it takes two types (it actually takes a type and yields a partially applied unary type constructor that takes the other type). A type constructor of kind `(Type -> Type) -> Type` is a _higher-order_ type constructor (it takes a unary type constructor and yields a type).
 
-### Type application <a id="type-application"></a>
+### Type application
+
 A type constructor is applied to a type or another type constructor, depending on its kind, similarly to how functions are applied to arguments at the term level. `C T` applies the type constructor `C` to the type `T`. Type application associates to the left, so the type `A B C` is the same as the type `(A B) C`.
 
-### Function types <a id="function-types"></a>
+### Function types
+
 The type `X -> Y` is a type for functions that take arguments of type `X` and yield results of type `Y`. Application of the binary type constructor `->` associates to the right, so the type `X -> Y -> Z` is the same as the type `X -> (Y -> Z)`.
 
-### Tuple types <a id="tuple-types"></a>
+### Tuple types
+
 The type `(A,B)` is a type for binary tuples (pairs) of values, one of type `A` and another of type `B`.  The type `(A,B,C)` is a triple, and so on.
 
 The type `(A)` is the same as the type `A` and is not considered a tuple.
@@ -678,7 +692,8 @@ In the standard Unison syntax, tuples of arity 2 and higher are actually of a ty
 
 Tuples are either constructed with the syntactic shorthand `(a,b)` (see [tuple literals](#literals)) or with the built-in `Tuple.Cons` data constructor: `Tuple.Cons a (Tuple.Cons b ())`.
 
-### Built-in types <a id="builtin-types"></a>
+### Built-in types
+
 Unison provides the following built-in types:
 
 * `.base.Nat` is the type of 64-bit natural numbers, also known as unsigned integers. They range from 0 to 18,446,744,073,709,551,615.
@@ -700,10 +715,11 @@ Unison has the following built-in type constructors.
 * `.base.Request` is the constructor of requests for abilities. A type `Request A T` is the type of values received by ability handlers for the ability `A` where current continuation requires a value of type `T`.
 
 ### User-defined types
-New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-reference/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor.
+New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-reference/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor. 
 
+<a id="abilities"></a>
+## Abilities and ability handlers
 
-## Abilities and ability handlers <a id="abilities"></a>
 Unison provides a system of _abilities_ and _ability handlers_ as a means of modeling computational effects in a purely functional language.
 
 Unison is a purely functional language, so no expressions are allowed to have _side effects_, meaning they are evaluated to a result and nothing else. But we still need to be able to write programs that have _effects_, for example writing to disk, communicating over a network, generating randomness, looking at the clock, and so on. Ability types are Unison's way of allowing an expression to request effects it would like to have. Handlers then interpret those requests, often by translating them in turn to a computation that uses the built-in `IO` ability. Unison has a built-in handler for the `IO` ability which cannot be invoked in Unison programs (it can only be invoked by the Unison runtime). This allows Unison to provide I/O effects in a purely functional setting.
@@ -846,4 +862,4 @@ use namespace name_1 name_2 .. name_n
 
 Where `namespace` is the namespace from which we want to use names unqualified, and `name_1` through `name_n` are the names we want to use. If no names are given in the `use` clause, Unison allows all the names from the namespace to be used unqualified. There's no performance penalty for this, as `use` clauses are purely a syntactic convenience. When rendering code as text, Unison will insert precise `use` clauses that mention exactly the names it uses, even if the programmer omitted the list of names.
 
-See the section on [identifiers](/docs/language-reference/identifiers) for more on namespaces as well as qualified and unqualified names.
+See the section on [identifiers](#identifiers) for more on namespaces as well as qualified and unqualified names.

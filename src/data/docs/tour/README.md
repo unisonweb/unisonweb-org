@@ -3,6 +3,8 @@ title: A tour of Unison
 description: A tour of Unison and its codebase management tool
 ---
 
+# A tour of Unison
+
 ## Introduction
 
 This document introduces "the big idea" behind Unison and walks through the basics of using the Unison codebase manager to develop and publish your first Unison library. We will introduce bits and pieces of the core Unison language and its syntax as we go. The [Unison language reference][langref] is a more in-depth resource on this if you have questions or want to learn more.
