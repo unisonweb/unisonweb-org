@@ -511,7 +511,7 @@ Unison supports [proper tail calls](https://en.wikipedia.org/wiki/Tail_call) so 
 Prefix function application:
 
 * Binds more tightly than infix operators. So `f x + g y` is the same as `(f x) + (g y)`.
-* Binds less tightly than keywords that introduce [blocks](/docs/language-reference/blocks). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`
+* Binds less tightly than keywords that introduce [blocks](#blocks). So `f let x` is the same as `f (let x)` and `f if b then p else q` is the same as `f (if b then p else q)`
 * Binds less tightly than `'` and `!` (see [delayed computations](#delayed-computations)), so `'f x y` is the same as `(_ -> f) x y` and `!f x y` is the same as `f () x y`.
 
 ### Boolean expressions
@@ -599,7 +599,7 @@ case e of
   pattern_n -> block_n
 ```
 
-Where `e` is an expression, called the _scrutinee_ of the case expression, and each _case_ has a [pattern to match against the value of the scrutinee](#pattern-matching) and a [block](/docs/language-reference/blocks) to evaluate in case it matches.
+Where `e` is an expression, called the _scrutinee_ of the case expression, and each _case_ has a [pattern to match against the value of the scrutinee](#blank-patterns) and a [block](#blocks) to evaluate in case it matches.
 
 The evaluation semantics of case expressions are as follows:
 
