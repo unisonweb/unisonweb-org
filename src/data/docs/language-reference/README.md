@@ -1,6 +1,7 @@
 ---
 title: Unison language reference
 description: An informal reference for the Unison language
+
 ---
 
 # Unison language reference
@@ -12,6 +13,7 @@ This document is an informal reference for the Unison language meant as an aid f
 This language reference, like the language it describes, is a work in progress and will be improved over time ([GitHub link](https://github.com/unisonweb/unisonweb-org/blob/master/src/data/docs/language-reference/README.md)). Contributions and corrections are welcome!
 
 ### A note on syntax
+
 Unison is a language in which _programs are not text_. That is, the source of truth for a program is not its textual representation as source code, but its structured representation as an abstract syntax tree.
 
 This document describes Unison in terms of its default (and currently, only) textual rendering into source code.
@@ -27,6 +29,7 @@ A top-level declaration can appear at the _top level_ or outermost scope of a Un
 [term]: /docs/language-reference#term-declarations
 [type]: /docs/language-reference#type-declarations
 [use]:  /docs/language-reference#use
+
 ## Literals
 
 A literal expression is a basic form of Unison expression. Unison has the following types of literals:
@@ -57,6 +60,7 @@ Text literals can include the following escape sequences:
 * `\\` = literal `\` character
 * `\'` = literal `'` character
 * `\"` = literal `"` character
+
 ## Term declarations
 
 A Unison term declaration (or "term binding") consists of an optional [type signature](#type-signatures), and a [term definition](#term-definition). For example:
@@ -244,6 +248,7 @@ ability A p_1 p_2 … p_n where
   Request_1 : Type_1
   Request_2 : Type_2
   Request_n : Type_n
+
 ```
 
 This declares an _ability type constructor_ `A` with type parameters `p_1` through `p_n`, and _request constructors_ `Request_1` through `Request_n`.
@@ -251,6 +256,7 @@ This declares an _ability type constructor_ `A` with type parameters `p_1` throu
 See [Abilities and Ability Handlers](#abilities) for more on user-defined abilities.
 
 ## Expressions
+
 This section describes the syntax and informal semantics of Unison expressions.
 
 Unison's evaluation strategy for expressions is [Applicative Order Call-by-Value](https://en.wikipedia.org/wiki/Evaluation_strategy#Applicative_order). See [Function application](/docs/language-reference/expressions/#function-application) for details.
@@ -268,15 +274,18 @@ See the sections on:
 ### Identifiers
 
 ---
+
 Unison identifiers come in two flavors:
 
 1. _Regular identifiers_ start with an alphabetic unicode character, emoji (which is any unicode character between 1F400 and 1FAFF inclusive), or underscore (`_`), followed by any number of alphanumeric characters, emoji, or the characters `_`, `!`, or `'`. For example, `foo`, `_bar4`, `qux'`, and `set!` are valid regular identifiers.
 2. _Operators_ consist entirely of the characters `!$%^&*-=+<>.~\\/|:`. For example, `+`, `*`, `<>`, and `>>=` are valid operators.
 
 #### Namespace-qualified identifiers
+
 The above describes _unqualified_ identifiers. An identifier can also be _qualified_. A qualified identifier consists of a _qualifier_ or _namespace_, followed by a `.`, followed by either a regular identifier or an operator. The qualifier is one or more regular identifiers separated by `.`. For example `Foo.Bar.baz` is a qualified identifier where `Foo.Bar` is the qualifier.
 
 #### Absolutely qualified identifiers
+
 Namespace-qualified identifiers described above are relative to a “current” namespace, which the programmer can set (and defaults to the root of the global namespace). To ignore the current namespace, an identifier can have an _absolute qualifier_. An absolutely qualified name begins with a `.`. For example, the name `.base.List` always refers to the name `.base.List`, regardless of the current namespace, whereas the name `base.List` will refer to `foo.base.List` if the current namespace is `foo`.
 
 Note that [operator identifiers](#identifiers) may contain the character `.`. In order for this to not create ambiguity, the rule is as follows:
@@ -289,9 +298,11 @@ Note that [operator identifiers](#identifiers) may contain the character `.`. In
 if `.` is followed by whitespace or another operator character, the `.` is treated like an operator character. If it's followed by a [regular identifier](#identifiers) character, it's treated as a namespace separator.
 
 #### Hash-qualified identifiers
+
 Any identifier, including a namespace-qualified one, can appear _hash-qualified_. A hash-qualified identifier has the form `x#h` where `x` is an identifier and `#h` is a [hash literal](#hashes). The hash disambiguates names that may refer to more than one thing.
 
 #### Reserved words
+
 The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `if`, `then`, `else`, `forall`, `handle`, `in`, `unique`, `where`, `use`, `and`, `or`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `case`, `of`, `with`.
 
 ### Name resolution and the environment
@@ -327,6 +338,7 @@ statement_2
 ...
 statement_n
 expression
+
 ```
 
 A block can have zero or more statements, and the value of the whole block is the value of the final `expression`. A statement is either:
@@ -342,12 +354,14 @@ x = 4
 y = x + 2
 f a = a + y
 f 10
+
 ```
 
 A number of language constructs introduce blocks. These are detailed in the relevant sections of this reference. Wherever Unison expects an expression, a block can be introduced with the  `let` keyword:
 
 ``` unison
 let <block>
+
 ```
 
 Where `<block>` denotes a block as described above.
@@ -372,6 +386,7 @@ let
 let x = 1
     y = 2
     x + y
+
 ```
 
 Whereas these are incorrect:
@@ -384,6 +399,7 @@ let x = 1
 let x = 1
      y = 2
        x + y
+
 ```
 
 ##### Syntactic precedence
@@ -431,6 +447,7 @@ a list. This is efficient and takes just `O(log n)`.
 * The `@[signature] List.drop` function
 * More about finger trees (used to implement `@List`) here: `@docs.fingerTrees`
 :]
+
 ```
 
 More specifically, within the block:
@@ -506,6 +523,7 @@ A Boolean expression has type `Boolean` which has two values, `true` and `false`
 A _conditional expression_ has the form `if c then t else f`, where `c` is an expression of type `Boolean`, and `t` and `f` are expressions of any type, but `t` and `f` must have the same type.
 
 Evaluation of conditional expressions is non-strict. The evaluation semantics of `if c then t else f` are:
+
 * The condition `c` is always evaluated.
 * If `c` evaluates to `true`, the expression `t`  is evaluated and `f` remains unevaluated. The whole expression reduces to the value of `t`.
 * If `c` evaluates to `false`, the expression `f` is evaluated and `t` remains unevaluated. The whole expression reduces to the value of `f`.
@@ -519,6 +537,7 @@ then
   <block>
 else
   <block>
+
 ```
 
 #### Boolean conjunction and disjunction
@@ -547,6 +566,7 @@ program = 'let
   printLine "What is your name?"
   name = !readLine
   printLine ("Hello, " ++ name)
+
 ```
 
 This example defines a small I/O program. The type `{IO} ()` by itself is not allowed as the type of a top-level definition, since the `IO` ability must be provided by a handler, see [abilities and ability handlers](/docs/language-reference/abilities)). Instead, `program` has the type `'{IO} ()` (note the `'` indicating a delayed computation). Inside a handler for `IO`, this computation can be forced with `!program`.
@@ -560,13 +580,14 @@ The reserved symbols `'` and `!` bind more tightly than function application, So
 These symbols bind less tightly than keywords that introduce blocks, so `'let x` is the same as `_ -> let x` and `!if b then p else q` is the same as `(if b then p else q) ()`.
 
 Additional `'` and `!` combine in the obvious way:
+
   * `''x` is the same as `(_ -> (_ -> x))` or `(_ _ -> x)`.
   * `!!x` is the same as `x () ()`.
   * `!'x` and `'!x` are both the same as `x`.
 
 You can of course use parentheses to precisely control how `'` and `!` get applied.
 
-## Case expressions and pattern matching
+### Case expressions and pattern matching
 
 A _case expression_ has the general form:
 
@@ -581,6 +602,7 @@ case e of
 Where `e` is an expression, called the _scrutinee_ of the case expression, and each _case_ has a [pattern to match against the value of the scrutinee](#pattern-matching) and a [block](/docs/language-reference/blocks) to evaluate in case it matches.
 
 The evaluation semantics of case expressions are as follows:
+
 1. The scrutinee is evaluated.
 2. The first pattern is evaluated and matched against the value of the scrutinee.
 3. If the pattern matches, any variables in the pattern are substituted into the block to the right of its `->` (called the _match body_) and the block is evaluated. If the pattern doesn’t match then the next pattern is tried and so on.
@@ -589,10 +611,10 @@ It's possible for Unison to actually evaluate cases in a different order, but su
 
 It is an error if none of the patterns match. In this version of Unison, the  error occurs at runtime. In a future version, this should be a compile-time error.
 
-### Pattern matching
 A _pattern_ has one of the following forms:
 
 #### Blank patterns
+
 A _blank pattern_ has the form `_`. It matches any expression without creating a variable binding.
 
 For example:
@@ -603,6 +625,7 @@ case 42 of
 ```
 
 #### Literal patterns
+
 A _literal pattern_ is a literal `Boolean`, `Nat`, `Int`, `Float`, or `Text`. A literal pattern matches if the scrutinee has that exact value.
 
 For example:
@@ -614,6 +637,7 @@ case 2 + 2 of
 ```
 
 #### Variable patterns
+
 A _variable pattern_ is a [regular identifier](/docs/language-reference/identifiers) and matches any expression. The expression that it matches will be bound to that identifier as a variable in the match body.
 
 For example, this expression evaluates to `3`:
@@ -624,6 +648,7 @@ case 1 + 1 of
 ```
 
 #### As-patterns
+
 An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](/docs/language-reference/identifiers) and `p` is a pattern. This pattern matches if `p` matches, and the variable `v` will be bound in the body to the value matching `p`.
 
 For example, this expression evaluates to `3`:
@@ -636,6 +661,7 @@ case 1 + 1 of
 ```
 
 #### Constructor patterns
+
 A _constructor pattern_ has the form `C p1 p2 ... pn` where `C` is the name of a data constructor in scope, and `p1` through `pn` are patterns such that `n` is the arity of `C`. Note that `n` may be zero. This pattern matches if the scrutinee reduces to a fully applied invocation of the data constructor `C` and the patterns `p1` through `pn` match the arguments to the constructor.
 
 For example, this expression uses `Some` and `None`, the constructors of the `Optional` type, to return the 3rd element of the list `xs` if present or `0` if there was no 3rd element.
@@ -674,6 +700,7 @@ exactlyOne a = case a of
 ```
 
 #### Tuple patterns
+
  A _tuple pattern_ has the form `(p1, p2, ... pn)` where `p1` through `pn` are patterns. The pattern matches if the scrutinee is a tuple of the same arity as the pattern and `p1` through `pn` match against the elements of the tuple. The pattern `(p)` is the same as the pattern `p`, and the pattern `()` matches the literal value `()` of the trivial type `()` (both pronounced “unit”).
 
 For example, this expression evaluates to `4`:
@@ -684,6 +711,7 @@ case (1,2,3) of
 ```
 
 #### Ability patterns (or `Request` patterns)
+
 An _ability pattern_ only appears in an _ability handler_ and has one of two forms (see [Abilities and ability handlers](#abilities) for details):
 
 1. `{C p1 p2 ... pn -> k}` where `C` is the name of an ability constructor in scope, and `p1` through `pn` are patterns such that `n` is the arity of `C`. Note that `n` may be zero. This pattern matches if the scrutinee reduces to a fully applied invocation of the ability constructor `C` and the patterns `p1` through `pn` match the arguments to the constructor.  The scrutinee must be of type `Request A T` for some ability `{A}` and type `T`. The variable `k` will be bound to the continuation of the program. If the scrutinee has type `Request A T` and `C` has type `X ->{A} Y`, then `k` has type `Y -> {A} T`.
@@ -692,6 +720,7 @@ An _ability pattern_ only appears in an _ability handler_ and has one of two for
 See the section on [abilities and ability handlers](/docs/language-reference/abilities) for examples of ability patterns.
 
 #### Guard patterns
+
 A _guard pattern_ has the form `p | g` where `p` is a pattern and `g` is a Boolean expression that may reference any variables bound in `p`. The pattern matches if `p` matches and `g` evaluates to `true`.
 
 For example, the following expression evaluates to 6:
@@ -846,17 +875,20 @@ Unison provides the following built-in types:
 See [literals](#literals) for more on how values of some of these types are constructed.
 
 ### Built-in type constructors
+
 Unison has the following built-in type constructors.
 
 * `(->)` is the constructor of function types. A type `X -> Y` is the type of functions from `X` to `Y`.
-*  `base.Tuple` is the constructor of tuple types. See [tuple types](#tuple-types) for details on tuples.
+* `base.Tuple` is the constructor of tuple types. See [tuple types](#tuple-types) for details on tuples.
 * `.base.List` is the constructor of list types. A type `List T` is the type of arbitrary-length sequences of values of type `T`. The type `[T]` is an alias for `List T`.
 * `.base.Request` is the constructor of requests for abilities. A type `Request A T` is the type of values received by ability handlers for the ability `A` where current continuation requires a value of type `T`.
 
 ### User-defined types
+
 New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-reference/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor. 
 
 <a id="abilities"></a>
+
 ## Abilities and ability handlers
 
 Unison provides a system of _abilities_ and _ability handlers_ as a means of modeling computational effects in a purely functional language.
