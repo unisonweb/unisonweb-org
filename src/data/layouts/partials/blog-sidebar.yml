@@ -3,10 +3,10 @@ categories:
 subscribeForm:
   heading: Updates
   blurb: |
-    Never miss an update! Get new blog posts delivered straight to your inbox.
+    Get new blog posts delivered to your inbox.
   errorMessage: Oops, something went wrong. Please try again.
   successMessage: Thanks for subscribing! Look for good things coming to your inbox.
   emailInput:
     label: Email address
     validationMessage: Please enter a valid email address
-  submitButtonLabel: Sign Me Up →
+  submitButtonLabel: Subscribe →

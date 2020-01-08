@@ -1,6 +1,6 @@
 linkSets:
 
-  - heading: Start Here 
+  - heading: Getting started
     icon: /media/icon-code.svg
     links:
       - label: Welcome
@@ -9,59 +9,37 @@ linkSets:
         url: /docs/roadmap
       - label: Quickstart
         url: /docs/quickstart
-
-  - heading: A Tour of Unison
-    icon: /media/icon-code.svg
-    links:
-      - label: Introduction
+      - label: A tour of Unison
         url: /docs/tour
-      - label: Hello to the codebase manager
-        url: /docs/tour/hello-ucm
-      - label: Unison's interactive scratch files
-        url: /docs/tour/scratch-files
-      - label: Testing your code 
-        url: /docs/tour/testing
-      - label: Making edits to your code
-        url: /docs/tour/updating
-      - label: Publishing code
-        url: /docs/tour/sharing
 
-  - heading: Language Reference
+  - heading: Usage topics
     icon: /media/icon-code.svg
     links:
-      - label: Introduction
+      - label: Refactoring and code updates
+        url: /docs/refactoring
+
+  - heading: Usage topics (coming soon)
+    icon: /media/icon-code.svg
+    links:
+      - label: Concurrent work and resolving edit conflicts
+        url: /docs/concurrent-work
+      - label: Pull requests and collaboration
+        url: /docs/pull-requests
+      - label: Testing your code
+        url: /docs/testing
+      - label: First-class documentation with live examples
+        url: /docs/documenting-code
+      - label: Abilities and handlers
+        url: /docs/abilities
+
+  - heading: References
+    icon: /media/icon-code.svg
+    links:
+      - label: Language reference
         url: /docs/language-reference
-      - label: Term declarations
-        url: /docs/language-reference/term-declarations
-      - label: Type declarations
-        url: /docs/language-reference/type-declarations
-      - label: Expressions 
-        url: /docs/language-reference/expressions
-      - label: Hashes 
-        url: /docs/language-reference/hashes
-      - label: Types 
-        url: /docs/language-reference/types
-      - label: Abilities and handlers 
-        url: /docs/language-reference/abilities
-      - label: Name resolution 
-        url: /docs/language-reference/name-resolution
-
-  - heading: Introducing Abilities
-    icon: /media/icon-code.svg
-    links:
-      - label: Introduction
-        url: /docs/ability-tutorial
-      - label: Motivation
-        url: /docs/ability-tutorial/motivation
-      - label: Using abilities
-        url: /docs/ability-tutorial/using-abilities
-      - label: Examples of abilities
-        url: /docs/ability-tutorial/examples-of-abilities
-      - label: More on abilities in type signatures
-        url: /docs/ability-tutorial/ability-signatures
-      - label: Invoking handlers
-        url: /docs/ability-tutorial/invoking-handlers
-      - label: Writing handlers
-        url: /docs/ability-tutorial/writing-handlers
-      - label: Conclusion and exercises
-        url: /docs/ability-tutorial/conclusion
+      - label: Full `ucm` command reference
+        url: /docs/commands
+      - label: FAQ
+        url: /docs/faq
+      - label: An annotated bibliography
+        url: /docs/bibliography

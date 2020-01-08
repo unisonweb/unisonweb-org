@@ -2,17 +2,25 @@
   <un-docs>
 
     <div class="un-doc-page">
-      <un-content :content="$page.docPage.content" />
-      <un-doc-sidebar :headings="$page.docPage.headings" />
+      <un-content
+        ref="content"
+        :content="$page.docPage.content"
+      />
+      <un-doc-sidebar
+        ref="sidebar"
+        :headings="$page.docPage.headings"
+      />
     </div>
 
   </un-docs>
 </template>
 
 <script>
+  import debounce from 'lodash.debounce'
   import Docs from '~/layouts/Docs'
   import DocSidebar from '~/layouts/partials/DocSidebar/DocSidebar'
   import Content from '~/components/Content'
+  import { UCbreakpoints as breakpoints } from '~/data/breakpoints.yml'
 
   export default {
     metaInfo() {
@@ -25,6 +33,24 @@
           name: 'description',
           content: description
         }],
+      }
+    },
+    methods: {
+      setContentMinHeight() {
+        if (window.matchMedia(`(min-width: ${breakpoints.md.min})`).matches) {
+          // only set `min-height` for desktop screens
+          const height = this.$refs['sidebar'].$refs['getSidebarHeight'].offsetHeight
+          this.$refs['content'].$el.style.minHeight = `${height}px`
+        } else {
+          // if we're on a mobile/tablet screen, remove `min-height`
+          this.$refs['content'].$el.style.minHeight = null
+        }
+      },
+    },
+    mounted() {
+      if (process.isClient) {
+        this.setContentMinHeight()
+        window.addEventListener('resize', debounce(this.setContentMinHeight, 300))
       }
     },
     components: {
