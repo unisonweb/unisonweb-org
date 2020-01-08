@@ -1,6 +1,6 @@
 linkSets:
 
-  - heading: Getting started
+  - heading: Getting started 
     icon: /media/icon-code.svg
     links:
       - label: Welcome
