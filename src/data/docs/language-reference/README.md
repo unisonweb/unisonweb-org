@@ -30,37 +30,6 @@ A top-level declaration can appear at the _top level_ or outermost scope of a Un
 [type]: /docs/language-reference#type-declarations
 [use]:  /docs/language-reference#use
 
-## Literals
-
-A literal expression is a basic form of Unison expression. Unison has the following types of literals:
-
-* A _64-bit unsigned integer_ of type `.base.Nat` (which stands for _natural number_) consists of digits from 0 to 9. The smallest `Nat` is `0` and the largest is `18446744073709551615`.
-* A _64-bit signed integer_ of type `.base.Int` consists of a natural number immediately preceded by either `+` or `-`. For example, `4` is a `Nat`, whereas `+4` is an `Int`. The smallest `Int` is `-9223372036854775808` and the largest is `+9223372036854775807`.
-* A _64-bit floating point number_ of type `.base.Float` consists of an optional sign (`+`/`-`), followed by two natural numbers separated by `.`. Floating point literals in Unison are [IEEE 754-1985](https://en.wikipedia.org/wiki/IEEE_754-1985) double-precision numbers. For example `1.6777216` is a valid floating point literal.
-* A _text literal_ of type `.base.Text` is any sequence of Unicode characters between pairs of `"`. The escape character is `\`, so a `"` can be included in a text literal with the escape sequence `\"`. The full list of escape sequences is given in the [Escape Sequences](#escape-sequences) section below. For example, `"Hello, World!"` is a text literal. A text literal can span multiple lines. Newlines do not terminate text literals, but become part of the literal text.
-* A _character literal_ of type `.base.Char` consists of a `?` character marker followed by a single Unicode character, or a single [escape sequence](#escape-sequences). For example, `?a`, `?🔥` or `?\t`.
-* There are two _Boolean literals_: `true` and `false`, and they have type `Boolean`.
-* A _hash literal_ begins with the character `#`. See the section **Hashes** for details on the lexical form of hash literals. A hash literal is a reference to a term or type. The type or term that it references must have a definition whose hash digest matches the hash in the literal. The type of a hash literal is the same as the type of its referent. `#a0v829` is an example of a hash literal.
-* A _literal list_ has the general form `[v1, v2, ... vn]` where `v1` through `vn` are expressions. A literal list may be empty. For example, `[]`, `[x]`, and `[1,2,3]` are list literals. The expressions that form the elements of the list all must have the same type. If that type is `T`, then the type of the list literal is `.base.List T` or `[T]`.
-* A _function literal_ or _lambda_ has the form `p1 p2 ... pn -> e`, where `p1` through `pn` are [regular identifiers](/docs/language-reference/identifiers) and `e` is a Unison expression (the _body_ of the lambda). The variables `p1` through `pn` are local variables in `e`, and they are bound to any values passed as arguments to the function when it’s called (see the section [Function Application](/docs/language-reference/expressions/#function-application) for details on call semantics). For example `x -> x + 2` is a function literal.
-* A _tuple literal_ has the form `(v1,v2, ..., vn)` where `v1` through `vn` are expressions. A value `(a,b)` has type `(A,B)` if `a` has type `A` and `b` has type `B`. The expression `(a)` is the same as the expression `a`. The nullary tuple `()` (pronounced “unit”) is of the trivial type `()`. See [tuple types](/docs/language-reference/types/#tuple-types) for details on these types and more ways of constructing tuples.
-
-### Escape sequences
-
-Text literals can include the following escape sequences:
-
-* `\0` = null character
-* `\a` = alert (bell)
-* `\b` = backspace
-* `\f` = form feed
-* `\n` = new line
-* `\r` = carriage return
-* `\t` = horizontal tab
-* `\v` = vertical tab
-* `\\` = literal `\` character
-* `\'` = literal `'` character
-* `\"` = literal `"` character
-
 ## Term declarations
 
 A Unison term declaration (or "term binding") consists of an optional [type signature](#type-signatures), and a [term definition](#term-definition). For example:
@@ -422,7 +391,7 @@ A literal expression is a basic form of Unison expression. Unison has the follow
 * There are two _Boolean literals_: `true` and `false`, and they have type `Boolean`.
 * A _hash literal_ begins with the character `#`. See the section **Hashes** for details on the lexical form of hash literals. A hash literal is a reference to a term or type. The type or term that it references must have a definition whose hash digest matches the hash in the literal. The type of a hash literal is the same as the type of its referent. `#a0v829` is an example of a hash literal.
 * A _literal list_ has the general form `[v1, v2, ... vn]` where `v1` through `vn` are expressions. A literal list may be empty. For example, `[]`, `[x]`, and `[1,2,3]` are list literals. The expressions that form the elements of the list all must have the same type. If that type is `T`, then the type of the list literal is `.base.List T` or `[T]`.
-* A _function literal_ or _lambda_ has the form `p1 p2 ... pn -> e`, where `p1` through `pn` are [regular identifiers](/docs/language-reference/identifiers) and `e` is a Unison expression (the _body_ of the lambda). The variables `p1` through `pn` are local variables in `e`, and they are bound to any values passed as arguments to the function when it’s called (see the section [Function Application](/docs/language-reference/expressions/#function-application) for details on call semantics). For example `x -> x + 2` is a function literal.
+* A _function literal_ or _lambda_ has the form `p1 p2 ... pn -> e`, where `p1` through `pn` are [regular identifiers](#identifiers) and `e` is a Unison expression (the _body_ of the lambda). The variables `p1` through `pn` are local variables in `e`, and they are bound to any values passed as arguments to the function when it’s called (see the section [Function Application](/docs/language-reference/expressions/#function-application) for details on call semantics). For example `x -> x + 2` is a function literal.
 * A _tuple literal_ has the form `(v1,v2, ..., vn)` where `v1` through `vn` are expressions. A value `(a,b)` has type `(A,B)` if `a` has type `A` and `b` has type `B`. The expression `(a)` is the same as the expression `a`. The nullary tuple `()` (pronounced “unit”) is of the trivial type `()`. See [tuple types](#tuple-types) for details on these types and more ways of constructing tuples.
 
 #### Documentation literals
@@ -638,7 +607,7 @@ case 2 + 2 of
 
 #### Variable patterns
 
-A _variable pattern_ is a [regular identifier](/docs/language-reference/identifiers) and matches any expression. The expression that it matches will be bound to that identifier as a variable in the match body.
+A _variable pattern_ is a [regular identifier](#identifiers) and matches any expression. The expression that it matches will be bound to that identifier as a variable in the match body.
 
 For example, this expression evaluates to `3`:
 
@@ -649,7 +618,7 @@ case 1 + 1 of
 
 #### As-patterns
 
-An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](/docs/language-reference/identifiers) and `p` is a pattern. This pattern matches if `p` matches, and the variable `v` will be bound in the body to the value matching `p`.
+An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](#identifiers) and `p` is a pattern. This pattern matches if `p` matches, and the variable `v` will be bound in the body to the value matching `p`.
 
 For example, this expression evaluates to `3`:
 
@@ -679,6 +648,7 @@ A _list pattern_ matches a `List t` for some type `t` and has one of three forms
 1. `head +: tail` matches a list with at least one element. The pattern `head` is matched against the first element of the list and `tail` is matched against the suffix of the list with the first element removed.
 2. `init :+ last` matches a list with at least one element. The pattern `init` is matched against the prefix of the list with the last element removed, and `last` is matched against the last element of the list.
 3. A _literal list pattern_ has the form `[p1, p2, ... pn]` where `p1` through `pn` are patterns. The patterns `p1` through `pn` are  matched against the elements of the list. This pattern only matches if the length of the scrutinee is the same as the number of elements in the pattern. The pattern `[]` matches the empty list.
+4. `part1 ++ part2` matches a list which composed of the concatenation of `part1` and `part2`. At least one of `part1` or `part2` must be a pattern with a known list length, otherwise it's unclear where the list is being spliti. For instance, `[x,y] ++ rest` is okay as is `start ++ [x,y]`, but just `a ++ b` is not allowed.
 
 Examples:
 
@@ -697,6 +667,16 @@ exactlyOne : [a] -> Boolean
 exactlyOne a = case a of
   [_] -> true
   _   -> false
+
+lastTwo : [a] -> Optional (a,a)
+lastTwo a = case a of
+  start ++ [a,a2] -> Some (a,a2)
+  _ -> None
+  
+firstTwo : [a] -> Optional (a,a)
+firstTwo a = case a of
+  [a,a2] ++ rest -> Some (a,a2)
+  _ -> None
 ```
 
 #### Tuple patterns
@@ -750,7 +730,7 @@ A term, type, data constructor, or ability constructor may be unambiguously refe
 
 ### Short hashes
 
-A hash literal may use a prefix of the base32Hex encoded SHA3 digest instead of the whole thing. For example the programmer may use a short hash like `#r1mtr0` instead of the much longer 104-character representation of the full 512-bit hash. If the short hash is long enough to be unambiguous given the [environment](/docs/language-reference/name-resolution), Unison will substitute the full hash at compile time. When rendering code as text, Unison may calculate the minimum disambiguating hash length before rendering a hash.
+A hash literal may use a prefix of the base32Hex encoded SHA3 digest instead of the whole thing. For example the programmer may use a short hash like `#r1mtr0` instead of the much longer 104-character representation of the full 512-bit hash. If the short hash is long enough to be unambiguous given the [environment](#name-resolution-and-the-environment), Unison will substitute the full hash at compile time. When rendering code as text, Unison may calculate the minimum disambiguating hash length before rendering a hash.
 
 ## Types
 
