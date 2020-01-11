@@ -391,7 +391,7 @@ A literal expression is a basic form of Unison expression. Unison has the follow
 * There are two _Boolean literals_: `true` and `false`, and they have type `Boolean`.
 * A _hash literal_ begins with the character `#`. See the section **Hashes** for details on the lexical form of hash literals. A hash literal is a reference to a term or type. The type or term that it references must have a definition whose hash digest matches the hash in the literal. The type of a hash literal is the same as the type of its referent. `#a0v829` is an example of a hash literal.
 * A _literal list_ has the general form `[v1, v2, ... vn]` where `v1` through `vn` are expressions. A literal list may be empty. For example, `[]`, `[x]`, and `[1,2,3]` are list literals. The expressions that form the elements of the list all must have the same type. If that type is `T`, then the type of the list literal is `.base.List T` or `[T]`.
-* A _function literal_ or _lambda_ has the form `p1 p2 ... pn -> e`, where `p1` through `pn` are [regular identifiers](/docs/language-reference/identifiers) and `e` is a Unison expression (the _body_ of the lambda). The variables `p1` through `pn` are local variables in `e`, and they are bound to any values passed as arguments to the function when it’s called (see the section [Function Application](/docs/language-reference/expressions/#function-application) for details on call semantics). For example `x -> x + 2` is a function literal.
+* A _function literal_ or _lambda_ has the form `p1 p2 ... pn -> e`, where `p1` through `pn` are [regular identifiers](#identifiers) and `e` is a Unison expression (the _body_ of the lambda). The variables `p1` through `pn` are local variables in `e`, and they are bound to any values passed as arguments to the function when it’s called (see the section [Function Application](/docs/language-reference/expressions/#function-application) for details on call semantics). For example `x -> x + 2` is a function literal.
 * A _tuple literal_ has the form `(v1,v2, ..., vn)` where `v1` through `vn` are expressions. A value `(a,b)` has type `(A,B)` if `a` has type `A` and `b` has type `B`. The expression `(a)` is the same as the expression `a`. The nullary tuple `()` (pronounced “unit”) is of the trivial type `()`. See [tuple types](#tuple-types) for details on these types and more ways of constructing tuples.
 
 #### Documentation literals
@@ -607,7 +607,7 @@ case 2 + 2 of
 
 #### Variable patterns
 
-A _variable pattern_ is a [regular identifier](/docs/language-reference/identifiers) and matches any expression. The expression that it matches will be bound to that identifier as a variable in the match body.
+A _variable pattern_ is a [regular identifier](#identifiers) and matches any expression. The expression that it matches will be bound to that identifier as a variable in the match body.
 
 For example, this expression evaluates to `3`:
 
@@ -618,7 +618,7 @@ case 1 + 1 of
 
 #### As-patterns
 
-An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](/docs/language-reference/identifiers) and `p` is a pattern. This pattern matches if `p` matches, and the variable `v` will be bound in the body to the value matching `p`.
+An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](#identifiers) and `p` is a pattern. This pattern matches if `p` matches, and the variable `v` will be bound in the body to the value matching `p`.
 
 For example, this expression evaluates to `3`:
 
@@ -730,7 +730,7 @@ A term, type, data constructor, or ability constructor may be unambiguously refe
 
 ### Short hashes
 
-A hash literal may use a prefix of the base32Hex encoded SHA3 digest instead of the whole thing. For example the programmer may use a short hash like `#r1mtr0` instead of the much longer 104-character representation of the full 512-bit hash. If the short hash is long enough to be unambiguous given the [environment](/docs/language-reference/name-resolution), Unison will substitute the full hash at compile time. When rendering code as text, Unison may calculate the minimum disambiguating hash length before rendering a hash.
+A hash literal may use a prefix of the base32Hex encoded SHA3 digest instead of the whole thing. For example the programmer may use a short hash like `#r1mtr0` instead of the much longer 104-character representation of the full 512-bit hash. If the short hash is long enough to be unambiguous given the [environment](#name-resolution-and-the-environment), Unison will substitute the full hash at compile time. When rendering code as text, Unison may calculate the minimum disambiguating hash length before rendering a hash.
 
 ## Types
 
