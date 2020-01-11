@@ -648,6 +648,7 @@ A _list pattern_ matches a `List t` for some type `t` and has one of three forms
 1. `head +: tail` matches a list with at least one element. The pattern `head` is matched against the first element of the list and `tail` is matched against the suffix of the list with the first element removed.
 2. `init :+ last` matches a list with at least one element. The pattern `init` is matched against the prefix of the list with the last element removed, and `last` is matched against the last element of the list.
 3. A _literal list pattern_ has the form `[p1, p2, ... pn]` where `p1` through `pn` are patterns. The patterns `p1` through `pn` are  matched against the elements of the list. This pattern only matches if the length of the scrutinee is the same as the number of elements in the pattern. The pattern `[]` matches the empty list.
+4. `part1 ++ part2` matches a list which composed of the concatenation of `part1` and `part2`. At least one of `part1` or `part2` must be a pattern with a known list length, otherwise it's unclear where the list is being spliti. For instance, `[x,y] ++ rest` is okay as is `start ++ [x,y]`, but just `a ++ b` is not allowed.
 
 Examples:
 
@@ -666,6 +667,16 @@ exactlyOne : [a] -> Boolean
 exactlyOne a = case a of
   [_] -> true
   _   -> false
+
+lastTwo : [a] -> Optional (a,a)
+lastTwo a = case a of
+  start ++ [a,a2] -> Some (a,a2)
+  _ -> None
+  
+firstTwo : [a] -> Optional (a,a)
+firstTwo a = case a of
+  [a,a2] ++ rest -> Some (a,a2)
+  _ -> None
 ```
 
 #### Tuple patterns
