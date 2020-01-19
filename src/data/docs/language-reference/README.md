@@ -272,7 +272,7 @@ Any identifier, including a namespace-qualified one, can appear _hash-qualified_
 
 #### Reserved words
 
-The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `if`, `then`, `else`, `forall`, `handle`, `in`, `unique`, `where`, `use`, `and`, `or`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `case`, `of`, `with`.
+The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `where`, `use`, `and`, `or`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `case`, `of`, `with`.
 
 ### Name resolution and the environment
 
@@ -911,10 +911,10 @@ The type `{Store v}` means that the computation which results in that type requi
 A constructor `{A} T` for some ability `A` and some type `T`  (or a function which uses such a constructor), can only be used in a scope where the ability `A` is provided. Abilities are provided by `handle` expressions:
 
 ``` unison
-handle h in x
+handle e with h
 ```
 
-This expression gives `x` access to abilities handled by the function `h` which must have the type `Request A T -> T` if `x` has type `{A} T`. The type constructor `Request` is a special builtin provided by Unison which will pass arguments of type `Request A T` to a handler for the ability `A`.
+This expression gives `e` access to abilities handled by the function `h` which must have the type `Request A T -> T` if `e` has type `{A} T`. The type constructor `Request` is a special builtin provided by Unison which will pass arguments of type `Request A T` to a handler for the ability `A`.
 
 The examples in the next section should help clarify how ability handlers work.
 
@@ -928,7 +928,7 @@ Each constructor of an ability corresponds with a _pattern_ that can be used for
 
 Where `A` is the name of the ability, `c` is the name of the constructor, `p_1` through `p_n` are patterns matching the arguments to the constructor, and `k` is a _continuation_ for the program. If the value matching the pattern has type `Request A T` and the constructor of that value had type `X ->{A} Y`, then `k` has type `Y -> {A} T`.
 
-The continuation will always be a function accepting the return value of the ability constructor, and the body of this function is the remainder of the `handle .. in` block immediately following the call to the constructor. See below for an example.
+The continuation will always be a function accepting the return value of the ability constructor, and the body of this function is the remainder of the `handle .. with` block immediately following the call to the constructor. See below for an example.
 
 A handler can choose to call the continuation or not, or to call it multiple times. For example, a handler can ignore the continuation in order to handle an ability that aborts the execution of the program:
 
@@ -943,10 +943,11 @@ abortHandler a e = case e of
    { x } -> x
 
 p : Nat
-p = handle abortHandler 0 in
-  x = 4
-  Abort.aborting
-  x + 2
+p = handle 
+      x = 4
+      Abort.aborting
+      x + 2
+    with abortHandler 0
 
 ```
 
@@ -970,13 +971,13 @@ ability Store v where
 storeHandler : v -> Request (Store v) a -> a
 storeHandler storedValue s = case s of
   {Store.get -> k} ->
-    handle storeHandler storedValue in k storedValue
+    handle k storedValue with storeHandler storedValue
   {Store.put v -> k} ->
-    handle storeHandler v in k ()
+    handle k () with storeHandler v
   {a} -> a
 ```
 
-Note that the `storeHandler` has a `handle` clause that uses `storeHandler` itself to handle the `Requests`s made by the continuation. So it’s a recursive definition. The initial "stored value" of type `v` is given to the handler in its argument named `storedValue`, and the changing value is captured by the fact that different values are passed to each recursive invocation of the handler.
+Note that the `storeHandler` has a `with` clause that uses `storeHandler` itself to handle the `Requests`s made by the continuation. So it’s a recursive definition. The initial "stored value" of type `v` is given to the handler in its argument named `storedValue`, and the changing value is captured by the fact that different values are passed to each recursive invocation of the handler.
 
 In the pattern for `Store.get`, the continuation `k` expects a `v`, since the return type of `get` is `v`. In the pattern for `Store.put`, the continuation `k` expects `()`, which is the return type of `put`.
 
