@@ -914,7 +914,7 @@ A constructor `{A} T` for some ability `A` and some type `T`  (or a function whi
 handle e with h
 ```
 
-This expression gives `e` access to abilities handled by the function `h` which must have the type `Request A T -> T` if `e` has type `{A} T`. The type constructor `Request` is a special builtin provided by Unison which will pass arguments of type `Request A T` to a handler for the ability `A`.
+This expression gives `e` access to abilities handled by the function `h`. If `h` has type `Request A T1 -> T2` and the expression `e` has type `{A} T1`, then `handle e with h` will have type `T2`. The type constructor `Request` is a special builtin provided by Unison which will pass arguments of type `Request A T` to a handler for the ability `A`. Note that `h` _must_ accept an argument of type `Request A T` if it is used to handle `e` of type `{A} T1`.
 
 The examples in the next section should help clarify how ability handlers work.
 
