@@ -977,7 +977,7 @@ storeHandler storedValue s = case s of
   {a} -> a
 ```
 
-Note that the `storeHandler` has a `with` clause that uses `storeHandler` itself to handle the `Requests`s made by the continuation. So it’s a recursive definition. The initial "stored value" of type `v` is given to the handler in its argument named `storedValue`, and the changing value is captured by the fact that different values are passed to each recursive invocation of the handler.
+Note that the `storeHandler` has a `with` clause that uses `storeHandler` itself to handle the `Request`s made by the continuation. So it’s a recursive definition. The initial "stored value" of type `v` is given to the handler in its argument named `storedValue`, and the changing value is captured by the fact that different values are passed to each recursive invocation of the handler.
 
 In the pattern for `Store.get`, the continuation `k` expects a `v`, since the return type of `get` is `v`. In the pattern for `Store.put`, the continuation `k` expects `()`, which is the return type of `put`.
 
