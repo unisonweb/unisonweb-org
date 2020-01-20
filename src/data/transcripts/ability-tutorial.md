@@ -12,7 +12,7 @@ Here's an ability declaration.
 .> move.term builtin.io.systemTime builtin.io.systemTimeTemp
 ```
 
-``` unison
+```unison:hide
 ability SystemTime where
   -- Number of seconds since the start of 1970.
   systemTime : Nat
@@ -26,7 +26,7 @@ It defines one **operation**, `systemTime`, which returns the system clock readi
 
 Now let's write some code that uses that operation to make a **request**.
 
-``` unison
+```unison:hide
 tomorrow = '(SystemTime.systemTime + 24 * 60 * 60)
 ```
 
@@ -38,11 +38,11 @@ If we add this function to the codebase we see that its requirement to have the 
 .> add
 ```
 
-Notice the signature: `∀ (). () ->{SystemTime} Nat`.
+Notice the mention of `SystemTime` in the type signature.
 
 We can combine requests to different abilities in the same function.  For example...
 
-``` unison
+```unison:hide
 -- We'll explain the usage of ' and ! in the
 -- section 'Using abilities'.
 printTomorrow : '{IO, SystemTime} ()
@@ -60,7 +60,7 @@ Here's how we can **eliminate** the `SystemTime` ability, in order to be able to
 ```
 -- This function is accepted by the 'execute' ucm command.
 printTomorrow' : '{IO} ()
-printTomorrow' = '(handle systemTimeToIO in !printTomorrow)
+printTomorrow' = '(handle !printTomorrow with systemTimeToIO)
 ```
 
 Here we've formed a **handle expression**, invoking a **handler** called `systemTimeToIO`, which converts our original `printTomorrow` function into one which doesn't require the `SystemTime` ability.
@@ -76,8 +76,7 @@ systemTimeToIO r =
   case r of
     { SystemTime.systemTime -> k } ->
       let epochTimeToNat e = case e of EpochTime.EpochTime n -> n
-          handle systemTimeToIO in
-            k (epochTimeToNat !systemTime)
+          handle k (epochTimeToNat !systemTime) with systemTimeToIO
     { a } -> a
 ```
 
@@ -131,7 +130,7 @@ OK, let's get started.  We're going to return to the example from the [Introduct
 
 Here's the declaration of the `SystemTime` ability, which lets us write code that can read the system clock.
 
-``` unison
+```unison:hide
 ability SystemTime where
   -- Number of seconds since the start of 1970.
   systemTime : Nat
@@ -139,7 +138,7 @@ ability SystemTime where
 
 It defines one operation, `systemTime`, which returns the clock reading.  An operation is a function that can be used from code which has this ability _available_ (as described in the next section).  Let's use this operation to write some code.
 
-``` unison
+```unison:hide
 tomorrow = '(SystemTime.systemTime + 24 * 60 * 60)
 ```
 
@@ -151,7 +150,7 @@ We're using the `'` to turn `tomorrow` into a function rather than just a regula
 
 So the following wouldn't make sense:
 
-``` unison:error
+```unison:error
 -- wrong
 tomorrow = SystemTime.systemTime + 24 * 60 * 60
 ```
@@ -194,14 +193,14 @@ This propagation is supported through the ability type inference mechanism as we
 
 Let's revisit the ability declaration we started with.
 
-``` unison
+```unison:hide
 ability SystemTime where
   systemTime : Nat
 ```
 
 There's a significant piece of information that's been elided here for brevity.  The full and unabridged version of this declaration would be the following.
 
-``` unison
+```unison:hide
 ability SystemTime where
   systemTime : {SystemTime} Nat
 ```
@@ -218,13 +217,13 @@ The reason we can omit the name of the ability being defined from its operations
 
 The following ability lets us write programs that have access to mutable state.
 
-``` unison
+```unison:hide
 ability Store v where
   get : v
   put : v -> ()
 ```
 
-``` ucm:hide
+```ucm:hide
 .> add
 ```
 
@@ -234,7 +233,7 @@ The `Store` ability can be implemented using handlers, even though Unison does n
 
 Here's an example, using `Store` to help label a binary tree with numerical indices, in left-to-right ascending order.
 
-``` unison
+```unison:hide
 type Tree a = Branch (Tree a) a (Tree a) | Leaf
 
 labelTree : Tree a ->{Store Nat} Tree (a, Nat)
@@ -259,7 +258,7 @@ labelTree t =
 
 The main reason for having abilities is to give our programs a way of having an effect on the world outside the program.  There is a special ability, called `IO` (for 'Input/Output'), which lets us do this.  It's built into the language and runtime, so it's not defined and implemented in the normal way, but we can take a look at its ability declaration.
 
-``` ucm
+```ucm
 .builtin.io> view IO
 ```
 
@@ -309,12 +308,12 @@ orderServer : ServerConfig ->{IO} ()
 
 Here's an example of an ability to let us append text to a log — for example a log file kept on disk.
 
-``` unison
+```unison:hide
 ability Log where
   log : Text -> ()
 ```
 
-``` ucm:hide
+```ucm:hide
 .> add
 ```
 
@@ -328,7 +327,7 @@ Most abilities are concerned with emitting and/or receiving data from/to the pro
 
 The `Abort` ability lets us write programs which can terminate early.
 
-``` unison
+```unison:hide
 ability Abort where
   abort : a
 ```
@@ -337,7 +336,7 @@ ability Abort where
 .> add
 ```
 
-```unison:hide
+```unison:hide:all
 type Input = Input Nat Nat
 valid : Input -> Boolean
 valid _ = true
@@ -357,7 +356,7 @@ handleRequest _ _ = ()
 
 Here's `Abort` in action:
 
-``` unison
+```unison:hide
 getName : Input ->{Abort} Text
 getName i = name = if not (valid i)
                    then Abort.abort
@@ -375,7 +374,7 @@ Suppose we're running `handleInput`, and we hit the `not (valid i)` error case i
 
 There's a variant of `Abort`, which lets you provide a value to describe what's happened — this is analogous to the exception handling provided in some other languages.
 
-``` unison
+```unison:hide
 ability Exception e where
   throw : e -> a
 ```
@@ -386,12 +385,12 @@ The ability mechanism is sufficiently general and powerful that what might other
 
 Here's another example — shown here to demonstrate further the idea of an ability affecting control flow.
 
-``` unison
+```unison:hide
 ability Choice where
   choose : Boolean
 ```
 
-``` ucm:hide
+```ucm:hide
 .> add
 ```
 
@@ -454,18 +453,18 @@ It's useful to keep the following in mind when reading type signatures.
 
 Unison can do two levels of type inference for you.  The first is to infer the complete signature of your definition.
 
-``` unison
+```unison
 retries = 3
 -- inferred type: Nat
 ```
 
 The second is to infer ability lists, wherever you have left them unspecified.
 
-``` unison
+```unison
 incrementP : Nat -> Nat
 incrementP x = io.printLine "incrementP"
                x + 1
--- inferred type: Nat ->{io.IO} Nat
+-- inferred type: Nat ->{IO} Nat
 ```
 
 Unison can see, from the use of `io.printLine`, that `incrementP` requires the `IO` ability.
@@ -503,13 +502,12 @@ We say that `base.List.map` is **ability polymorphic**: even though the function
 
 The generalization process can work in tandem with inferring concrete abilities — for example:
 
-``` unison
+```unison
 applyP f x = printLine "applyP"
              f x
 -- inferred type:
 --   (i ->{𝕖, IO} o) -> i ->{𝕖, IO} o
 ```
-TODO check above
 
 This is saying that `applyP` requires `IO`, combined with whatever other abilities (`𝕖`) are required by its first argument.  (The combination process is a set union, so if `𝕖` also includes `IO`, then `IO` still only appears once in the resulting type.)
 
@@ -517,7 +515,7 @@ This is saying that `applyP` requires `IO`, combined with whatever other abiliti
 
 Not all type signatures are sensitive to abilities.  For example:
 
-``` unison
+```unison:hide
 nowIfPast : Nat ->{SystemTime} Nat
 nowIfPast t = now : Nat
               now = SystemTime.systemTime
@@ -530,7 +528,7 @@ The answer is that functions and lambdas define _computations_, and it is comput
 
 So, the signatures where abilities are relevant are just those for functions and lambdas.  Let's see what that looks like.
 
-``` unison:error
+```unison:error
 -- doesn't compile
 nowIfPast' : [Nat] ->{SystemTime} [Nat]
 nowIfPast' ts = f : Nat ->{} Nat
@@ -552,7 +550,7 @@ So just because the signature on the top-level binding for `nowIfPast'`mentions 
 
 There's one last gotcha to be aware of when interpreting abilities in signatures.  Let's take a look at a better (if still slightly verbose) version of `nowIfPast'`.
 
-```unison:hide
+```unison:hide:all
 -- we never pulled base so:
   base.List.map : (a ->{𝕖} b) -> [a] ->{𝕖} [b]
   base.List.map f a =
@@ -565,11 +563,11 @@ There's one last gotcha to be aware of when interpreting abilities in signatures
     go 0 a []
 ```
 
-``` ucm:hide
+```ucm:hide
 .> add
 ```
 
-``` unison
+```unison:hide
 nowIfPast'' : [Nat] ->{SystemTime} [Nat]
 nowIfPast'' ts = now : Nat
                  now = SystemTime.systemTime
@@ -597,7 +595,7 @@ This sort of signature can be useful, to control exactly _when_ different effect
 
 But we didn't see how to define such a function!  Here's a first, unsuccessful attempt.
 
-``` unison:hide
+```unison:hide:all
 type ServerConfig = ServerConfig Nat Nat Nat
 startServer : ServerConfig -> ()
 startServer _ = ()
@@ -605,11 +603,11 @@ ServerConfig.toText : ServerConfig -> Text
 ServerConfig.toText _ = ""
 ```
 
-``` ucm:hide
+```ucm:hide
 .> add
 ```
 
-``` unison:error
+```unison:error
 -- doesn't compile
 orderServer' : ServerConfig ->{Log} '{IO} ()
 -- remember this signature is equivalent to
@@ -627,7 +625,7 @@ The problem with this is that by the time we've given `orderServer'` that `unit`
 
 To define this function, we need to process one argument at a time, and at each stage only use the abilities that argument's arrow (the one on its right) gives us.  Here's a correct definition:
 
-``` unison
+```unison:hide
 orderServer'' : ServerConfig ->{Log} '{IO} ()
 orderServer'' sc =
   Log.log (ServerConfig.toText sc)
@@ -654,14 +652,14 @@ First observation: we can treat a handler just like a regular function.  The onl
 
 Now let's remember our simple function from earlier, which uses `SystemTime`.
 
-``` unison
+```unison:hide
 tomorrow : '{SystemTime} Nat
 tomorrow = '(SystemTime.systemTime + 24 * 60 * 60)
 ```
 
 And now suppose we want to print the result to the console.  How can we do that?  Here's a good start:
 
-``` unison
+```unison:hide
 printTomorrow : '{IO, SystemTime} ()
 printTomorrow = '(printLine (Nat.toText !tomorrow))
 ```
@@ -685,7 +683,7 @@ We can't run `printTomorrow` yet.
 
 ```
 printTomorrow' : '{IO} ()
-printTomorrow' = '(handle systemTimeToIO in !printTomorrow)
+printTomorrow' = '(handle !printTomorrow with systemTimeToIO)
 ```
 
 That works! 👍
@@ -697,7 +695,7 @@ That works! 👍
 
 Notice in the function definition, we needed to force `printTomorrow`, turning it into `{IO, SystemTime} ()`, then delay the result again to get a `'{IO} ()`.  The intuition here is that you need to make `printTomorrow` actually _do_ its stuff, in order to handle the `SystemTime` requests it throws out — but that you need to delay the result because you can't have `printTomorrow'` doing `IO` requests except under a delay.
 
-❔ Would it be better for `handle` to take a delayed function, so you could just write `printTomorrow' = handle systemTimeToIO in printTomorrow`?  Feedback welcome... 📨
+❔ Would it be better for `handle` to take a delayed function, so you could just write `printTomorrow' = handle printTomorrow with systemTimeToIO`?  Feedback welcome... 📨
 
 So now we can use a handler to execute code that uses abilities!
 
@@ -705,15 +703,15 @@ There's something slightly unsatisfying about our definition of `printTomorrow` 
 
 ```
 printTomorrow'' : '{IO} ()
-printTomorrow'' = '(handle systemTimeToIO in
-	                printLine (Nat.toText !tomorrow))
+printTomorrow'' = '(handle printLine (Nat.toText !tomorrow)
+                    with systemTimeToIO)
 ```
 Or, we can also do:
 
 ```
 printTomorrow'' : '{IO} ()
 printTomorrow'' = '(printLine (Nat.toText
-  (handle systemTimeToIO in !tomorrow)))
+  (handle !tomorrow with systemTimeToIO)))
 ```
 
 ## Trying out a test handler
@@ -768,8 +766,10 @@ Then here's how we run `labelTree`, eliminating both abilities.  We just need tw
 
 ```
 labelledTree : Tree (Text, Nat)
-labelledTree = fst (handle logHandler [] in
-  (handle storeHandler 0 in (labelTree tree)))
+labelledTree = fst (handle
+                     (handle (labelTree tree)
+                      with storeHandler 0)
+                    with logHandler [])
 -- The call to fst just discards the log output.
 ```
 
@@ -781,15 +781,14 @@ We now know how to use and handle abilities.  The last piece of the puzzle is wr
 
 Here's an example.  We'll unpack this piece by piece.
 
-``` ucm
+```ucm:hide
 .> delete.type SystemTime
 .> delete.term tomorrow
 .> delete.term SystemTime.systemTime
 .> move.term builtin.io.systemTimeTemp builtin.io.systemTime
 ```
 
--- TODO hide
-``` unison
+```unison:hide:all
 ability SystemTime where
   -- Number of seconds since the start of 1970.
   systemTime : .builtin.io.EpochTime
@@ -799,12 +798,12 @@ ability SystemTime where
 .> add
 ```
 
-``` unison
+```unison:hide
 systemTimeToIO : Request SystemTime a ->{IO} a
 systemTimeToIO r =
   case r of
     { SystemTime.systemTime -> k } ->
-      handle systemTimeToIO in (k !(.builtin.io.systemTime))
+      handle (k !(.builtin.io.systemTime)) with systemTimeToIO
     { a } -> a
 
 -- We've switched here to having SystemTime.systemTime
@@ -816,7 +815,7 @@ systemTimeToIO r =
 
 What's going on here?  Let's start with a recap of the type signature.
 
-* A `Request A T` is a value representing a computation that requires ability `A` and has return type `T`.  `Request` is a built-in type constructor that ties in to Unison's `handle` mechanism: `handle h in k` is taking the computation `k` which has type `T` and uses ability `A`, building a `Request A T` for it, and passing that to `h`.
+* A `Request A T` is a value representing a computation that requires ability `A` and has return type `T`.  `Request` is a built-in type constructor that ties in to Unison's `handle` mechanism: `handle k with h` is taking the computation `k` which has type `T` and uses ability `A`, building a `Request A T` for it, and passing that to `h`.
 
 * A handler is a function `Request A T -> R` — it takes the computation and boils it down into some return value.  Common cases:
 
@@ -842,7 +841,7 @@ Let's start by unpacking the body of `systemTimeToIO`.
 
 * It's handling this case first by evaluating `k !systemTime`.  This is the sharp end of the handler.  The point of the whole business was to consult the system clock by mapping down to the appropriate `IO` call.  That's what we do here.  Note the `!` to force that call, and how we pass the result straight into `k`, as input for the rest of the computation.  This part uses the `IO` ability, hence the `->{IO}` in the signature of the handler.
 
-* But we're not done yet!  We've only handled one step of the computation.  `k !systemTime` is all of the rest of the steps.  The handler _does_ specify how to handle all these: recursively, with the `handle systemTimeToIO in`.  That converts our effectful computation of return type `T` (in this case type `a`), into a computation of type `R` (in this case also type `a`), which does _not_ use the `SystemTime` ability.
+* But we're not done yet!  We've only handled one step of the computation.  `k !systemTime` is all of the rest of the steps.  The handler _does_ specify how to handle all these: recursively, with the `handle ... with systemTimeToIO`.  That converts our effectful computation of return type `T` (in this case type `a`), into a computation of type `R` (in this case also type `a`), which does _not_ use the `SystemTime` ability.
 
 * The last case of the pattern match, ('the pure case'), `{ a } -> a` is easy.  It's saying 'and when we get to the last step of the computation, take the `a` it returns, and just pass that back directly as the result of the `handle` expression.'
 
@@ -856,11 +855,11 @@ And that's it!  So now let's take a look at some more examples.
 
 Let's revisit the `systemTimeToPure` handler which we were using for testing back in [Trying out a test handler](#trying-out-a-test-handler) TODO check link.  Here's the implementation:
 
-``` unison
+```unison:hide
 systemTimeToPure : [EpochTime] -> Request SystemTime a -> a
 systemTimeToPure xs r = case r of
   { SystemTime.systemTime -> k } -> case xs of
-    x +: rest -> handle (systemTimeToPure rest) in k x
+    x +: rest -> handle (k x) with (systemTimeToPure rest)
   { a } -> a
 ```
 
@@ -872,16 +871,16 @@ The interesting thing here is that the handler is taking a `[Nat]` argument, to 
 
 Now let's see a handler for our ability, `ability Log where log : Text -> ()`, which we met back [here](#log) TODO check link to examples subsection.  This one doesn't try to map it down to file I/O — it's just collecting the log lines and returning them in the handle expression's return value.
 
-``` unison
+```unison:hide
 logHandler : [Text] -> Request Log a -> (a, [Text])
 logHandler ts r =
   case r of
     { Log.log t -> k } ->
-      handle logHandler (t +: ts) in !k
+      handle !k with (logHandler (t +: ts))
     { a } -> (a, ts)
 ```
 
-``` ucm:hide
+```ucm:hide
 .> add
 ```
 
@@ -894,7 +893,7 @@ Again, `logHandler` is being partially applied in the `handle` expression, for t
 
 Remember the `Store` ability from [here](#store) TODO check link to examples subsection:
 
-``` unison
+```unison:hide
 ability Store v where
   get : v
   put : v -> ()
@@ -902,16 +901,16 @@ ability Store v where
 
 Here's the handler for it.
 
-``` unison
+```unison
 storeHandler : v -> Request (Store v) a -> a
 storeHandler storedValue s = case s of
   { Store.get -> k } ->
-    handle storeHandler storedValue in k storedValue
-  { Store.put v -> k } -> handle storeHandler v in !k
+    handle k storedValue with storeHandler storedValue
+  { Store.put v -> k } -> handle !k with storeHandler v
   { a } -> a
 ```
 
-``` ucm:hide
+```ucm:hide
 .> add
 ```
 
@@ -925,7 +924,7 @@ Now let's take a look at a couple of handlers for abilities that affect the prog
 
 Here's the handler for `ability Abort where abort : a`, which we met in [Abort and Exception](#abort-and-exception): TODO check examples link
 
-``` unison
+```unison:hide
 abortToPure : Request Abort a -> Optional a
 abortToPure r = case r of
   { Abort.abort -> k } -> None
@@ -938,12 +937,12 @@ The key point here is that the case for `abort` *does not use `k`*.  Whatever th
 
 So if that was a handler calling the continuation 0 times, what about 2 times?  Let's see a handler for `ability Choice where choose : Boolean`, which we met [here](#choice) TODO check examples link.  This handler runs through a whole tree of possible evolutions of the computation, with a fork at each `choose`, and collects the results in a list.
 
-``` unison
+```unison:hide
 choiceToPure : Request Choice a -> [a]
 choiceToPure r = case r of
   { Choice.choose -> k } ->
-    (handle choiceToPure in k false) ++
-    (handle choiceToPure in k true)
+    (handle k false with choiceToPure) ++
+    (handle k true with choiceToPure)
   { a } -> [a]
 ```
 
@@ -955,21 +954,21 @@ Sometimes, you want to handle an ability without eliminating it — so, passing 
 
 For example, suppose we want a handler that logs the values that a `Store` computation `put`s.
 
-``` unison
+```unison:hide
 storeProxyLog :
   (v -> Text) -> Request (Store v) a ->{Store v, Log} a
 storeProxyLog print r = case r of
   { Store.get -> k } ->
     v = Store.get
-    handle storeProxyLog print in k v
+    handle k v with storeProxyLog print
   { Store.put v -> k } ->
     Log.log ("Put: " ++ print v)
     Store.put v
-    handle storeProxyLog print in !k
+    handle !k with storeProxyLog print
   { a } -> a
 ```
 
-``` ucm:hide
+```ucm:hide
 .> add
 ```
 
@@ -977,17 +976,19 @@ This `Store` handler is itself using `Store`!  And `Log` too.
 
 Take a look at the stack of handlers we end up with in `result` below.
 
-``` unison
+```unison
 computation : '{Store Nat} Nat
 computation = 'let
                 Store.put 42
                 Store.get
 
 result : (Nat, [Text])
-result = handle logHandler [] in
-  (handle storeHandler 0 in
-    (handle storeProxyLog Nat.toText in !computation))
-
+result = handle
+           (handle
+             (handle !computation
+             with storeProxyLog Nat.toText)
+           with storeHandler 0)
+         with logHandler []
 > result
 ```
 
@@ -1001,7 +1002,7 @@ TODO check
 
 So the abilities used by the computation are being transformed step-by-step as follows: `{Store Nat}`, then `{Store Nat, Log}`, then `{Log}`, then `{}`.
 
-> Note we can't just say `handle storeProxyLog print in k Store.get` in the `get` branch: then the `Store.get` would end up being handled by `storeProxyLog`, instead of passed out to the next `Store` handler.
+> Note we can't just say `handle k Store.get with storeProxyLog print` in the `get` branch: then the `Store.get` would end up being handled by `storeProxyLog`, instead of passed out to the next `Store` handler.
 
 Note how, if we wanted it to, `storeProxyLog` would be able to *change* the `v` value that `storeHandler` stores on a `put`, and the value that gets given to the computation on a `get`.
 
