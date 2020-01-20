@@ -51,7 +51,7 @@ Use `docs foo` to print the documentation [associated with](#link) definition `f
 
 ## `find` (and relatives)
 
-The [`find`](#find) command and its relatives ([`find.patch`](#find-patch) and [`find.verbose`](#find-verbose)) can be used to explore the definitions in a Unison codebase.
+The [`find`](#find) command and its relatives ([`find.patch`](#findpatch) and [`find.verbose`](#findverbose)) can be used to explore the definitions in a Unison codebase.
 
 ### `find`
 
