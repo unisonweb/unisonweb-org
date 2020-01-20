@@ -44,3 +44,80 @@ Here's what these reasons mean:
 #### I want to `undo` a partially completed `add` where some of the definitions failed
 
 Just do [`undo`](#undo)!
+
+## `docs`
+
+Use `docs foo` to print the documentation [associated with](#link) definition `foo` (see [documentation literals](language-reference#documentation-literals) to learn more).
+
+## `find` (and relatives)
+
+The [`find`](#find) command and its relatives ([`find.patch`](#find-patch) and [`find.verbose`](#find-verbose)) can be used to explore the definitions in a Unison codebase.
+
+### `find`
+
+With no arguments, the `find` command will list all definitions in the current namespace (including definitions in descendants of the current namespace).
+
+With one or more arguments (e.g., `find foo bar baz`), the command will list definitions in the current namespace with names similar to the arguments:
+
+```unison
+isEmpty : [a] -> Boolean
+isEmpty l = case l of 
+  [] -> true
+  _ -> false
+```
+
+```ucm
+.> find emp
+```
+
+The find command also supports type-driven search:
+
+```ucm
+.> find : [a] -> Boolean
+```
+
+### `find.patch`
+
+Use `find.patch` (or `list.patch` or `ls.patch`) to list all patches in the current namespace.
+
+### `find.verbose`
+
+The `find.verbose` command behaves identically to `find`, except that it includes hashes and aliases in its output:
+
+```ucm
+.> find.verbose emp
+```
+
+## `help`
+
+Issue this command (or `?`) to display UCM's built-in command reference.
+
+## `link`
+
+> 🚧  Unfortunately, this document is currently under construction. Check back later!
+
+## `pull`
+
+The `pull` command is used to pull definitions from another Unison codebase into the current codebase. When a codebase is initialized, the user is advised to pull a "base library" (usually the canonical base library at http://github.com/unisonweb/base):
+
+```
+.> pull https://github.com/unisonweb/base .base
+```
+
+The first argument to `pull` identifies the codebase to pull from, and the second argument (if given) identifies a namespace that the remote codebase will be merged into. If a second argument is not supplied, then the remote codebase will be merged into the current namespace.
+
+## `quit`
+
+Use `quit` (or `exit` or `:q`) to terminate UCM.
+
+## `undo`
+
+Use `undo` to revert the most recent change to the codebase.
+
+## `update`
+
+> 🚧  Unfortunately, this document is currently under construction. Check back later!
+
+## Other commands (coming soon!)
+
+> 🚧  Unfortunately, this document is currently under construction. Check back later!
