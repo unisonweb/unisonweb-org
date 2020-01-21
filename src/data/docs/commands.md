@@ -23,12 +23,13 @@ Adds `x` to the root namespace. If we first `cd foo.bar`, then the `add` creates
 This message happens when some of the definitions couldn't be added to the codebase. UCM shows a table of definitions along with the reason why they didn't succeed, like this:
 
 ```
-  x These definitions failed:
+x These definitions failed:
 
     Reason
     needs alias   List.sum   : [Nat] -> Nat
 
     Tip: Use `help filestatus` to learn more.
+
 ```
 
 Here's what these reasons mean:
@@ -61,19 +62,25 @@ With one or more arguments (e.g., `find foo bar baz`), the command will list def
 
 ```unison
 isEmpty : [a] -> Boolean
-isEmpty l = case l of 
+isEmpty l = case l of
   [] -> true
   _ -> false
 ```
 
 ```ucm
 .> find emp
+
+  1. isEmpty : [a] -> Boolean
+
 ```
 
 The find command also supports type-driven search:
 
 ```ucm
 .> find : [a] -> Boolean
+
+  1. isEmpty : [a] -> Boolean
+
 ```
 
 ### `find.patch`
@@ -86,6 +93,10 @@ The `find.verbose` command behaves identically to `find`, except that it include
 
 ```ucm
 .> find.verbose emp
+
+  1. -- #bs08eqa1ukvve64fh71sqp406jf73c8s6c3v8ltg1ucqre10lcq32qk45sf8pgrfrctstbldlm4m7mscnk9vkra2ohcpmqqhtprb9jo
+     isEmpty : [a] -> Boolean
+
 ```
 
 ## `help`
@@ -100,8 +111,9 @@ Issue this command (or `?`) to display UCM's built-in command reference.
 
 The `pull` command is used to pull definitions from another Unison codebase into the current codebase. When a codebase is initialized, the user is advised to pull a "base library" (usually the canonical base library at http://github.com/unisonweb/base):
 
-```
+```ucm
 .> pull https://github.com/unisonweb/base .base
+
 ```
 
 The first argument to `pull` identifies the codebase to pull from, and the second argument (if given) identifies a namespace that the remote codebase will be merged into. If a second argument is not supplied, then the remote codebase will be merged into the current namespace.
@@ -114,7 +126,7 @@ Use `quit` (or `exit` or `:q`) to terminate UCM.
 
 Use `undo` to revert the most recent change to the codebase.
 
-## `update`
+## `update
 
 > 🚧  Unfortunately, this document is currently under construction. Check back later!
 
