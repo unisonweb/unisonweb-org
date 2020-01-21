@@ -47,7 +47,7 @@ Just do [`undo`](#undo)!
 
 ## `docs`
 
-Use `docs foo` to print the documentation [associated with](#link) definition `foo` (see [documentation literals](language-reference#documentation-literals) to learn more).
+Use `docs foo` to print the documentation [associated with](#link) definition `foo` (see [documentation literals](/language-reference#documentation-literals) to learn more).
 
 ## `find` (and relatives)
 
