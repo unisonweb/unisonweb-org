@@ -24,7 +24,7 @@ ability SystemTime where
 
 It defines one **operation**, `systemTime`, which returns the system clock reading.
 
-Now let's write some code that uses that operation to make a **request**.
+Now let's write some code that uses that operation.
 
 ```unison:hide
 tomorrow = '(SystemTime.systemTime + 24 * 60 * 60)
@@ -40,7 +40,7 @@ If we add this function to the codebase we see that its requirement to have the 
 
 Notice the mention of `SystemTime` in the type signature.
 
-We can combine requests to different abilities in the same function.  For example...
+We can combine operations from different abilities in the same function.  For example...
 
 ```unison:hide
 -- We'll explain the usage of ' and ! in the
@@ -49,28 +49,28 @@ printTomorrow : '{IO, SystemTime} ()
 printTomorrow = '(printLine (Nat.toText !tomorrow))
 ```
 
-`IO` is a special ability, built in to Unison.  It's through `IO` that **effectful** Unison programs can actually interact with the outside world - writing to the console, reading from files and sockets, and any other behavior that goes beyond simply evaluating Unison expressions to a result.  When you run your program (for example using `ucm`'s `execute` command), requests in the `IO` ability are handled by the Unison runtime system.
+```ucm:hide
+.> add
+```
+
+`IO` is a special ability, built in to Unison.  It's through `IO` that **effectful** Unison programs can actually interact with the outside world - writing to the console, reading from files and sockets, and any other behavior that goes beyond simply evaluating Unison expressions to a result.  When you run your program (for example using `ucm`'s `run` command), operations from the `IO` ability are handled by the Unison runtime system.
 
 We'll learn more about `IO`, and other interesting abilities, in [Examples of abilities](#examples-of-abilities).
 
-Any abilities *other* than `IO` need to be handled by your code.  We can't ask `execute` to run our `printTomorrow : '{IO, SystemTime} ()` function - `execute` only accepts functions of type `'{IO}`
+Any abilities *other* than `IO` need to be handled by your code.  We can't ask `run` to run our `printTomorrow : '{IO, SystemTime} ()` function - `run` only accepts functions of type `'{IO} ()`
 
 Here's how we can **eliminate** the `SystemTime` ability, in order to be able to run our code.
 
+```unison:hide:all
+systemTime : '{IO} EpochTime
+systemTime = .base.io.systemTimeTemp
 ```
--- This function is accepted by the 'execute' ucm command.
-printTomorrow' : '{IO} ()
-printTomorrow' = '(handle !printTomorrow with systemTimeToIO)
+
+```ucm:hide
+.builtin'.io> add
 ```
 
-Here we've formed a **handle expression**, invoking a **handler** called `systemTimeToIO`, which converts our original `printTomorrow` function into one which doesn't require the `SystemTime` ability.
-
-We'll see more in the section [Invoking handlers](#invoking-handlers).
-
-Here's how that handler looks - it's converting the `SystemTime.systemTime` operation into a raw `IO` operation which is understood directly by the Unison runtime.  (Why not just use `IO` directly?  Because it's too low-level, and 'too powerful'.  Full reasoning is given in [Using abilities](#IO).  TODO check link)
-
---TODO check the following against the version that comes later
-```
+```unison:hide
 systemTimeToIO : Request SystemTime a ->{IO} a
 systemTimeToIO r =
   case r of
@@ -78,6 +78,30 @@ systemTimeToIO r =
       let epochTimeToNat e = case e of EpochTime.EpochTime n -> n
           handle k (epochTimeToNat !systemTime) with systemTimeToIO
     { a } -> a
+```
+
+```ucm:hide
+.> add
+```
+
+```unison:hide
+-- This function is accepted by the 'run' ucm command.
+printTomorrow' : '{IO} ()
+printTomorrow' = '(handle !printTomorrow with systemTimeToIO)
+```
+
+```ucm:hide
+.> add
+```
+
+Here we've formed a **handle expression**, invoking a **handler** called `systemTimeToIO`, which converts our original `printTomorrow` function into one which doesn't require the `SystemTime` ability.
+
+We'll see more in the section [Invoking handlers](#invoking-handlers).
+
+Here's how that handler looks - it's converting the `SystemTime.systemTime` **request** into a raw `IO` request which is understood directly by the Unison runtime.  (Why not just use `IO` directly?  Because it's too low-level, and 'too powerful'.  Full reasoning is given in [Using abilities](#IO).)
+
+```ucm
+.> view systemTimeToIO
 ```
 
 The handler is pattern matching on the request, handling each operation declared by the ability, plus the 'pure case' (the last line).  It's using a **continuation** (`k`) to control how the remainder of the code continues after the request.
@@ -96,13 +120,20 @@ Why does Unison have abilities, when so many languages get by without them?
 
 One important reason is that when our functions have effectful behaviors like storing state or doing disk I/O, we want to make that visible in their type signatures.  Here's an example of why this is useful.
 
-Suppose we're faced with this code:
+```unison:hide:all
+writeLog = x -> x
+g = x -> x
 ```
+```ucm:hide
+.> add
+```
+Suppose we're faced with this code:
+```unison:hide
 f x = 2 * (g x)
 ```
 Then later we come back and we find that a well-intentioned friend has changed our code to the following.
 
-```
+```unison:hide
 f x = writeLog (g x)
       2 * (g x)
 ```
@@ -126,7 +157,7 @@ The design of Unison's ability system comes out of recent research in the theory
 
 # Using abilities
 
-OK, let's get started.  We're going to return to the example from the [Introduction](#introduction)  TODO check link, but step through it more thoroughly.
+OK, let's get started.  We're going to return to the example from the [Introduction](#introducing-abilities), but step through it more thoroughly.
 
 Here's the declaration of the `SystemTime` ability, which lets us write code that can read the system clock.
 
@@ -144,7 +175,7 @@ tomorrow = '(SystemTime.systemTime + 24 * 60 * 60)
 
 This code is making a request using the `SystemTime.systemTime` operation.  Notice also the delay, that is, the use of the `'`.
 
-> 🐘 Remember that when an expression `e` has type `t`, `'e` has type `() -> e` — that is, a function which takes an argument of the unit type, and returns an `e`.  See [delayed computations](#delayed-computations) (TODO check link) for more detail.
+> 🐘 Remember that when an expression `e` has type `t`, `'e` has type `() -> e` — that is, a function which takes an argument of the unit type, and returns an `e`.  See [delayed computations](/docs/language-reference#delayed-computations) for more detail.
 
 We're using the `'` to turn `tomorrow` into a function rather than just a regular value.  That's because it's only in the process of a function doing some computation that it makes sense to make a request using an ability.  A value can't do it — it's just sitting there, with no more computation to do.
 
@@ -169,13 +200,16 @@ Here's the key point to remember:
 
 If we add `tomorrow` to the codebase, Unison tells us it's inferred the following signature:
 
-TODO check
+```ucm:hide
+.> delete.term printTomorrow'
+.> delete.term printTomorrow
 ```
-tomorrow : '{SystemTime} Nat
-```
-> 🐘 Again, that `'` is syntactic sugar for delayed function types — this signature is equivalent to `() ->{SystemTime} Nat`.
 
-> 🐞 You may see a `∀` in the signature, due to Unison issue [#689](https://github.com/unisonweb/unison/issues/689).
+```ucm
+.> find tomorrow
+```
+
+> 🐞 The `∀` in the signature is due to Unison issue [#689](https://github.com/unisonweb/unison/issues/689) - ideally it would be shown as `'{SystemTime} Nat`.
 
 The `{SystemTime}` is an **ability list** — in this case a list of just one ability.  It's saying that `tomorrow` _requires_ the `SystemTime` ability — that ability needs to be _available_ in functions that call `tomorrow`.  And it's also saying that the `SystemTime` ability is available for use within the definition of `tomorrow` itself.  If a function of type `'Nat` tried to make a `SystemTime.systemTime` request, Unison would reject it with an 'ability check failure': the ability required for that request is not in the set of *ambient abilities* (which is empty in this case).
 
@@ -291,18 +325,6 @@ And then we have one or more functions to wrap that logic, invoking handlers to 
 ```
 orderServer : ServerConfig ->{IO} ()
 ```
-
-> ### Executing a Unison program
->
-> Here's the help for `ucm`'s `execute` command.
-> ```
-> .> help execute
->
->   `execute foo` evaluates the Unison expression
->   `foo` of type `()` with access to the `IO` ability.
-> ```
->
-> This shows us that we *need* to collapse our functions down to something like `orderServer`, so Unison knows how to run them.
 
 ## `Log`
 
@@ -429,6 +451,7 @@ So far we've seen functions whose types include one ability list, like so:
 ```
 orderServer : ServerConfig ->{IO} ()
 ```
+
 But the following is also possible:
 
 ```
@@ -455,7 +478,6 @@ Unison can do two levels of type inference for you.  The first is to infer the c
 
 ```unison
 retries = 3
--- inferred type: Nat
 ```
 
 The second is to infer ability lists, wherever you have left them unspecified.
@@ -464,7 +486,6 @@ The second is to infer ability lists, wherever you have left them unspecified.
 incrementP : Nat -> Nat
 incrementP x = io.printLine "incrementP"
                x + 1
--- inferred type: Nat ->{IO} Nat
 ```
 
 Unison can see, from the use of `io.printLine`, that `incrementP` requires the `IO` ability.
@@ -489,9 +510,24 @@ So in particular, this means that
 
 Here's how Unison infers the type of `List.map`, a higher-order function:
 
+```unison:hide:all
+-- we haven't pulled base
+base.List.map : (a ->{𝕖} b) -> [a] ->{𝕖} [b]
+base.List.map f a =
+  go i as acc =
+    case List.at i as of
+      None -> acc
+      Some a ->
+        use Nat +
+        go (i + 1) as (acc :+ f a)
+  go 0 a []
 ```
-List.map : (a -> b) -> [a] -> [b]
--- inferred type: (a ->{𝕖} b) -> [a] ->{𝕖} [b]
+```ucm:hide
+.> add
+```
+
+```ucm
+.> find List.map
 ```
 
 It's added ability lists including a type variable, `𝕖`, in a process called **ability generalization**.  This is saying that, whatever the required abilities of the input function, the overall invocation of `map` will have the same requirements.
@@ -621,8 +657,6 @@ orderServer' sc unit =
 
 The problem with this is that by the time we've given `orderServer'` that `unit` argument, we've got on to the second arrow — the one that only allows us the `IO` ability.  So we can't use `log` in the function definition.  (If Unison allowed this, then partially applying `orderServer'` would yield a function of type `'{IO} ()` that uses the `Log` ability.)
 
-🐞 Umm, actually at the moment the above does compile, wrongly ☹️  This is due to Unison issue [#745](https://github.com/unisonweb/unison/issues/745).
-
 To define this function, we need to process one argument at a time, and at each stage only use the abilities that argument's arrow (the one on its right) gives us.  Here's a correct definition:
 
 ```unison:hide
@@ -652,9 +686,8 @@ First observation: we can treat a handler just like a regular function.  The onl
 
 Now let's remember our simple function from earlier, which uses `SystemTime`.
 
-```unison:hide
-tomorrow : '{SystemTime} Nat
-tomorrow = '(SystemTime.systemTime + 24 * 60 * 60)
+```ucm
+.> view tomorrow
 ```
 
 And now suppose we want to print the result to the console.  How can we do that?  Here's a good start:
@@ -664,33 +697,41 @@ printTomorrow : '{IO, SystemTime} ()
 printTomorrow = '(printLine (Nat.toText !tomorrow))
 ```
 
+```ucm:hide
+.> add
+```
+
 Notice we've already introduced some `IO`, before even eliminating `SystemTime`, to print the result to the console.
 
 We can't run `printTomorrow` yet.
 
--- TODO check
-```
-.> execute !printTomorrow
-
-  The expression in red needs these abilities: {.base.io.IO,
-  SystemTime}, but this location only has access to the
-  {.base.io.IO} ability,
-
-      1 | main_ = !printTomorrow
+```ucm:error
+.> run printTomorrow
 ```
 
-`execute` can only help us eliminate `IO` — any other ability we need to `handle` ourselves.  Here's how...
+`run` can only help us eliminate `IO` — any other ability we need to `handle` ourselves.  Here's how...
 
-```
+```unison:hide
 printTomorrow' : '{IO} ()
 printTomorrow' = '(handle !printTomorrow with systemTimeToIO)
 ```
 
+```ucm:hide
+.> add
+```
+
 That works! 👍
 
+```ucm
+.> run printTomorrow'
 ```
-.> execute !printTomorrow'
-5638144744800
+
+```unison:hide:all
+-- workaround for #1172, mock up the run output
+```
+
+```
+5687036794800
 ```
 
 Notice in the function definition, we needed to force `printTomorrow`, turning it into `{IO, SystemTime} ()`, then delay the result again to get a `'{IO} ()`.  The intuition here is that you need to make `printTomorrow` actually _do_ its stuff, in order to handle the `SystemTime` requests it throws out — but that you need to delay the result because you can't have `printTomorrow'` doing `IO` requests except under a delay.
@@ -701,14 +742,14 @@ So now we can use a handler to execute code that uses abilities!
 
 There's something slightly unsatisfying about our definition of `printTomorrow` — its signature `'{IO, SystemTime} ()` tells us it needs _both_ abilities, but we wanted to _swap_ out `SystemTime` and replace it with `IO`.  We can smarten it up a bit by splicing the definition of `printTomorrow` into `printTomorrow'`.
 
-```
+```unison:hide
 printTomorrow'' : '{IO} ()
 printTomorrow'' = '(handle printLine (Nat.toText !tomorrow)
                     with systemTimeToIO)
 ```
 Or, we can also do:
 
-```
+```unison:hide
 printTomorrow'' : '{IO} ()
 printTomorrow'' = '(printLine (Nat.toText
   (handle !tomorrow with systemTimeToIO)))
@@ -741,6 +782,27 @@ Awesome! 💥
 
 Suppose our `labelTree` function from earlier reported its progress to a log.
 
+```unison:hide:all
+type Tree a = Branch (Tree a) a (Tree a) | Leaf
+```
+```ucm:hide
+.> add
+```
+```unison:hide:all
+-- hide these to avoid showing all the empty implementations
+labelTree : Tree a ->{Store Nat, Log} Tree (a, Nat)
+labelTree = todo
+logHandler : [Text] -> Request Log a -> (a, [Text])
+logHandler = todo
+storeHandler : v -> Request (Store v) a -> a
+storeHandler = todo
+fst : (a, b) -> a
+fst x = case x of (a, b) -> a
+```
+```ucm:hide
+.> add
+```
+
 ```
 labelTree : Tree a ->{Store Nat, Log} Tree (a, Nat)
 ```
@@ -762,15 +824,20 @@ tree = Branch Leaf "Hi!" Leaf
 fst : (a, b) -> a
 ```
 
-Then here's how we run `labelTree`, eliminating both abilities.  We just need two nested handle expressions.
+Then here's how we use `labelTree`, eliminating both abilities.  We just need two nested handle expressions.
 
-```
-labelledTree : Tree (Text, Nat)
-labelledTree = fst (handle
-                     (handle (labelTree tree)
-                      with storeHandler 0)
-                    with logHandler [])
+```unison:hide
+labelledTree : Tree Text -> Tree (Text, Nat)
+labelledTree tree = fst (handle
+                          (handle (labelTree tree)
+                           with storeHandler 0)
+                         with logHandler [])
 -- The call to fst just discards the log output.
+```
+
+```ucm:hide
+.> delete.term logHandler
+.> delete.term storeHandler
 ```
 
 Note that we could equally well have swapped the order we handle the two abilities.
@@ -783,7 +850,10 @@ Here's an example.  We'll unpack this piece by piece.
 
 ```ucm:hide
 .> delete.type SystemTime
+.> delete.term printTomorrow'
+.> delete.term printTomorrow
 .> delete.term tomorrow
+.> delete.term systemTimeToIO
 .> delete.term SystemTime.systemTime
 .> move.term builtin.io.systemTimeTemp builtin.io.systemTime
 ```
@@ -811,7 +881,6 @@ systemTimeToIO r =
 -- the builtin io.systemTime returns and so make things
 -- convenient.
 ```
--- TODO check above
 
 What's going on here?  Let's start with a recap of the type signature.
 
@@ -853,7 +922,7 @@ And that's it!  So now let's take a look at some more examples.
 
 ### Feeding in information via a pure handler
 
-Let's revisit the `systemTimeToPure` handler which we were using for testing back in [Trying out a test handler](#trying-out-a-test-handler) TODO check link.  Here's the implementation:
+Let's revisit the `systemTimeToPure` handler which we were using for testing back in [Trying out a test handler](#trying-out-a-test-handler).  Here's the implementation:
 
 ```unison:hide
 systemTimeToPure : [EpochTime] -> Request SystemTime a -> a
@@ -865,11 +934,11 @@ systemTimeToPure xs r = case r of
 
 The interesting thing here is that the handler is taking a `[Nat]` argument, to give it a list of values to feed out each time there's a call to `systemTime`.  Note how the handler is partially applied in the handle expression, `(systemTimeToPure rest)`.
 
-> Note how the case statement fails to handle receiving an empty list `xs`.  Perhaps a better choice would be for the handler to use `Abort` to cover this case — see the [exercises](#exercises) TODO check link.
+> Note how the case statement fails to handle receiving an empty list `xs`.  Perhaps a better choice would be for the handler to use `Abort` to cover this case — see the [exercises](#exercises).
 
 ### Handling `Log`
 
-Now let's see a handler for our ability, `ability Log where log : Text -> ()`, which we met back [here](#log) TODO check link to examples subsection.  This one doesn't try to map it down to file I/O — it's just collecting the log lines and returning them in the handle expression's return value.
+Now let's see a handler for our ability, `ability Log where log : Text -> ()`, which we met back [here](#log).  This one doesn't try to map it down to file I/O — it's just collecting the log lines and returning them in the handle expression's return value.
 
 ```unison:hide
 logHandler : [Text] -> Request Log a -> (a, [Text])
@@ -891,7 +960,7 @@ Again, `logHandler` is being partially applied in the `handle` expression, for t
 
 ### Handling `Store`
 
-Remember the `Store` ability from [here](#store) TODO check link to examples subsection:
+Remember the `Store` ability from [here](#store):
 
 ```unison:hide
 ability Store v where
@@ -901,7 +970,7 @@ ability Store v where
 
 Here's the handler for it.
 
-```unison
+```unison:hide
 storeHandler : v -> Request (Store v) a -> a
 storeHandler storedValue s = case s of
   { Store.get -> k } ->
@@ -922,7 +991,7 @@ Now let's take a look at a couple of handlers for abilities that affect the prog
 
 ### Handling `Abort`
 
-Here's the handler for `ability Abort where abort : a`, which we met in [Abort and Exception](#abort-and-exception): TODO check examples link
+Here's the handler for `ability Abort where abort : a`, which we met in [Abort and Exception](#abort-and-exception):
 
 ```unison:hide
 abortToPure : Request Abort a -> Optional a
@@ -935,7 +1004,7 @@ The key point here is that the case for `abort` *does not use `k`*.  Whatever th
 
 ### Handling `Choice`
 
-So if that was a handler calling the continuation 0 times, what about 2 times?  Let's see a handler for `ability Choice where choose : Boolean`, which we met [here](#choice) TODO check examples link.  This handler runs through a whole tree of possible evolutions of the computation, with a fork at each `choose`, and collects the results in a list.
+So if that was a handler calling the continuation 0 times, what about 2 times?  Let's see a handler for `ability Choice where choose : Boolean`, which we met [here](#choice).  This handler runs through a whole tree of possible evolutions of the computation, with a fork at each `choose`, and collects the results in a list.
 
 ```unison:hide
 choiceToPure : Request Choice a -> [a]
@@ -946,7 +1015,7 @@ choiceToPure r = case r of
   { a } -> [a]
 ```
 
-> This is the first handler we've seen where the call to `handle` is not in tail position — i.e. where the return value of `handle` still needs some further processing (with `++`) before returning.  Recursive calls in tail position can be made any number of times in sequence, while still using constant space (because the function's stack frame can be reused from call to call).  `choiceToPure` does not have this property.  In this case that's probably fine — if you're handling a computation that makes a long sequence of calls to `choose`, you're likely to run into the exponential growth of the `[a]` list before the linear growth of the handler stack troubles you.  (See the [exercises](#exercises) TODO check link... to try writing a handler that does random sampling instead of accumulating all possible results.)
+> This is the first handler we've seen where the call to `handle` is not in tail position — i.e. where the return value of `handle` still needs some further processing (with `++`) before returning.  Recursive calls in tail position can be made any number of times in sequence, while still using constant space (because the function's stack frame can be reused from call to call).  `choiceToPure` does not have this property.  In this case that's probably fine — if you're handling a computation that makes a long sequence of calls to `choose`, you're likely to run into the exponential growth of the `[a]` list before the linear growth of the handler stack troubles you.  (See the [exercises](#exercises) to try writing a handler that does random sampling instead of accumulating all possible results.)
 
 ## The proxy handler pattern
 
@@ -992,14 +1061,6 @@ result = handle
 > result
 ```
 
-TODO check
-```
-    9  | > result
-           ⧩
-           (42, ["Put: 42"])
-
-```
-
 So the abilities used by the computation are being transformed step-by-step as follows: `{Store Nat}`, then `{Store Nat, Log}`, then `{Log}`, then `{}`.
 
 > Note we can't just say `handle k Store.get with storeProxyLog print` in the `get` branch: then the `Store.get` would end up being handled by `storeProxyLog`, instead of passed out to the next `Store` handler.
@@ -1032,7 +1093,7 @@ Great work! 👍
 
 Here are some ideas for exercises to get you fluent in working with abilities.  In each case, be sure to actually try running your code!
 
-1. Write an ability `ConsoleIO`, and a handler for it of type `Request ConsoleIO a ->{IO} a` that uses `getLine` and `putLine`.  Write a program of type `'{ConsoleIO} Text`.  TODO check all links below: writing handlers, examples, writing, writing
+1. Write an ability `ConsoleIO`, and a handler for it of type `Request ConsoleIO a ->{IO} a` that uses `getLine` and `putLine`.  Write a program of type `'{ConsoleIO} Text`.
 
 2. Write a handler for `Log` that writes to file.  Write a program of type `'{Log} ()` and try running it first with your handler, and then with the `logHandler` from [Handling Log](#handling-log).
 
