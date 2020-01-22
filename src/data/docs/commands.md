@@ -126,7 +126,7 @@ Use `quit` (or `exit` or `:q`) to terminate UCM.
 
 Use `undo` to revert the most recent change to the codebase.
 
-## `update
+## `update`
 
 > 🚧  Unfortunately, this document is currently under construction. Check back later!
 
