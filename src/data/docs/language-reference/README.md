@@ -525,7 +525,7 @@ An expression can appear _delayed_ as `'e`, which is the same as `_ -> e`. If `e
 
 If `c` is a delayed computation, it can be _forced_ with `!c`, which is the same as `c ()`. The expression `c` must conform to a type `() -> t` for some type `t`, in which case `!c` has type `t`.
 
-Delayed computations are important for writing expressions that require [abilities](/docs/language-reference/abilities). For example:
+Delayed computations are important for writing expressions that require [abilities](#abilities-and-ability-handlers). For example:
 
 ``` unison
 use io
@@ -538,7 +538,7 @@ program = 'let
 
 ```
 
-This example defines a small I/O program. The type `{IO} ()` by itself is not allowed as the type of a top-level definition, since the `IO` ability must be provided by a handler, see [abilities and ability handlers](/docs/language-reference/abilities)). Instead, `program` has the type `'{IO} ()` (note the `'` indicating a delayed computation). Inside a handler for `IO`, this computation can be forced with `!program`.
+This example defines a small I/O program. The type `{IO} ()` by itself is not allowed as the type of a top-level definition, since the `IO` ability must be provided by a handler, see [abilities and ability handlers](#abilities-and-ability-handlers)). Instead, `program` has the type `'{IO} ()` (note the `'` indicating a delayed computation). Inside a handler for `IO`, this computation can be forced with `!program`.
 
 Inside the program, `!readLine` has to be forced, as the type of `io.readLine` is `'{IO} Text`, a delayed computation which, when forced, reads a line from standard input.
 
@@ -697,7 +697,7 @@ An _ability pattern_ only appears in an _ability handler_ and has one of two for
 1. `{C p1 p2 ... pn -> k}` where `C` is the name of an ability constructor in scope, and `p1` through `pn` are patterns such that `n` is the arity of `C`. Note that `n` may be zero. This pattern matches if the scrutinee reduces to a fully applied invocation of the ability constructor `C` and the patterns `p1` through `pn` match the arguments to the constructor.  The scrutinee must be of type `Request A T` for some ability `{A}` and type `T`. The variable `k` will be bound to the continuation of the program. If the scrutinee has type `Request A T` and `C` has type `X ->{A} Y`, then `k` has type `Y -> {A} T`.
 2. `{p}` where `p` is a pattern. This matches the case where the computation is _pure_ (the value of type `Request A T` calls none of the constructors of the ability `{A}`). A pattern match on an `Request` is not complete unless this case is handled.
 
-See the section on [abilities and ability handlers](/docs/language-reference/abilities) for examples of ability patterns.
+See the section on [abilities and ability handlers](#abilities-and-ability-handlers) for examples of ability patterns.
 
 #### Guard patterns
 
@@ -885,7 +885,7 @@ A function type in Unison like `A -> B` is really syntactic sugar for a type `A 
 
 If a function `f` calls in its implementation another function requiring ability set `{A}`, then `f` will require `A` in its ability set as well. If `f` also calls a function requiring abilities `{B}`, then `f` will require abilities `{A,B}`.
 
-Stated the other way around, `f` can only be called in contexts where the abilities `{A,B}` are available. Abilities are provided by `handle` blocks. See the [Ability Handlers](/docs/language-reference/abilities/#ability-handlers) section below. The only exception to abilities being provided by handlers is the built-in provider of the `IO` ability in the Unison runtime.
+Stated the other way around, `f` can only be called in contexts where the abilities `{A,B}` are available. Abilities are provided by `handle` blocks. See the [Ability Handlers](#ability-handlers) section below. The only exception to abilities being provided by handlers is the built-in provider of the `IO` ability in the Unison runtime.
 
 ### User-defined abilities
 
