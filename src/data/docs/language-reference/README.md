@@ -278,7 +278,7 @@ The following names are reserved by Unison and cannot be used as identifiers: `=
 
 During typechecking, Unison substitutes free variables in an expression by looking them up in an environment populated from a _codebase_ of available definitions. A Unison codebase is a database of term and type definitions, indexed by [hashes](#hashes) and names.
 
-A name in the environment can refer to either terms or types, or both (a type name can never be confused with a term name). 
+A name in the environment can refer to either terms or types, or both (a type name can never be confused with a term name).
 
 #### Suffix-based name resolution
 
@@ -400,32 +400,34 @@ Documentation blocks have type `Doc` (documentation is a first-class value in th
 
 ```unison
 List.take.apiDocs : Doc
-List.take.apiDocs = [: 
+List.take.apiDocs = [:
 `@List.take n [1,2,3]` returns the first `n` elements of
-a list. This is efficient and takes just `O(log n)`.
+a list. This is efficient and takes just `O(log n)` operations.
 
 ## Example
 
-@[source]   examples.List.take.ex1
-⧩
-@[evaluate] examples.List.take.ex1
+  @[source]   examples.List.take.ex1
+  ⧩
+  @[evaluate] examples.List.take.ex1
 
 ## Also see
 
-* The `@List` type
-* The `@[signature] List.drop` function
-* More about finger trees (used to implement `@List`) here: `@docs.fingerTrees`
+  * The `@List` type
+  * The `@[signature] List.drop` function
+  * More about finger trees (used to implement `@List`) here: `@docs.fingerTrees`
 :]
 
 ```
 
 More specifically, within the block:
 
-* Links to definitions are done with `@List.` ` \@` is used to escape the `@` symbol.
+* Links to definitions are done with `@List.` ` \@` is used to escape the `@` symbol (and ` \:]` to escape the `:]` sequence).
 * `@[signature] List.take` expands to the type signature of List.take
 * `@[source] List.map` expands to the full source of List.map
 * `@[include] someOtherDoc`, inserts a value `someOtherDoc : Doc` here.
 * `@[evaluate] someDefinition` expands to the result of evaluating `someDefinition`, which must be a pre-existing definition in the codebase (it can't be an arbitrary expression).
+
+When Unison outputs a doc, it word-wraps paragraphs to fit the output width - where a paragraph is taken to be any sequence of non-indented lines.  So you can prevent the wrapping, for a given line, by indenting that line relative to the rest of the doc.
 
 #### Escape sequences
 
@@ -455,7 +457,7 @@ Unison does not currently support block comments. A comment can span multiple li
 
 A type annotation has the form `e:T` where `e` is an expression and `T` is a type. This tells Unison that `e` should be of type `T` (or a subtype of type `T`), and Unison will check whether this is true. It's a type error for the actual type of `e` to be anything other than a type that conforms to `T`.
 
-### Parenthesized expressions 
+### Parenthesized expressions
 
 Any expression can appear in parentheses, and an expression `(e)` is the same as the expression `e`. Parentheses can be used to delimit where an expression begins and ends. For example `(f : P -> Q) y` is an application of the function `f` of type `P -> Q` to the argument `y`. The parentheses are needed to tell Unison that `y` is an argument to `f`, not a part of the type annotation expression.
 
@@ -672,7 +674,7 @@ lastTwo : [a] -> Optional (a,a)
 lastTwo a = case a of
   start ++ [a,a2] -> Some (a,a2)
   _ -> None
-  
+
 firstTwo : [a] -> Optional (a,a)
 firstTwo a = case a of
   [a,a2] ++ rest -> Some (a,a2)
@@ -865,7 +867,7 @@ Unison has the following built-in type constructors.
 
 ### User-defined types
 
-New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-reference/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor. 
+New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-reference/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor.
 
 <a id="abilities"></a>
 
@@ -943,7 +945,7 @@ abortHandler a e = case e of
    { x } -> x
 
 p : Nat
-p = handle 
+p = handle
       x = 4
       Abort.aborting
       x + 2
