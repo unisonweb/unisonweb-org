@@ -42,12 +42,7 @@ Let's get started! This tutorial has some (optional, extremely fun) exercises, w
 
 ## Usage of abilities and ability checking
 
-As we've seen, ability requirements are part of Unison's type system. Functions like `greet` that do `IO` (like `printLine`, which prints a line to the console) indicate this fact in their type signature:
-
-```greet
-: Text ->{IO} ()
-
-```
+As we've seen, ability requirements are part of Unison's type system. Functions like `greet : Text ->{IO} ()` that do `IO` (like `printLine`, which prints a line to the console) indicate this fact in their type signature.
 
 A function can have 0 or more abilities inside the `{}`, separated by commas if there's more than one, and a function that requires no abilities is sometimes called _pure_. If we try to give `greet` a type signature that says it's pure, we'll get a type error called an _ability check failure_ because the function's implementation still requires `IO` but its type doesn't make that ability available:
 
