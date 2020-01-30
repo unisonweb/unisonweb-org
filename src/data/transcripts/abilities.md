@@ -1,6 +1,6 @@
 ---
 title: Abilities in Unison
-description: Unison provides a convenient feature called _abilities_ which lets you use the same ordinary Unison syntax for programs that do I/O, stream processing, parsing, distributed computation, and lots more.
+description: Unison's type system tracks which functions can do I/O, and the same language feature, called _abilities_ can be used for many other things, too. This is a tutorial on abilities.
 ---
 
 # Abilities in Unison
@@ -55,7 +55,7 @@ If you _don't_ want this inference, just add a `{..}` to the arrow (as in `->{}`
 
 ### Ability polymorphism
 
-Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We call such functions _ability polymorphic_ (or "ability parametric"). For instance, here's the definition and signature of `List.map`:
+Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We say such functions _ability polymorphic_ (or "ability parametric"). For instance, here's the definition and signature of `List.map`:
 
 ```unison:hide
 List.map : (a ->{m} b) -> [a] ->{m} [b]
@@ -108,7 +108,7 @@ Stream.range n m =
 .abilities> add
 ```
 
-This declaration introduces the function `Stream.emit ` which has exactly the type provided in the ability declaration: `e ->{Stream e} ()` so calling `emit` requires the `Stream e` ability. We call `emit` one of the _operations_ of the ability. In general, an ability declaration can have any number of operations in it.
+This declaration introduces the function `Stream.emit ` which has exactly the type provided in the ability declaration: `e ->{Stream e} ()` so calling `emit` requires the `Stream e` ability. We say that `emit` is one of the _operations_ of the ability. In general, an ability declaration can have any number of operations in it.
 
 The `Stream.range` example shows how we can use `emit` to produce streams. We can think of the calls to `emit` as suspending the computation and requesting that the `emit` operation be handled by an external piece of code that will interpret the `emit` and (if it wants) resume the computation.
 
@@ -134,9 +134,9 @@ What's happening here?
 * `handle !stream with ... h []` says to start evaluating the `stream` computation and if it makes any requests, pass them to the handler `h []`".
   * `h []` is just a partial application of the function `h`, `h []` will have type `Request {Stream a} () -> [a]`.
 * Let's look now at the body of `h`, the `case req of ...` part:
-  * In the line `{Stream.emit e -> resume}`, think of `resume` as a function which represents "the rest of the computation"  (or _continuation_) after the point in the code where the request was made. The name `resume` here isn't special, we could call it `k`, `frobnicate`, or even `_` if we planned to ignore the continuation and never resume the computation.
+  * In the line `{Stream.emit e -> resume}`, think of `resume` as a function which represents "the rest of the computation"  (or _continuation_) after the point in the code where the request was made. The name `resume` here isn't special, we could name it `k`, `frobnicate`, or even `_` if we planned to ignore the continuation and never resume the computation.
   * In the line `handle resume () with h (snoc acc e)` we are resuming the computation and saying "handle any additional requests made after resuming with the handler `h (snoc acc e)`. Notice how we are using that first parameter to `h` to represent the state we are accumulating.
-  * The case `{u} -> acc` matches when there are no further operations to process (called the "pure case"). `u` can be any pattern (it could be `_` here since we are ignoring it). When matching on a `Request e a`, the type of the pure case will be `a`. Here, since we were given a `{Stream a} ()`, `u` will be of type `()`.
+  * The case `{u} -> acc` matches when there are no further operations to process (the "pure case"). `u` can be any pattern (it could be `_` here since we are ignoring it). When matching on a `Request e a`, the type of the pure case will be `a`. Here, since we were given a `{Stream a} ()`, `u` will be of type `()`.
 * See [this part of the language reference](/docs/language-reference#handlers) for more about the syntax of `handle` blocks and handlers.
 
 #### Exercise: writing your first handler
@@ -292,7 +292,7 @@ Optional.toAbort a = case a of
 
 That signature for `abort : forall a . {Abort} a` looks funny at first. It's saying that `abort` has a return type of `a` for any choice of `a`. Since we can call `abort` anywhere and it terminates the computation, an `abort` can stand in for an expression of any type (for instance, the first example does `42 + Abort.abort`, and the `abort` will have type `Nat`). The handler also has no way of resuming the computation after the `abort` since it has no idea what type needs to be provided to the rest of the computation.
 
-The `Exception` ability is similar, but the operation for failing the computation (which we'll call `raise`) takes an argument:
+The `Exception` ability is similar, but the operation for failing the computation (which we'll name `raise`) takes an argument:
 
 ```unison
 ability Exception e where
