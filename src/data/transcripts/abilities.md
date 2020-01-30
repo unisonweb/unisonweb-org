@@ -5,11 +5,11 @@ description: Unison provides a convenient feature called _abilities_ which lets 
 
 # Abilities in Unison
 
-Unison provides a convenient feature called _abilities_ which lets you use the same ordinary Unison syntax for programs that do (asynchronous) I/O, stream processing, exception handling, parsing, distributed computation, and lots more. This tutorial walks the basics of how you'll interact with abilities and how they are typechecked, using `IO` as an example, then we'll cover how you can create and use new abilities for yourself. There's some (extremely fun and optional) exercises you can do along the way, and answers at the end of this document!
+Unison provides a convenient feature called _abilities_ which lets you use the same ordinary Unison syntax for programs that do (asynchronous) I/O, stream processing, exception handling, parsing, distributed computation, and lots more. This tutorial walks the basics of how you'll interact with abilities and how they are typechecked, using `IO` as an example, then we'll cover how you can create and use new abilities for yourself. There are some (extremely fun and optional) exercises you can do along the way, and answers at the end of this document!
 
-> 📚  Unison's "abilities" are called _algebraic effects_ in the literature. See the [bibliography](https://www.unisonweb.org/docs/bibliography/#programming-language-theory) if you're interested in the research behind this aspect of Unison.
+> 📚  Unison's "abilities" are called _algebraic effects_ in the literature. See the [bibliography](/docs/bibliography/#programming-language-theory) if you're interested in the research behind this aspect of Unison.
 >
-> Also see [the language reference section on abilities](https://www.unisonweb.org/docs/language-reference#abilities-and-ability-handlers).
+> Also see [the language reference section on abilities](/docs/language-reference#abilities).
 
 <a id="usage"></a>
 
