@@ -873,11 +873,10 @@ New types can be declared as described in detail in the [User-defined types](/do
 
 ## Abilities and ability handlers
 
-Unison provides a system of _abilities_ and _ability handlers_ as a means of modeling computational effects in a purely functional language.
+Unison provides a convenient feature called _abilities_ which lets you use the same ordinary Unison syntax for programs that do (asynchronous) I/O, stream processing, exception handling, parsing, distributed computation, and lots more.  Unison's system of abilities (often called "algebraic effects" in the literature) is based on [the Frank language by Sam Lindley, Conor McBride, and Craig McLaughlin](https://arxiv.org/pdf/1611.09259.pdf). Unison diverges slightly from the scheme detailed in this paper. In particular:
 
-Unison is a purely functional language, so no expressions are allowed to have _side effects_, meaning they are evaluated to a result and nothing else. But we still need to be able to write programs that have _effects_, for example writing to disk, communicating over a network, generating randomness, looking at the clock, and so on. Ability types are Unison's way of allowing an expression to request effects it would like to have. Handlers then interpret those requests, often by translating them in turn to a computation that uses the built-in `IO` ability. Unison has a built-in handler for the `IO` ability which cannot be invoked in Unison programs (it can only be invoked by the Unison runtime). This allows Unison to provide I/O effects in a purely functional setting.
-
-Unison's system of abilities is based on [the Frank language by Sam Lindley, Conor McBride, and Craig McLaughlin](https://arxiv.org/pdf/1611.09259.pdf). Unison diverges slightly from the scheme detailed in this paper. In particular, Unison's ability polymorphism is provided by ordinary polymorphic types, and a Unison type with an empty ability set explicitly disallows any abilities. In Frank, the empty ability set implies an ability-polymorphic type.
+* Unison's ability polymorphism is provided by ordinary polymorphic types, and a Unison type with an empty ability set explicitly disallows any abilities. In Frank, the empty ability set implies an ability-polymorphic type.
+* Unison doesn't overload function application syntax to do ability handling; instead it has a separate [`handle` construct](#handle-blocks) for this purpose.
 
 ### Abilities in function types
 
@@ -944,6 +943,8 @@ The `Store` constructors `get` and `put` have the following types:
 * `put : forall v. v ->{Store v} ()`
 
 The type `{Store v}` means that the computation which results in that type requires a `Store v` ability and cannot be executed except in the context of an _ability handler_ that provides the ability.
+
+<a id="handlers"></a>
 
 ### Ability handlers
 

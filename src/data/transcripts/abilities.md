@@ -5,11 +5,11 @@ description: Unison provides a convenient feature called _abilities_ which lets 
 
 # Abilities in Unison
 
-Unison provides a convenient feature called _abilities_ which lets you use the same ordinary Unison syntax for programs that do (asynchronous) I/O, stream processing, parsing, distributed computation, and lots more. This tutorial walks the basics of how you'll interact with abilities and how they are typechecked, using `IO` as an example, then we'll cover how you can create and use new abilities for yourself. There's some (totally optional) exercises you can do along the way, and answers at the end of this document!
+Unison provides a convenient feature called _abilities_ which lets you use the same ordinary Unison syntax for programs that do (asynchronous) I/O, stream processing, exception handling, parsing, distributed computation, and lots more. This tutorial walks the basics of how you'll interact with abilities and how they are typechecked, using `IO` as an example, then we'll cover how you can create and use new abilities for yourself. There's some (extremely fun and optional) exercises you can do along the way, and answers at the end of this document!
 
 > 📚  Unison's "abilities" are called _algebraic effects_ in the literature. See the [bibliography](https://www.unisonweb.org/docs/bibliography/#programming-language-theory) if you're interested in the research behind this aspect of Unison.
 >
-> Also see [the language reference section on abilities](https://www.unisonweb.org/docs/language-reference/#abilities-and-ability-handlers).
+> Also see [the language reference section on abilities](https://www.unisonweb.org/docs/language-reference#abilities-and-ability-handlers).
 
 <a id="usage"></a>
 
@@ -22,9 +22,7 @@ Functions that need to do `IO` (like `printLine`, which prints a line to the con
 .> view 1
 ```
 
-Notice the `{IO}` attached to the `->` in `Text ->{IO} ()`. We read this type signature as saying that `printLine` is a function from `Text` to `()` which _requires the `IO` ability_ (or we say that its _ability requirements_ are `{IO}`). A function that requires no abilities is sometimes called _pure_.
-
-> __Note:__ a function can have 0 or more multiple abilities inside the `{}`. If there is more than one they are separated by commas, like so: `Text ->{IO, Error Text} ()`
+Notice the `{IO}` attached to the `->` in `Text ->{IO} ()`. We read this type signature as saying that `printLine` is a function from `Text` to `()` which _requires the `IO` ability_ (or we say that its _ability requirements_ are `{IO}`). A function that requires no abilities is sometimes called _pure_. A function can have 0 or more abilities inside the `{}`, separated by commas if there's more than one.
 
 If we call `printLine` from another function, that function will pick up the same `IO` requirement:
 
@@ -33,9 +31,9 @@ greet name =
   printLine ("Hello there, " ++ name)
 ```
 
-Notice that Unison infers `IO` in the ability requirements for `greet`. If we wish to enforce that a function has no ability requirements, we can do with a type signature by using an empty `{}` after the `->`. That is, we can constrain ability requirements for functions with just a tweak to the type signature.
+Notice that Unison infers `IO` in the ability requirements for `greet`. If we wish to enforce that a function has no ability requirements, we can do with a type signature by using an empty `{}` after the `->`. That is an example of how we can constrain what abilities a function may access just by giving it a different type signature.
 
-If we do this for `greet`, we'll get a type error called an _ability check failure_ because the function's implementation still requires `IO` but the type signature doesn't make that ability available:
+If we remove `IO` from the ability requirements for `greet`, we'll get a type error called an _ability check failure_ because the function's implementation still requires `IO` but the type signature doesn't make that ability available:
 
 ```unison:error
 greet : Text ->{} ()
@@ -43,7 +41,7 @@ greet name =
   printLine ("Hello there, " ++ name)
 ```
 
-The empty `{}` attached to the arrow on the `greet` type signature tells the typechecker we are expecting `greet` to be pure. The typechecker therefore complains when the function tries to call a function (`printLine`) that requires abilities.
+The empty `{}` attached to the arrow on the `greet` type signature tells the typechecker we are expecting `greet` to be pure. The typechecker therefore complains when the function tries to call a function (`printLine`) that requires abilities. _The ability requirements of a function `f` must include all the abilities required by any function that could be called in the body of `f`._
 
 When writing a type signature, any unadorned `->` (without `{..}` immediately following it) is treated as a request to infer the abilities associated with that function arrow. For instance, this works and `greet` gets `IO` correctly inferred as its requirement.
 
@@ -55,26 +53,7 @@ greet name =
 
 If you don't want this inference, just add a `{..}` to the arrow (as in `->{}` or `->{IO}`) to say exactly what abilities you want to make available to the function.
 
-### Delayed computations can have ability requirements
-
-Since a [delayed computation](/docs/language-reference#delayed-computations), `f : 'Nat` is just syntax sugar for `f : () -> Nat`, delayed computations can also have ability requirements, for instance, these both typecheck:
-
-```unison:hide
-greet : Text -> ()
-greet name =
-  printLine ("Hello there, " ++ name)
-
-greet1 = '(greet "Alice")
-
-greet2 : '{IO} ()
-greet2 = 'let
-  greet "Alice"
-  greet "Bob"
-```
-
-The type signature on `greet2` isn't needed and would be inferred. Likewise, to force a delayed computation of type `'{IO} a` requires that the `IO` ability be available, since the typechecker treats forcing a thunk exactly the same as calling a function.
-
-> _Note on syntax:_ Syntactically, `a -> '{IO} Nat ->{} b` parses as `a -> ('{IO} Nat) -> b`, that is, the `'` binds tighter than the `->`.
+[Delayed computations](#delayed-computations) are treated just like functions by Unison and can also have ability requirements. For instance, `'(printLine "Hi!")` will have the type `'{IO} ()`. See [this section of the appendix](#delayed-computations) for more on this.
 
 ### Ability polymorphism
 
@@ -89,7 +68,7 @@ List.map f as =
   go [] as
 ```
 
-Notice the function `f` has type `a ->{m} b` where `m` is a universally quantified type variable, just like `a` and `b` (there's nothing special about the variable name `m`, we could use `zonk` or `myFavTypeVar` or whatever we like). Since `List.map` is ability polymorphic, we can call it with a pure function or one requiring abilities:
+Notice the function `f` has type `a ->{m} b` where `m` is a type variable, just like `a` and `b` (there's nothing special about the variable name `m`, we could use `zonk` or `myFavTypeVar` or whatever we like). This means `f` may have any set of ability requirements, and that the requirements of `List.map` are the same as what `f` requires. We say that `List.map` is ability polymorphic, since we can call it with a pure function or one requiring abilities:
 
 ```unison
 greeter finalMessage =
@@ -102,7 +81,7 @@ greeter finalMessage =
 
 > _Note:_ you can also allow Unison to infer the full ability polymorphic type of `List.map`, either by leaving off the signature entirely, or just giving a signature with unadorned arrows like `List.map : (a -> b) -> [a] -> [b]` which tells Unison to infer the ability requirements on each of the arrows.
 
-That's the basics! See [the typechecking rule for abilities](/docs/language-reference#ability-typechecking) for more detail on the typechecking of abilities. Now let's move onto defining and _handling_ your own abilities.
+This is all you need to know to work with existing abilities. See [the typechecking rule for abilities](/docs/language-reference#ability-typechecking) for more detail on the typechecking of abilities.
 
 <a id="creating"></a>
 
@@ -120,12 +99,15 @@ ability Stream e where
   -- equivalently
   -- emit : e -> ()
 
-Stream.range : Nat -> Nat ->{Stream Nat} ()
+Stream.range : Nat ->{} Nat ->{Stream Nat} ()
 Stream.range n m =
   if n >= m then ()
   else
     emit n
     Stream.range (n + 1) m
+```
+```ucm:hide
+.abilities> add
 ```
 
 This declaration introduces the function `Stream.emit ` which has exactly the type provided in the ability declaration: `e ->{Stream e} ()` so calling `emit` requires the `Stream e` ability. We call `emit` one of the _operations_ of the ability. In general, an ability declaration can have any number of operations in it.
@@ -135,16 +117,6 @@ The `Stream.range` example shows how we can use `emit` to produce streams. (Exer
 The operations of an ability are all abstract: the ability declaration just states the signatures of the operations but doesn't say how they are implemented or what they mean. We give meaning to the operations of an ability by interpreting them with a _handler_. Let's now look at an example of a handler, which interprets `Stream` computations by collecting all the emited values into a list. There's a bunch of new things here, which will all be explained!
 
 ```unison
-ability Stream e where
-  emit : e -> ()
-
-Stream.range : Nat -> Nat ->{Stream Nat} ()
-Stream.range n m =
-  if n >= m then ()
-  else
-    emit n
-    Stream.range (n + 1) m
-
 Stream.toList : '{Stream a} () -> [a]
 Stream.toList stream =
   handle !stream with
@@ -167,7 +139,7 @@ What's happening here?
   * In the line `{Stream.emit e -> resume}`, think of `resume` as a function which represents "the rest of the computation"  (or _continuation_) after the point in the code where the request was made. The name `resume` here isn't special, we could call it `k`, `frobnicate`, or even `_` if we planned to ignore the continuation and never resume the computation.
   * In the line `handle h (snoc acc e) in resume ()`, we are resuming the computation and saying "handle any additional requests made after resuming with the handler `h (snoc acc e)`. Notice how we are using that first parameter to `h` to represent the state we are accumulating.
   * The case `{u} -> acc` matches when there are no further operations to process (called the "pure case"). `u` can be any pattern (it could be `_` here since we are ignoring it). When matching on a `Request e a`, the type of the pure case will be `a`. Here, since we were given a `{Stream a} ()`, `u` will be of type `()`.
-* See [this part of the language reference](/docs/language-reference#abilities-and-ability-handlers) for more about the syntax of `handle` blocks and handlers.
+* See [this part of the language reference](/docs/language-reference#handlers) for more about the syntax of `handle` blocks and handlers.
 
 #### Exercise: writing your first handler
 
@@ -176,22 +148,23 @@ Try writing a function `Stream.sum : '{Stream Nat} () -> Nat` which sums up the 
 __Bonus:__ Try defining `Stream.sum` in terms of a more general operation, `Stream.foldLeft`:
 
 ```
-Stream.foldLeft : (b -> a -> b) -> b -> '{Stream b} () -> b
+Stream.foldLeft : (b -> a -> b) -> b -> '{Stream a} () -> b
 ```
 
 Answers are at the bottom of this tutorial.
 
-#### Advanced exercises
+#### Challenging exercises
 
-Try writing the following stream functions:
+Try writing the following stream functions, each of which uses an interesting handler. We recommmend writing out the signature of your handler function as we did above for the `h` function in `Stream.toList`.
 
 ```
 Stream.map : (a -> b) -> '{Stream a} r -> '{Stream b} r
 Stream.filter : (a -> Boolean) -> '{Stream a} () -> '{Stream a} ()
+Stream.take : Nat -> '{Stream a} () -> '{Stream a} ()
 Stream.terminated : '{Stream a} () -> '{Stream (Optional a)} ()
 ```
 
-`Stream.map` should apply a function to each emitted element, `filter` should skip over any elements not matching the `a -> Boolean` predicate, and `terminated` should wrap all elements emitted in `Some`, then emit a final `None` once the stream terminates.
+`Stream.map` should apply a function to each emitted element, `filter` should skip over any elements not matching the `a -> Boolean` predicate, `take n` should emit only the first `n` elements before terminating, and `terminated` should wrap all elements emitted in `Some`, then emit a final `None` once the stream terminates.
 
 ### Another example ability: `Ask`
 
@@ -199,8 +172,8 @@ Here's another example ability, `Ask a`, which provides one operation, `ask`, fo
 
 ```unison
 ability Ask a where
-  ask : {Ask a} a
-  -- equivalently, `ask : a`
+  ask : a
+  -- equivalently, ask : {Ask a} a
 
 Ask.provide : a -> '{Ask a} r -> r
 Ask.provide a asker =
@@ -218,7 +191,7 @@ use Ask ask
 
 > __Note:__ `Ask.ask : {Ask a} a` is an example of a _nullary_ operation (it doesn't take any arguments). Nullary operations are typechecked like a function call: in order to reference a nullary operation like `ask` in a definition, its ability requirements (here, `{Ask a}`) must be available. If instead you want to pass around a nullary operation without evaluating it, you can wrap it in a quote, as in `'Ask.ask`.
 
-`Ask.ask` requests that the handler provide a value of type `a`. The `provide` function is an example handler which always provides the same constant value. Notice the usages of it, for instance in `provide 10 (1 + ask + ask)`, which will essentially replace each `ask` with the value `10`.
+`Ask.ask` requests that the handler provide a value of type `a`. The `provide` function is an example handler which always provides the same constant value. Notice the usages of it, for instance in `provide 10 (1 + ask + ask)`, which will replace each `ask` with the value `10`.
 
 A common usage of `Ask` is to avoid needing to pass around common configuration settings, just `provide myConfig 'myMain` to make `myConfig` available anywhere in `myMain` with a call to `ask`.
 
@@ -240,9 +213,32 @@ That's all for the basics, but here are some topics you might be interested to l
 
 * [Other interesting examples of abilities](#other-examples). Abilities are a very general mechanism, capable of expressing exceptions, coroutines, nondeterminism, and more.
 * [More about the typechecking of abilities](/docs/language-reference#ability-typechecking) in the language reference.
-* If you're coming from a functional programming background and are knowledgeable about monads and the free monads, [this gist discusses the connection between abilities and the free monad](https://gist.github.com/pchiusano/2e804c2aa81894c854a6b7f27c06fe28)
+* If you're coming from a functional programming background and are knowledgeable about monads and the free monad, [this gist discusses the connection between abilities and the free monad](https://gist.github.com/pchiusano/2e804c2aa81894c854a6b7f27c06fe28).
 
 ## Appendix
+
+<a id="delayed-computations"></a>
+
+### Delayed computations can have ability requirements
+
+Since a [delayed computation](/docs/language-reference#delayed-computations), `f : 'Nat` is just syntax sugar for `f : () -> Nat`, delayed computations can also have ability requirements, for instance, these both typecheck:
+
+```unison:hide
+greet : Text -> ()
+greet name =
+  printLine ("Hello there, " ++ name)
+
+greet1 = '(greet "Alice")
+
+greet2 : '{IO} ()
+greet2 = 'let
+  greet "Alice"
+  greet "Bob"
+```
+
+The type signature on `greet2` isn't needed and would be inferred. Likewise, to force a delayed computation of type `'{IO} a` requires that the `IO` ability be available, since the typechecker treats forcing a thunk exactly the same as calling a function.
+
+> _Note on syntax:_ Syntactically, `a -> '{IO} Nat ->{} b` parses as `a -> ('{IO} Nat) -> b`, that is, the `'` binds tighter than the `->`.
 
 <a id="other-examples"></a>
 
@@ -269,13 +265,15 @@ Optional.toAbort a = case a of
 
 > Abort.toOptional 'let
     x = 1
-    x + Abort.abort + 42
+    42 + Abort.abort + x
 
 > Abort.toOptional 'let
     x = Optional.toAbort (Some 1)
     y = 2
     x + y
 ```
+
+That signature for `abort : forall a . {Abort} a` looks funny at first. It's saying that `abort` has a return type of `a` for any choice of `a`. Since we can call `abort` anywhere and it terminates the computation, an `abort` can stand in for an expression of any type (for instance, the first example does `42 + Abort.abort`, and the `abort` will have type `Nat`). The handler also has no way of resuming the computation after the `abort` since it has no idea what type needs to be provided to the rest of the computation.
 
 The `Exception` ability is similar, but the operation for failing the computation (which we'll call `raise`) takes an argument:
 
@@ -302,7 +300,7 @@ Either.toException a = case a of
 
 #### `Choose` for expressing nondeterminism
 
-We can use abilities to generate all possible values chosen from a list:
+We can use abilities to choose nondeterministically, and collect up all results from all possible choices that can be made:
 
 ```unison
 ability Choose where
@@ -318,6 +316,8 @@ Choose.toList p = handle !p with
 
 > Choose.toList '(choose [1,2,3], choose [3,4,5])
 ```
+
+> 🚧 We are looking for other nice little examples of abilities to include here, feel free to [open a PR](https://github.com/unisonweb/unisonweb-org/blob/master/src/data/transcripts/abilities.md)!
 
 <a id="answers"></a>
 
