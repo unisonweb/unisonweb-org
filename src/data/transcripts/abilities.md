@@ -27,9 +27,9 @@ Let's get started! This tutorial has some (optional, extremely fun) exercises, w
 
 ## Usage of abilities and ability checking
 
-As we've seen, ability requirements are part of Unison's type system. Functions like `greet : Text ->{IO} ()` that do `IO` (like `printLine`, which prints a line to the console) indicate this fact in their type signature.
+As we've seen, ability requirements are part of Unison's type system. Functions like `greet : Text ->{IO} ()` that do `IO` (such as calling `printLine`, which prints a line to the console) indicate this fact in their type signature.
 
-A function can have 0 or more abilities inside the `{}`, separated by commas if there's more than one, and a function that requires no abilities is sometimes called _pure_. If we try to give `greet` a type signature that says it's pure, we'll get a type error called an _ability check failure_ because the function's implementation still requires `IO` but its type doesn't make that ability available:
+A function can require multiple abilities inside the `{}`, separated by commas; a function with zero abilities inside the `{}` is sometimes called _pure_. If we try to give `greet` a type signature that says it's pure, we'll get a type error called an _ability check failure_ because the call to `printLine` still requires `IO` but its type doesn't make that ability available:
 
 ```unison:error
 greet : Text ->{} ()
@@ -39,9 +39,9 @@ greet name =
 
 The empty `{}` attached to the arrow on the `greet` type signature tells the typechecker we are expecting `greet` to be pure. The typechecker therefore complains when the function tries to call a function (`printLine`) that requires abilities. _The ability requirements of a function `f` must include all the abilities required by any function that could be called in the body of `f`._
 
-> 😲  Pretty nifty! We can constrain what sorts of operations a function can access just by giving it a different type signature.
+> 😲  Pretty nifty! We can constrain (and easily recall) what sorts of operations a function can access, using its type signature.
 
-When writing a type signature, any unadorned `->` (without `{..}` immediately following it) is treated as a request for Unison to infer the abilities associated with that function arrow. For instance, this also works and `greet` gets `IO` inferred as its requirement.
+When writing a type signature, any unadorned `->` (meaning there's no ability brackets immediately following it) is treated as a request for Unison to infer the abilities associated with that function arrow. For instance, the following also works, and infers the same signature we had before.
 
 ```unison
 greet : Text -> ()
@@ -49,13 +49,13 @@ greet name =
   printLine ("Hello there, " ++ name)
 ```
 
-If you _don't_ want this inference, just add a `{..}` to the arrow (as in `->{}` or `->{IO}`) to say exactly what abilities you want to make available to the function.
+If you _don't_ want this inference, just add ability brackets to the arrow (like `->{}` or `->{IO}`) to say exactly what abilities you want to make available to the function.
 
-[Delayed computations](#delayed-computations) are treated just like functions by Unison and can also have ability requirements. For instance, `'(printLine "Hi!")` will have the type `'{IO} ()`. See [this section of the appendix](#delayed-computations) for more on this.
+[Delayed computations](#delayed-computations) are treated just like functions by Unison and can also have ability requirements. For instance, `'(printLine "Hi!")` will have the type `'{IO} ()`. See [this appendix](#delayed-computations) for more on this.
 
 ### Ability polymorphism
 
-Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We say such functions _ability polymorphic_ (or "ability parametric"). For instance, here's the definition and signature of `List.map`:
+Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We say such functions _ability-polymorphic_ (or "ability-parametric"). For instance, here's the definition and signature of `List.map`:
 
 ```unison:hide
 List.map : (a ->{m} b) -> [a] ->{m} [b]
@@ -66,7 +66,7 @@ List.map f as =
   go [] as
 ```
 
-Notice the function `f` has type `a ->{m} b` where `m` is a type variable, just like `a` and `b` (there's nothing special about the variable name `m`, we could use `zonk` or `myFavTypeVar` or whatever we like). This means `f` may have any set of ability requirements, and that the requirements of `List.map` are the same as what `f` requires. We say that `List.map` is ability polymorphic, since we can call it with a pure function or one requiring abilities:
+Notice the function argument `f` has type `a ->{m} b` where `m` is a type variable, just like `a` and `b`. This means `m` can represent any set of abilities (according to whatever is passed in for `f`) and that the requirements of `List.map` are just the same as what `f` requires. We say that `List.map` is ability-polymorphic, since we can call it with a pure function or one requiring abilities:
 
 ```unison
 greeter finalMessage =
@@ -108,7 +108,7 @@ Stream.range n m =
 .abilities> add
 ```
 
-This declaration introduces the function `Stream.emit ` which has exactly the type provided in the ability declaration: `e ->{Stream e} ()` so calling `emit` requires the `Stream e` ability. We say that `emit` is one of the _operations_ of the ability. In general, an ability declaration can have any number of operations in it.
+This declaration introduces the function `Stream.emit` which has exactly the type provided in the ability declaration: `e ->{Stream e} ()` so calling `emit` requires the `Stream e` ability. We say that `emit` is one of the _operations_ of the ability. In general, an ability declaration can have any number of operations in it.
 
 The `Stream.range` example shows how we can use `emit` to produce streams. We can think of the calls to `emit` as suspending the computation and requesting that the `emit` operation be handled by an external piece of code that will interpret the `emit` and (if it wants) resume the computation.
 
@@ -130,7 +130,7 @@ Stream.toList stream =
 
 What's happening here?
 
-* Here, the recursive function `h` is the handler. Its first argument `[a]` is an accumulated list of the values emited so far. Its second argument is the requested operation, which it inspects before resuming. Handlers will frequently be recursive functions like this where the state of the handler is represented with the first argument(s) and request is the final parameter to the function. We'll explain the `case req of ...` part in a minute.
+* Here, the recursive function `h` is the handler. Its first argument `[a]` is an accumulated list of the values emitted so far. Its second argument is the requested operation, which it inspects before resuming. Handlers will frequently be recursive functions like this where the state of the handler is represented with the first argument(s) and request is the final parameter to the function. We'll explain the `case req of ...` part in a minute.
 * `handle !stream with ... h []` says to start evaluating the `stream` computation and if it makes any requests, pass them to the handler `h []`".
   * `h []` is just a partial application of the function `h`, `h []` will have type `Request {Stream a} () -> [a]`.
 * Let's look now at the body of `h`, the `case req of ...` part:
