@@ -527,7 +527,7 @@ An expression can appear _delayed_ as `'e`, which is the same as `_ -> e`. If `e
 
 If `c` is a delayed computation, it can be _forced_ with `!c`, which is the same as `c ()`. The expression `c` must conform to a type `() -> t` for some type `t`, in which case `!c` has type `t`.
 
-Delayed computations are important for writing expressions that require [abilities](#abilities-and-ability-handlers). For example:
+Delayed computations are important for writing expressions that require [abilities](#abilities). For example:
 
 ``` unison
 use io
@@ -540,7 +540,7 @@ program = 'let
 
 ```
 
-This example defines a small I/O program. The type `{IO} ()` by itself is not allowed as the type of a top-level definition, since the `IO` ability must be provided by a handler, see [abilities and ability handlers](#abilities-and-ability-handlers)). Instead, `program` has the type `'{IO} ()` (note the `'` indicating a delayed computation). Inside a handler for `IO`, this computation can be forced with `!program`.
+This example defines a small I/O program. The type `{IO} ()` by itself is not allowed as the type of a top-level definition, since the `IO` ability must be provided by a handler, see [abilities and ability handlers](#abilities)). Instead, `program` has the type `'{IO} ()` (note the `'` indicating a delayed computation). Inside a handler for `IO`, this computation can be forced with `!program`.
 
 Inside the program, `!readLine` has to be forced, as the type of `io.readLine` is `'{IO} Text`, a delayed computation which, when forced, reads a line from standard input.
 
@@ -699,7 +699,7 @@ An _ability pattern_ only appears in an _ability handler_ and has one of two for
 1. `{C p1 p2 ... pn -> k}` where `C` is the name of an ability constructor in scope, and `p1` through `pn` are patterns such that `n` is the arity of `C`. Note that `n` may be zero. This pattern matches if the scrutinee reduces to a fully applied invocation of the ability constructor `C` and the patterns `p1` through `pn` match the arguments to the constructor.  The scrutinee must be of type `Request A T` for some ability `{A}` and type `T`. The variable `k` will be bound to the continuation of the program. If the scrutinee has type `Request A T` and `C` has type `X ->{A} Y`, then `k` has type `Y -> {A} T`.
 2. `{p}` where `p` is a pattern. This matches the case where the computation is _pure_ (the value of type `Request A T` calls none of the constructors of the ability `{A}`). A pattern match on an `Request` is not complete unless this case is handled.
 
-See the section on [abilities and ability handlers](#abilities-and-ability-handlers) for examples of ability patterns.
+See the section on [abilities and ability handlers](#abilities) for examples of ability patterns.
 
 #### Guard patterns
 
@@ -740,7 +740,7 @@ This section describes informally the structure of types in Unison. See also the
 
 Formally, Unison’s type system is an implementation of the system described by Joshua Dunfield and Neelakantan R. Krishnaswami in their 2013 paper [Complete and Easy Bidirectional Typechecking for Higher-Rank Polymorphism](https://arxiv.org/abs/1306.6032).
 
-Unison extends that type system with, [pattern matching](/docs/language-reference/pattern-matching), [scoped type variables](#scoped-type-variables), _ability types_ (also known as _algebraic effects_). See the section titled [Abilities and Ability Handlers](#abilities) for details on ability types.
+Unison extends that type system with, [pattern matching](/docs/language-reference/pattern-matching), [scoped type variables](#scoped-type-variables), _ability types_ (also known as _algebraic effects_). See the section on [Abilities](#abilities) for details on ability types.
 
 Unison attributes a type to every valid expression. For example:
 
@@ -873,21 +873,57 @@ New types can be declared as described in detail in the [User-defined types](/do
 
 ## Abilities and ability handlers
 
-Unison provides a system of _abilities_ and _ability handlers_ as a means of modeling computational effects in a purely functional language.
+Unison provides a convenient feature called _abilities_ which lets you use the same ordinary Unison syntax for programs that do (asynchronous) I/O, stream processing, exception handling, parsing, distributed computation, and lots more.  Unison's system of abilities (often called "algebraic effects" in the literature) is based on [the Frank language by Sam Lindley, Conor McBride, and Craig McLaughlin](https://arxiv.org/pdf/1611.09259.pdf). Unison diverges slightly from the scheme detailed in this paper. In particular:
 
-Unison is a purely functional language, so no expressions are allowed to have _side effects_, meaning they are evaluated to a result and nothing else. But we still need to be able to write programs that have _effects_, for example writing to disk, communicating over a network, generating randomness, looking at the clock, and so on. Ability types are Unison's way of allowing an expression to request effects it would like to have. Handlers then interpret those requests, often by translating them in turn to a computation that uses the built-in `IO` ability. Unison has a built-in handler for the `IO` ability which cannot be invoked in Unison programs (it can only be invoked by the Unison runtime). This allows Unison to provide I/O effects in a purely functional setting.
-
-Unison's system of abilities is based on [the Frank language by Sam Lindley, Conor McBride, and Craig McLaughlin](https://arxiv.org/pdf/1611.09259.pdf). Unison diverges slightly from the scheme detailed in this paper. In particular, Unison's ability polymorphism is provided by ordinary polymorphic types, and a Unison type with an empty ability set explicitly disallows any abilities. In Frank, the empty ability set implies an ability-polymorphic type.
+* Unison's ability polymorphism is provided by ordinary polymorphic types, and a Unison type with an empty ability set explicitly disallows any abilities. In Frank, the empty ability set implies an ability-polymorphic type.
+* Unison doesn't overload function application syntax to do ability handling; instead it has a separate [`handle` construct](#handle-blocks) for this purpose.
 
 ### Abilities in function types
 
-The general form for a function type in Unison is `I ->{A} O`, where `I` is the input type of the function, `O` is the output type, and `A` is the set of _abilities_ that the function requires.
+The general form for a function type in Unison is `I ->{A} O`, where `I` is the input type of the function, `O` is the output type, and `A` is the set of _ability requirements_ of the function. More generally, this can be any comma-separated list of types, like `I ->{A1,A2,A3} O`.
 
 A function type in Unison like `A -> B` is really syntactic sugar for a type `A ->{e} B` where `e` is some set of abilities, possibly empty. A function that definitely requires no abilities has a type like `A ->{} B` (it has an empty set of abilities).
 
-If a function `f` calls in its implementation another function requiring ability set `{A}`, then `f` will require `A` in its ability set as well. If `f` also calls a function requiring abilities `{B}`, then `f` will require abilities `{A,B}`.
+<a id="ability-typechecking"></a>
 
-Stated the other way around, `f` can only be called in contexts where the abilities `{A,B}` are available. Abilities are provided by `handle` blocks. See the [Ability Handlers](#ability-handlers) section below. The only exception to abilities being provided by handlers is the built-in provider of the `IO` ability in the Unison runtime.
+### The typechecking rule for abilities
+
+The general typechecking rule used for abilities is this: calls to functions requiring abilities `{A1,A2}` must be in a context where _at least_ the abilities `{A1,A2}` are _available_, otherwise the typechecker will complain with an ability check failure. Abilities can be made available using a `handle` block (discussed below) or with a type signature: so for instance, within the body of a function `Text ->{IO} Nat`, `{IO}` is available and therefore:
+
+* We can call a function `f : Nat ->{} Nat`, since the ability requirements of f are `{}` which is a subset the available `{IO}` abilities.
+* We can also call a function `g : Text ->{IO} ()`, since the requirements of `g` are `{IO}` which is a subset of the available `{IO}` abilities.
+
+For functions accepting multiple arguments, it might seem we need a different rule, but the rule is the same: the body of the function can access the abilities attached to the corresponding function type in the signature. Here's an example that won't typecheck, since the function body must be pure according to the signature:
+
+```unison
+doesNotWork : Text ->{IO} Text ->{} Nat
+doesNotWork arg1 arg2 =
+  printLine "Does not work!"
+  42
+```
+
+However, if we do the `IO` before returning the pure function, it typechecks just fine:
+
+```unison
+doesWork : Text ->{IO} Text ->{} Nat
+doesWork arg1 =
+  printLine "Works great!"
+  (arg2 -> 42) -- we return a pure `Text ->{} Nat`
+```
+
+For top-level definitions which aren't contained in a function body, _they are required to be pure_. For instance, this doesn't typecheck:
+
+```unison
+msg = printLine "hello"
+```
+
+But if we say `msg = '(printLine "Hello")` that typechecks fine, since the `printLine` is now inside a function body whose requirements inferred as `{IO}` (try it!).
+
+> 🤓 This restriction on top level definitions needing to be pure might lifted in a future version of Unison.
+
+#### Ability inference
+
+When inferring ability requirements for `f`, the ability requirements become the union of all requirements for functions that can be called within the body of the function.
 
 ### User-defined abilities
 
@@ -907,6 +943,8 @@ The `Store` constructors `get` and `put` have the following types:
 * `put : forall v. v ->{Store v} ()`
 
 The type `{Store v}` means that the computation which results in that type requires a `Store v` ability and cannot be executed except in the context of an _ability handler_ that provides the ability.
+
+<a id="handlers"></a>
 
 ### Ability handlers
 
