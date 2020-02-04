@@ -72,6 +72,19 @@ Also see [`alias.type`](#alias.type).
 
 Also see [`alias.term`](#alias.term).
 
+## `builtins.merge`
+
+Adds the builtin terms and types from your currrent version of Unison to a namespace `builtins` under the [current namespace](/docs/tour#unison-namespaces-and-use-clauses):
+
+```ucm
+.mystuff> builtins.merge
+.mystuff> find .mystuff.builtins.Nat.+
+
+  1. (Nat.+) : Nat -> Nat -> Nat
+```
+
+When new builtin terms and types are added to Unison, this is one way you can get access to them from within a Unison codebase (you might also [`pull`](#pull) from another codebase that includes the new builtins). Once the builtins are in your namespace tree, you can rename or alias them however you like.
+
 ## `docs`
 
 Use `docs foo` to print the documentation [associated with](#link) definition `foo` (see [documentation literals](/docs/language-reference#documentation-literals) to learn more).
