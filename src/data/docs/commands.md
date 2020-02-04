@@ -164,7 +164,15 @@ Use `quit` (or `exit` or `:q`) to terminate UCM.
 
 ## `undo`
 
-Use `undo` to revert the most recent change to the codebase.
+Use `undo` to revert the most recent change to the codebase. Some commands result in multiple steps in the history. You can use the [`reflog`](#reflog) and [`reset-root`](#reset-root) commands to move around history more reliably.
+
+### FAQ about `undo`
+
+#### How do I redo a change after an `undo`?
+
+Use [the `reflog` command](#reflog) to jump to the point in history just before the `undo`. 
+
+> 😕 We'd like this to be a nicer experience. A `redo` command sounds nice, but it's not implemented yet!
 
 ## `update`
 
