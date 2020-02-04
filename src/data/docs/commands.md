@@ -2,6 +2,8 @@
 
 This document lists all the current UCM commands, gives basic usage instructions and links to further reading. Commands are listed alphabetically in this document.
 
+[metadata]: /docs/metadata
+
 ## `add`
 
 This is how you add new definitions to the codebase. It tries to add all definitions from the most recent typechecked file.
@@ -46,10 +48,35 @@ Here's what these reasons mean:
 
 Just do [`undo`](#undo)!
 
+## `alias.term`
+
+`alias.term foo bar` creates the name `bar` as an alias for the term `foo`. [Metadata linked to][metadata] `foo` is copied over to `bar` (use [`unlink`](#unlink) if this isn't what you want). `foo` and `bar` can be any [term names](/docs/language-reference#identifiers) including [operators](/docs/language-reference#identifiers) and hash qualified names. Here are a few examples:
+
+```ucm
+.> alias.term .base.List.map .utils.List.map
+.> alias.term frobnicate#2jdk10 zonk.betterName
+.base> alias.term Nat.drop .utils.Nat.-
+```
+
+Also see [`alias.type`](#alias.type).
+
+## `alias.type`
+
+`alias.type foo bar` creates the name `bar` as an alias for the type `foo`. [Metadata linked to][metadata] `foo` is copied over to `bar` (use [`unlink`](#unlink) if this isn't what you want). `foo` and `bar` can be any [type names](/docs/language-reference#identifiers). Here are a few examples:
+
+```ucm
+.> alias.type .base.Optional .utils.Maybe
+.> alias.type Employoee#2jdk10 v1.Employee
+.base> alias.type List.map .utils.List.map
+```
+
+Also see [`alias.term`](#alias.term).
+
 ## `docs`
 
 Use `docs foo` to print the documentation [associated with](#link) definition `foo` (see [documentation literals](/docs/language-reference#documentation-literals) to learn more).
 
+<a id="find"></a>
 ## `find` (and relatives)
 
 The [`find`](#find) command and its relatives ([`find.patch`](#findpatch) and [`find.verbose`](#findverbose)) can be used to explore the definitions in a Unison codebase.
