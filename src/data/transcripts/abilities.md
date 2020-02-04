@@ -39,7 +39,7 @@ greet name =
 
 The empty `{}` attached to the arrow on the `greet` type signature tells the typechecker we are expecting `greet` to be pure. The typechecker therefore complains when the function tries to call a function (`printLine`) that requires abilities. _The ability requirements of a function `f` must include all the abilities required by any function that could be called in the body of `f`._
 
-> 😲  Pretty nifty! We can constrain (and easily recall) what sorts of operations a function can access, using its type signature.
+> 😲  Pretty nifty! The type signature tells us what operations a function may access, and when writing a function, we can limit the abilities the function can access using a type signature.
 
 When writing a type signature, any unadorned `->` (meaning there's no ability brackets immediately following it) is treated as a request for Unison to infer the abilities associated with that function arrow. For instance, the following also works, and infers the same signature we had before.
 
@@ -55,15 +55,19 @@ If you _don't_ want this inference, just add ability brackets to the arrow (like
 
 ### Ability polymorphism
 
-Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We say such functions _ability-polymorphic_ (or "ability-parametric"). For instance, here's the definition and signature of `List.map`:
+Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We say such functions _ability-polymorphic_ (or "ability-parametric"). For instance, here's the definition and signature of `List.map`, which applies a function to each element of a list:
 
-```unison:hide
+```unison
 List.map : (a ->{m} b) -> [a] ->{m} [b]
 List.map f as =
+  -- Details of this implementation
+  -- aren't important here
   go acc rem = case rem of
     [] -> acc
-    hd +: tl -> go (snoc acc (f hd)) tl
+    [hd] ++ tl -> go (acc ++ [f hd]) tl
   go [] as
+
+> List.map (x -> x + 10) [1,2,3]
 ```
 
 Notice the function argument `f` has type `a ->{m} b` where `m` is a type variable, just like `a` and `b`. This means `m` can represent any set of abilities (according to whatever is passed in for `f`) and that the requirements of `List.map` are just the same as what `f` requires. We say that `List.map` is ability-polymorphic, since we can call it with a pure function or one requiring abilities:
@@ -117,13 +121,12 @@ The operations of an ability are all abstract: the ability declaration just stat
 ```unison
 Stream.toList : '{Stream a} () -> [a]
 Stream.toList stream =
-  handle !stream with
-    h : [a] -> Request {Stream a} () -> [a]
-    h acc req = case req of
-      {Stream.emit e -> resume} ->
-        handle resume () with h (snoc acc e)
-      {u} -> acc
-    h []
+  h : [a] -> Request {Stream a} () -> [a]
+  h acc req = case req of
+    {Stream.emit e -> resume} ->
+      handle resume () with h (acc ++ [e])
+    {u} -> acc
+  handle !stream with h []
 
 > Stream.toList '(Stream.range 0 10)
 ```
@@ -190,11 +193,10 @@ ability Ask a where
 
 Ask.provide : a -> '{Ask a} r -> r
 Ask.provide a asker =
-  handle !asker with
-    h req = case req of
-      {r}                 -> r
-      {Ask.ask -> resume} -> handle resume a with h
-    h
+  h req = case req of
+    {r}                 -> r
+    {Ask.ask -> resume} -> handle resume a with h
+  handle !asker with h
 
 use Ask ask
 
@@ -267,7 +269,8 @@ The `Abort` ability is analogous to `Optional` and can be used to terminate a co
 
 ```unison
 ability Abort where
-  abort : forall a . {Abort} a
+  abort : a
+  -- equivalently: `abort : {Abort} a`
 
 Abort.toOptional : '{Abort} a -> Optional a
 Abort.toOptional a = handle !a with
@@ -290,13 +293,14 @@ Optional.toAbort a = case a of
     x + y
 ```
 
-That signature for `abort : forall a . {Abort} a` looks funny at first. It's saying that `abort` has a return type of `a` for any choice of `a`. Since we can call `abort` anywhere and it terminates the computation, an `abort` can stand in for an expression of any type (for instance, the first example does `42 + Abort.abort`, and the `abort` will have type `Nat`). The handler also has no way of resuming the computation after the `abort` since it has no idea what type needs to be provided to the rest of the computation.
+That signature for `abort : {Abort} a` looks funny at first. It's saying that `abort` has a return type of `a` for any choice of `a`. Since we can call `abort` anywhere and it terminates the computation, an `abort` can stand in for an expression of any type (for instance, the first example does `42 + Abort.abort`, and the `abort` will have type `Nat`). The handler also has no way of resuming the computation after the `abort` since it has no idea what type needs to be provided to the rest of the computation.
 
 The `Exception` ability is similar, but the operation for failing the computation (which we'll name `raise`) takes an argument:
 
 ```unison
 ability Exception e where
   raise : e -> a
+  -- equivalently: `raise : e -> {Exception e} a`
 
 Exception.toEither : '{Exception e} a -> Either e a
 Exception.toEither a = handle !a with
