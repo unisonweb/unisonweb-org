@@ -156,7 +156,7 @@ The `pull` command is used to pull definitions from another Unison codebase into
 
 ```
 
-The first argument to `pull` identifies the codebase to pull from, and the second argument (if given) identifies a namespace that the remote codebase will be merged into. If a second argument is not supplied, then the remote codebase will be merged into the current namespace.
+The first argument to `pull` is any [Git URL](#git-url) that identifies the namespace to pull from and the second argument (if given) identifies a namespace that the remote codebase will be merged into. If a second argument is not supplied, then the remote codebase will be merged into the current namespace.
 
 ## `quit`
 
@@ -181,3 +181,22 @@ Use [the `reflog` command](#reflog) to jump to the point in history just before 
 ## Other commands (coming soon!)
 
 > 🚧  Unfortunately, this document is currently under construction. Check back later!
+
+## Glossary
+
+<a id="git-url"></a>
+
+### Git urls
+
+Commands like [`push`](#push) and [`pull`](#pull) use git urls, which have one of the following forms:
+
+* `https://github.com/org/repo` (refers to the root of a git repository)
+* `https://github.com/org/repo:.some.remote.path` (refers to the `.some.remote.path` namespace of the git repository)
+* `git@github.com:unisonweb/base.git:.some.path` (refers to `.some.path` of the provided git repository)
+
+The UCM tab completion provides some handy shortcuts:
+
+* `gh` to `https://github.com`
+* `ghs` to `git@github.com:` (which you can complete with `org/reponame.git`)
+* `gl` to `https://gitlab.com`
+* `gls` to `git@gitlab.com:`(which you can finish with `org/reponame.git`)
