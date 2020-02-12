@@ -86,13 +86,13 @@ show-carets: true
 
 Here, we did a type-based search for functions of type `[a] -> [a]`, got a list of results, and then used the `view` command to look at the nicely formatted source code of one of these results. Let's introduce some Unison syntax:
 
-* `base.List.reverse : [a] -> [a]` is the syntax for giving a [type signature](/docs/language-reference/term-declarations/#type-signatures) to a definition. We pronounce the `:` symbol as "has type", as in "reverse has the type `[a] -> [a]`".
+* `base.List.reverse : [a] -> [a]` is the syntax for giving a [type signature](/docs/language-reference#type-signatures) to a definition. We pronounce the `:` symbol as "has type", as in "reverse has the type `[a] -> [a]`".
 * `[Nat]` is the syntax for the type consisting of lists of natural numbers (terms like `[0,1,2]` and `[3,4,5]`, and `[]` will have this type), and more generally `[Foo]` is the type of lists whose elements have some type `Foo`.
-* Any lowercase variable in a type signature is assumed to be [universally quantified](/docs/language-reference/types/#polymorphic-types), so `[a] -> [a]` really means and could be written `forall a . [a] -> [a]`, which is the type of functions that take a list whose elements are some (but any) type, and return a list of elements of that same type.
-* `base.List.reverse` takes one parameter, called `as`. The stuff after the `=` is called the _body_ of the function, and here it's a [block](/docs/language-reference/blocks), which is demarcated by whitespace.
+* Any lowercase variable in a type signature is assumed to be [universally quantified](/docs/language-reference#polymorphic-types), so `[a] -> [a]` really means and could be written `forall a . [a] -> [a]`, which is the type of functions that take a list whose elements are some (but any) type, and return a list of elements of that same type.
+* `base.List.reverse` takes one parameter, called `as`. The stuff after the `=` is called the _body_ of the function, and here it's a [block](/docs/language-reference#blocks-and-statements), which is demarcated by whitespace.
 * `acc a -> ..` is the syntax for an anonymous function.
 * Function arguments are separated by spaces and function application binds tighter than any operator, so `f x y + g p q` parses as `(f x y) + (g p q)`. You can always use parentheses to control grouping more explicitly.
-* The declaration `use base.List +:` lets us reference the function `base.List.+:` using just `+:`. (This function prepends an element to the front of a list.) [Use clauses](/docs/language-reference/use) like this can be placed in any Unison block; they don't need to go at the top of your file.
+* The declaration `use base.List +:` lets us reference the function `base.List.+:` using just `+:`. (This function prepends an element to the front of a list.) [Use clauses](/docs/language-reference#use-clauses) like this can be placed in any Unison block; they don't need to go at the top of your file.
 
 > Try doing `view base.List.foldl` if you're curious to see how it's defined.
 
@@ -344,8 +344,8 @@ This will test our function with a bunch of different inputs.
 #### Syntax notes
 
 * The Unison block which begins after an `=` begins a Unison block, which can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
-* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference/expressions/#delayed-computations) so it can be run multiple times by the `runs` function.
-* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference/expressions/#delayed-computations) `expr`.
+* You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference#delayed-computations) so it can be run multiple times by the `runs` function.
+* `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference#delayed-computations) `expr`.
 * Note: there's nothing special about the names `tests.square.ex1` or `tests.square.prop1`; we could call those bindings anything we wanted. Here we just picked some uncreative names based on the function being tested. Use whatever naming convention you prefer.
 
 `nat` comes from `test.v1` - `test.v1.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
@@ -397,7 +397,7 @@ Now that we've added our `square` function to the codebase, how do we reference 
 
 The _Unison namespace_ is the mapping from names to definitions. Names in Unison look like this: `math.sqrt`, `.base.Int`, `base.Nat`, `base.Nat.*`, `++`, or `foo`. That is: an optional `.`, followed by one or more segments separated by a `.`, with the last segment allowed to be an operator name like `*` or `++`.
 
-We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. [Absolute names](/docs/language-reference/identifiers/#absolutely-qualified-identifiers) (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` (or equivalently `cd`) command:
+We often think of these names as forming a tree, much like a directory of files, and names are like file paths in this tree. [Absolute names](/docs/language-reference#absolutely-qualified-identifiers) (like `.base.Int`) start with a `.` and are paths from the root of this tree and _relative_ names (like `math.sqrt`) are paths starting from the current namespace, which you can set using the `namespace` (or equivalently `cd`) command:
 
 ```
 ---
