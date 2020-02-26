@@ -573,7 +573,8 @@ Stream.filter f s =
   go _ =
     a = ask
     if f a then emit a
-    else !go
+    else ()
+    !go
   Stream.pipe s go
 
 Stream.map f s =

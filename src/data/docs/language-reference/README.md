@@ -70,7 +70,7 @@ The expression comprising the right-hand side can refer to the name given to the
 sumUpTo : Nat -> Nat
 sumUpTo n =
   if n < 2 then n
-  else n + sumUpto (drop n 1)
+  else n + sumUpTo (drop n 1)
 ```
 
 The above defines a function `sumUpTo` that recursively sums all the natural numbers less than some number `n`. As an example, `sumUpTo 3` is `1 + 2 + 3`, which is `6`.
