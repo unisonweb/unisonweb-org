@@ -204,7 +204,7 @@ There's currently no special syntax for creating or pattern matching on records.
 
 ``` unison
 p = Point.Point 1 2
-px = case p of
+px = match p with
        Point.Point x _ -> x
 ```
 
@@ -238,7 +238,7 @@ See the sections on:
 * [Blocks and statements](#blocks), for example: `x = 42`.
 * [Literals](#literals), for example: `1`, `"hello"`, `[1,2,3]`.
 * [Comments](#comments), for example `-- this is a comment`.
-* [Pattern matching](#patternmatching), for example `case (x,y) of (1, "hi) -> 42`.
+* [Pattern matching](#patternmatching), for example `match (x,y) with (1, "hi) -> 42`.
 
 ### Identifiers
 
@@ -272,7 +272,7 @@ Any identifier, including a namespace-qualified one, can appear _hash-qualified_
 
 #### Reserved words
 
-The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `where`, `use`, `and`, `or`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `case`, `of`, `with`.
+The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `where`, `use`, `and`, `or`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`.
 
 ### Name resolution and the environment
 
@@ -558,21 +558,21 @@ Additional `'` and `!` combine in the obvious way:
 
 You can of course use parentheses to precisely control how `'` and `!` get applied.
 
-### Case expressions and pattern matching
+### Match expressions and pattern matching
 
-A _case expression_ has the general form:
+A _match expression_ has the general form:
 
 ``` unison
-case e of
+match e with
   pattern_1 -> block_1
   pattern_2 -> block_2
   ...
   pattern_n -> block_n
 ```
 
-Where `e` is an expression, called the _scrutinee_ of the case expression, and each _case_ has a [pattern to match against the value of the scrutinee](#blank-patterns) and a [block](#blocks) to evaluate in case it matches.
+Where `e` is an expression, called the _scrutinee_ of the match expression, and each _case_ has a [pattern to match against the value of the scrutinee](#blank-patterns) and a [block](#blocks) to evaluate in case it matches.
 
-The evaluation semantics of case expressions are as follows:
+The evaluation semantics of match expressions are as follows:
 
 1. The scrutinee is evaluated.
 2. The first pattern is evaluated and matched against the value of the scrutinee.
@@ -581,6 +581,23 @@ The evaluation semantics of case expressions are as follows:
 It's possible for Unison to actually evaluate cases in a different order, but such evaluation should always have the same observable behavior as trying the patterns in sequence.
 
 It is an error if none of the patterns match. In this version of Unison, the  error occurs at runtime. In a future version, this should be a compile-time error.
+
+Unison provides syntactic sugar for match expressions in which the scrutinee is the sole argument of a lambda expression:
+
+```unison
+cases
+  pattern_1 -> block_1
+  pattern_2 -> block_1
+  ...
+  pattern_n -> block_n
+
+-- equivalent to
+e -> match e with
+  pattern_1 -> block_1
+  pattern_2 -> block_1
+  ...
+  pattern_n -> block_n
+```
 
 A _pattern_ has one of the following forms:
 
@@ -591,7 +608,7 @@ A _blank pattern_ has the form `_`. It matches any expression without creating a
 For example:
 
 ``` unison
-case 42 of
+match 42 with
   _ -> "Always matches"
 ```
 
@@ -602,7 +619,7 @@ A _literal pattern_ is a literal `Boolean`, `Nat`, `Int`, `Float`, or `Text`. A 
 For example:
 
 ``` unison
-case 2 + 2 of
+match 2 + 2 with
   4 -> "Matches"
   _ -> "Doesn't match"
 ```
@@ -614,7 +631,7 @@ A _variable pattern_ is a [regular identifier](#identifiers) and matches any exp
 For example, this expression evaluates to `3`:
 
 ``` unison
-case 1 + 1 of
+match 1 + 1 with
   x -> x + 1
 ```
 
@@ -625,7 +642,7 @@ An _as-pattern_ has the form `v@p` where `v` is a [regular identifier](#identifi
 For example, this expression evaluates to `3`:
 
 ``` unison
-case 1 + 1 of
+match 1 + 1 with
   x@4 -> x * 2
   y@2 -> y + 1
   _   -> 22
@@ -638,7 +655,7 @@ A _constructor pattern_ has the form `C p1 p2 ... pn` where `C` is the name of a
 For example, this expression uses `Some` and `None`, the constructors of the `Optional` type, to return the 3rd element of the list `xs` if present or `0` if there was no 3rd element.
 
 ``` unison
-case List.at 3 xs of
+match List.at 3 xs with
   None -> 0
   Some x -> x
 ```
@@ -656,27 +673,27 @@ Examples:
 
 ``` unison
 first : [a] -> Optional a
-first as = case as of
+first as = match as with
   h +: _ -> Some h
   [] -> None
 
 last : [a] -> Optional a
-last as = case as of
+last as = match as with
   _ :+ l -> Some l
   [] -> None
 
 exactlyOne : [a] -> Boolean
-exactlyOne a = case a of
+exactlyOne a = match a with
   [_] -> true
   _   -> false
 
 lastTwo : [a] -> Optional (a,a)
-lastTwo a = case a of
+lastTwo a = match a with
   start ++ [a,a2] -> Some (a,a2)
   _ -> None
 
 firstTwo : [a] -> Optional (a,a)
-firstTwo a = case a of
+firstTwo a = match a with
   [a,a2] ++ rest -> Some (a,a2)
   _ -> None
 ```
@@ -688,7 +705,7 @@ firstTwo a = case a of
 For example, this expression evaluates to `4`:
 
 ``` unison
-case (1,2,3) of
+match (1,2,3) with
   (a,_,c) -> a + c
 ```
 
@@ -708,7 +725,7 @@ A _guard pattern_ has the form `p | g` where `p` is a pattern and `g` is a Boole
 For example, the following expression evaluates to 6:
 
 ``` unison
-case 1 + 2 of
+match 1 + 2 with
   x | x == 4 -> 0
   x | x + 1 == 4 -> 6
   _ -> 42
@@ -978,7 +995,7 @@ ability Abort where
 
 -- Returns `a` immediately if the program `e` calls `abort`
 abortHandler : a -> Request Abort a -> a
-abortHandler a e = case e of
+abortHandler a = cases
    { Abort.aborting -> _ } -> a
    { x } -> x
 
@@ -1009,7 +1026,7 @@ ability Store v where
   put : v -> ()
 
 storeHandler : v -> Request (Store v) a -> a
-storeHandler storedValue s = case s of
+storeHandler storedValue = cases
   {Store.get -> k} ->
     handle k storedValue with storeHandler storedValue
   {Store.put v -> k} ->
