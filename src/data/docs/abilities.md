@@ -99,7 +99,7 @@ List.map : (a ->{m} b) -> [a] ->{m} [b]
 List.map f as =
   -- Details of this implementation
   -- aren't important here
-  go acc rem = case rem of
+  go acc = cases
     [] -> acc
     [hd] ++ tl -> go (acc ++ [f hd]) tl
   go [] as
@@ -182,13 +182,13 @@ This declaration introduces the function `Stream.emit` which has exactly the typ
 
 The `Stream.range` example shows how we can use `emit` to produce streams. We can think of the calls to `emit` as suspending the computation and requesting that the `emit` operation be handled by an external piece of code that will interpret the `emit` and (if it wants) resume the computation.
 
-The operations of an ability are all abstract: the ability declaration just states the signatures of the operations but doesn't say how they are implemented or what they mean. We give meaning to the operations of an ability by interpreting them with a _handler_. Let's now look at an example of a handler, which interprets `Stream` computations by collecting all the emited values into a list. There's a bunch of new things here, which will all be explained!
+The operations of an ability are all abstract: the ability declaration just states the signatures of the operations but doesn't say how they are implemented or what they mean. We give meaning to the operations of an ability by interpreting them with a _handler_. Let's now look at an example of a handler, which interprets `Stream` computations by collecting all the emitted values into a list. There's a bunch of new things here, which will all be explained!
 
 ```unison
 Stream.toList : '{Stream a} () -> [a]
 Stream.toList stream =
   h : [a] -> Request {Stream a} () -> [a]
-  h acc req = case req of
+  h acc = cases
     {Stream.emit e -> resume} ->
       handle resume () with h (acc ++ [e])
     {u} -> acc
@@ -217,10 +217,10 @@ Stream.toList stream =
 ```
 What's happening here?
 
-* Here, the recursive function `h` is the handler. Its first argument `[a]` is an accumulated list of the values emitted so far. Its second argument is the requested operation, which it inspects before resuming. Handlers will frequently be recursive functions like this where the state of the handler is represented with the first argument(s) and request is the final parameter to the function. We'll explain the `case req of ...` part in a minute.
+* Here, the recursive function `h` is the handler. Its first argument `[a]` is an accumulated list of the values emitted so far. Its second argument is the requested operation, which it inspects before resuming. Handlers will frequently be recursive functions like this where the state of the handler is represented with the first argument(s) and request is the final parameter to the function. We'll explain the `cases ...` part in a minute.
 * `handle !stream with ... h []` says to start evaluating the `stream` computation and if it makes any requests, pass them to the handler `h []`".
   * `h []` is just a partial application of the function `h`, `h []` will have type `Request {Stream a} () -> [a]`.
-* Let's look now at the body of `h`, the `case req of ...` part:
+* Let's look now at the body of `h`, the `cases ...` part:
   * In the line `{Stream.emit e -> resume}`, think of `resume` as a function which represents "the rest of the computation"  (or _continuation_) after the point in the code where the request was made. The name `resume` here isn't special, we could name it `k`, `frobnicate`, or even `_` if we planned to ignore the continuation and never resume the computation.
   * In the line `handle resume () with h (snoc acc e)` we are resuming the computation and saying "handle any additional requests made after resuming with the handler `h (snoc acc e)`. Notice how we are using that first parameter to `h` to represent the state we are accumulating.
   * The case `{u} -> acc` matches when there are no further operations to process (the "pure case"). `u` can be any pattern (it could be `_` here since we are ignoring it). When matching on a `Request e a`, the type of the pure case will be `a`. Here, since we were given a `{Stream a} ()`, `u` will be of type `()`.
@@ -241,7 +241,7 @@ Answers are at the bottom of this tutorial.
 
 #### Challenging exercises
 
-Try writing the following stream functions, each of which uses an interesting handler. We recommmend writing out the signature of your handler function as we did above for the `h` function in `Stream.toList`.
+Try writing the following stream functions, each of which uses an interesting handler. We recommend writing out the signature of your handler function as we did above for the `h` function in `Stream.toList`.
 
 ```
 Stream.map : (a -> b) -> '{Stream a} r -> '{Stream b} r
@@ -279,7 +279,7 @@ ability Ask a where
 
 Ask.provide : a -> '{Ask a} r -> r
 Ask.provide a asker =
-  h req = case req of
+  h = cases
     {r}                 -> r
     {Ask.ask -> resume} -> handle resume a with h
   handle !asker with h
@@ -379,13 +379,12 @@ ability Abort where
   -- equivalently: `abort : {Abort} a`
 
 Abort.toOptional : '{Abort} a -> Optional a
-Abort.toOptional a = handle !a with
-  req -> case req of
-    {a} -> Some a
-    {Abort.abort -> _} -> None
+Abort.toOptional a = handle !a with cases
+  {a} -> Some a
+  {Abort.abort -> _} -> None
 
 Optional.toAbort : Optional a ->{Abort} a
-Optional.toAbort a = case a of
+Optional.toAbort = cases
   None -> Abort.abort
   Some a -> a
 
@@ -414,11 +413,11 @@ Optional.toAbort a = case a of
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
-    16 | > Abort.toOptional 'let
+    15 | > Abort.toOptional 'let
            ⧩
            None
   
-    20 | > Abort.toOptional 'let
+    19 | > Abort.toOptional 'let
            ⧩
            Some 3
 
@@ -433,13 +432,12 @@ ability Exception e where
   -- equivalently: `raise : e -> {Exception e} a`
 
 Exception.toEither : '{Exception e} a -> Either e a
-Exception.toEither a = handle !a with
-  req -> case req of
-    {a} -> Right a
-    {Exception.raise e -> _} -> Left e
+Exception.toEither a = handle !a with cases
+  {a} -> Right a
+  {Exception.raise e -> _} -> Left e
 
 Either.toException : Either e a ->{Exception e} a
-Either.toException a = case a of
+Either.toException = cases
   Left e -> raise e
   Right a -> a
 
@@ -464,11 +462,11 @@ Either.toException a = case a of
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
-    16 | > Exception.toEither '(42 + raise "oh noes!")
+    15 | > Exception.toEither '(42 + raise "oh noes!")
            ⧩
            Left "oh noes!"
   
-    17 | > Exception.toEither 'let
+    16 | > Exception.toEither 'let
            ⧩
            Right 111
 
@@ -482,12 +480,12 @@ ability Choose where
   choose : [a] -> a
 
 Choose.toList : '{Choose} a -> [a]
-Choose.toList p = handle !p with
-  h req = case req of
+Choose.toList p =
+  h = cases
     {a} -> [a]
     {Choose.choose as -> resume} ->
       List.flatMap (x -> handle resume x with h) as
-  h
+  handle !p with h
 
 > Choose.toList '(choose [1,2,3], choose [3,4,5])
 ```
@@ -527,54 +525,53 @@ Choose.toList p = handle !p with
 
 ```unison
 Stream.sum : '{Stream Nat} () -> Nat
-Stream.sum ns = handle !ns with
+Stream.sum ns =
   h : Nat -> Request {Stream Nat} () -> Nat
-  h acc req = case req of
+  h acc = cases
     {_} -> acc
     {Stream.emit n -> resume} ->
       handle resume () with h (acc + n)
-  h 0
+  handle !ns with h 0
 
 Stream.foldLeft : (b -> a -> b) -> b -> '{Stream a} () -> b
-Stream.foldLeft f b s = handle !s with
-  h acc req = case req of
+Stream.foldLeft f b s =
+  h acc = cases
     {_} -> acc
     {Stream.emit a -> resume} ->
       handle resume () with h (f acc a)
-  h b
+  handle !s with h b
 
 Stream.terminated : '{Stream a} () -> '{Stream (Optional a)} ()
-Stream.terminated s _ = handle !s with
+Stream.terminated s _ =
   h : Request {Stream a} () ->{Stream (Optional a)} ()
-  h req = case req of
+  h = cases
     {_} -> emit None
     {Stream.emit a -> resume} ->
       emit (Some a)
       handle resume () with h
-  h
+  handle !s with h
 
 Stream.sum' = Stream.foldLeft (Nat.+) 0
 
 Stream.pipe : '{Stream a} () -> '{Ask a, Stream b} r -> '{Stream b} ()
-Stream.pipe s f _ = handle !f with
-  h s req = case req of
+Stream.pipe s f _ =
+  h s = cases
     {_} -> ()
     {Ask.ask -> resumeF} ->
-      handle !s with req -> case req of
+      handle !s with cases
         {_} -> ()
         {Stream.emit a -> resumeS} ->
           handle resumeF a with h resumeS
     {Stream.emit b -> resumeF} ->
       emit b
       handle resumeF () with h s
-  h s
+  handle !f with h s
 
 Stream.filter f s =
   go _ =
     a = ask
     if f a then emit a
-    else ()
-    !go
+    else !go
   Stream.pipe s go
 
 Stream.map f s =
