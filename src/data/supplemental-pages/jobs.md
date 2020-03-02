@@ -52,7 +52,7 @@ Send an email to jobs@unison.cloud. Here's what to include:
 * If you have some work you want to show us, attach that or a link to it.
 * Attach samples of, or links to, things you’ve written (being a distributed team, written communication is important to us). This can be an awesome code comment, API doc, blog post, novel, or whatever you want.
 * If you’ve given any talks, technical or otherwise, show us those as well.
-* Let us know where you are currently based
+* Let us know where you are currently based.
 * What questions do you have about the role?
 
 We look forward to hearing from you!
