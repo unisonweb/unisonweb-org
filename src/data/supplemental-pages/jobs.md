@@ -6,7 +6,7 @@ slug: jobs
 
 # Jobs at Unison Computing
 
-Unison Computing is a seed stage startup and a [public benefit corp](https://en.wikipedia.org/wiki/Public-benefit_corporation). Our overall mission: radically advance what’s possible with software, and make the creation of software accessible to everyone. The company researches and develops new open-source programming technolog and builds products on this new technology. Our current projects are the open source [Unison language](http://unisonweb.org/) and the proprietary [Unison Cloud Platform](http://unison.cloud) (UCP).
+Unison Computing is a seed stage startup and a [public benefit corp](https://en.wikipedia.org/wiki/Public-benefit_corporation). Our overall mission: radically advance what’s possible with software, and make the creation of software accessible to everyone. The company researches and develops new open-source programming technolog and builds products on this new technology. Our current projects are the open source [Unison language](http://unisonweb.org/) and the commercial [Unison Cloud Platform](http://unison.cloud) (UCP).
 
 ## Principal Infrastructure Engineer
 
