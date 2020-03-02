@@ -37,7 +37,14 @@
    These variables can be found in the following locations:
    - The ["API Keys" page](https://www.algolia.com/apps/XNXUU7UYLX/api-keys/all) in the Alogia app.
    - The ["Environment" section](https://app.netlify.com/sites/unisonweb-org/settings/deploys#environment) of Settings > Build & Deploy in the Netlify Dashboard.
-7. **Start local webserver**
+
+7. **Install gridsome**
+  
+  ```
+  yarn global add @gridsome/cli
+  ```
+  
+8. **Start local webserver**
 
    ```shell
    gridsome develop
