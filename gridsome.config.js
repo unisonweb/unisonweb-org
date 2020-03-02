@@ -20,7 +20,15 @@ module.exports = {
       baseDir: './src/data/supplemental-pages',
       path: '**/*.md',
       route: ':slug',
-      remark: true
+      remark: {
+        autolinkHeadings: {
+          behavior: 'append',
+          content: {
+            type: 'text',
+            value: '#'
+          }
+        }
+      }
     }
   }, {
     // blog posts
@@ -30,7 +38,15 @@ module.exports = {
       baseDir: './src/data/blog/posts',
       path: '*/index.md',
       route: '/:year/:month/:day/:slug',
-      remark: true,
+      remark: {
+        autolinkHeadings: {
+          behavior: 'append',
+          content: {
+            type: 'text',
+            value: '#'
+          }
+        }
+      },
       refs: {
         authors: 'Author',
         categories: 'Category',
