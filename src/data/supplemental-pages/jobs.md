@@ -16,7 +16,7 @@ In this role you’ll have the opportunity to lead development of our futuristic
 
 The most important trait for this role: a belief that the (computing) world is what we make of it, and an ability and willingness to learn whatever is necessary to make a new vision of computing a reality. Regardless of your past experience, you will often find yourself in uncharted territory.
 
-### What will you do in this role
+### What you will do in this role
 
 - Design the architecture of the Unison Cloud Platform, working very closely with the technical founders of the company.
 - Determine staffing needs for UCP v1 and help recruit an amazing team to build it with you.
