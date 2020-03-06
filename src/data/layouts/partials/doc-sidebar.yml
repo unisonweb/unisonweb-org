@@ -19,6 +19,8 @@ linkSets:
         url: /docs/abilities
       - label: Refactoring and code updates
         url: /docs/refactoring
+      - label: Documenting code
+        url: /docs/documentation
 
   - heading: Usage topics (coming soon)
     icon: /media/icon-code.svg
