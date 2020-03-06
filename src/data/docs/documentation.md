@@ -7,15 +7,19 @@ description: How to write Unison documentation and associate it with your code
 
 Unison documentation is written in Unison. Documentation consists of values of the type `builtin.Doc`, and there's a special syntax to create these values:
 
-    myDoc : Doc
-    myDoc = [: This is some documentation. :]
+```unison
+myDoc : Doc
+myDoc = [: This is some documentation. :]
+```
 
 The syntax `[:` opens a documentation block, and `:]` closes it. Everything in between is documentation. The block can even span multiple lines:
 
-    myDoc = [: 
-      This is documentation
-      with line breaks and indentation.
-    :]
+```unison
+myDoc = [: 
+  This is documentation
+  with line breaks and indentation.
+:]
+```
 
 ## Attaching docs to your code
 
@@ -23,24 +27,30 @@ Documentation can be "linked" to definitions in the Unison codebase. A function 
 
 For example, let's say we have these Unison definitions already in our codebase:
 
-    myFunction.doc = [: This function multiplies its argument by two. :]
-    
-    myFunction x = x * 2
+```unison
+myFunction.doc = [: This function multiplies its argument by two. :]
+
+myFunction x = x * 2
+```
 
 In the `ucm` command-line tool, we can then link the `myFunction.doc` value to the `myFunction` definition, using the `link` command:
 
-    .> link myFunction.doc myFunction
-    
-      Updates:
-    
-        1. myFunction : Nat -> Nat
-           + 2. myFunction.doc : Doc
+```ucm
+.> link myFunction.doc myFunction
+
+  Updates:
+
+    1. myFunction : Nat -> Nat
+       + 2. myFunction.doc : Doc
+```
 
 The documentation value `myFunction.doc` is now linked to the `myFunction` definition in the codebase and we can check this using the `links` command:
 
-    .> links myFunction
-    
-      1. myFunction.doc : Doc
+```ucm
+.> links myFunction
+
+  1. myFunction.doc : Doc
+```
 
 This demonstrates the Unison codebase's system of *links*, which allows you to link documentation to code. This system also lets you link all kinds of metadata other than documentation, but for now let's concentrate on docs. The whole metadata linking system is described in detail later in this document.
 
@@ -48,9 +58,11 @@ This demonstrates the Unison codebase's system of *links*, which allows you to l
 
 We can ask `ucm` to display the documentation for a given definition using the `docs` command:
 
-    .> docs myFunction
-    
-      This function multiplies its argument by two.
+```ucm
+.> docs myFunction
+
+  This function multiplies its argument by two.
+```
 
 ## The documentation syntax in detail
 
@@ -60,23 +72,29 @@ The syntax `[:` opens a documentation block, and `:]` closes it. Everything in b
 
 You can create a hyperlink to a Unison definition named `myDef` in your codebase with `@myDef`. For example we could have the documentation for `myFunction` reference that function itself:
 
-    myFunction.doc = [: @myFunction multiplies its argument by two. :]
+```unison
+myFunction.doc = [: @myFunction multiplies its argument by two. :]
+```
 
 ### Insert the source code of another definition
 
 You can include the full source code of any definition in your codebase using `@[source]` followed by the name of the definition. For example, to include the source code of `myFunction` in its own documentation:
 
-    [:  
-      Multiplies its argument by two. Here is its source code:
-    
-      @[source] myFunction
-    :]
+```unison
+[:  
+  Multiplies its argument by two. Here is its source code:
+
+  @[source] myFunction
+:]
+```
 
 When Unison displays this `Doc`, it will be expanded to:
 
-    Multiplies its argument by two. Here is its source code:
-    
-    myFunction x = x * 2
+```ucm
+Multiplies its argument by two. Here is its source code:
+
+myFunction x = x * 2
+```
 
 Note that the source code is not copied into the document, it's just linked to it. Only on display of the document do we see what the link expands to. So if the source code for `myFunction` ever changes, your documentation changes along with it. This kind of linking where the link is expanded on display is sometimes called *[transclusion](https://en.wikipedia.org/wiki/Transclusion).*
 
@@ -84,17 +102,21 @@ Note that the source code is not copied into the document, it's just linked to i
 
 You can include the type signature of any function or value in the codebase, with `@[signature]` followed by the name of the function or value. For example, to include the type of `myFunction` in its own documentation:
 
-    [:  
-      Multiplies its argument by two. Here is its type:
-    
-        @[signature] myFunction
-    :]
+```unison
+[:  
+  Multiplies its argument by two. Here is its type:
+
+    @[signature] myFunction
+:]
+```
 
 When Unison displays this `Doc`, the type signature gets expanded:
 
-    Multiplies its argument by two. Here is its type:
-    
-      myFunction : Nat -> Nat
+```ucm
+Multiplies its argument by two. Here is its type:
+
+  myFunction : Nat -> Nat
+```
 
 This is also a [transclusion](https://en.wikipedia.org/wiki/Transclusion). If the type of `myFunction` ever changes (i.e. the name `myFunction` changes so that it refers to a function with a different type), your `Doc` changes automatically as well.
 
@@ -111,24 +133,32 @@ Note that Unison will not let you create a cycle where you include a `Doc` insid
 
 Sometimes you want to include the result of evaluating some Unison expression. To do this, use `@[evaluate]` followed by the name of a value in your codebase. For example, given a definition like this:
 
-    exampleExpression = 2 + 2
+```unison
+exampleExpression = 2 + 2
+```
 
 We'll have to first add it to the codebase:
 
-    .> add
-    
-      ⍟ I've added these definitions:
-    
-        exampleExpression : Nat
+```ucm
+.> add
+
+  ⍟ I've added these definitions:
+
+    exampleExpression : Nat
+```
 
 Once the definition in the codebase, we can insert the result of evaluating it
 into any `Doc` value:
 
-    exampleDoc = [: The value is @[evaluate] exampleExpression :]
+```unison
+exampleDoc = [: The value is @[evaluate] exampleExpression :]
+```
 
 When Unison displays `exampleDoc`, this will get expanded to:
 
-    The value is 4
+```ucm
+The value is 4
+```
 
 [Transclusion](https://en.wikipedia.org/wiki/Transclusion) applies here as well; even if the definition of `exampleExpression` changes, Unison will always display its current value when showing the `Doc`.
 
@@ -138,31 +168,37 @@ The Unison codebase caches evaluated results, so even if your expression is expe
 
 If you want your `Doc` to contain literally the `:]` character sequence or the `@` symbol, you can do so with `\\:]` and `\\@`, respectively. Example:
 
-    [:
-      A documentation block looks like this:
-      [: Contents go here \\:]
-    
-      Email simple\\@example.com for questions.
-    :]
+```unison
+[:
+  A documentation block looks like this:
+  [: Contents go here \\:]
+
+  Email simple\\@example.com for questions.
+:]
+```
 
 This will be displayed as:
 
-    A documentation block looks like this:
-    [: Contents go here :]
-    
-    Email simple@example.com for questions.
+```ucm
+A documentation block looks like this:
+[: Contents go here :]
+
+Email simple@example.com for questions.
+```
 
 ## The Doc datatype
 
 Even though there is special syntax for `Doc` values, it's just an ordinary data type:
 
-    unique type Doc
-      = Link Link
-      | Source Link
-      | Blob Text
-      | Signature Term
-      | Evaluate Term
-      | Join [Doc]
+```unison
+unique type Doc
+  = Link Link
+  | Source Link
+  | Blob Text
+  | Signature Term
+  | Evaluate Term
+  | Join [Doc]
+```
 
 You can use ordinary data construction syntax in Unison to construct documentation, instead of (or in addition to) using the special syntax, if you like.
 
@@ -183,27 +219,29 @@ Values of type `Type` are constructed with the `typeLink` keyword and `Term` val
 
 Although documentation values don't require any particular structure, here's a more complete example that uses some helpful conventions:
 
-    List.take.doc = [:
-      `@List.take n xs` returns a list of the first `n` elements of `xs`. 
-      Runtime is O(log n).
-      
-      Here's a typical example:
-    
-          @[source] List.take.examples.ex1
-          ↳ @[evaluate] List.take.examples.ex1
-    
-      If we `@List.take` more than the size of the list, we get back the 
-      original list:
-    
-          @[source] List.take.examples.ex2
-          ↳ @[evaluate] List.take.examples.ex2
-    
-      And lastly, `@List.take 0 xs` is always equal to `[]`, the empty list. 
-    
-      __Also see:__
-     
-      * @List.drop (ignores the first `n` elements)
-      * @List.doc has more about the @List data structure 
+```unison
+List.take.doc = [:
+  `@List.take n xs` returns a list of the first `n` elements of `xs`. 
+  Runtime is O(log n).
+  
+  Here's a typical example:
+
+      @[source] List.take.examples.ex1
+      ↳ @[evaluate] List.take.examples.ex1
+
+  If we `@List.take` more than the size of the list, we get back the 
+  original list:
+
+      @[source] List.take.examples.ex2
+      ↳ @[evaluate] List.take.examples.ex2
+
+  And lastly, `@List.take 0 xs` is always equal to `[]`, the empty list. 
+
+  __Also see:__
+ 
+  * @List.drop (ignores the first `n` elements)
+  * @List.doc has more about the @List data structure 
+```
 
 That is:
 
