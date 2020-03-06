@@ -19,6 +19,8 @@ linkSets:
         url: /docs/abilities
       - label: Refactoring and code updates
         url: /docs/refactoring
+      - label: First-class documentation with live examples
+        url: /docs/documentation
 
   - heading: Usage topics (coming soon)
     icon: /media/icon-code.svg
@@ -29,8 +31,6 @@ linkSets:
         url: /docs/pull-requests
       - label: Testing your code
         url: /docs/testing
-      - label: First-class documentation with live examples
-        url: /docs/documenting-code
 
   - heading: References
     icon: /media/icon-code.svg
