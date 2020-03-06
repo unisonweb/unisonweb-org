@@ -93,7 +93,7 @@ You can include the full source code of any definition in your codebase using `@
 
 When Unison displays this `Doc`, it will be expanded to:
 
-```ucm
+```
 Multiplies its argument by two. Here is its source code:
 
 myFunction x = x * 2
@@ -183,7 +183,7 @@ If you want your `Doc` to contain literally the `:]` character sequence or the `
 
 This will be displayed as:
 
-```ucm
+```
 A documentation block looks like this:
 [: Contents go here :]
 
@@ -245,7 +245,8 @@ List.take.doc = [:
   __Also see:__
  
   * @List.drop (ignores the first `n` elements)
-  * @List.doc has more about the @List data structure 
+  * @List.doc has more about the @List data structure
+  :]
 ```
 
 That is:
