@@ -28,7 +28,8 @@ Documentation can be "linked" to definitions in the Unison codebase. A function 
 For example, let's say we have these Unison definitions already in our codebase:
 
 ```unison
-myFunction.doc = [: This function multiplies its argument by two. :]
+myFunction.doc = 
+  [: This function multiplies its argument by two. :]
 
 myFunction x = x * 2
 ```
@@ -73,7 +74,8 @@ The syntax `[:` opens a documentation block, and `:]` closes it. Everything in b
 You can create a hyperlink to a Unison definition named `myDef` in your codebase with `@myDef`. For example we could have the documentation for `myFunction` reference that function itself:
 
 ```unison
-myFunction.doc = [: @myFunction multiplies its argument by two. :]
+myFunction.doc = 
+  [: @myFunction multiplies its argument by two. :]
 ```
 
 ### Insert the source code of another definition
@@ -82,7 +84,8 @@ You can include the full source code of any definition in your codebase using `@
 
 ```unison
 [:  
-  Multiplies its argument by two. Here is its source code:
+  Multiplies its argument by two.
+  Here is its source code:
 
   @[source] myFunction
 :]
@@ -151,7 +154,8 @@ Once the definition in the codebase, we can insert the result of evaluating it
 into any `Doc` value:
 
 ```unison
-exampleDoc = [: The value is @[evaluate] exampleExpression :]
+exampleDoc = 
+  [: The value is @[evaluate] exampleExpression :]
 ```
 
 When Unison displays `exampleDoc`, this will get expanded to:
@@ -221,21 +225,22 @@ Although documentation values don't require any particular structure, here's a m
 
 ```unison
 List.take.doc = [:
-  `@List.take n xs` returns a list of the first `n` elements of `xs`. 
-  Runtime is O(log n).
+  `@List.take n xs` returns a list of the first `n`
+  elements of `xs`. Complexity is O(log n).
   
   Here's a typical example:
 
       @[source] List.take.examples.ex1
       ↳ @[evaluate] List.take.examples.ex1
 
-  If we `@List.take` more than the size of the list, we get back the 
-  original list:
+  If we `@List.take` more than the size of the list, we 
+  get back the original list:
 
       @[source] List.take.examples.ex2
       ↳ @[evaluate] List.take.examples.ex2
 
-  And lastly, `@List.take 0 xs` is always equal to `[]`, the empty list. 
+  And lastly, `@List.take 0 xs` is always equal to `[]`,
+  the empty list. 
 
   __Also see:__
  
