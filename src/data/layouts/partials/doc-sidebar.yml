@@ -19,7 +19,7 @@ linkSets:
         url: /docs/abilities
       - label: Refactoring and code updates
         url: /docs/refactoring
-      - label: First-class documentation with live examples
+      - label: Documenting Unison code
         url: /docs/documentation
 
   - heading: Usage topics (coming soon)
