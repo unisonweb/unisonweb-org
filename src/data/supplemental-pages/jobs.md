@@ -39,9 +39,9 @@ An interest in compilers, runtimes, and programming language theory is also nice
 
 ### Logistics
 
-This position can be remote, but will involve regular travel to the company headquarters in [Somerville, MA](https://en.wikipedia.org/wiki/Davis_Square), especially when first getting started. If remote, you should be willing to work hours that overlap substantially with an Eastern Standard Time workday 9am-5pm.
+This position can be remote, but will involve regular travel to the company headquarters in [Somerville, MA](https://en.wikipedia.org/wiki/Davis_Square), especially when first getting started. If remote, you should be willing to work hours that overlap substantially with a North American Eastern Time workday 9am-5pm.
 
-The company is also happy to cover relocation expenses if you would like to relocate the Boston area for the position.
+The company is also happy to cover relocation expenses if you would like to relocate to the Boston area for the position.
 
 ### How to apply
 
