@@ -170,14 +170,14 @@ The Unison codebase caches evaluated results, so even if your expression is expe
 
 ### Escape sequences
 
-If you want your `Doc` to contain literally the `:]` character sequence or the `@` symbol, you can do so with `\\:]` and `\\@`, respectively. Example:
+If you want your `Doc` to contain literally the `:]` character sequence or the `@` symbol, you can do so with `\:]` and `\@`, respectively. Example:
 
 ```unison
 [:
   A documentation block looks like this:
-  [: Contents go here \\:]
+  [: Contents go here \:]
 
-  Email simple\\@example.com for questions.
+  Email simple\@example.com for questions.
 :]
 ```
 
@@ -246,6 +246,7 @@ List.take.doc = [:
  
   * @List.drop (ignores the first `n` elements)
   * @List.doc has more about the @List data structure 
+:]
 ```
 
 That is:
