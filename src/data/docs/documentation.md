@@ -78,6 +78,8 @@ myFunction.doc =
   [: @myFunction multiplies its argument by two. :]
 ```
 
+The hyperlink is based on a hash of `myFunction` rather than its name, so if it's ever renamed or moved, the link will still work.
+
 ### Insert the source code of another definition
 
 You can include the full source code of any definition in your codebase using `@[source]` followed by the name of the definition. For example, to include the source code of `myFunction` in its own documentation:
