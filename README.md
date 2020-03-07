@@ -216,7 +216,7 @@ Colors for syntax highlighting in codeblocks are defined in `src/assets/styles/c
 }
 ```
 
-Regex patterns to identify tokens are defined here: https://github.com/brianfryer/prism/blob/master/components/prism-unison.js.
+Regex patterns to identify tokens are defined here: https://github.com/unisonweb/prism/blob/master/components/prism-unison.js.
 
 > Eventually, the regex patterns need to be updated to match the Unison language. Once complete, a PR should be submitted to include Unison syntax highlighting in the main repository.
 
