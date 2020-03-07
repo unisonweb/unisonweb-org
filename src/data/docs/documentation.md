@@ -53,7 +53,7 @@ The documentation value `myFunction.doc` is now linked to the `myFunction` defin
   1. myFunction.doc : Doc
 ```
 
-This demonstrates the Unison codebase's system of *links*, which allows you to link documentation to code. This system also lets you link all kinds of metadata other than documentation, but for now let's concentrate on docs. The whole metadata linking system is described in detail later in this document.
+This demonstrates the Unison codebase's system of *links*, which allows you to link documentation to code. This system also lets you link all kinds of metadata other than documentation, but for now let's concentrate on docs.
 
 ## Viewing the docs for a definition
 
@@ -150,7 +150,7 @@ We'll have to first add it to the codebase:
     exampleExpression : Nat
 ```
 
-Once the definition in the codebase, we can insert the result of evaluating it
+Once the definition is in the codebase, we can insert the result of evaluating it
 into any `Doc` value:
 
 ```unison
@@ -164,9 +164,9 @@ When Unison displays `exampleDoc`, this will get expanded to:
 The value is 4
 ```
 
-[Transclusion](https://en.wikipedia.org/wiki/Transclusion) applies here as well; even if the definition of `exampleExpression` changes, Unison will always display its current value when showing the `Doc`.
+[Transclusion](https://en.wikipedia.org/wiki/Transclusion) applies here as well; Unison will always display the current value of `exampleExpression` when showing the `Doc`.
 
-The Unison codebase caches evaluated results, so even if your expression is expensive, you don't have to worry about Unison evaluating it again every time it displays your documentation.
+The Unison codebase caches evaluated results, so even if your expression is expensive, you don't have to worry about Unison evaluating it again every time it displays your documentation. Unison will only evaluate the expression if it has changed.
 
 ### Escape sequences
 
@@ -251,7 +251,7 @@ List.take.doc = [:
 
 That is:
 
-- Start with a 1-2 sentence overview, then an (optional) longer description, then some examples, then link to related definitions and further reading.
+- Start with a brief overview, then maybe a longer description, then some examples, then link to related definitions and further reading.
 - Use Markdown syntax for formatting. Indent examples by 4 spaces for readability when viewing the docs in plain text form, and this will also render nicely as Markdown.
 - Use the following naming conventions for associated documentation and examples. For a definition `List.take`, for example:
     - Its primary documentation value can be called `List.take.doc` (secondary docs can be in the `[List.take.docs](http://list.take.docs)` subnamespace, perhaps `List.take.docs.advancedUsages`).
