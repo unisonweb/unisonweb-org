@@ -244,8 +244,8 @@ List.take.doc = [:
 
   __Also see:__
  
-  * @List.drop (ignores the first `n` elements)
-  * @List.doc has more about the @List data structure 
+    * @List.drop (ignores the first `n` elements)
+    * @List.doc has more about the @List data structure 
 :]
 ```
 
@@ -253,7 +253,7 @@ That is:
 
 - Start with a brief overview, then maybe a longer description, then some examples, then link to related definitions and further reading.
 - Use Markdown syntax for formatting. Indent examples by 4 spaces for readability when viewing the docs in plain text form, and this will also render nicely as Markdown.
-- Use the following naming conventions for associated documentation and examples. For a definition `List.take`, for example:
-    - Its primary documentation value can be called `List.take.doc` (secondary docs can be in the `[List.take.docs](http://list.take.docs)` subnamespace, perhaps `List.take.docs.advancedUsages`).
-    - Examples can be in the `List.take.examples` namespace (for instance, above we just named the examples `List.take.examples.ex1` and `List.take.examples.ex2`.
+- Follow sensible naming conventions for associated documentation and examples. For a definition `List.take`, for example:
+    - Its primary documentation value could be called `List.take.doc`, and secondary docs could be in the `List.take.docs` namespace. Perhaps a document called `List.take.docs.advancedUsages` could show advanced usages of the function.
+    - Examples could be in the `List.take.examples` namespace. For instance, the examples above were named `List.take.examples.ex1` and `List.take.examples.ex2`.
 
