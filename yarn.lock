@@ -7718,7 +7718,7 @@ pretty-hrtime@^1.0.3:
 
 "prismjs@git://github.com/unisonweb/prism":
   version "1.17.1"
-  resolved "git://github.com/unisonweb/prism#ab9a3cbc3e8a066db749563b368fc3a60907969e"
+  resolved "git://github.com/unisonweb/prism#191bd2124be99c104991524c4c2f04af00f05650"
   optionalDependencies:
     clipboard "^2.0.0"
 
