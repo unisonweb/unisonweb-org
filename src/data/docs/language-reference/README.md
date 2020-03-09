@@ -441,6 +441,7 @@ Text literals can include the following escape sequences:
 * `\r` = carriage return
 * `\t` = horizontal tab
 * `\v` = vertical tab
+* `\s` = space
 * `\\` = literal `\` character
 * `\'` = literal `'` character
 * `\"` = literal `"` character
