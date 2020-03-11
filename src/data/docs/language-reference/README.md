@@ -26,9 +26,9 @@ A top-level declaration can appear at the _top level_ or outermost scope of a Un
 * A [type declaration][type], like `type Optional a = None | Some a`.
 * A [use clause][use], like `use .base` or `use math sqrt`.
 
-[term]: /docs/language-reference#term-declarations
-[type]: /docs/language-reference#type-declarations
-[use]:  /docs/language-reference#use
+[term]: #term-declarations
+[type]: #user-defined-data-types
+[use]:  #use-clauses
 
 ## Term declarations
 
@@ -39,7 +39,7 @@ timesTwo : Nat -> Nat
 timesTwo x = x * 2
 ```
 
-The first line in the above is a type signature. The type signature `timesTwo : Nat -> Nat` declares that the term named `timesTwo` is a function accepting an argument of type `Nat` and computes a value of type `Nat`. The type `Nat` is the type of 64-bit natural numbers starting from zero. See [Unison types](/docs/language-reference/types) for details.
+The first line in the above is a type signature. The type signature `timesTwo : Nat -> Nat` declares that the term named `timesTwo` is a function accepting an argument of type `Nat` and computes a value of type `Nat`. The type `Nat` is the type of 64-bit natural numbers starting from zero. See [Unison types](#types) for details.
 
 The second line is the term definition. The `=` sign splits the definition into a _left-hand side_, which is the term being defined, and the _right-hand side_, which is the definition of the term.
 
@@ -52,15 +52,15 @@ name p_1 p_2 … p_n = expression
 
 ### Type signatures
 
-`name : Type` is a type signature, where `name` is the name of the term being defined and `Type` is a [type](/docs/language-reference/types) for that term. The `name` given in the type signature and the `name` given in the definition must be the same.
+`name : Type` is a type signature, where `name` is the name of the term being defined and `Type` is a [type](#types) for that term. The `name` given in the type signature and the `name` given in the definition must be the same.
 
 Type signatures are optional. In the absence of a type signature, Unison will automatically infer the type of a term declaration. If a type signature is present, Unison will verify that the term has the type given in the signature.
 
 ### Term definition
 
-A term definition has the form `f p_1 p_2 … p_n = e` where `f` is the name of the term being defined. The parameters `p_1` through `p_n` are the names of parameters, if any (if the term is a function), separated by spaces. The right-hand side of the `=` sign is any [Unison expression](/docs/language-reference/expressions).
+A term definition has the form `f p_1 p_2 … p_n = e` where `f` is the name of the term being defined. The parameters `p_1` through `p_n` are the names of parameters, if any (if the term is a function), separated by spaces. The right-hand side of the `=` sign is any [Unison expression](#expressions).
 
-The names of the parameters as well as the name of the term are bound as local variables in the expression on the right-hand side (also known as the _body_ of the function). When the function is called, the parameter names are bound to any arguments passed in the call. See [function application](/docs/language-reference/expressions/#function-application) for details on the call semantics of functions.
+The names of the parameters as well as the name of the term are bound as local variables in the expression on the right-hand side (also known as the _body_ of the function). When the function is called, the parameter names are bound to any arguments passed in the call. See [function application](#function-application) for details on the call semantics of functions.
 
 If the term takes no arguments, the term has the value of the fully evaluated expression on the right-hand side and is not a function.
 
@@ -79,7 +79,7 @@ Note: The expression `drop n 1` on line 4 above subtracts one from the natural n
 
 ### Operator definitions
 
-[Operator identifiers](/docs/language-reference/identifiers) are valid names for Unison definitions, but the syntax for defining them is slightly different. For example, we could define a binary operator `|`:
+[Operator identifiers](#identifiers) are valid names for Unison definitions, but the syntax for defining them is slightly different. For example, we could define a binary operator `|`:
 
 ``` unison
 (|) x y = if x == 0 then y else x
@@ -103,11 +103,11 @@ Or if defining it infix:
 x MyNamespace.| y = if x == 0 then y else x
 ```
 
-The operator can be applied using either notation, no matter which way it's defined. See [function application](/docs/language-reference/expressions/#function-application) for details.
+The operator can be applied using either notation, no matter which way it's defined. See [function application](#function-application) for details.
 
 ## User-defined data types
 
-A user-defined data type is introduced with the `type` keyword. (See [Types](/docs/language-reference/types) for an informal description of Unison's type system.)
+A user-defined data type is introduced with the `type` keyword. (See [Types](#types) for an informal description of Unison's type system.)
 
 For example:
 
@@ -117,11 +117,11 @@ type Optional a = None | Some a
 
 The `=` sign splits the definition into a _left-hand side_ and a _right-hand side_, much like term definitions.
 
-The left-hand side is the data type being defined. It gives a name for the data type and declares a new [_type constructor_](/docs/language-reference/types#type-constructors) with that name (here it’s named `Optional`), followed by names for any type arguments (here there is one and it’s called `a`). These names are bound as type variables in the right-hand side. The right-hand side may also refer to the name given to the type in the left-hand side, in which case it is a recursive type declaration. Note that the fully saturated type construction `Optional Nat` is a type, whereas `Optional` by itself is a type constructor, not a type (it requires a type argument in order to construct a type).
+The left-hand side is the data type being defined. It gives a name for the data type and declares a new [_type constructor_](#type-constructors) with that name (here it’s named `Optional`), followed by names for any type arguments (here there is one and it’s called `a`). These names are bound as type variables in the right-hand side. The right-hand side may also refer to the name given to the type in the left-hand side, in which case it is a recursive type declaration. Note that the fully saturated type construction `Optional Nat` is a type, whereas `Optional` by itself is a type constructor, not a type (it requires a type argument in order to construct a type).
 
 The right-hand side consists of zero or more data constructors separated by `|`. These are _data constructors_ for the type, or ways in which values of the type can be constructed. Each case declares a name for a data constructor (here the data constructors are `None` and `Some`), followed by the **types** of the arguments to the constructor.
 
-When Unison compiles a type definition, it generates a term for each data constructor. Here they are the terms `Optional.Some : a -> Optional a`, and `Optional.None : Optional a`. It also generates _patterns_ for matching on data (see [Pattern Matching](/docs/language-reference/pattern-matching)).
+When Unison compiles a type definition, it generates a term for each data constructor. Here they are the terms `Optional.Some : a -> Optional a`, and `Optional.None : Optional a`. It also generates _patterns_ for matching on data (see [Pattern Matching](#match-expressions-and-pattern-matching)).
 
 Note that these terms and patterns receive qualified names: if the type named `x.y.Z` has a data constructor `C`, the generated term and pattern for `C` will be named `x.y.Z.C`.
 
@@ -139,7 +139,7 @@ The optional `unique` keyword introduces a [unique type](#unique-types), explain
 
 ### Unique types
 
-A type declaration gives a name to a type, but Unison does not uniquely identify a type by its name. Rather, the [hash](/docs/language-reference/hashes) of a type's definition identifies the type. The hash is based on the _structure_ of the type definition, with all identifiers removed.
+A type declaration gives a name to a type, but Unison does not uniquely identify a type by its name. Rather, the [hash](#hashes) of a type's definition identifies the type. The hash is based on the _structure_ of the type definition, with all identifiers removed.
 
 For example, Unison considers these type declarations to declare _the exact same type_, even though they give different names to both the type constructor and the data constructors:
 
@@ -228,7 +228,7 @@ See [Abilities and Ability Handlers](#abilities) for more on user-defined abilit
 
 This section describes the syntax and informal semantics of Unison expressions.
 
-Unison's evaluation strategy for expressions is [Applicative Order Call-by-Value](https://en.wikipedia.org/wiki/Evaluation_strategy#Applicative_order). See [Function application](/docs/language-reference/expressions/#function-application) for details.
+Unison's evaluation strategy for expressions is [Applicative Order Call-by-Value](https://en.wikipedia.org/wiki/Evaluation_strategy#Applicative_order). See [Function application](#function-application) for details.
 
 ### Basic lexical forms
 
@@ -238,7 +238,7 @@ See the sections on:
 * [Blocks and statements](#blocks), for example: `x = 42`.
 * [Literals](#literals), for example: `1`, `"hello"`, `[1,2,3]`.
 * [Comments](#comments), for example `-- this is a comment`.
-* [Pattern matching](#patternmatching), for example `match (x,y) with (1, "hi) -> 42`.
+* [Pattern matching](#match-expressions-and-pattern-matching), for example `match (x,y) with (1, "hi) -> 42`.
 
 ### Identifiers
 
@@ -312,7 +312,7 @@ expression
 
 A block can have zero or more statements, and the value of the whole block is the value of the final `expression`. A statement is either:
 
-1. A [term definition](#term-definition) which defines a term within the scope of the block. The definition is not visible outside this scope, and is bound to a local name. Unlike top-level definitions, a block-level definition does not result in a hash, and cannot be referenced with a [hash literal](/docs/language-reference/hashes).
+1. A [term definition](#term-definition) which defines a term within the scope of the block. The definition is not visible outside this scope, and is bound to a local name. Unlike top-level definitions, a block-level definition does not result in a hash, and cannot be referenced with a [hash literal](#hashes).
 2. A [Unison expression](#expressions). In particular, blocks often contain _action expressions_, which are expressions evaluated solely for their effects. An action expression has type `{A} T` for some ability `A` (see [Abilities and Ability Handlers](#abilities)) and some type `T`.
 3. A [`use` clause](#use).
 
@@ -391,7 +391,7 @@ A literal expression is a basic form of Unison expression. Unison has the follow
 * There are two _Boolean literals_: `true` and `false`, and they have type `Boolean`.
 * A _hash literal_ begins with the character `#`. See the section **Hashes** for details on the lexical form of hash literals. A hash literal is a reference to a term or type. The type or term that it references must have a definition whose hash digest matches the hash in the literal. The type of a hash literal is the same as the type of its referent. `#a0v829` is an example of a hash literal.
 * A _literal list_ has the general form `[v1, v2, ... vn]` where `v1` through `vn` are expressions. A literal list may be empty. For example, `[]`, `[x]`, and `[1,2,3]` are list literals. The expressions that form the elements of the list all must have the same type. If that type is `T`, then the type of the list literal is `.base.List T` or `[T]`.
-* A _function literal_ or _lambda_ has the form `p1 p2 ... pn -> e`, where `p1` through `pn` are [regular identifiers](#identifiers) and `e` is a Unison expression (the _body_ of the lambda). The variables `p1` through `pn` are local variables in `e`, and they are bound to any values passed as arguments to the function when it’s called (see the section [Function Application](/docs/language-reference/expressions/#function-application) for details on call semantics). For example `x -> x + 2` is a function literal.
+* A _function literal_ or _lambda_ has the form `p1 p2 ... pn -> e`, where `p1` through `pn` are [regular identifiers](#identifiers) and `e` is a Unison expression (the _body_ of the lambda). The variables `p1` through `pn` are local variables in `e`, and they are bound to any values passed as arguments to the function when it’s called (see the section [Function Application](#function-application) for details on call semantics). For example `x -> x + 2` is a function literal.
 * A _tuple literal_ has the form `(v1,v2, ..., vn)` where `v1` through `vn` are expressions. A value `(a,b)` has type `(A,B)` if `a` has type `A` and `b` has type `B`. The expression `(a)` is the same as the expression `a`. The nullary tuple `()` (pronounced “unit”) is of the trivial type `()`. See [tuple types](#tuple-types) for details on these types and more ways of constructing tuples.
 
 #### Documentation literals
@@ -500,7 +500,7 @@ Evaluation of conditional expressions is non-strict. The evaluation semantics of
 * If `c` evaluates to `true`, the expression `t`  is evaluated and `f` remains unevaluated. The whole expression reduces to the value of `t`.
 * If `c` evaluates to `false`, the expression `f` is evaluated and `t` remains unevaluated. The whole expression reduces to the value of `f`.
 
-The keywords `if`, `then`, and `else` each introduce a [Block](/docs/language-reference/blocks)  as follows:
+The keywords `if`, `then`, and `else` each introduce a [Block](#blocks-and-statements)  as follows:
 
 ``` unison
 if
@@ -758,7 +758,7 @@ This section describes informally the structure of types in Unison. See also the
 
 Formally, Unison’s type system is an implementation of the system described by Joshua Dunfield and Neelakantan R. Krishnaswami in their 2013 paper [Complete and Easy Bidirectional Typechecking for Higher-Rank Polymorphism](https://arxiv.org/abs/1306.6032).
 
-Unison extends that type system with, [pattern matching](/docs/language-reference/pattern-matching), [scoped type variables](#scoped-type-variables), _ability types_ (also known as _algebraic effects_). See the section on [Abilities](#abilities) for details on ability types.
+Unison extends that type system with, [pattern matching](#match-expressions-and-pattern-matching), [scoped type variables](#scoped-type-variables), _ability types_ (also known as _algebraic effects_). See the section on [Abilities](#abilities) for details on ability types.
 
 Unison attributes a type to every valid expression. For example:
 
@@ -885,7 +885,7 @@ Unison has the following built-in type constructors.
 
 ### User-defined types
 
-New types can be declared as described in detail in the [User-defined types](/docs/language-reference/type-declarations) section. These include ordinary [data types](/docs/language-reference/type-declarations), [unique types](/docs/language-reference/type-declarations#unique-types), and [record types](/docs/language-reference/type-declarations#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor.
+New types can be declared as described in detail in the [User-defined types](#user-defined-data-types) section. These include ordinary [data types](#user-defined-data-types), [unique types](#unique-types), and [record types](#record-types). A type declaration introduces a _type_, a corresponding _type constructor_, one or more _data constructors_ that (collectively) construct all possible values of the type, and (in the case of record types) accessors for the named arguments of the type's single data constructor.
 
 <a id="abilities"></a>
 
@@ -1039,7 +1039,7 @@ Note that the `storeHandler` has a `with` clause that uses `storeHandler` itself
 
 In the pattern for `Store.get`, the continuation `k` expects a `v`, since the return type of `get` is `v`. In the pattern for `Store.put`, the continuation `k` expects `()`, which is the return type of `put`.
 
-It's worth noting that this is a mutual recursion between `storeHandler` and the various continuations (all named `k`). This is no cause for concern, as they call each other in tail position and the Unison compiler performs [tail call elimination](/docs/language-reference/expressions/#function-application).
+It's worth noting that this is a mutual recursion between `storeHandler` and the various continuations (all named `k`). This is no cause for concern, as they call each other in tail position and the Unison compiler performs [tail call elimination](#function-application).
 
 An example use of the above handler:
 
