@@ -5,9 +5,9 @@ description: How to write tests in Unison
 
 # Testing your Unison code
 
-Writing unit tests is easy in Unison. You'll add your tests as [special watch expressions in your scratch file](/docs/tour#unisons-interactive-scratch-files), then add them to the codebase using the [`add` or `update`](/docs/commands#add) commands, then use the [`test` command](/docs/commands#test) to run the tests.
+Writing unit tests is easy in Unison. You add your tests as [special watch expressions in your scratch file](/docs/tour#unisons-interactive-scratch-files), then add them to the codebase using the [`add` or `update`](/docs/commands#add) commands, then use the [`test` command](/docs/commands#test) to run the tests.
 
-Note that unit tests can't access any [abilities](/docs/abilities) that would cause the test to give different results each time it is run, so it is completely safe to just cache the test results. Most often, when you issue the [`test` command](/docs/commands#test) it's just reporting on already computed and cached test results.
+Note that unit tests can't access any [abilities](/docs/abilities) that would cause the test to give different results each time it's run. This means Unison can cache test results, which is completely safe to do. Most often, when you issue the [`test` command](/docs/commands#test) it's just reporting on already computed and cached test results.
 
 ## Basic unit tests
 
