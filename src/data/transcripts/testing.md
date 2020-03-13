@@ -7,7 +7,7 @@ description: How to write tests in Unison
 
 Writing unit tests is easy in Unison. You add your tests as [special watch expressions in your scratch file](/docs/tour#unisons-interactive-scratch-files), then add them to the codebase using the [`add` or `update`](/docs/commands#add) commands, then use the [`test` command](/docs/commands#test) to run the tests.
 
-Note that unit tests can't access any [abilities](/docs/abilities) that would cause the test to give different results each time it's run. This means Unison can cache test results, which is completely safe to do. Most often, when you issue the [`test` command](/docs/commands#test) it's just reporting on already computed and cached test results.
+Note that unit tests can't access any [abilities](/docs/abilities) that would cause the test to give different results each time it's run. This means Unison can cache test results, which is completely safe to do. When you issue the [`test` command](/docs/commands#test) any tests that have been run before will simply report the cached results.
 
 ## Basic unit tests
 
@@ -33,7 +33,7 @@ test> List.reverse.tests.ex1 = check let
   expected == actual
 ```
 
-> 📕 As discussed [here in the language reference](/docs/language-reference#syntactic-precedence), keyword-based constructs like `let` bind tighter than function application, so you don't need any parentheses around the `let` block which is used as the argument to `check`.
+> 📕 As [discussed in the language reference](/docs/language-reference#syntactic-precedence), keyword-based constructs like `let` bind tighter than function application, so you don't need any parentheses around the `let` block which is used as the argument to `check`.
 
 ## Adding diagnostics for a failing test
 
@@ -91,11 +91,11 @@ But actually, it didn't need to run anything! All the tests had been run previou
 
 ## Generating test cases with code
 
-Unison's [base library](https://github.com/unisonweb/base) contains powerful utility functions for generating test cases with Unison code, which lets your tests cover a lot more cases than if you are writing test cases manually like we've done so far. (This style of testing library is often called a _property-based testing library_.)
+Unison's [base library](https://github.com/unisonweb/base) contains powerful utility functions for generating test cases with Unison code, which lets your tests cover a lot more cases than if you are writing test cases manually like we've done so far. (This style of testing is often called _property-based testing_.)
 
 The property-based testing support in Unison relies on [an ability](/docs/abilities) called `Gen` (short for "generator"). If you haven't read about [abilities](/docs/abilities) yet, we suggest taking a detour to do so before continuing.
 
-For instance, a `'{Gen} Nat` is a computation that, when run, produces `Nat` values. You can sample from a `'{Gen} a` multiple times to produce different values. Importantly, these are not _random_ values, the sequence of values generated is entirely deterministic:
+For instance, a `'{Gen} Nat` is a computation that, when run, produces `Nat` values. You can sample from a `'{Gen} a` multiple times to produce different values. Importantly, these are _not random_ values. The sequence of values generated is entirely deterministic:
 
 ```unison
 > sample 100 (natIn 0 10)
@@ -134,13 +134,13 @@ Here's an example:
 > sample 10 <| pick [natIn 0 10, natIn 100 200]
 ```
 
-The other is `cost : Nat -> '{Gen} a -> '{Gen} a`, which assigns a "cost" to a generator. What's that mean? When a branch of `pick` has a cost of say, `5`, the sampling process will take 5 samples from the _other_ branches before switching to fairly sampling from both branches:
+The other is `cost : Nat -> '{Gen} a -> '{Gen} a`, which assigns a "cost" to a generator. What does that mean? When a branch of `pick` has a cost of `5` for instance, the sampling process will take 5 samples from the _other_ branches before switching to fairly sampling from both branches:
 
 ```unison
 > sample 10 <| pick [cost 5 (natIn 0 10), natIn 100 200]
 ```
 
-Very interesting! Admit it, you are now curious: does the sampling process wait until _all_ the other branches have 5 samples taken, or just 5 _total_ samples across all other branches? Let's test this out with 3 branches:
+Now, does the sampling process wait until _all_ the other branches have 5 samples taken, or just 5 _total_ samples across all other branches? Let's test this out with 3 branches:
 
 ```unison
 > sample 10 <|
@@ -151,7 +151,7 @@ You may want to do some experimentation to get a feel for how `Gen` behaves. You
 
 ### Using generators to write property based tests
 
-Once you've got your generators in good shape, you can combine these into property-based tests that verify some property for _all_ generated test cases. For instance, let's check that reversing a list twice gives back the original list:
+Once you've got your generators in good shape, you can combine these into property-based tests that verify some property for _all_ generated test cases. For example, let's check that reversing a list twice gives back the original list:
 
 ```unison
 test> List.reverse.tests.prop1 = runs 100 'let
@@ -175,13 +175,13 @@ Notice that all the test results are cached. If you later `update` the definitio
 
 ### Other useful functions when writing property-based tests
 
-The function `runs` that we've been using has type `Nat -> '{Gen} Test -> [Test.Result]`. To form a value of type `Test`, you can using the functions `expect` (which we've seen) as well as `ok`, `fail`, `unexpectedOk`, and `unexpectedFail`, which we can locate using [type-based search](/docs/tour#-to-the-unison-codebase-manager):
+The function `runs` that we've been using has type `Nat -> '{Gen} Test -> [Test.Result]`. To form a value of type `Test`, you can use the functions `expect` (which we've seen) as well as `ok`, `fail`, `unexpectedOk`, and `unexpectedFail`, which we can locate using [type-based search](/docs/tour#-to-the-unison-codebase-manager):
 
 ```ucm
 .base> find : Test
 ```
 
-These can just be used to give different messages on success or failure. Feel free to try them out in your tests, and you may want to explore other functions in the testing package.
+These functions are used to give different messages on success or failure. Feel free to try them out in your tests, and you may want to explore other functions in the testing package.
 
 Lastly, the [base library is open for contributions](https://github.com/unisonweb/base/blob/master/CONTRIBUTING.md) if you come up with some handy testing utility functions, or want to contribute better documentation (or tests) for existing definitions.
 
