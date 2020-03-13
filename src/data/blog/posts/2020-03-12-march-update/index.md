@@ -82,7 +82,7 @@ We take the output of this command and send it to the recipient of our pull requ
   The merged result is in pr1.merged.
   Use `diff.namespace pr1.base pr1.merged` to see what's been updated.
   Use `todo merged.patch pr1.merged` to see what work is remaining for the merge.
-  Use `push <https://github.com/unisonweb/base> pr1.merged` to push the changes.
+  Use `push https://github.com/unisonweb/base pr1.merged` to push the changes.
 ```
 
 Following the instructions in the output of `pr.load`, the maintainer of `unisonweb/base` can audit our changes and push them to their repo on GitHub.
