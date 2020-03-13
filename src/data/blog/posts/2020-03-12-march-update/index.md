@@ -97,7 +97,7 @@ Sometimes this will result in code that doesn't typecheck, and Unison will let y
 
 ## A number of syntax changes
 
-We've made some changes to Unison's surface syntax, hoping to make the language more ergonomic. A cool thing about Unison is that we can change the syntax without breaking anyone's existing code! When you update to the latest version of Unison, it will simply start rendering your code using the new syntax.
+We've made some changes to Unison's surface syntax, hoping to make the language more ergonomic. Kudos go to Aaron Novstrup who contributed each of these improvements. 🙌 A cool thing about Unison is that we can change the syntax without breaking anyone's existing code! When you update to the latest version of Unison, it will simply start rendering your code using the new syntax.
 
 Here are three major syntax changes:
 
@@ -127,7 +127,7 @@ match List.head xs with
 
 ### Lambda-case syntax
 
-Thanks to Aaron Novstrup for adding this improvement. When writing a lambda literal that pattern matches on its argument, normally you would write:
+When writing a lambda literal that pattern matches on its argument, normally you would write:
 
 ```unison
 x -> match x with ...
