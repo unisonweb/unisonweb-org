@@ -180,7 +180,7 @@ More generally, you can now refer to a type or term without imports using any su
 
 ## Builtins for crashing Unison programs
 
-We added two builtins, `bug` and `todo`, which simply crash your program with an error.
+We added two builtins, `bug` and `todo`, which simply crash your program with an error. Shoutout to Noah Haasis for contributing both of these.
 
 The `todo` builtin is handy for when you've only partially implemented something but you want to try out the partial implementation anyway:
 
@@ -201,7 +201,7 @@ else
   bug ("Tree unbalanced after rebalancing!", tree')
 ```
 
-You can pass any value at all to `bug` and it will be nicely formatted by Unison, using the pretty-printing code developed by contributor Chris Gibbs.
+You can pass any value at all to `bug` or `todo` and it will be nicely formatted by Unison, using the pretty-printing code developed by contributor Chris Gibbs. A common idiom is just to give it a tuple with one element being the description and the other elements being a list of values that you want to be able to see if `bug` or `todo` call is ever hit in running code.
 
 ## What's next?
 
