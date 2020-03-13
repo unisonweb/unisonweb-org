@@ -180,7 +180,7 @@ More generally, you can now refer to a type or term without imports using any su
 
 ## Builtins for crashing Unison programs
 
-We added two builtins, `bug` and `todo`, which simply crash your program with an error. Shoutout to Noah Haasis for contributing both of these.
+We added two builtins, `bug` and `todo`, which simply crash your program with an error. (A shoutout to Noah Haasis for contributing both of these! 🎉)
 
 The `todo` builtin is handy for when you've only partially implemented something but you want to try out the partial implementation anyway:
 
