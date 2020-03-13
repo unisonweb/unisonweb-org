@@ -1,12 +1,10 @@
 ---
-title: First class documentation with live code examples, better pull requests, a new runtime, and more
+title: First class documentation with live examples, rethinking the pull request, a new runtime, and more
 description: There have been more than 700 commits to Unison's master branch since we last did one of these update posts, so a lot has happened. We've made a lot of bug-fixes and improvements to the ergonomics of Unison--too many to list them all here. Here are some highlights.
 date: 2020-03-12
 categories: ["news"]
 featuredImage: /media/thing7.svg
 ---
-
-# First class documentation with live code examples, better pull requests, a new runtime, and more
 
 There have been more than 700 commits to Unison's master branch since we last did one of these update posts, so a lot has happened. We've made a lot of bug-fixes and improvements to the ergonomics of Unison--too many to list them all here. Here are some highlights.
 
@@ -52,9 +50,11 @@ See [the documentation for how to write tests in Unison](/docs/testing) to learn
 
 ## A workflow for making pull requests against Unison repos
 
-This is still a work in progress, but we have a fairly straightforward workflow that you can use to make "pull requests" against Unison repos.
+This is still a work in progress, but we have a fairly straightforward workflow that you can use to make "pull requests" against Unison repos. The usual pull request review process involves navigating large textual diffs, using a tool that has little understanding of your code. Unison has a semantic understanding of changes that are made to a namespace, and can report things like "this function was changed" or "this definition was moved from here to there" rather than "these 46 lines in this file are now different, as are these other 74 lines in this other file". Also, by storing the Unison codebase as serialized abstract syntax trees, we avoid merge conflicts or diffs due to things like formatting.
 
-The scare quotes around "pull request" are here because even though Unison repos are hostable on GitHub, we cannot actually use the GitHub pull request mechanism. Or at least, that would not be a nice experience. Instead, Unison has its own kind of pull request.
+Because of this more semantic understanding, the PR review process can also be more random-access, where one can hop around through semantically meaningful parts of the change rather than scrolling through large textual diffs.
+
+Though we still call them "pull requests" and though Unison repos are hostable on GitHub, we cannot actually use the GitHub pull request mechanism. Or at least, that would not be a nice experience. Instead, Unison has its own kind of pull request.
 
 Let's say we've forked the [Unison Base library](https://github.com/unisonweb/base) to `https://github.com/me/mybase`, and we've added a new function `Char.toText` that we would like to have merged back to `unisonweb/base`. We can create a Unison pull request from the Unison Codebase Manager, with `pr.create`:
 
