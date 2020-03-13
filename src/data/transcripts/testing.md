@@ -134,17 +134,10 @@ Here's an example:
 > sample 10 <| pick [natIn 0 10, natIn 100 200]
 ```
 
-The other is `cost : Nat -> '{Gen} a -> '{Gen} a`, which assigns a "cost" to a generator. What does that mean? When a branch of `pick` has a cost of `5` for instance, the sampling process will take 5 samples from the _other_ branches before switching to fairly sampling from both branches:
+The other is `cost : Nat -> '{Gen} a -> '{Gen} a`, which assigns a "cost" to a generator. What does that mean? When a branch of `pick` has a cost of `5` for instance, the sampling process will take 5 samples from all _other_ branches before switching to fairly sampling from both branches:
 
 ```unison
 > sample 10 <| pick [cost 5 (natIn 0 10), natIn 100 200]
-```
-
-Now, does the sampling process wait until _all_ the other branches have 5 samples taken, or just 5 _total_ samples across all other branches? Let's test this out with 3 branches:
-
-```unison
-> sample 10 <|
-  pick [cost 5 (natIn 0 10), natIn 100 200, natIn 1000 2000]
 ```
 
 You may want to do some experimentation to get a feel for how `Gen` behaves. You can use the `cost` to control which branches of the space of possibilities get explored first--a common use case will be to assign higher costs to "large" test cases that you wish to test less frequently.
@@ -175,7 +168,7 @@ Notice that all the test results are cached. If you later `update` the definitio
 
 ### Other useful functions when writing property-based tests
 
-The function `runs` that we've been using has type `Nat -> '{Gen} Test -> [Test.Result]`. To form a value of type `Test`, you can use the functions `expect` (which we've seen) as well as `ok`, `fail`, `unexpectedOk`, and `unexpectedFail`, which we can locate using [type-based search](/docs/tour#-to-the-unison-codebase-manager):
+The function `runs` that we've been using has type `Nat -> '{Gen} Test -> [Test.Result]`. To form a value of type `Test`, you can use the functions `expect` (which we've seen) as well as `ok`, `fail`, and others which we can locate using [type-based search](/docs/tour#-to-the-unison-codebase-manager):
 
 ```ucm
 .base> find : Test
