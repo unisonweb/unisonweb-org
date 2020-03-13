@@ -21,6 +21,8 @@ linkSets:
         url: /docs/refactoring
       - label: Documenting Unison code
         url: /docs/documentation
+      - label: Testing your code
+        url: /docs/testing
 
   - heading: Usage topics (coming soon)
     icon: /media/icon-code.svg
@@ -29,8 +31,7 @@ linkSets:
         url: /docs/concurrent-work
       - label: Pull requests and collaboration
         url: /docs/pull-requests
-      - label: Testing your code
-        url: /docs/testing
+
 
   - heading: References
     icon: /media/icon-code.svg
