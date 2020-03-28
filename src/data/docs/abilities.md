@@ -90,6 +90,8 @@ If you _don't_ want this inference, just add ability brackets to the arrow (like
 
 [Delayed computations](#delayed-computations) are treated just like functions by Unison and can also have ability requirements. For instance, `'(printLine "Hi!")` will have the type `'{IO} ()`. See [this appendix](#delayed-computations) for more on this.
 
+> 🏁  In case you're wondering how to run a program that requires the `IO` ability, you can use the `run` command in `ucm`. For example, `run myProgram` will evaluate `!myProgram`, where `myProgram` identifies a term of type `'{IO} ()` (or, equivalently, `() ->{IO} ()`) in the codebase or in the most recently typechecked scratch file.  🏎
+
 ### Ability polymorphism
 
 Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We say such functions _ability-polymorphic_ (or "ability-parametric"). For instance, here's the definition and signature of `List.map`, which applies a function to each element of a list:
@@ -218,7 +220,7 @@ Stream.toList stream =
 What's happening here?
 
 * Here, the recursive function `h` is the handler. Its first argument `[a]` is an accumulated list of the values emitted so far. Its second argument is the requested operation, which it inspects before resuming. Handlers will frequently be recursive functions like this where the state of the handler is represented with the first argument(s) and request is the final parameter to the function. We'll explain the `cases ...` part in a minute.
-* `handle !stream with ... h []` says to start evaluating the `stream` computation and if it makes any requests, pass them to the handler `h []`".
+* `handle !stream with h []` says to start evaluating the `stream` computation and if it makes any requests, pass them to the handler `h []`.
   * `h []` is just a partial application of the function `h`, `h []` will have type `Request {Stream a} () -> [a]`.
 * Let's look now at the body of `h`, the `cases ...` part:
   * In the line `{Stream.emit e -> resume}`, think of `resume` as a function which represents "the rest of the computation"  (or _continuation_) after the point in the code where the request was made. The name `resume` here isn't special, we could name it `k`, `frobnicate`, or even `_` if we planned to ignore the continuation and never resume the computation.
