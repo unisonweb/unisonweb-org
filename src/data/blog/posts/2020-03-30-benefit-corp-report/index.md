@@ -1,8 +1,9 @@
 ---
 title: Why Unison Computing is a public benefit corporation and our first annual report
 description: Unison Computing is a public benefit corp (PBC), cofounded by Paul Chiusano, Rúnar Bjarnason, and Arya Irani. We work alongside other amazing open source contributors on the Unison language. 💜 This post talks about why Unison Computing is a PBC and also includes our first annual report.
-date: 2020-03-12
+date: 2020-03-30
 categories: ["announcements"]
+slug: benefit-corp-report
 featuredImage: /media/thing11.svg
 ---
 
