@@ -162,6 +162,26 @@ The first argument to `pull` is any [Git URL](#git-url) that identifies the name
 
 Use `quit` (or `exit` or `:q`) to terminate UCM.
 
+## `run`
+
+The `run` command is used to evaluate terms that require the `IO` ability within `ucm`.  A program that performs `IO` cannot be evaluated in a watch expression but _can_ be executed with `run`.
+
+Formally, `run myProgram` will force a [delayed computation](/docs/language-reference#delayed-computations) `myProgram` of type `'{IO} ()`, evaluating `!myProgram` in a context where the `IO` ability is provided by the Unison runtime. The argument (e.g., `myProgram`) must be defined in the codebase or in the most recently typechecked scratch file.
+
+Here's an example:
+
+```unison
+greet : Text ->{IO} ()
+greet name = printLine ("Hello, " ++ name ++ "!")
+
+helloWorld : '{IO} ()
+helloWorld = '(greet "World")
+```
+
+```ucm
+.> run helloWorld
+```
+
 ## `undo`
 
 Use `undo` to revert the most recent change to the codebase. Some commands result in multiple steps in the history. You can use the [`reflog`](#reflog) and [`reset-root`](#reset-root) commands to move around history more reliably.
@@ -170,7 +190,7 @@ Use `undo` to revert the most recent change to the codebase. Some commands resul
 
 #### How do I redo a change after an `undo`?
 
-Use [the `reflog` command](#reflog) to jump to the point in history just before the `undo`. 
+Use [the `reflog` command](#reflog) to jump to the point in history just before the `undo`.
 
 > 😕 We'd like this to be a nicer experience. A `redo` command sounds nice, but it's not implemented yet!
 
