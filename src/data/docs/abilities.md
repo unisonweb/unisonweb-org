@@ -340,8 +340,8 @@ In the introduction, the `greet` function was defined in terms of the `IO` abili
 
 Let's implement a Hello World program in terms of a user-defined `Console` ability that we'll handle into `IO`.
 
-```ability
-Console where
+```
+ability Console where
   readLine  : Text
   printLine : Text -> ()
 
@@ -355,8 +355,8 @@ greet _ =
 
 We can easily test this program without performing any I/O:
 
-```test
-Console : '{Console} () -> [Text] -> [Text]
+```
+testConsole : '{Console} () -> [Text] -> [Text]
 testConsole prog inputLines =
   h inputLines outputLines = cases
     { Console.readLine -> resume } ->
@@ -382,8 +382,8 @@ test> greet.test2 = run (expect
 
 Alternatively, we could test for the exact sequence of operations that we expect:
 
-```test
-> greet.test = run (handle !greet with cases
+```
+test> greet.test = run (handle !greet with cases
   { Console.printLine _ -> resume } ->
     handle !resume with cases
       { Console.readLine -> resume } ->
@@ -400,8 +400,8 @@ Alternatively, we could test for the exact sequence of operations that we expect
 
 In order to run our program, we'll want to reinterpret `Console` operations as `IO` operations.
 
-```live
-Console.handler : Request Console a ->{IO} a
+```
+liveConsole.handler : Request Console a ->{IO} a
 liveConsole.handler = cases
   { Console.readLine -> resume } ->
     handle resume !io.readLine with liveConsole.handler
