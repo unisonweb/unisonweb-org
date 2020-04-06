@@ -44,7 +44,7 @@
     },
     computed: {
       encodedUrl() {
-        return encodeURIComponent(`${this.$static.metaData.siteUrl}${this.path}`)
+        return encodeURIComponent(`${this.$static.metadata.siteUrl}${this.path}`)
       },
       encodedTitle() {
         return encodeURIComponent(this.title)
@@ -123,7 +123,7 @@
 
 <static-query>
   query {
-    metaData {
+    metadata {
       siteUrl
     }
   }
