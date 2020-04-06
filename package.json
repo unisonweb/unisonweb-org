@@ -31,7 +31,6 @@
     "vue-scrollto": "^2.15.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.8.4",
     "@fullhuman/postcss-purgecss": "^1.1.0",
     "@gridsome/plugin-sitemap": "^0.2.3",
     "@gridsome/source-filesystem": "^0.6.2",
@@ -72,6 +71,8 @@
   "resolutions": {
     "acorn": "^6.4.1",
     "decompress": "^4.2.1",
+    "kind-of": "^6.0.3",
+    "minimist": "^1.2.3",
     "serialize-javascript": "^2.1.1"
   }
 }
