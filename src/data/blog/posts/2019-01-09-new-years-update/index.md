@@ -1,4 +1,5 @@
 ---
+slug: new-years-update
 title: New Years Update
 description: Hey everyone, Rúnar here. It's been a while since our last update. We've been busy.
 date: 2019-01-09

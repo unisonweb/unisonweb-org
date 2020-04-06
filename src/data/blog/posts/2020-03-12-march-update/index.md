@@ -1,4 +1,5 @@
 ---
+slug: march-update
 title: First class documentation with live examples, rethinking the pull request, a new runtime, and more
 description: There have been more than 700 commits to Unison's master branch since we last did one of these update posts, so a lot has happened. We've made a lot of bug-fixes and improvements to the ergonomics of Unison--too many to list them all here. Here are some highlights.
 date: 2020-03-12

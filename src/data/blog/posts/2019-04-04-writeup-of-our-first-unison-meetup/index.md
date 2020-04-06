@@ -1,4 +1,5 @@
 ---
+slug: writeup-of-our-first-unison-meetup
 title: Writeup of our first Unison meetup
 description: We had our first ever Unison meetup last Tuesday! If you missed it or just want to look back on it fondly (or if like me you struggle to remember anything from more than 2 days ago..), this post is for you!!
 date: 2019-04-04
