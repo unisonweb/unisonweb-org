@@ -12,100 +12,111 @@ module.exports = {
   siteUrl: 'https://www.unisonweb.org',
   titleTemplate: '%s',
 
-  plugins: [{
-    // supplemental pages
-    use: '@gridsome/source-filesystem',
-    options: {
-      typeName: 'SupplementalPage',
-      baseDir: './src/data/supplemental-pages',
-      path: '**/*.md',
-      route: ':slug',
-      remark: {
-        autolinkHeadings: {
-          behavior: 'append',
-          content: {
-            type: 'text',
-            value: '#'
+  plugins: [
+
+    { // supplemental pages
+      use: '@gridsome/source-filesystem',
+      options: {
+        typeName: 'SupplementalPage',
+        baseDir: './src/data/supplemental-pages',
+        path: '**/*.md',
+        remark: {
+          autolinkHeadings: {
+            behavior: 'append',
+            content: {
+              type: 'text',
+              value: '#'
+            }
           }
         }
       }
-    }
-  }, {
-    // blog posts
-    use: '@gridsome/source-filesystem',
-    options: {
-      typeName: 'BlogPost',
-      baseDir: './src/data/blog/posts',
-      path: '*/index.md',
-      route: '/:year/:month/:day/:slug',
-      remark: {
-        autolinkHeadings: {
-          behavior: 'append',
-          content: {
-            type: 'text',
-            value: '#'
-          }
-        }
-      },
-      refs: {
-        authors: 'Author',
-        categories: 'Category',
-      }
-    }
-  }, {
-    // author references
-    use: '@gridsome/source-filesystem',
-    options: {
-      typeName: 'Author',
-      baseDir: './src/data/blog/authors',
-      path: '*.md',
-      route: '/author/:id'
-    }
-  }, {
-    // category indexes
-    use: '@gridsome/source-filesystem',
-    options: {
-      typeName: 'Category',
-      baseDir: './src/data/blog/categories',
-      path: '*.md',
-      route: '/category/:slug'
-    }
-  }, {
-    // doc pages
-    use: '@gridsome/source-filesystem',
-    options: {
-      typeName: 'DocPage',
-      index: ['README'],
-      baseDir: './src/data/docs',
-      pathPrefix: '/docs',
-      path: '**/*.md',
-      remark: {
-        autolinkHeadings: {
-          behavior: 'append',
-          content: {
-            type: 'text',
-            value: '#'
-          }
-        }
-      }
-    }
-  }, {
-    // sitemap.xml
-    use: '@gridsome/plugin-sitemap',
-    options: {
-      cacheTime: 600000, // default
-    }
-  }, {
-    // algolia integration
-    use: 'gridsome-plugin-algolia',
-    options: {
-      appId: process.env.ALGOLIA_APP_ID,
-      apiKey: process.env.ALGOLIA_ADMIN_KEY,
-      collections: CONFIG.algolia.collections,
-      chunkSize: 10000, // default: 1000
-      enablePartialUpdates: true, // default: false
     },
-  }],
+
+    { // blog posts
+      use: '@gridsome/source-filesystem',
+      options: {
+        typeName: 'BlogPost',
+        baseDir: './src/data/blog/posts',
+        path: '**/index.md',
+        remark: {
+          autolinkHeadings: {
+            behavior: 'append',
+            content: {
+              type: 'text',
+              value: '#'
+            }
+          }
+        },
+        refs: {
+          authors: 'Author',
+          categories: 'Category',
+        }
+      }
+    },
+
+    { // author references
+      use: '@gridsome/source-filesystem',
+      options: {
+        typeName: 'Author',
+        baseDir: './src/data/blog/authors',
+        path: '*.md',
+      }
+    },
+
+    { // category indexes
+      use: '@gridsome/source-filesystem',
+      options: {
+        typeName: 'Category',
+        baseDir: './src/data/blog/categories',
+        path: '*.md',
+      }
+    },
+
+    { // doc pages
+      use: '@gridsome/source-filesystem',
+      options: {
+        typeName: 'DocPage',
+        index: ['README'],
+        baseDir: './src/data/docs',
+        pathPrefix: '/docs',
+        path: '**/*.md',
+        remark: {
+          autolinkHeadings: {
+            behavior: 'append',
+            content: {
+              type: 'text',
+              value: '#'
+            }
+          }
+        }
+      }
+    },
+
+    { // sitemap.xml
+      use: '@gridsome/plugin-sitemap',
+      options: {
+        cacheTime: 600000, // default
+      }
+    },
+
+    { // algolia integration
+      use: 'gridsome-plugin-algolia',
+      options: {
+        appId: process.env.ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_KEY,
+        collections: CONFIG.algolia.collections,
+        chunkSize: 10000, // default: 1000
+        enablePartialUpdates: true, // default: false
+      },
+    }
+
+  ],
+
+  templates: {
+    BlogPost: '/:year/:month/:day/:slug',
+    Author: '/author/:id',
+    Category: '/category/:id',
+  },
 
   transformers: {
     remark: {
