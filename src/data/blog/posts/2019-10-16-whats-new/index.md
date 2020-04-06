@@ -1,4 +1,5 @@
 ---
+slug: here-s-what-s-been-happening-with-unison
 title: Here's what's been happening with Unison
 description: Since our last official update here, we started alpha testing a first release of Unison, gave a talk at Strange Loop, and have been working towards an M2 release with lots of new features, bugfixes, and polish.
 date: 2019-10-16
@@ -18,7 +19,7 @@ The approach I took in explaining Unison in the The Strange Loop talk was to foc
 * No dependency conflicts
 * Typed durable storage
 * A better model for distributed execution and transparent code deployment
-* ... and I could have kept going! My favorite additional benefits that I didn't cover are having structured refactoring sessions rather than long lists of compile errors, and having a codebase that is always runnable - never broken. 
+* ... and I could have kept going! My favorite additional benefits that I didn't cover are having structured refactoring sessions rather than long lists of compile errors, and having a codebase that is always runnable - never broken.
 
 Content-addressed code is one of those essential, simple ideas that feels like it ought to become ubiquitous in languages of the future. Even though it might seem elementary, it's also a fundamental change that affects almost everything about the developer experience. When Unison started as a research project based on this core idea, there were so many questions - things like [if you can't ever modify a definition, only introduce new ones, how do you refactor or update a codebase?](https://twitter.com/unisonweb/status/1173942969726054401) What has been surprising and cool is that all the questions around "how do you do X in the Unison worldview" continue to have answers, and these answers often make MORE sense than what is being done currently. Just by thinking through things with an open mind you can uncover an entirely consistent alternate reality of how programming could work, and it has been there the whole time just waiting to be discovered. That's been a lot of fun!
 
@@ -55,7 +56,7 @@ I am very excited for this to come online. Kudos to the team for putting this to
 
 We will try to post updates more regularly than once every 6 months. 😀 In addition to this blog, feel free to come by the [Unison Slack](/community), which is a friendly spot to ask questions if you’re trying out Unison. Besides [the project on GitHub](https://github.com/unisonweb/unison), the #contrib channel is a good spot to follow along with Unison's development.
 
-One more thing: Arya and I will be at [Scale By the Bay](https://sched.co/RoSk) in a month, giving a talk on Unison. 
+One more thing: Arya and I will be at [Scale By the Bay](https://sched.co/RoSk) in a month, giving a talk on Unison.
 
 That's all for now. 🌻
 

@@ -1,6 +1,6 @@
 ---
 title: Set up your text editor for Unison development
-description: Set up your text editor for Unison development 
+description: Set up your text editor for Unison development
 ---
 
 # Set up your editor for Unison
@@ -15,7 +15,7 @@ This document is a collection of user-submitted instructions for setting up a te
 Using [vim-plug][vimplug]:
 
 1. Install [vim-plug][vimplug] if you haven't already.
-2. Add the following to your .vimrc: 
+2. Add the following to your .vimrc:
 
         Plug 'unisonweb/unison', { 'rtp': 'editor-support/vim' }
 

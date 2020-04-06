@@ -1,4 +1,5 @@
 ---
+slug: how-to-refactor-a-codebase-without-ever-breaking-it
 title: How to refactor a codebase without ever breaking it
 description: At Scale By the Bay 2019 we gave a talk on Unison's unique approach to refactoring. This post gives a brief overview of how it works.
 date: 2019-11-26

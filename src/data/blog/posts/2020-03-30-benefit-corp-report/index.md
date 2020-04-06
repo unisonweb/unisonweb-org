@@ -1,9 +1,9 @@
 ---
+slug: benefit-corp-report
 title: Why Unison Computing is a public benefit corporation
 description: Unison Computing is a public benefit corp (PBC), cofounded by Paul Chiusano, Rúnar Bjarnason, and Arya Irani. We work alongside other amazing open source contributors on the Unison language. 💜 This post talks about why Unison Computing is a PBC and also includes our first annual report.
 date: 2020-03-30
 categories: ["announcements"]
-slug: benefit-corp-report
 featuredImage: /media/thing11.svg
 ---
 
@@ -36,7 +36,7 @@ Companies like Unison Computing that are based around open source software usual
 - If the tech is incubated within academia, it is often is more innovative but undercapitalized. And incentives in academia prevent the necessary level of engineering polish, since the emphasis is more on proving concepts in peer-reviewed publications, rather than releasing a practical piece of technology.
 - And if the tech is incubated by individuals working nights and weekends, it's _way_ undercapitalized. This is roughly the position Unison was in before we raised money.
 
-Rather than forming a commercial entity after the technology exists, it's possible to fund the _creation_ of OSS by identifying a business model that fits the technology, raising initial funding from investors on this basis, and eventually supporting continued OSS development with the proceeds of the successful business. This is the idea behind Unison Computing: use the business side of the company to capitalize truly innovative work on better programming technology. 
+Rather than forming a commercial entity after the technology exists, it's possible to fund the _creation_ of OSS by identifying a business model that fits the technology, raising initial funding from investors on this basis, and eventually supporting continued OSS development with the proceeds of the successful business. This is the idea behind Unison Computing: use the business side of the company to capitalize truly innovative work on better programming technology.
 
 We adopted the structure of a public benefit corp to make it clear to everyone involved that we have a mission we care about and that we're not just building a soulless profit-maximizing machine. Though we had some concerns that investors might be frightened off by the benefit corp structure, so far it's turned out not to be an issue, and we are now a well-funded startup. One of our investors told us that anyone frightened off by the benefit corp structure is probably not an investor we'd want to have anyway. 😀
 

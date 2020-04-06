@@ -18,12 +18,12 @@ greet name = printLine (msg name)
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       greet : Text ->{IO} ()
       msg   : Text -> Text
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -55,9 +55,9 @@ greet name =
 ```ucm
 
   The expression in red needs the {base.io.IO} ability, but this location does not have access to any abilities.
-  
+
       3 |   printLine ("Hello there, " ++ name)
-  
+
 
 ```
 The empty `{}` attached to the arrow on the `greet` type signature tells the typechecker we are expecting `greet` to be pure. The typechecker therefore complains when the function tries to call a function (`printLine`) that requires abilities. _The ability requirements of a function `f` must include all the abilities required by any function that could be called in the body of `f`._
@@ -77,11 +77,11 @@ greet name =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       greet : Text ->{IO} ()
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -114,11 +114,11 @@ List.map f as =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       List.map : (a ->{m} b) -> [a] ->{m} [b]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -141,11 +141,11 @@ greeter finalMessage =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       greeter : Text ->{IO} ()
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -204,11 +204,11 @@ Stream.toList stream =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       Stream.toList : '{Stream a} () -> [a]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -297,19 +297,19 @@ use Ask ask
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       ability Ask a
       Ask.provide : a -> '{Ask a} r -> r
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     14 | > provide 10 '(1 + ask + ask)
            ⧩
            21
-  
+
     15 | > provide "Bob" '("Hello there, " ++ ask)
            ⧩
            "Hello there, Bob"
@@ -405,20 +405,20 @@ Optional.toAbort = cases
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       ability Abort
       Abort.toOptional : '{Abort} a -> Optional a
       Optional.toAbort : Optional a ->{Abort} a
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     15 | > Abort.toOptional 'let
            ⧩
            None
-  
+
     19 | > Abort.toOptional 'let
            ⧩
            Some 3
@@ -454,20 +454,20 @@ Either.toException = cases
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       ability Exception e
       Either.toException : Either e a ->{Exception e} a
       Exception.toEither : '{Exception e} a -> Either e a
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     15 | > Exception.toEither '(42 + raise "oh noes!")
            ⧩
            Left "oh noes!"
-  
+
     16 | > Exception.toEither 'let
            ⧩
            Right 111
@@ -497,12 +497,12 @@ Choose.toList p =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       ability Choose
       Choose.toList : '{Choose} a -> [a]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 

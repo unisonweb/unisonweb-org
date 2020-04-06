@@ -15,7 +15,7 @@ myDoc = [: This is some documentation. :]
 The syntax `[:` opens a documentation block, and `:]` closes it. Everything in between is documentation. The block can even span multiple lines:
 
 ```unison
-myDoc = [: 
+myDoc = [:
   This is documentation
   with line breaks and indentation.
 :]
@@ -28,7 +28,7 @@ Documentation can be "linked" to definitions in the Unison codebase. A function 
 For example, let's say we have these Unison definitions already in our codebase:
 
 ```unison
-myFunction.doc = 
+myFunction.doc =
   [: This function multiplies its argument by two. :]
 
 myFunction x = x * 2
@@ -74,7 +74,7 @@ The syntax `[:` opens a documentation block, and `:]` closes it. Everything in b
 You can create a hyperlink to a Unison definition named `myDef` in your codebase with `@myDef`. For example we could have the documentation for `myFunction` reference that function itself:
 
 ```unison
-myFunction.doc = 
+myFunction.doc =
   [: @myFunction multiplies its argument by two. :]
 ```
 
@@ -85,7 +85,7 @@ The hyperlink is based on a hash of `myFunction` rather than its name, so if it'
 You can include the full source code of any definition in your codebase using `@[source]` followed by the name of the definition. For example, to include the source code of `myFunction` in its own documentation:
 
 ```unison
-[:  
+[:
   Multiplies its argument by two.
   Here is its source code:
 
@@ -108,7 +108,7 @@ Note that the source code is not copied into the document, it's just linked to i
 You can include the type signature of any function or value in the codebase, with `@[signature]` followed by the name of the function or value. For example, to include the type of `myFunction` in its own documentation:
 
 ```unison
-[:  
+[:
   Multiplies its argument by two. Here is its type:
 
     @[signature] myFunction
@@ -156,7 +156,7 @@ Once the definition is in the codebase, we can insert the result of evaluating i
 into any `Doc` value:
 
 ```unison
-exampleDoc = 
+exampleDoc =
   [: The value is @[evaluate] exampleExpression :]
 ```
 
@@ -229,25 +229,25 @@ Although documentation values don't require any particular structure, here's a m
 List.take.doc = [:
   `@List.take n xs` returns a list of the first `n`
   elements of `xs`. Complexity is O(log n).
-  
+
   Here's a typical example:
 
       @[source] List.take.examples.ex1
       ↳ @[evaluate] List.take.examples.ex1
 
-  If we `@List.take` more than the size of the list, we 
+  If we `@List.take` more than the size of the list, we
   get back the original list:
 
       @[source] List.take.examples.ex2
       ↳ @[evaluate] List.take.examples.ex2
 
   And lastly, `@List.take 0 xs` is always equal to `[]`,
-  the empty list. 
+  the empty list.
 
   __Also see:__
- 
+
     * @List.drop (ignores the first `n` elements)
-    * @List.doc has more about the @List data structure 
+    * @List.doc has more about the @List data structure
 :]
 ```
 

@@ -25,17 +25,17 @@ test> square.tests.ex1 = check (square 4 == 16)
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       square           : Nat -> Nat
       square.tests.ex1 : [Result]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     4 | test> square.tests.ex1 = check (square 4 == 16)
-    
+
     ✅ Passed : Proved.
 
 ```
@@ -57,16 +57,16 @@ test> List.reverse.tests.ex1 = check let
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       List.reverse.tests.ex1 : [Result]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     1 | test> List.reverse.tests.ex1 = check let
-    
+
     ✅ Passed : Proved.
 
 ```
@@ -91,18 +91,18 @@ test> brokenReverse.tests.ex1 = check let
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       brokenReverse           : [a] -> [a]
       brokenReverse.tests.ex1 : [Result]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     4 | test> brokenReverse.tests.ex1 = check let
-    
-    🚫 FAILED 
+
+    🚫 FAILED
 
 ```
 Notice we don't get any information about why it failed. Let's go ahead and fix that, by temporarily inserting a call to the function `bug : a -> x`, which halts your program with an exception and prints out its argument, nicely formatted onto multiple lines if needed:
@@ -125,22 +125,22 @@ test> brokenReverse.tests.ex1 = check let
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       brokenReverse           : [a] -> [a]
       brokenReverse.tests.ex1 : [Result]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
   💔💥
-  
+
   I've encountered a call to builtin.bug with the following
   value:
-  
+
     ("Not equal!", [4, 3, 2, 1], [])
-  
+
   I'm sorry this message doesn't have more detail about the
   location of the failure. My makers plan to fix this in a
   future release. 😢
@@ -170,7 +170,7 @@ test> List.reverse.tests.ex1 = check let
 .mystuff> add
 
   ⍟ I've added these definitions:
-  
+
     List.reverse.tests.ex1 : [Result]
     square                 : Nat -> Nat
     square.tests.ex1       : [Result]
@@ -178,12 +178,12 @@ test> List.reverse.tests.ex1 = check let
 .mystuff> test
 
   Cached test results (`help testcache` to learn more)
-  
+
   ◉ List.reverse.tests.ex1    : Proved.
   ◉ square.tests.ex1          : Proved.
-  
+
   ✅ 2 test(s) passing
-  
+
   Tip: Use view List.reverse.tests.ex1 to view the source of a
        test.
 
@@ -209,20 +209,20 @@ test> myTest = runs 100 '(expect (!(natIn 0 10) < 10))
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       myTest : [Result]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     1 | > sample 100 (natIn 0 10)
           ⧩
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-  
+
     3 | test> myTest = runs 100 '(expect (!(natIn 0 10) < 10))
-    
+
     ✅ Passed : Passed 10 tests.
 
 ```
@@ -242,9 +242,9 @@ Where things get interesting is when _combining_ generators. There are a few way
 ```ucm
 
   ✅
-  
+
   scratch.u changed.
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -285,9 +285,9 @@ Here's an example:
 ```ucm
 
   ✅
-  
+
   scratch.u changed.
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -305,9 +305,9 @@ The other is `cost : Nat -> '{Gen} a -> '{Gen} a`, which assigns a "cost" to a g
 ```ucm
 
   ✅
-  
+
   scratch.u changed.
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -336,18 +336,18 @@ test> List.reverse.tests.prop1 = runs 100 'let
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-  
+
     ⍟ These new definitions are ok to `add`:
-    
+
       List.reverse.tests.prop1 : [Result]
-   
+
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     1 | test> List.reverse.tests.prop1 = runs 100 'let
-    
+
     ✅ Passed : Passed 100 tests.
-  
+
     6 | > sample 10 (list (natIn 0 100))
           ⧩
           [ [],
@@ -370,19 +370,19 @@ Because the test results are always deterministic and cached, you may want to cr
 .mystuff> add
 
   ⍟ I've added these definitions:
-  
+
     List.reverse.tests.prop1 : [Result]
 
 .mystuff> test
 
   Cached test results (`help testcache` to learn more)
-  
+
   ◉ List.reverse.tests.prop1    : Passed 100 tests.
   ◉ List.reverse.tests.ex1      : Proved.
   ◉ square.tests.ex1            : Proved.
-  
+
   ✅ 3 test(s) passing
-  
+
   Tip: Use view List.reverse.tests.prop1 to view the source of a
        test.
 
@@ -406,7 +406,7 @@ The function `runs` that we've been using has type `Nat -> '{Gen} Test -> [Test.
   8.  test.v1.fail : Test
   9.  test.internals.v1.Test.proved : Test
   10. test.v1.prove : Test
-  
+
 
 ```
 These functions are used to give different messages on success or failure. Feel free to try them out in your tests, and you may want to explore other functions in the testing package.
