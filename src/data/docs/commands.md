@@ -1,3 +1,8 @@
+---
+title: UCM command reference
+description: This document lists all the current UCM commands, gives basic usage instructions and links to further reading.
+---
+
 # UCM command reference
 
 This document lists all the current UCM commands, gives basic usage instructions and links to further reading. Commands are listed alphabetically in this document.

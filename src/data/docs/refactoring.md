@@ -1,3 +1,8 @@
+---
+title: Refactoring and modifying code in Unison
+description: This document walks through how refactoring and updates to existing definitions works in Unison.
+---
+
 # Refactoring and modifying code in Unison
 
 This document walks through how refactoring and updates to existing definitions works in Unison. It shows the UCM commands you'll use when refactoring. As a running example, we'll use a small library for computing the answers to important questions like: "What's our ingredient list and quantities if we are making enough pecan pie to serve 12 people?"

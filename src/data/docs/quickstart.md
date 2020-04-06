@@ -1,3 +1,8 @@
+---
+title: Three-minute quickstart guide
+description: This short guide will have you downloading and installing Unison and running your first program (a toy distributed mergesort implementation).
+---
+
 # Three-minute quickstart guide
 
 This short guide will have you downloading and installing Unison and running your first program (a toy distributed mergesort implementation). There isn't much exposition here and the focus is on getting you up and running as quickly as possible. 🏎

@@ -1,6 +1,6 @@
 ---
 title: Annotated bibliography
-description: Learn more about the research backing Unison, related work, and influences
+description: Learn more about the research backing Unison, related work, and influences.
 ---
 
 # An annotated bibliography
@@ -29,7 +29,7 @@ Other references:
 
 ## Functional programming
 
-> 🚧 Almost too many things to cite here, would focus on references that provide good background on FP and then specific work that is notable 
+> 🚧 Almost too many things to cite here, would focus on references that provide good background on FP and then specific work that is notable
 
 ## Distributed systems
 
