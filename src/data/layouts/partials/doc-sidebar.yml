@@ -17,21 +17,20 @@ linkSets:
     links:
       - label: Abilities and handlers
         url: /docs/abilities
-      - label: Refactoring and code updates
-        url: /docs/refactoring
       - label: Documenting Unison code
         url: /docs/documentation
       - label: Testing your code
         url: /docs/testing
+      - label: Organizing your code
+        url: /docs/codebase-organization
+      - label: Refactoring and code updates
+        url: /docs/refactoring
 
   - heading: Usage topics (coming soon)
     icon: /media/icon-code.svg
     links:
       - label: Concurrent work and resolving edit conflicts
         url: /docs/concurrent-work
-      - label: Pull requests and collaboration
-        url: /docs/pull-requests
-
 
   - heading: References
     icon: /media/icon-code.svg
