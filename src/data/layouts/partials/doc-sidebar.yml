@@ -22,7 +22,7 @@ linkSets:
       - label: Testing your code
         url: /docs/testing
       - label: Organizing your code
-        url: /docs/code-organization
+        url: /docs/codebase-organization
       - label: Refactoring and code updates
         url: /docs/refactoring
 
