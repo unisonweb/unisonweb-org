@@ -9,6 +9,8 @@ Though the Unison namespace tree can be organized however you like, this documen
 
 We recommend using this exact same set of conventions for library maintainers, library contributors, and application developers. It makes it easy to follow the conventions regardless of which of these roles you are working in, and doesn't require reorganizing anything if you decide you want to publish your personal Unison repository as a library for others to build on.
 
+> 🖋  This documentation is still in draft form. Please help test out these conventions and let us know how they work for you. Also any general feedback or questions are welcome! See [this ticket](https://github.com/unisonweb/unison/issues/1409) or start a thread [in Slack #alphatesting](/slack).
+
 Without further ado, here's what a namespace tree will look like that follows these conventions. This will be explained more below, and we'll also show how common workflows (like installing and upgrading libraries and opening pull requests) can be handled with a few UCM commands:
 
     trunk/
