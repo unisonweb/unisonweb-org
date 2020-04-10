@@ -1,6 +1,6 @@
 ---
 id: research
 title: Research
-emoji: 🔬
+emoji: 🧪
 color: green
 ---
