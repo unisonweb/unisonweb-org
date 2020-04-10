@@ -39,11 +39,11 @@
    - The ["Environment" section](https://app.netlify.com/sites/unisonweb-org/settings/deploys#environment) of Settings > Build & Deploy in the Netlify Dashboard.
 
 7. **Install gridsome**
-  
+
   ```
   yarn global add @gridsome/cli
   ```
-  
+
 8. **Start local webserver**
 
    ```shell
@@ -115,10 +115,11 @@ All editable content is located in `src/data/`.
 
   This ^ naming convention will yield the following permalink: `www.unisonweb.org/2019/04/04/writeup-of-our-first-unison-meetup`
 
-  In addition to the `title` and `description` properties, each markdown file's frontmatter must also include a `date`, `author`, and `categories` property:
+  In addition to the `title` and `description` properties, each markdown file's frontmatter must also include a `date`, `author`, `slug` (used to form the URL), and `categories` property:
 
   ```md
   ---
+  slug: first-unison-meetup
   title: Writeup of our first Unison meetup
   description: placeholder
   date: 2019-04-04
