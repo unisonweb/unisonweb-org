@@ -224,7 +224,7 @@ What's happening here?
   * `h []` is just a partial application of the function `h`, `h []` will have type `Request {Stream a} () -> [a]`.
 * Let's look now at the body of `h`, the `cases ...` part:
   * In the line `{Stream.emit e -> resume}`, think of `resume` as a function which represents "the rest of the computation"  (or _continuation_) after the point in the code where the request was made. The name `resume` here isn't special, we could name it `k`, `frobnicate`, or even `_` if we planned to ignore the continuation and never resume the computation.
-  * In the line `handle resume () with h (snoc acc e)` we are resuming the computation and saying "handle any additional requests made after resuming with the handler `h (snoc acc e)`. Notice how we are using that first parameter to `h` to represent the state we are accumulating.
+  * In the line `handle resume () with h (acc ++ [e])` we are resuming the computation and saying "handle any additional requests made after resuming with the handler `h (acc ++ [e])`. Notice how we are using that first parameter to `h` to represent the state we are accumulating.
   * The case `{u} -> acc` matches when there are no further operations to process (the "pure case"). `u` can be any pattern (it could be `_` here since we are ignoring it). When matching on a `Request e a`, the type of the pure case will be `a`. Here, since we were given a `{Stream a} ()`, `u` will be of type `()`.
 * See [this part of the language reference](/docs/language-reference#handlers) for more about the syntax of `handle` blocks and handlers.
 
