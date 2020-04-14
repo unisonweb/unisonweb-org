@@ -270,8 +270,7 @@ Doing a breadth-first enumeration is the right move because as we build up more 
 
 There are two other ways of combining generators. One is `pick`, which fairly samples from multiple generators in a breadth first manner:
 
-```
-Haskell
+```unison
 pick : ['{Gen} a] -> '{Gen} a
 
 ```
