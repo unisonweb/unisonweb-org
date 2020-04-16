@@ -18,14 +18,11 @@ greet name = printLine (msg name)
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
       greet : Text ->{IO} ()
       msg   : Text -> Text
-
-  Now evaluating any watch expressions (lines starting with
-  `>`)... Ctrl+C cancels.
 
 ```
 Notice the `{IO}` attached to the `->` in `greet : Text ->{IO} ()`. We read this type signature as saying that `greet` is a function from `Text` to `()` which "does some I/O in the process". `IO` is what we call an _ability_ in Unison and we say that `greet` "requires the `IO` ability".
@@ -55,9 +52,9 @@ greet name =
 ```ucm
 
   The expression in red needs the {base.io.IO} ability, but this location does not have access to any abilities.
-
+  
       3 |   printLine ("Hello there, " ++ name)
-
+  
 
 ```
 The empty `{}` attached to the arrow on the `greet` type signature tells the typechecker we are expecting `greet` to be pure. The typechecker therefore complains when the function tries to call a function (`printLine`) that requires abilities. _The ability requirements of a function `f` must include all the abilities required by any function that could be called in the body of `f`._
@@ -77,13 +74,10 @@ greet name =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
       greet : Text ->{IO} ()
-
-  Now evaluating any watch expressions (lines starting with
-  `>`)... Ctrl+C cancels.
 
 ```
 If you _don't_ want this inference, just add ability brackets to the arrow (like `->{}` or `->{IO}`) to say exactly what abilities you want to make available to the function.
@@ -114,11 +108,11 @@ List.map f as =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
       List.map : (a ->{m} b) -> [a] ->{m} [b]
-
+  
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -141,13 +135,10 @@ greeter finalMessage =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
       greeter : Text ->{IO} ()
-
-  Now evaluating any watch expressions (lines starting with
-  `>`)... Ctrl+C cancels.
 
 ```
 `ex1` calls `List.map` with a pure function, and `ex2` calls it with `printLine`, which requires `IO`. Both calls work fine and we don't need two different versions of `List.map`. Also, Unison correctly infers that `greeter` itself requires `IO`, since in the body of `greeter` there are calls to `printLine`.
@@ -204,11 +195,11 @@ Stream.toList stream =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
       Stream.toList : '{Stream a} () -> [a]
-
+  
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
@@ -297,19 +288,19 @@ use Ask ask
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
       ability Ask a
       Ask.provide : a -> '{Ask a} r -> r
-
+  
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     14 | > provide 10 '(1 + ask + ask)
            ⧩
            21
-
+  
     15 | > provide "Bob" '("Hello there, " ++ ask)
            ⧩
            "Hello there, Bob"
@@ -373,7 +364,9 @@ The type signature on `greet2` isn't needed and would be inferred. Likewise, to 
 
 #### The `Abort` and `Exception` abilities
 
-The `Abort` ability is analogous to `Optional` and can be used to terminate a computation.
+The `Abort` ability can be used to terminate a computation. Validation is one practical use case for `Abort`&mdash;in the example below, we use `Abort` to implement a smart constructor for a `User` data type, aborting when an invalid constructor argument is encountered.
+
+> 📒 `Abort` is analogous to the `Optional` data type. The `Abort.toOptional` and `Optional.toAbort` functions below demonstrates the relationship between the two constructs.
 
 ```unison
 ability Abort where
@@ -382,13 +375,13 @@ ability Abort where
 
 Abort.toOptional : '{Abort} a -> Optional a
 Abort.toOptional a = handle !a with cases
-  {a} -> Some a
+  {a}                -> Some a
   {Abort.abort -> _} -> None
 
 Optional.toAbort : Optional a ->{Abort} a
 Optional.toAbort = cases
-  None -> Abort.abort
   Some a -> a
+  None   -> Abort.abort
 
 > Abort.toOptional 'let
     x = 1
@@ -398,6 +391,45 @@ Optional.toAbort = cases
     x = Optional.toAbort (Some 1)
     y = 2
     x + y
+
+-- Validation example: The following data types require validation; each "private"
+-- data constructor is intended only for use from a validating "smart constructor"
+-- that will abort on invalid arguments.
+type User = UserPrivate Username Password Age
+type Username = UsernamePrivate Text
+type Password = PasswordPrivate Text
+type Age = AgePrivate Nat
+
+User.User : Text -> Text -> Nat ->{Abort} User
+User.User name password age =
+  User.UserPrivate (Username.Username name) (Password.Password password) (Age.Age age)
+
+Username.Username : Text ->{Abort} Username
+Username.Username name =
+  if size name > 0
+  then Username.UsernamePrivate name
+  else Abort.abort
+
+Password.Password : Text ->{Abort} Password
+Password.Password password =
+  if size password >= 8
+  then Password.PasswordPrivate password
+  else Abort.abort
+
+Age.Age : Nat ->{Abort} Age
+Age.Age age =
+  if age >= 15
+  then Age.AgePrivate age
+  else Abort.abort
+
+test> Abort.tests.t1 = run (expect (Abort.toOptional '(User.User "Jill" "password" 13) == None))
+test> Abort.tests.t2 = run (expect (Abort.toOptional '(User.User "" "password" 21) == None))
+test> Abort.tests.t3 = run (expect (Abort.toOptional '(User.User "Jill" "pwd" 30) == None))
+test> Abort.tests.t4 = run (expect (Abort.toOptional '(User.User "Jill" "password" 18) ==
+  Some (User.UserPrivate
+    (Username.UsernamePrivate "Jill")
+    (Password.PasswordPrivate "password")
+    (Age.AgePrivate 18))))    
 ```
 
 ```ucm
@@ -405,26 +437,56 @@ Optional.toAbort = cases
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
       ability Abort
-      Abort.toOptional : '{Abort} a -> Optional a
-      Optional.toAbort : Optional a ->{Abort} a
-
+      type Age
+      type Password
+      type User
+      type Username
+      Abort.tests.t1    : [Result]
+      Abort.tests.t2    : [Result]
+      Abort.tests.t3    : [Result]
+      Abort.tests.t4    : [Result]
+      Abort.toOptional  : '{Abort} a -> Optional a
+      Age.Age           : Nat ->{Abort} Age
+      Optional.toAbort  : Optional a ->{Abort} a
+      Password.Password : Text ->{Abort} Password
+      User.User         : Text -> Text -> Nat ->{Abort} User
+      Username.Username : Text ->{Abort} Password
+  
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     15 | > Abort.toOptional 'let
            ⧩
            None
-
+  
     19 | > Abort.toOptional 'let
            ⧩
            Some 3
+  
+    54 | test> Abort.tests.t1 = run (expect (Abort.toOptional '(User.User "Jill" "password" 13) == None))
+    
+    ✅ Passed : Passed 1 tests.
+  
+    55 | test> Abort.tests.t2 = run (expect (Abort.toOptional '(User.User "" "password" 21) == None))
+    
+    ✅ Passed : Passed 1 tests.
+  
+    56 | test> Abort.tests.t3 = run (expect (Abort.toOptional '(User.User "Jill" "pwd" 30) == None))
+    
+    ✅ Passed : Passed 1 tests.
+  
+    57 | test> Abort.tests.t4 = run (expect (Abort.toOptional '(User.User "Jill" "password" 18) ==
+    
+    ✅ Passed : Passed 1 tests.
 
 ```
 That signature for `abort : {Abort} a` looks funny at first. It's saying that `abort` has a return type of `a` for any choice of `a`. Since we can call `abort` anywhere and it terminates the computation, an `abort` can stand in for an expression of any type (for instance, the first example does `42 + Abort.abort`, and the `abort` will have type `Nat`). The handler also has no way of resuming the computation after the `abort` since it has no idea what type needs to be provided to the rest of the computation.
+
+> __Exercise:__ Implement smart constructors that return `Optional` values instead of using `Abort`. How does the implementation compare to the one above?
 
 The `Exception` ability is similar, but the operation for failing the computation (which we'll name `raise`) takes an argument:
 
@@ -447,6 +509,46 @@ Either.toException = cases
 > Exception.toEither 'let
     x = toException (Right 1)
     x + 10 + toException (Right 100)
+
+-- Validation example revisited
+type User = UserPrivate Username Password Age
+type Username = UsernamePrivate Text
+type Password = PasswordPrivate Text
+type Age = AgePrivate Nat
+
+User.User : Text -> Text -> Nat ->{Exception Text} User
+User.User name password age =
+  User.UserPrivate (Username.Username name) (Password.Password password) (Age.Age age)
+
+Username.Username : Text ->{Exception Text} Username
+Username.Username name =
+  if size name > 0
+  then Username.UsernamePrivate name
+  else Exception.raise "Invalid username: must have at least one character"
+
+Password.Password : Text ->{Exception Text} Password
+Password.Password password =
+  if size password >= 8
+  then Password.PasswordPrivate password
+  else Exception.raise "Invalid password: must have at least 8 characters"
+
+Age.Age : Nat ->{Exception Text} Age
+Age.Age age =
+  if age >= 15
+  then Age.AgePrivate age
+  else Exception.raise "Invalid age: must be at least 15"
+
+test> Exception.tests.t1 = run (expect (Exception.toEither '(User.User "Jill" "password" 13) ==
+        Left "Invalid age: must be at least 15"))
+test> Exception.tests.t2 = run (expect (Exception.toEither '(User.User "" "password" 21) ==
+        Left "Invalid username: must have at least one character"))
+test> Exception.tests.t3 = run (expect (Exception.toEither '(User.User "Jill" "pwd" 30) ==
+        Left "Invalid password: must have at least 8 characters"))
+test> Exception.tests.t4 = run (expect (Exception.toEither '(User.User "Jill" "password" 18) ==
+        Right (User.UserPrivate
+          (Username.UsernamePrivate "Jill")
+          (Password.PasswordPrivate "password")
+          (Age.AgePrivate 18))))
 ```
 
 ```ucm
@@ -454,23 +556,54 @@ Either.toException = cases
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
+      type Age
       ability Exception e
+      type Password
+      type User
+      type Username
+      Age.Age            : Nat ->{Exception Text} Age
       Either.toException : Either e a ->{Exception e} a
+      Exception.tests.t1 : [Result]
+      Exception.tests.t2 : [Result]
+      Exception.tests.t3 : [Result]
+      Exception.tests.t4 : [Result]
       Exception.toEither : '{Exception e} a -> Either e a
-
+      Password.Password  : Text ->{Exception Text} Password
+      User.User          : Text
+                           -> Text
+                           -> Nat
+                           ->{Exception Text} User
+      Username.Username  : Text ->{Exception Text} Password
+  
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 
     15 | > Exception.toEither '(42 + raise "oh noes!")
            ⧩
            Left "oh noes!"
-
+  
     16 | > Exception.toEither 'let
            ⧩
            Right 111
+  
+    48 | test> Exception.tests.t1 = run (expect (Exception.toEither '(User.User "Jill" "password" 13) ==
+    
+    ✅ Passed : Passed 1 tests.
+  
+    50 | test> Exception.tests.t2 = run (expect (Exception.toEither '(User.User "" "password" 21) ==
+    
+    ✅ Passed : Passed 1 tests.
+  
+    52 | test> Exception.tests.t3 = run (expect (Exception.toEither '(User.User "Jill" "pwd" 30) ==
+    
+    ✅ Passed : Passed 1 tests.
+  
+    54 | test> Exception.tests.t4 = run (expect (Exception.toEither '(User.User "Jill" "password" 18) ==
+    
+    ✅ Passed : Passed 1 tests.
 
 ```
 #### `Choose` for expressing nondeterminism
@@ -497,12 +630,12 @@ Choose.toList p =
   I found and typechecked these definitions in scratch.u. If you
   do an `add` or `update`, here's how your codebase would
   change:
-
+  
     ⍟ These new definitions are ok to `add`:
-
+    
       ability Choose
       Choose.toList : '{Choose} a -> [a]
-
+  
   Now evaluating any watch expressions (lines starting with
   `>`)... Ctrl+C cancels.
 

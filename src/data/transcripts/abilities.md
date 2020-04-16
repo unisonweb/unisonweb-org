@@ -271,7 +271,9 @@ The type signature on `greet2` isn't needed and would be inferred. Likewise, to 
 
 #### The `Abort` and `Exception` abilities
 
-The `Abort` ability is analogous to `Optional` and can be used to terminate a computation.
+The `Abort` ability can be used to terminate a computation. Validation is one practical use case for `Abort`&mdash;in the example below, we use `Abort` to implement a smart constructor for a `User` data type, aborting when an invalid constructor argument is encountered.
+
+> 📒 `Abort` is analogous to the `Optional` data type. The `Abort.toOptional` and `Optional.toAbort` functions below demonstrates the relationship between the two constructs.
 
 ```unison
 ability Abort where
@@ -280,13 +282,13 @@ ability Abort where
 
 Abort.toOptional : '{Abort} a -> Optional a
 Abort.toOptional a = handle !a with cases
-  {a} -> Some a
+  {a}                -> Some a
   {Abort.abort -> _} -> None
 
 Optional.toAbort : Optional a ->{Abort} a
 Optional.toAbort = cases
-  None -> Abort.abort
   Some a -> a
+  None   -> Abort.abort
 
 > Abort.toOptional 'let
     x = 1
@@ -296,9 +298,50 @@ Optional.toAbort = cases
     x = Optional.toAbort (Some 1)
     y = 2
     x + y
+
+-- Validation example: The following data types require validation; each "private"
+-- data constructor is intended only for use from a validating "smart constructor"
+-- that will abort on invalid arguments.
+type User = UserPrivate Username Password Age
+type Username = UsernamePrivate Text
+type Password = PasswordPrivate Text
+type Age = AgePrivate Nat
+
+User.User : Text -> Text -> Nat ->{Abort} User
+User.User name password age =
+  User.UserPrivate (Username.Username name) (Password.Password password) (Age.Age age)
+
+Username.Username : Text ->{Abort} Username
+Username.Username name =
+  if size name > 0
+  then Username.UsernamePrivate name
+  else Abort.abort
+
+Password.Password : Text ->{Abort} Password
+Password.Password password =
+  if size password >= 8
+  then Password.PasswordPrivate password
+  else Abort.abort
+
+Age.Age : Nat ->{Abort} Age
+Age.Age age =
+  if age >= 15
+  then Age.AgePrivate age
+  else Abort.abort
+
+test> Abort.tests.t1 = run (expect (Abort.toOptional '(User.User "Jill" "password" 13) == None))
+test> Abort.tests.t2 = run (expect (Abort.toOptional '(User.User "" "password" 21) == None))
+test> Abort.tests.t3 = run (expect (Abort.toOptional '(User.User "Jill" "pwd" 30) == None))
+test> Abort.tests.t4 = run (expect (Abort.toOptional '(User.User "Jill" "password" 18) ==
+  Some (User.UserPrivate
+    (Username.UsernamePrivate "Jill")
+    (Password.PasswordPrivate "password")
+    (Age.AgePrivate 18))))    
 ```
 
 That signature for `abort : {Abort} a` looks funny at first. It's saying that `abort` has a return type of `a` for any choice of `a`. Since we can call `abort` anywhere and it terminates the computation, an `abort` can stand in for an expression of any type (for instance, the first example does `42 + Abort.abort`, and the `abort` will have type `Nat`). The handler also has no way of resuming the computation after the `abort` since it has no idea what type needs to be provided to the rest of the computation.
+
+> __Exercise:__ Implement smart constructors that return `Optional` values instead of using `Abort`. How does the implementation compare to the one above?
 
 The `Exception` ability is similar, but the operation for failing the computation (which we'll name `raise`) takes an argument:
 
@@ -321,6 +364,46 @@ Either.toException = cases
 > Exception.toEither 'let
     x = toException (Right 1)
     x + 10 + toException (Right 100)
+
+-- Validation example revisited
+type User = UserPrivate Username Password Age
+type Username = UsernamePrivate Text
+type Password = PasswordPrivate Text
+type Age = AgePrivate Nat
+
+User.User : Text -> Text -> Nat ->{Exception Text} User
+User.User name password age =
+  User.UserPrivate (Username.Username name) (Password.Password password) (Age.Age age)
+
+Username.Username : Text ->{Exception Text} Username
+Username.Username name =
+  if size name > 0
+  then Username.UsernamePrivate name
+  else Exception.raise "Invalid username: must have at least one character"
+
+Password.Password : Text ->{Exception Text} Password
+Password.Password password =
+  if size password >= 8
+  then Password.PasswordPrivate password
+  else Exception.raise "Invalid password: must have at least 8 characters"
+
+Age.Age : Nat ->{Exception Text} Age
+Age.Age age =
+  if age >= 15
+  then Age.AgePrivate age
+  else Exception.raise "Invalid age: must be at least 15"
+
+test> Exception.tests.t1 = run (expect (Exception.toEither '(User.User "Jill" "password" 13) ==
+        Left "Invalid age: must be at least 15"))
+test> Exception.tests.t2 = run (expect (Exception.toEither '(User.User "" "password" 21) ==
+        Left "Invalid username: must have at least one character"))
+test> Exception.tests.t3 = run (expect (Exception.toEither '(User.User "Jill" "pwd" 30) ==
+        Left "Invalid password: must have at least 8 characters"))
+test> Exception.tests.t4 = run (expect (Exception.toEither '(User.User "Jill" "password" 18) ==
+        Right (User.UserPrivate
+          (Username.UsernamePrivate "Jill")
+          (Password.PasswordPrivate "password")
+          (Age.AgePrivate 18))))
 ```
 
 #### `Choose` for expressing nondeterminism
