@@ -273,7 +273,7 @@ The type signature on `greet2` isn't needed and would be inferred. Likewise, to 
 
 The `Abort` ability can be used to terminate a computation. Validation is one practical use case for `Abort`&mdash;in the example below, we use `Abort` to implement a smart constructor for a `User` data type, aborting when an invalid constructor argument is encountered.
 
-> 📒 `Abort` is analogous to the `Optional` data type. The `Abort.toOptional` and `Optional.toAbort` functions below demonstrates the relationship between the two constructs.
+> 📒 `Abort` is analogous to the `Optional` data type. The `Abort.toOptional` and `Optional.toAbort` functions below demonstrate the relationship between the two constructs.
 
 ```unison
 ability Abort where
