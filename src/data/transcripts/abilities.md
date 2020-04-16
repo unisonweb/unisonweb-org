@@ -425,6 +425,51 @@ Choose.toList p =
 > Choose.toList '(choose [1,2,3], choose [3,4,5])
 ```
 
+#### Manipulating global state with the `Store` ability
+
+The `Store` ability can provide access to global state and is analogous to the `State` monad familiar to functional programmers.
+
+```unison
+ability Store a where
+  get : a
+  put : a -> ()
+
+-- Updates the stored state by applying the given function to the current state
+-- and overwriting the state with the result.
+Store.modify : (a -> a) ->{Store a} ()
+Store.modify f = Store.put (f Store.get)
+
+-- Evaluates a delayed computation in a context in which the stored state
+-- has been initialized to a given value and returns the result. The
+-- stored state is restored to the value it had when `Store.local` was
+-- called.
+Store.local : a -> '{Store a} v ->{Store a} v
+Store.local localValue thunk =
+  oldValue = Store.get
+  Store.put localValue
+  result = !thunk
+  Store.put oldValue
+  result
+
+-- Evaluates a delayed computation in a context in which the stored state is
+-- initialized to the given value.
+Store.store : a -> '{Store a} v -> v
+Store.store init thunk =
+  h init = cases
+    {v}                     -> v
+    {Store.get   -> resume} -> handle resume init with h init
+    {Store.put a -> resume} -> handle !resume with h a
+  handle !thunk with h init
+
+Store.examples.storeMax : Nat ->{Store Nat} ()
+Store.examples.storeMax n =
+  if (n > Store.get) then Store.put n else ()
+
+test> Store.tests.t1 = Store.store 0 'let
+        List.map Store.examples.storeMax [1,3,12,5,16,4,7]
+        run (expect (Store.get == 16))
+```
+
 > 🚧 We are looking for other nice little examples of abilities to include here, feel free to [open a PR](https://github.com/unisonweb/unisonweb-org/blob/master/src/data/transcripts/abilities.md)!
 
 <a id="answers"></a>
