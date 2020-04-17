@@ -362,7 +362,7 @@ The type signature on `greet2` isn't needed and would be inferred. Likewise, to 
 
 ### Other interesting examples
 
-#### The `Abort` and `Exception` abilities
+#### Terminating with the `Abort` and `Exception` abilities
 
 The `Abort` ability can be used to terminate a computation. Validation is one practical use case for `Abort`&mdash;in the example below, we use `Abort` to implement a smart constructor for a `User` data type, aborting when an invalid constructor argument is encountered.
 
@@ -606,7 +606,7 @@ test> Exception.tests.t4 = run (expect (Exception.toEither '(User.User "Jill" "p
     ✅ Passed : Passed 1 tests.
 
 ```
-#### `Choose` for expressing nondeterminism
+#### Expressing nondeterminism with the `Choose` ability
 
 We can use abilities to choose nondeterministically, and collect up all results from all possible choices that can be made:
 
@@ -718,6 +718,54 @@ test> Store.tests.t1 = Store.store 0 'let
     36 | test> Store.tests.t1 = Store.store 0 'let
     
     ✅ Passed : Passed 1 tests.
+
+```
+#### Caching computation with the `Memo` ability
+
+The `Memo` ability can cache partial computations:
+
+```unison
+ability Memo where
+  memoize : 'a -> a
+
+Memo.eval : '{Memo} a -> a
+Memo.eval expr =
+  h m = cases
+    {v}                    -> (v, m)
+    {Memo.memoize v' -> resume} ->
+      match Map.lookup v' m with
+        Some v -> handle resume v with h m
+        None   -> match handle !v' with h m with
+                    (v, m2) -> handle resume v with h (Map.insert v' v m2)
+  match handle !expr with h Map.empty with (v, _) -> v
+
+memoFib : Nat ->{Memo} Nat
+memoFib n = Memo.memoize 'let
+  if n == 0 then 1
+  else if n == 1 then 1
+  else memoFib (n `drop` 2) + memoFib (n `drop` 1)
+
+> Memo.eval '(memoFib 20)
+```
+
+```ucm
+
+  I found and typechecked these definitions in scratch.u. If you
+  do an `add` or `update`, here's how your codebase would
+  change:
+  
+    ⍟ These new definitions are ok to `add`:
+    
+      ability Memo
+      Memo.eval : '{Memo} a -> a
+      memoFib   : Nat ->{Memo} Nat
+  
+  Now evaluating any watch expressions (lines starting with
+  `>`)... Ctrl+C cancels.
+
+    21 | > Memo.eval '(memoFib 20)
+           ⧩
+           10946
 
 ```
 > 🚧 We are looking for other nice little examples of abilities to include here, feel free to [open a PR](https://github.com/unisonweb/unisonweb-org/blob/master/src/data/transcripts/abilities.md)!
