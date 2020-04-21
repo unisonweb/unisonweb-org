@@ -54,6 +54,22 @@ sudo apt-get install libtinfo5
 
 (This issue is tracked under [#602](https://github.com/unisonweb/unison/issues/682).)
 
+### When I save my scratch file, `ucm` doesn't react
+
+On Linux, this can happen if your system has run out of 'inotify watches'.  (Backup applications often use a lot of these.)
+
+You can see if this is the case by running `tail -f <file>` on a file of your choice, and looking out for the following output.
+```
+tail: inotify cannot be used, reverting to polling: Too many open files
+```
+
+If so you can up the limit by doing
+```
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+```
+
+Search stackoverflow for more tips if that command doesn't work for you.
+
 ## Language
 
 ### Does Unison have Haskell-style type classes?
