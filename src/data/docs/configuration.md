@@ -15,7 +15,7 @@ UCM loads the configuration on startup, but also watches the file for changes. I
 
 ## What is the configuration file format?
 
-The `.unisonConfig` file uses the `[Data.Configurator` file format](http://hackage.haskell.org/package/configurator-0.3.0.0/docs/Data-Configurator.html). This is a temporary solution, and it's highly likely that the format will change in a future version of Unison.
+The `.unisonConfig` file uses the [`Data.Configurator` file format](http://hackage.haskell.org/package/configurator-0.3.0.0/docs/Data-Configurator.html). This is a temporary solution, and it's highly likely that the format will change in a future version of Unison.
 
 What follows is an example configuration file. Note that this is just an example and the values shown here will not actually work. Substitute your own values.
 
