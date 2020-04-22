@@ -282,9 +282,9 @@ use .base
 square : Nat -> Nat
 square x = x * x
 
-use test.v1
+use test
 
-test> tests.square.ex1 = run (expect (square 4 == 16))
+test> square.tests.ex1 = check (square 4 == 16)
 ```
 
 Save the file, and Unison comes back with:
@@ -294,16 +294,17 @@ Save the file, and Unison comes back with:
 title: ucm
 show-numbers: false
 ---
-7 | test> tests.square.ex1 = run (expect (square 4 == 16))
+7 | test> square.tests.ex1 = check (square 4 == 16)
 
 ✅ Passed : Passed 1 tests.
 ```
 
 Some syntax notes:
 
-* The `test>` prefix tells Unison that what follows is a test watch expression. Note that we're also giving a name to this expression, `tests.square.ex1`.
+* The `test>` prefix tells Unison that what follows is a test watch expression. Note that we're also giving a name to this expression, `square.tests.ex1`.
+* Note: there's nothing special about the name `square.tests.ex1`; we could call those bindings anything we wanted. Here we use the convention that tests for a definition `foo` go in `foo.tests`.
 
-The `expect` function has type `Boolean -> Test`. It takes a `Boolean` expression and gives back a `Test`, which can be `run` to produce a list of test results, of type `[base.Test.Result]` (try `view base.Test.Result`). In this case there was only one result, and it was a passed test.
+The `check` function has type `Boolean -> Test.Result`. It takes a `Boolean` expression and gives back a list of test results, of type `[base.Test.Result]` (try `view Test.Result`). In this case there was only one result, and it was a passed test.
 
 ### A property-based test
 
@@ -318,11 +319,11 @@ use .base
 square : Nat -> Nat
 square x = x * x
 
-use test.v1
+use test
 
-test> tests.square.ex1 = run (expect (square 4 == 16))
+test> square.tests.ex1 = check (square 4 == 16)
 
-test> tests.square.prop1 =
+test> square.tests.prop1 =
   go _ = a = !nat
          b = !nat
          expect (square a * square b == square (a * b))
@@ -346,9 +347,8 @@ This will test our function with a bunch of different inputs.
 * The Unison block which begins after an `=` begins a Unison block, which can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
 * You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference#delayed-computations) so it can be run multiple times by the `runs` function.
 * `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference#delayed-computations) `expr`.
-* Note: there's nothing special about the names `tests.square.ex1` or `tests.square.prop1`; we could call those bindings anything we wanted. Here we just picked some uncreative names based on the function being tested. Use whatever naming convention you prefer.
 
-`nat` comes from `test.v1` - `test.v1.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
+`nat` comes from `test` - `test.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
 
 ## Adding code to the codebase
 
@@ -363,12 +363,12 @@ show-carets: true
 
   ⍟ I've added these definitions:
 
-    tests.square.ex1    : [base.Test.Result]
-    tests.square.prop1  : [base.Test.Result]
+    square.tests.ex1    : [base.Test.Result]
+    square.tests.prop1  : [base.Test.Result]
     square              : base.Nat -> base.Nat
 ```
 
-You've just added a new function and some tests to your Unison codebase. Try typing `view square` or `view tests.square.prop1`. Notice that Unison inserts precise `use` statements when rendering your code. `use` statements aren't part of your code once it's in the codebase. When rendering code, a minimal set of `use` statements is inserted automatically by the code printer, so you don't have to be precise with your `use` statements.
+You've just added a new function and some tests to your Unison codebase. Try typing `view square` or `view square.tests.prop1`. Notice that Unison inserts precise `use` statements when rendering your code. `use` statements aren't part of your code once it's in the codebase. When rendering code, a minimal set of `use` statements is inserted automatically by the code printer, so you don't have to be precise with your `use` statements.
 
 If you type `test` at the Unison prompt, it will "run" your test suite:
 
@@ -381,12 +381,12 @@ show-carets: true
 
   Cached test results (`help testcache` to learn more)
 
-  ◉ tests.square.ex1       : Passed 1 tests.
-  ◉ tests.square.prop1     : Passed 100 tests.
+  ◉ square.tests.ex1       : Passed 1 tests.
+  ◉ square.tests.prop1     : Passed 100 tests.
 
   ✅ 2 test(s) passing
 
-  Tip:  Use view tests.square.ex1 to view the source of a test.
+  Tip:  Use view square.tests.ex1 to view the source of a test.
 ```
 
 But actually, it didn't need to run anything! All the tests had been run previously and cached according to their Unison hash. In a purely functional language like Unison, tests like these are deterministic and can be cached and never run again. No more running the same tests over and over again!
@@ -443,8 +443,8 @@ show-carets: true
 ---
 .mylibrary> find
 
-  1.  tests.square.ex1 : [.base.Test.Result]
-  2.  tests.square.prop1 : [.base.Test.Result]
+  1.  square.tests.ex1 : [.base.Test.Result]
+  2.  square.tests.prop1 : [.base.Test.Result]
   3.  square : .base.Nat -> .base.Nat
 ```
 
@@ -459,12 +459,12 @@ show-carets: true
 
   Cached test results (`help testcache` to learn more)
 
-  ◉ tests.square.ex1       : Passed 1 tests.
-  ◉ tests.square.prop1     : Passed 100 tests.
+  ◉ square.tests.ex1       : Passed 1 tests.
+  ◉ square.tests.prop1     : Passed 100 tests.
 
   ✅ 2 test(s) passing
 
-  Tip:  Use view tests.square.ex1 to view the source of a test.
+  Tip:  Use view square.tests.ex1 to view the source of a test.
 ```
 
 We get this for free because the test cache is keyed by the hash of the test, not by what the test is called.
@@ -566,12 +566,12 @@ show-carets: true
 
   New test results:
 
-  ◉ tests.square.prop1    : Passed 100 tests.
-  ◉ tests.square.ex1      : Passed 1 tests.
+  ◉ square.tests.prop1    : Passed 100 tests.
+  ◉ square.tests.ex1      : Passed 1 tests.
 
   ✅ 2 test(s) passing
 
-  Tip: Use view tests.square.prop1 to view the source of a test.
+  Tip: Use view square.tests.prop1 to view the source of a test.
 ```
 
 Notice the message indicates that the tests weren't cached. If we do `test` again, we'll get the newly cached results.
@@ -580,60 +580,17 @@ The dependency tracking for determining whether a test needs rerunning is 100% a
 
 ## Publishing code and installing Unison libraries
 
-Before publishing code, you might choose to make a copy of your namespace, similar to how you might tag a release in Git. Let's go ahead and do this:
+Code is published using the `push` command and libraries are installed just via the `pull` command (recall how in the [quickstart guide](/docs/quickstart), we installed the base libraries with a `pull`). There's no separate tooling needed for managing dependencies or publishing code and you'll never encounter dependency conflicts in Unison. 
 
-```
----
-title: ucm
-show-carets: true
----
-.mylibrary> cd .
-.> copy.namespace mylibrary mylibrary.releases.v1
-
-  Done.
-
-.> cd mylibrary.releases.v1
-.mylibrary.releases.v1> find
-
-  1.  tests.square.ex1 : [Result]
-  2.  tests.square.prop1 : [Result]
-  3.  square : Nat -> Nat
-```
-
-But this is just a naming convention, there's nothing magic happening here.
-
-Now let's publish our `mylibrary` to a fresh Unison repo. First, create an empty Git repository on GitHub or wherever you prefer to host your Git repositories.
-
-After you've created this empty repo, you can then push to it, using `push <giturl>` (to push the current namespace) or `push <giturl> .mystuff` (to push the `.mystuff` namespace):
-
-```
----
-title: ucm
-show-numbers: false
----
-.mylibrary.releases.v1> cd .mylibrary
-.mylibrary> push git@github.com:<yourgithubuser>/myunisonrepo
-```
-
-You'll see some git logging output. Your code is now live on the internet!
-
-## Installing libraries written by others
-
-This section is under construction.
-
-From the root, do:
-
-```
----
-title: ucm
-show-numbers: false
----
-.> pull git@github.com:<github-username>/myunisonrepo.git .myfirstlibrary
-```
-
-The namespace you created is now available under `.myfirstlibrary`. Try `cd .myfirstlibrary` after the pull to look around.
+[This document](/docs/codebase-organization) covers the details of how to organize your codebase, issue and review pull requests, install libraries, and make releases.
 
 ## What next?
 
+Before getting going writing Unison code, you can [configure UCM to set author and license information](/docs/configuration). Also see the guide on [organizing your codebase and day-to-day workflows](/docs/codebase-organization).
+
+Other topics:
+
+* [Libraries](/docs/libraries) has a catalog of open source Unison projects. If you're working on something in Unison, feel free to open a PR to add it here.
+* [Abilities in Unison](/docs/abilities) covers a unique aspect of Unison's type system.
+* [Writing documentation](/docs/documentation) is a tutorial on Unison's approach to documentation.
 * [The core language reference](/docs/language-reference) describes Unison's core language and current syntax in more detail.
-* TODO: writing a more interesting library
