@@ -33,10 +33,12 @@ linkSets:
         url: /docs/concurrent-work
 
   - heading: References
-    icon: /media/icon-code.svg
+    icon: /media/icon-book.svg
     links:
       - label: Language reference
         url: /docs/language-reference
+      - label: Libraries
+        url: /docs/libraries
       - label: Full `ucm` command reference
         url: /docs/commands
       - label: FAQ

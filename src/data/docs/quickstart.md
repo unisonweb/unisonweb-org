@@ -1,17 +1,17 @@
 ---
 title: Three-minute quickstart guide
-description: This short guide will have you downloading and installing Unison and running your first program (a toy distributed mergesort implementation).
+description: This short guide will have you downloading and installing Unison and running your first program.
 ---
 
 # Three-minute quickstart guide
 
-This short guide will have you downloading and installing Unison and running your first program (a toy distributed mergesort implementation). There isn't much exposition here and the focus is on getting you up and running as quickly as possible. 🏎
+This short guide will have you downloading and installing Unison and running your first program. There isn't much exposition here and the focus is on getting you up and running as quickly as possible. 🏎
 
 More in-depth guides follow this one.
 
 If you have any trouble with the process, or have ideas about how to improve this document, [come talk to us in the #alphatesting Slack channel][slack]! This document is also [on GitHub][on-github].
 
-[slack]: https://join.slack.com/t/unisonlanguage/shared_invite/enQtNzAyMTQ4ODA0MDM4LWYxZTNkMGUxMDEzNTg3NTMxNjMxOGM2Zjg4ODFjM2RhNGY0OGU2NTMzYmQ1YWIwN2Y0YTc1NjQ1NjgzYzEzOWI
+[slack]: /slack
 [on-github]: https://github.com/unisonweb/docsite/edit/gh-pages/_includes/quickstart.markdown
 [guide]: /docs/tour
 [roadmap]: /docs/roadmap
@@ -24,65 +24,26 @@ When Unison is further along and ready for more general availability we'll just 
 
 ## Step 2: Create your Unison codebase
 
-Run `ucm init` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. Now let's launch the Unison Codebase Manager:
+Run `ucm init` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. 
 
-<script id="asciicast-vz5JHl6po4zmJ0rXb9SCITjB1" src="https://asciinema.org/a/vz5JHl6po4zmJ0rXb9SCITjB1.js" async></script>
+## Step 3: Fetch the base libraries and run your first program
 
-## Step 3: Fetch and run a distributed mergesort example
+Launch `ucm` again, then from the `.>` prompt, do:
 
-__Prerequisites for this step:__ you'll need to have Git installed and on your path.
-
-At the Unison `.>` prompt, before doing anything else, do:
-
-```
----
-title: ucm
-show-numbers: false
-show-copy-button: false
----
-.> pull https://github.com/unisonweb/quickstart quickstart
+```ucm
+pull https://github.com/unisonweb/base:.releases._M1j base
 ```
 
-to fetch a base library with the first example. You'll see some output from `git` in the background, and once that's done you'll see a big list of definitions that the `pull` added.  Press `q` to exit the list of definitions.
+You'll see some output from `git` in the background, and once that's done you'll see a big list of definitions that the `pull` added. Press `q` to exit the list of definitions.
 
-First, we'll unpack the new code we just got, to help configure your codebase to match the other examples on the documentation site. 😄
-
-```
----
-title: ucm
-show-numbers: false
----
-.> move.namespace quickstart.base .base
-```
-
-Next:
-
-```
----
-title: ucm
-show-numbers: false
----
-.> edit quickstart.dsort
-```
-
-to add the `dsort` distributed mergesort function to the top of a newly created _scratch file_, `scratch.u`:
-
-<script id="asciicast-o9lfrfetnmUT4ArqdDFMXZkr9" src="https://asciinema.org/a/o9lfrfetnmUT4ArqdDFMXZkr9.js" data-speed="1.4" data-rows="30" data-cols="65" async></script>
-
-Open that file and add the following _watch expression_ (a line starting with `>`) to the top, then save the file:
+Open a new file, `scratch.u` in the same directory where you launched `ucm`, then add the following _watch expression_ (a line starting with `>`) to the top, then save the file. This expression multiplies every element in a list by `10`, using the `List.map` function:
 
 ```unison
 ---
 title: scratch.u
 ---
-> runLocal '(quickstart.dsort (<) [8,2,3,1,4,5,6,7])
+> List.map (x -> x * 10) [1,2,3,4,5,6]
 ```
-
-<script id="asciicast-aTn8qIa3DHaxhspsZJmXodfO7" src="https://asciinema.org/a/aTn8qIa3DHaxhspsZJmXodfO7.js" data-speed="1.4" data-t="1.5" data-autoplay="0" async></script>
-
-You should see your watch expression evaluate to a sorted list. You are now up and running!
-
-_Disclaimer:_ This example is a toy that simulates execution locally and does no error handling. It's just meant to be suggestive of the general idea of being able to test Unison distributed programs locally (perhaps with simulated latency and failures injected) and then run them unchanged atop an actual elastic source of distributed compute. This _will_ be something you'll be able to do in Unison in not too long (see [the roadmap][roadmap])).
 
 ## What next?
 
