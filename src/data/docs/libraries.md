@@ -24,5 +24,5 @@ This list is in alphabetical order by (user/repo). Each entry has a super brief 
 [This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1j), do:
 
 ```ucm
-.> pull https://github.com/unisonweb/base:.releases._M1j external.base.M1j
+pull https://github.com/unisonweb/base:.releases._M1j external.base.M1j
 ```
