@@ -6,7 +6,7 @@ slug: libraries
 
 # Unison code catalog
 
-This page has a catalog of Unison libraries, experiments, and other Unison-related projects. If you're working on something in Unison, you can share it here by [opening a pull request](https://github.com/unisonweb/unisonweb-org/tree/master/src/data/docs/libraries.md).
+This page has a catalog of Unison libraries, experiments, and other Unison-related projects. If you're working on something in Unison, you can share it here by [opening a pull request](https://github.com/unisonweb/unisonweb-org/edit/master/src/data/docs/libraries.md).
 
 Tag each entry in the catalog with one of the following icons:
 
