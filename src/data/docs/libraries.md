@@ -19,7 +19,7 @@ There's active discussion of new library work in the [`#hackathon` channel on Sl
 
 This list is in alphabetical order by (user/repo). Each entry has a super brief description in the heading (since headings are indexed by the site-wide search), then a tweet-length blurb about the library which links to the code, then instructions on how to fetch the latest version.
 
-### 🏗 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
+### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
 
 [This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1j), do:
 
