@@ -1,19 +1,17 @@
 linkSets:
 
   - heading: Getting started 
-    icon: /media/icon-code.svg
+    icon: /media/life-buoy.svg
     links:
       - label: Welcome
         url: /docs
-      - label: Roadmap
-        url: /docs/roadmap
       - label: Quickstart
         url: /docs/quickstart
       - label: A tour of Unison
         url: /docs/tour
 
   - heading: Usage topics
-    icon: /media/icon-code.svg
+    icon: /media/layers.svg
     links:
       - label: Abilities and handlers
         url: /docs/abilities
@@ -27,16 +25,18 @@ linkSets:
         url: /docs/refactoring
 
   - heading: Usage topics (coming soon)
-    icon: /media/icon-code.svg
+    icon: /media/layers.svg
     links:
       - label: Concurrent work and resolving edit conflicts
         url: /docs/concurrent-work
 
   - heading: References
-    icon: /media/icon-code.svg
+    icon: /media/icon-book.svg
     links:
       - label: Language reference
         url: /docs/language-reference
+      - label: Libraries
+        url: /docs/libraries
       - label: Full `ucm` command reference
         url: /docs/commands
       - label: FAQ
