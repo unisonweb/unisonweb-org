@@ -7,11 +7,11 @@ categories: ["news"]
 featuredImage: /media/thing4.svg
 ---
 
-Hi folks!  We've just released milestone M1j of the the Unison Codebase Manager, which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring and licensing your own libraries, and contributing to others.
+Hi folks!  We've just released milestone M1j of the the Unison Codebase Manager (the [quickstart guide](/docs/quickstart) has install instructions), which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring your own libraries and contributing to others. 
 
-### Hack on some Unison with Rúnar
+### A Slack channel to talk about Unison libraries you're working on
 
-Rúnar has started #hackathon on the Unison Slack, as a place for talking about Unison libraries you're working on, finding collaborators, and comparing notes, and has also started streaming Unison live-coding sessions! Check out reruns [on Twitch](https://twitch.tv/runarorama), or join [#hackathon](hackathon) to chat about the next one.
+Rúnar has started [`#hackathon`](https://slack.com/app_redirect?channel=C011CJFTQP9&team=TLL09QC85) on the [Unison Slack](/slack), as a place to talk about Unison libraries you're working on, find collaborators, and compare notes. He's also started streaming Unison live-coding sessions! Check out reruns [on Twitch](https://twitch.tv/runarorama), or join [#hackathon](hackathon) to chat about the next one.
 
 ### Organizing your codebase
 
@@ -50,7 +50,7 @@ Are we forgetting anything?  Tweet [@unisonweb](twitter) or come tell us [on Sla
 
 
 [codebase-organization]: /docs/codebase-organization
-[ configuration]: /docs/configuration
+[configuration]: /docs/configuration
 [libraries]: /docs/libraries
 [M1j]: https://github.com/unisonweb/unison/releases/tag/release%2FM1j
 [devcontainer]: https://github.com/unisonweb/vscode-devcontainer
