@@ -34,3 +34,7 @@ apm install unisonweb/atom-unison
 1. Bring up the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of VS Code, or with ⇧⌘X.
 2. Search for "unison"
 3. Select "Unison Syntax Highlighting" and click "Install".
+
+## Emacs
+
+Install [unison-mode](https://github.com/dariooddenino/unison-mode-emacs).
