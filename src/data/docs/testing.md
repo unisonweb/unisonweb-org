@@ -323,11 +323,11 @@ Once you've got your generators in good shape, you can combine these into proper
 
 ```unison
 test> List.reverse.tests.prop1 = runs 100 'let
-  original = !(list (natIn 0 100))
+  original = !(listOf (natIn 0 100))
   original' = List.reverse (List.reverse original)
   expect (original == original')
 
-> sample 10 (list (natIn 0 100))
+> sample 10 (listOf (natIn 0 100))
 ```
 
 ```ucm
@@ -347,7 +347,7 @@ test> List.reverse.tests.prop1 = runs 100 'let
 
     ✅ Passed : Passed 100 tests.
 
-    6 | > sample 10 (list (natIn 0 100))
+    6 | > sample 10 (listOf (natIn 0 100))
           ⧩
           [ [],
             [0],
