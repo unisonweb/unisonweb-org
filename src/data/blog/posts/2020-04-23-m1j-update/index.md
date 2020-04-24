@@ -17,7 +17,7 @@ Rúnar has started [`#hackathon`](https://slack.com/app_redirect?channel=C011CJF
 
 We've had our first few PRs to `unisonweb/base`, which has been been rewarding, and also forced us to sit down and figure out what a nice process in Unison might look like.  So check out the draft docs on [how to organize your codebase](codebase-organization).  It gives some guidance on how to install new Unison libraries (both "released" and pre-released), doing the day-to-day work of creating, or reviewing and merging pull requests, and how to publish a release of your own.
 
-### Publish a library
+### Publishing a library
 
 Speaking of publishing your own libraries, we are now hosting a [Unison code catalog](libraries) to show off what projects people are working on, or maybe accepting contributions for.  As of this writing, we've only listed `unisonweb/base`, so please submit your new libraries to the list via PR (until we have an automated solution)! :slightly_smiling_face:
 
