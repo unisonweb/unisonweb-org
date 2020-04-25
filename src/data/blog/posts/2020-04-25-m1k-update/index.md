@@ -8,7 +8,7 @@ categories: ["news"]
 featuredImage: /media/thing4.svg
 ---
 
-Hi folks!  We've just released milestone M1j of the the Unison Codebase Manager (the [quickstart guide](/docs/quickstart) has install instructions), which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring your own libraries and contributing to others. 
+Hi folks!  We've just released milestone M1k of the the Unison Codebase Manager (the [quickstart guide](/docs/quickstart) has install instructions), which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring your own libraries and contributing to others.
 
 ### A Slack channel to talk about Unison libraries you're working on
 
