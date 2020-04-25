@@ -1,8 +1,8 @@
 ---
 slug: april-update
-title: Get set up for publishing Unison libraries with milestone M1j
+title: Get set up for publishing Unison libraries with milestone M1k
 description: "We've just released milestone M1j of the the Unison Codebase Manager, which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring and licensing your own libraries, and contributing to others."
-date: 2020-04-23
+date: 2020-04-25
 authors: ["arya-irani"]
 categories: ["news"]
 featuredImage: /media/thing4.svg
