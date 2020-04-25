@@ -20,7 +20,7 @@ We've had our first few PRs to `unisonweb/base`, which has been been rewarding, 
 
 ### Publishing a library
 
-Speaking of publishing your own libraries, we are now hosting a [Unison code catalog][libraries] to show off what projects people are working on, or maybe accepting contributions for.  As of this writing, we've only listed `unisonweb/base`, so please submit your new libraries to the list via PR (until we have an automated solution)! :slightly_smiling_face:
+Speaking of publishing your own libraries, we are now hosting a [Unison code catalog][libraries] to show off what projects people are working on, or maybe accepting contributions for.  As of this writing, we've only listed `unisonweb/base`, so please submit your new libraries to the list via PR (until we have an automated solution)! 🙂
 
 You can use the new `create.author` command to create `Author` and `CopyrightHolder` values to attach, along with your library's `License`, as metadata to your published definitions.
 
