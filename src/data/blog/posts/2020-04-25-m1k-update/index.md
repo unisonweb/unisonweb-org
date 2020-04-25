@@ -44,7 +44,7 @@ Speaking of `push` and `pull`, these commands have been updated to be a bit snap
 
 ### What's next?
 
-Work on the faster new runtime has been humming along, and we plan to release it soon in M2.  We'll add better support for the abovementioned proposed codebase organization format to UCM, e.g. good project scoping for commands where it matters, and we're also about to start devoting more resources to the distributed computing libraries. :rocket:
+Work on the faster new runtime has been humming along, and we plan to release it soon in milestone M2.  We'll add better support for the abovementioned proposed codebase organization format to UCM, e.g. good project scoping for commands where it matters, and we're also about to start devoting more resources to the distributed computing libraries. :rocket:
 
 Are we forgetting anything?  Tweet [@unisonweb][twitter] or come tell us [on Slack][slack]!
 
