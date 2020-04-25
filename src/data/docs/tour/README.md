@@ -57,7 +57,7 @@ If you haven't already worked through the [quickstart guide][quickstart], let's 
 ---
 title: ucm
 ---
-.> pull https://github.com/unisonweb/base .base
+.> pull https://github.com/unisonweb/base:.releases._M1k base
 ```
 
 This command uses git behind the scenes to sync new definitions from the remote Unison codebase to the local codebase.
