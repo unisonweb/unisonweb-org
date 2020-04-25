@@ -4,6 +4,7 @@ title: How Unison reduces ecosystem churn
 description: Unison doesn't have library dependency conflicts, and many sources of ecosystem churn just disappear. This fact got a brief mention in the Strange Loop 2019 talk, but that talk didn't make all the benefits totally clear. This article will attempt to highlight some of the more surprising benefits of Unison's approach.
 date: 2020-04-10
 categories: ["viewpoints", "learn"]
+authors: ["paul-chiusano"]
 featuredImage: /media/thing12.svg
 ---
 

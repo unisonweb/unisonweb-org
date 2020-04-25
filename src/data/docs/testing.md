@@ -323,11 +323,11 @@ Once you've got your generators in good shape, you can combine these into proper
 
 ```unison
 test> List.reverse.tests.prop1 = runs 100 'let
-  original = !(list (natIn 0 100))
+  original = !(listOf (natIn 0 100))
   original' = List.reverse (List.reverse original)
   expect (original == original')
 
-> sample 10 (list (natIn 0 100))
+> sample 10 (listOf (natIn 0 100))
 ```
 
 ```ucm
@@ -347,7 +347,7 @@ test> List.reverse.tests.prop1 = runs 100 'let
 
     ✅ Passed : Passed 100 tests.
 
-    6 | > sample 10 (list (natIn 0 100))
+    6 | > sample 10 (listOf (natIn 0 100))
           ⧩
           [ [],
             [0],
@@ -395,16 +395,16 @@ The function `runs` that we've been using has type `Nat -> '{Gen} Test -> [Test.
 ```ucm
 .base> find : Test
 
-  1.  test.internals.v1.Test.passed : Test
-  2.  test.v1.ok : Test
-  3.  test.internals.v1.Test.passedUnexpectedly : Test
-  4.  test.v1.unexpected.ok : Test
-  5.  test.internals.v1.Test.provedUnexpectedly : Test
-  6.  test.v1.unexpected.proven : Test
-  7.  test.internals.v1.Test.failed : Test
-  8.  test.v1.fail : Test
-  9.  test.internals.v1.Test.proved : Test
-  10. test.v1.prove : Test
+  1.  test.internals.Test.passed : Test
+  2.  test.ok : Test
+  3.  test.internals.Test.passedUnexpectedly : Test
+  4.  test.unexpected.ok : Test
+  5.  test.internals.Test.provedUnexpectedly : Test
+  6.  test.unexpected.proven : Test
+  7.  test.internals.Test.failed : Test
+  8.  test.fail : Test
+  9.  test.internals.Test.proved : Test
+  10. test.prove : Test
 
 
 ```

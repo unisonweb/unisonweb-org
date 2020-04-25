@@ -148,11 +148,11 @@ Once you've got your generators in good shape, you can combine these into proper
 
 ```unison
 test> List.reverse.tests.prop1 = runs 100 'let
-  original = !(list (natIn 0 100))
+  original = !(listOf (natIn 0 100))
   original' = List.reverse (List.reverse original)
   expect (original == original')
 
-> sample 10 (list (natIn 0 100))
+> sample 10 (listOf (natIn 0 100))
 ```
 
 Don't forget, if you encounter failures, you can use `bug` to view intermediate generated values that trigger the failure.
