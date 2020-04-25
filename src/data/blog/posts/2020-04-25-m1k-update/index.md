@@ -1,7 +1,7 @@
 ---
 slug: april-update
 title: Get set up for publishing Unison libraries with milestone M1k
-description: "We've just released milestone M1j of the the Unison Codebase Manager, which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring and licensing your own libraries, and contributing to others."
+description: "We've just released milestone M1k of the the Unison Codebase Manager, which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring and licensing your own libraries, and contributing to others."
 date: 2020-04-25
 authors: ["arya-irani"]
 categories: ["news"]
@@ -12,7 +12,7 @@ Hi folks!  We've just released milestone M1k of the the Unison Codebase Manager 
 
 ### A Slack channel to talk about Unison libraries you're working on
 
-Rúnar has started [`#hackathon`][hackathon] on the [Unison Slack][slack], as a place to talk about Unison libraries you're working on, find collaborators, and compare notes. He's also started streaming Unison live-coding sessions! Check out reruns [on Twitch](https://twitch.tv/runarorama), or join [#hackathon][hackathon] to chat about the next one.
+Rúnar has started [#hackathon][hackathon] on the [Unison Slack][slack], as a place to talk about Unison libraries you're working on, find collaborators, and compare notes. He's also started streaming Unison live-coding sessions! Check out reruns [on Twitch](https://twitch.tv/runarorama), or join [#hackathon][hackathon] to chat about the next one.
 
 ### Organizing your codebase
 
@@ -24,7 +24,7 @@ Speaking of publishing your own libraries, we are now hosting a [Unison code cat
 
 You can use the new `create.author` command to create `Author` and `CopyrightHolder` values to attach, along with your library's `License`, as metadata to your published definitions.
 
-As of M1j, you can [configure the Unison Codebase Manager][configuration] with some default metadata to attach to all of your work.  You can also associate a default Git url to a given namespace, meaning that with some configuration,
+As of M1k, you can [configure the Unison Codebase Manager][configuration] with some default metadata to attach to all of your work.  You can also associate a default Git url to a given namespace, meaning that with some configuration,
 
 ```
 ._coolproject> push git@github.com:myorg/coolproject
