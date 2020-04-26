@@ -19,6 +19,8 @@ The `.unisonConfig` file uses the [`Data.Configurator` file format](http://hacka
 
 What follows is an example configuration file. We'll explain the details of what this means below. Note that this is just an example and the values shown here will not actually work. (Though your file's basic structure will look similar to this if you are following the [recommendations on how to organize your Unison namespace](/docs/codebase-organization).)
 
+> ⚠️  There's a known issue with configuration segments starting with an underscore, see [here](https://github.com/unisonweb/unison/issues/1467). It will be fixed soon.
+
 ```ini
 # I version my full namespace tree here, it's a snapshot
 # of all my current workstreams. If I need to switch 
