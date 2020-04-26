@@ -35,7 +35,7 @@ GitUrl = {
   # Example: from UCM, `._base> pull` will get latest trunk
 
   _base = "git@github.com:unisonweb/base:.trunk"
-  _distributed = ns2 = "git@github.com:unisonweb/distributed:.trunk"
+  _distributed = "git@github.com:unisonweb/distributed:.trunk"
 
   # I help maintain these projects, so I track the full tree.
   # This makes it easy to create, review and merge pull requests.
