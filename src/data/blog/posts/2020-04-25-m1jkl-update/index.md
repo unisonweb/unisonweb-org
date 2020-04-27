@@ -1,14 +1,14 @@
 ---
 slug: april-update
-title: Get set up for publishing Unison libraries with milestone M1k
-description: "We've just released milestone M1k of the the Unison Codebase Manager, which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring and licensing your own libraries, and contributing to others."
+title: Get set up for publishing Unison libraries with milestone M1l
+description: "We've just released milestone M1l of the the Unison Codebase Manager, which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring and licensing your own libraries, and contributing to others."
 date: 2020-04-25
 authors: ["arya-irani"]
 categories: ["news"]
 featuredImage: /media/thing4.svg
 ---
 
-Hi folks!  We've just released milestone M1k of the the Unison Codebase Manager (the [quickstart guide][quickstart] has install instructions), which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring your own libraries and contributing to others.
+Hi folks!  We've just released milestone M1l of the the Unison Codebase Manager (the [quickstart guide][quickstart] has install instructions), which focused on essentials for ecosystem growth, specifically: guidance and tools for structuring your own libraries and contributing to others.
 
 ### A Slack channel to talk about Unison libraries you're working on
 
@@ -24,7 +24,7 @@ Speaking of publishing your own libraries, we are now hosting a [Unison code cat
 
 You can use the new `create.author` command to create `Author` and `CopyrightHolder` values to attach, along with your library's `License`, as metadata to your published definitions.
 
-As of M1k, you can [configure the Unison Codebase Manager][configuration] with some default metadata to attach to all of your work.  You can also associate a default Git url to a given namespace, meaning that with some configuration,
+As of M1l, you can [configure the Unison Codebase Manager][configuration] with some default metadata to attach to all of your work.  You can also associate a default Git url to a given namespace, meaning that with some configuration,
 
 ```
 ._coolproject> push git@github.com:myorg/coolproject

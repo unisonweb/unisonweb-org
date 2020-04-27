@@ -21,8 +21,8 @@ This list is in alphabetical order by (user/repo). Each entry has a super brief 
 
 ### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
 
-[This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1k), do:
+[This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1l), do:
 
 ```ucm
-pull https://github.com/unisonweb/base:.releases._M1k external.base.M1k
+pull https://github.com/unisonweb/base:.releases._M1l external.base.M1l
 ```
