@@ -88,7 +88,7 @@ Then you can simply issue a `pull` from UCM while sitting in the `_project1` nam
 ._project1> pull
 ```
 
-If you have multiple configuration settings that have the same prefix, you can add them both to the same "configuration group".  For example, the next two configurations have the same meaning:
+If you have multiple configuration settings that have the same prefix, you can put them into a "configuration group".  For example, the next two configurations have the same meaning:
 
     GitUrl._project1 = "git@github.com:myorg/coolproject"
     GitUrl.foo.bar = "git@github.com:foo/bar.git"
