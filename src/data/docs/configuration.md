@@ -23,14 +23,14 @@ What follows is an example configuration file. We'll explain the details of what
 
 ```ini
 # I version my full namespace tree here, it's a snapshot
-# of all my current workstreams. If I need to switch 
+# of all my current workstreams. If I need to switch
 # computers, I might just push here, then pull on the
-# other computer. 
+# other computer.
 # `.> push` will go here.
 GitUrl = "git@github.com:myuser/allmycode"
 
 GitUrl = {
-  
+
   # Some projects I occasionally make PRs against.
   # Example: from UCM, `._base> pull` will get latest trunk
 
@@ -40,7 +40,7 @@ GitUrl = {
   # I help maintain these projects, so I track the full tree.
   # This makes it easy to create, review and merge pull requests.
   # Example: from UCM, `._json> pull` will get latest full dev tree
-  
+
   _json = "git@github.com:myuser/json.git"  # '.git' is optional!
   _httpclient = "git@github.com:myorg/unison-httpclient"
   _project1 = "git@github.com:myorg/coolproject"
@@ -51,13 +51,9 @@ GitUrl = {
 
   scratch = "git@github.com:myuser/unison-gists"
 
-  # Bogus example showing default GitUrl for a nested namespace
+  # Another example with a nested namespace
 
-  ns3 {
-    example { 
-      foo = "git@github.com:someorganization/thing"
-    }
-  }
+  ns3.example.foo = "git@github.com:someorganization/thing"
 }
 
 # Attach myself as author and use BSD license.
@@ -68,11 +64,7 @@ DefaultMetadata = [ "._project1._trunk.metadata.authors.myself"
 # I'd remove license from the root and add a license here instead
 # DefaultMetadata {
 #  _project1 = ["._project1._trunk.metadata.licenses.myself_bsd3_2020"]
-#  org { 
-#    example {
-#      foo = ["._project1._trunk.metadata.licenses.myself_apache2_2020"]
-#    }
-#  }
+#  org.example.foo = ["._project1._trunk.metadata.licenses.myself_apache2_2020"]
 }
 ```
 
@@ -90,9 +82,7 @@ For example, while you can always supply an explicit argument to `pull`, like so
 
 ... to avoid having to type or paste the URL every time, you could instead add the following to your `.unisonConfig`:
 
-    GitUrl {
-      _project1 = "git@github.com:myorg/coolproject"
-    }
+    GitUrl._project1 = "git@github.com:myorg/coolproject"
 
 Then you can simply issue a `pull` from UCM while sitting in the `_project1` namespace:
 
@@ -100,12 +90,15 @@ Then you can simply issue a `pull` from UCM while sitting in the `_project1` nam
 ._project1> pull
 ```
 
-Note that if your namespace has more than one segment, you will need to nest configuration groups. For example, if your namespace is `foo.bar`, you'll need something like this:
+If you have multiple configuration settings that have the same prefix, you can add them both to the same "configuration group".  For example, the next two configurations have the same meaning:
+
+    GitUrl._project1 = "git@github.com:myorg/coolproject"
+    GitUrl.foo.bar = "git@github.com:foo/bar.git"
+
 
     GitUrl {
-      foo {
-        bar = "git@github.com:foo/bar.git"
-      }
+      _project1 = "git@github.com:myorg/coolproject"
+      foo.bar = "git@github.com:foo/bar.git"
     }
 
 ## Setting default metadata like License and Author
@@ -130,7 +123,7 @@ Then, create a license under which to publish your code. The license is an ordin
 
 ```unison
 metadata.licenses.aliceCoder2020 =
-  License [Year 2020] licenseTypes.bsd3 
+  License [Year 2020] licenseTypes.bsd3
 ```
 
 Add that to your codebase:
@@ -143,23 +136,19 @@ Add that to your codebase:
 
 Now add the following to your `.unisonConfig` file to make those values the default for any code you write:
 
-    DefaultMetadata = [ "._project1.metadata.authors.aliceCoder", 
+    DefaultMetadata = [ "._project1.metadata.authors.aliceCoder",
                       , "._project1.metadata.licenses.aliceCoder2020" ]
 
-With this configuration, UCM will link these two values in to any Unison definitions you add to your codebase. 
+With this configuration, UCM will link these two values in to any Unison definitions you add to your codebase.
 
 You might want to license different projects differently. In that case you should create a configuration value for your author under the `DefaultMetadata` configuration group, but rather than having a global license, just have a license per project:
 
     DefaultMetadata = ["._project1.metadata.authors.aliceCoder"]
-    
+
     DefaultMetadata {
       _project1 = ["._project1._trunk.metadata.licenses.aliceCoder_bsd3_2020"]
       _httpclient = ["._project1._trunk.metadata.licenses.aliceCoder_bsd3_2020"]
-      org {
-        example {
-         foo = ["._project1._trunk.metadata.licenses.aliceCoder_apache2_2020"]
-        }
-      }
+      org.example.foo = ["._project1._trunk.metadata.licenses.aliceCoder_apache2_2020"]
     }
 
 With this configuration, UCM will link the `aliceCoder_apache2_2020` license to any definitions you add to the `org.example.mylibrary` namespace and any subnamespaces and will use `aliceCoder_bsd3_2020` when in `_project1` or `_httpclient` namespaces.
