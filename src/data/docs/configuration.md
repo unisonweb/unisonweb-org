@@ -99,6 +99,15 @@ If you have multiple configuration settings that have the same prefix, you can c
       foo.bar = "git@github.com:foo/bar.git"
     }
 
+Configuration groups can be nested as well:
+
+GitUrl {
+  _project1 = "git@github.com:myorg/coolproject"
+  foo {
+    bar = "git@github.com:foo/bar.git"
+  }
+}
+
 ## Setting default metadata like License and Author
 
 UCM allows you to [link](https://www.unisonweb.org/docs/commands#link) metadata to Unison definitions. These metadata are things like [documentation](https://www.unisonweb.org/docs/documentation), authors, as well as license and copyright information.
