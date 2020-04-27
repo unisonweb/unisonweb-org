@@ -15,6 +15,8 @@ UCM loads the configuration on startup, but also watches the file for changes. I
 
 ## What is the configuration file format?
 
+> ⚠️  There's a known issue with configuration segments starting with an underscore, see [here](https://github.com/unisonweb/unison/issues/1467). So unfortunately, the examples below won't work without removing the underscore from the start of identifiers. It will be fixed very soon.
+
 The `.unisonConfig` file uses the [`Data.Configurator` file format](http://hackage.haskell.org/package/configurator-0.3.0.0/docs/Data-Configurator.html). This is a temporary solution, and it's highly likely that the format will change in a future version of Unison.
 
 What follows is an example configuration file. We'll explain the details of what this means below. Note that this is just an example and the values shown here will not actually work. (Though your file's basic structure will look similar to this if you are following the [recommendations on how to organize your Unison namespace](/docs/codebase-organization).)
@@ -33,7 +35,7 @@ GitUrl = {
   # Example: from UCM, `._base> pull` will get latest trunk
 
   _base = "git@github.com:unisonweb/base:.trunk"
-  _distributed = ns2 = "git@github.com:unisonweb/distributed:.trunk"
+  _distributed = "git@github.com:unisonweb/distributed:.trunk"
 
   # I help maintain these projects, so I track the full tree.
   # This makes it easy to create, review and merge pull requests.
