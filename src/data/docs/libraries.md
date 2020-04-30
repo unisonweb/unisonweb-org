@@ -26,3 +26,11 @@ This list is in alphabetical order by (user/repo). Each entry has a super brief 
 ```ucm
 pull https://github.com/unisonweb/base:.releases._M1l external.base.M1l
 ```
+
+### 🚢 `atacratic/unison-random-mersenne`: Pseudo-random number generator using the Mersenne Twister algorithm 
+
+[This library](https://github.com/atacratic/unison-random-mersenne) implements a widely-used PRNG algorithm, giving you a deterministic stream of pseudo-random numbers based on a seed of your choice.  Suitable for statistical purposes (e.g. Monte Carlo sampling).  
+
+### 🧪 `atacratic/unison-datetime`: Date and time 
+
+Currently just a design - code is TODO!  https://github.com/atacratic/unison-datetime
