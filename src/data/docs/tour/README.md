@@ -431,7 +431,7 @@ title: ucm
 
   1.  square : .base.Nat -> .base.Nat
 
-.mylibrary> move.namespace .tests tests
+.mylibrary> move.namespace .square.tests square.tests
 
   Done.
 ```
