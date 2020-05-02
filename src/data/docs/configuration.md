@@ -27,7 +27,7 @@ What follows is an example configuration file. We'll explain the details of what
 # `.> push` will go here.
 GitUrl = "git@github.com:myuser/allmycode"
 
-GitUrl = {
+GitUrl {
 
   # Some projects I occasionally make PRs against.
   # Example: from UCM, `._base> pull` will get latest trunk
@@ -63,7 +63,7 @@ DefaultMetadata = [ "._project1._trunk.metadata.authors.myself"
 # DefaultMetadata {
 #  _project1 = ["._project1._trunk.metadata.licenses.myself_bsd3_2020"]
 #  org.example.foo = ["._project1._trunk.metadata.licenses.myself_apache2_2020"]
-}
+# }
 ```
 
 Your file will look similar to this if you are following the [recommendations on how to organize your Unison namespace](/docs/codebase-organization).
@@ -101,12 +101,12 @@ If you have multiple configuration settings that have the same prefix, you can c
 
 Configuration groups can be nested as well:
 
-GitUrl {
-  _project1 = "git@github.com:myorg/coolproject"
-  foo {
-    bar = "git@github.com:foo/bar.git"
-  }
-}
+    GitUrl {
+      _project1 = "git@github.com:myorg/coolproject"
+      foo {
+        bar = "git@github.com:foo/bar.git"
+      }
+    }
 
 ## Setting default metadata like License and Author
 
