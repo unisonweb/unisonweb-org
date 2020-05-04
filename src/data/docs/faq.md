@@ -106,7 +106,10 @@ The sketch design for how it will work is as follows.
 - The Unison runtime will let you run a program of type `'{GPU} ()` just as it lets you run a `'{IO} ()`.
 - There will be an extensible binding mechanism for defining new such abilities and forwarding their operations to external APIs.
 
-There's still plenty to work out, for example in designing the binding mechanism, and in managing `ucm` linkage dependencies to external binaries.
+There's still plenty to work out, for example in
+- designing the binding mechanism
+- managing `ucm` linkage dependencies to external binaries
+- making it play nicely with distribution, so computations can jump between nodes, and make use of the varying FFI abilities on each one.
 
 Note how using the ability mechanism gives a great story for testing.  You can define a test handler, in pure Unison, to handle your `GPU` ability, and use it to add regular Unison tests for your GPU code, that can run anywhere regardless of whether the right GPU is installed.
 
