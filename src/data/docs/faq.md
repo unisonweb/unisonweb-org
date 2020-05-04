@@ -95,6 +95,21 @@ Some key differences...
 - Unison supports algebraic effects, which it calls 'abilities', which replace monads and monad transformers for writing effectful code.
 - Unison uses a strict evaluation model, whereas Haskell's model is lazy.
 
+### Does Unison have an FFI?
+
+Unison does not currently support a Foreign Function Interface, for invoking code written in other languages.
+
+Your programs can interact with the outside world via the `IO` ability, and this includes interaction via network sockets - so you can interact with code written in other languages if that code can expose a network interface, for example as a web service.  We'd like to improve on this position in future.
+
+The sketch design for how it will work is as follows.
+- A foreign API, let's say one for working with the GPU, will be exposed through a top-level ability, let's say `GPU`.
+- The Unison runtime will let you run a program of type `'{GPU} ()` just as it lets you run a `'{IO} ()`.
+- There will be an extensible binding mechanism for defining new such abilities and forwarding their operations to external APIs.
+
+There's still plenty to work out, for example in designing the binding mechanism, and in managing `ucm` linkage dependencies to external binaries.
+
+Note how using the ability mechanism gives a great story for testing.  You can define a test handler, in pure Unison, to handle your `GPU` ability, and use it to add regular Unison tests for your GPU code, that can run anywhere regardless of whether the right GPU is installed.
+
 ## Distributed computing
 
 ### How can Unison's distributed execution be made secure?
@@ -310,12 +325,17 @@ Yes!  Please come and get involved 😊
 
 The first step is to play with the language, and get familiar with writing Unison code.  Also come join the slack, and browse through the issue tracker to see what's going on.
 
+#### Contributing Unison code
+
+Is there a library you could write in Unison?  That's a way to contribute which requires very little coordination with the compiler team, and can have a big impact on the usability of the overall Unison ecosystem.  There's a catalog of libraries [here](https://www.unisonweb.org/docs/libraries) - do add yours!  Let us know in the slack (channel #hackathon) what you're working on 😎
+
+You could also try fixing some omissions from the base library - see [here](https://github.com/unisonweb/base/blob/master/CONTRIBUTING.md#contributions-that-are-most-welcome) for the contributions that would be most welcome.
+
+#### Contributing to the Unison language/compiler/toolchain
+
 You can dip your toes by finding small ways to contribute a little piece:
 - take a look at the issues labelled '[good first issue](https://github.com/unisonweb/unison/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)' and '[help wanted](https://github.com/unisonweb/unison/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)'
 - see if you can find any tidying or refactoring you think needs doing in the parser-typechecker source (chat to us on slack before spending much time)
 - are there any contributor docs you'd like to see which you could make a start on?
 
 Once you've had your first PR merged and gotten to know how we work, have a think whether you want to take on a bigger project!  There's lots of cool stuff to do.  Get in touch with Paul Chiusano via the slack and give him an idea of your areas of interest and level of experience.  If you have your own suggestions for what you could work on then let him know!
-
-Also think about any Unison libraries you could write - that's a way to contribute which requires very little coordination with the compiler team, and can have a big impact on the usability of the overall Unison ecosystem.  Let us know in the slack what you're working on 😎
-
