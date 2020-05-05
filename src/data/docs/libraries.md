@@ -31,6 +31,14 @@ This list is in alphabetical order by (user/repo). Each entry has a super brief 
 pull https://github.com/atacratic/unison-random-mersenne.git:.releases._v1 external.unison_random_mersenne.v1
 ```
 
+### 🚢 `bascott/unison-continuations`: Continuations as an ability
+
+[This library](https://github.com/bascott/unison-continuations) includes the ability to substitute one computation with another regardless of where you are in your current computation. Includes the implementation of control operators such as callCC. To fetch the latest version (v1), do:
+
+```ucm
+pull https://github.com/bascott/unison-continuations:.releases._v1 external.continuations.v1
+```
+
 ### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
 
 [This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1l), do:
