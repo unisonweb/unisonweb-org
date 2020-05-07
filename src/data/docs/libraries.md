@@ -39,6 +39,14 @@ pull https://github.com/atacratic/unison-random-mersenne.git:.releases._v1 exter
 pull https://github.com/bascott/unison-continuations:.releases._v1 external.continuations.v1
 ```
 
+### 🚢 `emiflake/unison-json`: Elm-like JSON decoders
+
+[This library](https://github.com/emiflake/unison-json) implements a JSON parser and Decoders to convert JSON values into Unison values using the applicative style. To fetch the latest version (v0), do:
+
+```ucm
+pull https://github.com/emiflake/unison-json:.releases._v0 external.json.v0
+```
+
 ### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
 
 [This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1l), do:
