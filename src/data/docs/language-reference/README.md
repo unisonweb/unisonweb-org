@@ -79,28 +79,28 @@ Note: The expression `drop n 1` on line 4 above subtracts one from the natural n
 
 ### Operator definitions
 
-[Operator identifiers](#identifiers) are valid names for Unison definitions, but the syntax for defining them is slightly different. For example, we could define a binary operator `|`:
+[Operator identifiers](#identifiers) are valid names for Unison definitions, but the syntax for defining them is slightly different. For example, we could define a binary operator `**`:
 
 ``` unison
-(|) x y = if x == 0 then y else x
+(**) x y = Float.pow x y
 ```
 
 Or we could define it using infix notation:
 
 ``` unison
-x | y = if x == 0 then y else x
+x ** y = Float.pow x y
 ```
 
 If we want to give the operator a qualified name, we put the qualifier inside the parentheses:
 
 ``` unison
-(MyNamespace.|) x y = if x == 0 then y else x
+(MyNamespace.**) x y = Float.pow x y
 ```
 
 Or if defining it infix:
 
 ``` unison
-x MyNamespace.| y = if x == 0 then y else x
+x MyNamespace.** y = Float.pow x y
 ```
 
 The operator can be applied using either notation, no matter which way it's defined. See [function application](#function-application) for details.
@@ -242,12 +242,10 @@ See the sections on:
 
 ### Identifiers
 
----
-
 Unison identifiers come in two flavors:
 
 1. _Regular identifiers_ start with an alphabetic unicode character, emoji (which is any unicode character between 1F400 and 1FAFF inclusive), or underscore (`_`), followed by any number of alphanumeric characters, emoji, or the characters `_`, `!`, or `'`. For example, `foo`, `_bar4`, `qux'`, and `set!` are valid regular identifiers.
-2. _Operators_ consist entirely of the characters `!$%^&*-=+<>.~\\/|:`. For example, `+`, `*`, `<>`, and `>>=` are valid operators.
+2. _Operators_ consist entirely of the characters `!$%^&*-=+<>.~\\/:`. For example, `+`, `*`, `<>`, and `>>=` are valid operators.
 
 #### Namespace-qualified identifiers
 
@@ -478,7 +476,15 @@ An exception to the evaluation semantics is [Boolean expressions](#boolean-expre
 
 Unison supports [proper tail calls](https://en.wikipedia.org/wiki/Tail_call) so function calls in tail position do not grow the call stack.
 
-#### Syntactic precedence
+#### Syntactic precedence of operators and prefix function application
+
+All operators and infix function applications currently have the same precedence, and are parsed left-associative. Use parentheses to obtain a different grouping. So for instance:
+
+* `1 + 3 * 4` is parsed `(1 + 3) * 4`. You can group it differently using parentheses: `1 + (3 * 4)`
+* `a + b < c * d` is parsed as `((a + b) < c) * d`.  You can group it differently using parentheses: `a + b < (c * d)`
+* ``x `Nat.drop` 1 + 11`` is parsed as ``(x `Nat.drop` 1) + 11``.
+
+When your code is printed back to you by Unison, it will be displayed with minimal necessary parentheses, so if Unison's default syntax later supports operator precedence, old definitions written originally with more parentheses will get displayed with only the parentheses currently needed for the current precedence settings.
 
 Prefix function application:
 
