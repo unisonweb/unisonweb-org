@@ -876,6 +876,7 @@ Unison provides the following built-in types:
 * `.base.Boolean` is the type of Boolean expressions whose value is `true` or `false`.
 * `.base.Bytes` is the type of arbitrary-length 8-bit byte sequences.
 * `.base.Text` is the type of arbitrary-length strings of Unicode text.
+* `.base.Char` is the type of a single Unicode character.
 * The trivial type `()` (pronounced “unit”) is the type of the nullary tuple. There is a single data constructor of type `()` and it’s also written `()`.
 
 See [literals](#literals) for more on how values of some of these types are constructed.
