@@ -47,6 +47,10 @@ pull https://github.com/bascott/unison-continuations:.releases._v1 external.cont
 pull https://github.com/emiflake/unison-json:.releases._v0 external.json.v0
 ```
 
+### 🚢 `runarorama/alt-names` : alternate names for definitions in the Base libraries
+
+[This very small library](https://github.com/runarorama/alt-names) adds no definitions or types, only alternate names for things in `unisonweb/base`. Adds the names `Maybe` and `Option` for `Optional`, `compose` for `(.)`, among other things.
+
 ### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
 
 [This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1l), do:
