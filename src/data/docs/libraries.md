@@ -19,6 +19,15 @@ There's active discussion of new library work in the [`#hackathon` channel on Sl
 
 This list is in alphabetical order by (user/repo). Each entry has a super brief description in the heading (since headings are indexed by the site-wide search), then a tweet-length blurb about the library which links to the code, then instructions on how to fetch the latest version.
 
+### 🏗 `hojberg/unison-money`: Money
+
+[This library](https://github.com/hojberg/unison-money) A Small library for
+working with Money and currencies. To fetch the latest version (v0), do:
+
+```ucm
+pull git@github.com:hojberg/unison-money.git:.releases._v0 external.money.v0
+```
+
 ### 🧪 `atacratic/unison-datetime`: Date and time
 
 [This one](https://github.com/atacratic/unison-datetime) is currently just a design - code is TODO!
