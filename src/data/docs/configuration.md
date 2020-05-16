@@ -130,7 +130,7 @@ Then, create a license under which to publish your code. The license is an ordin
 
 ```unison
 metadata.licenses.aliceCoder2020 =
-  License [Year 2020] licenseTypes.bsd3
+  License [copyrightHolders.aliceCoder] [Year 2020] licenseTypes.bsd3
 ```
 
 Add that to your codebase:
