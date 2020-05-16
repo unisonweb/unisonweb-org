@@ -47,7 +47,7 @@ pull https://github.com/bascott/unison-continuations:.releases._v1 external.cont
 pull https://github.com/emiflake/unison-json:.releases._v0 external.json.v0
 ```
 
-### 🏗 `hojberg/unison-money`: Money
+### 🏗 `hojberg/unison-money`: Money and Currency
 
 [This library](https://github.com/hojberg/unison-money) is implements a `Money`
 type and various functions to work with Money and currencies.
