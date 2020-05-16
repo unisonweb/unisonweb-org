@@ -47,6 +47,28 @@ pull https://github.com/bascott/unison-continuations:.releases._v1 external.cont
 pull https://github.com/emiflake/unison-json:.releases._v0 external.json.v0
 ```
 
+### 🏗 `hojberg/unison-money`: Money and Currency
+
+[This library](https://github.com/hojberg/unison-money) is implements a `Money`
+type and various functions to work with Money and currencies.
+To fetch the latest version, run:
+
+```ucm
+pull https://github.com/hojberg/unison-money:.releases._latest external.money
+```
+
+### 🚢 `runarorama/alt-names` : alternate names for definitions in the Base libraries
+
+[This very small library](https://github.com/runarorama/alt-names) adds no definitions or types, only alternate names for things in `unisonweb/base`. Adds the names `Maybe` and `Option` for `Optional`, `compose` for `(.)`, among other things.
+
+### 🚢 `thoradam/unison-read`: Parsing / deserialization supporting incremental consumption
+
+[This library](https://github.com/thoradam/unison-read) provides a `Read a` ability, along with some combinators and handlers, that allow for incrementally consuming some `a`s to produce a result. To fetch the latest version (v0), do:
+
+```ucm
+pull https://github.com/thoradam/unison-read:.releases._v0 external.read.v0
+```
+
 ### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
 
 [This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1l), do:

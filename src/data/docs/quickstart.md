@@ -12,7 +12,7 @@ More in-depth guides follow this one.
 If you have any trouble with the process, or have ideas about how to improve this document, [come talk to us in the #alphatesting Slack channel][slack]! This document is also [on GitHub][on-github].
 
 [slack]: /slack
-[on-github]: https://github.com/unisonweb/docsite/edit/gh-pages/_includes/quickstart.markdown
+[on-github]: https://github.com/unisonweb/unisonweb-org/blob/master/src/data/docs/quickstart.md
 [guide]: /docs/tour
 [roadmap]: /docs/roadmap
 
