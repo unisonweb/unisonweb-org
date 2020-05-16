@@ -51,6 +51,10 @@ pull https://github.com/emiflake/unison-json:.releases._v0 external.json.v0
 
 [This very small library](https://github.com/runarorama/alt-names) adds no definitions or types, only alternate names for things in `unisonweb/base`. Adds the names `Maybe` and `Option` for `Optional`, `compose` for `(.)`, among other things.
 
+### 🚢 `thoradam/unison-read`: Parsing / deserialization supporting incremental consumption
+
+[This library](https://github.com/thoradam/unison-read) provides a `Read a` ability, along with some combinators and handlers, that allow for incrementally consuming some `a`s to produce a result.
+
 ### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
 
 [This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1l), do:
