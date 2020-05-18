@@ -1,6 +1,6 @@
 ---
 title: Organizing your codebase
-description: How to organize your Unison namespace tree to support multiple workstreams, releases, external dependencies, and pull requests.
+description: How to organize your codebase, install dependencies, create and review pull requests, and make releases
 ---
 
 # Organizing your codebase
@@ -19,7 +19,6 @@ Without further ado, here's what a namespace tree will look like that follows th
       ...
       README : Doc
       releaseNotes : Doc
-      _changelog/
     
     external/
       dependency1.v7/
@@ -28,10 +27,8 @@ Without further ado, here's what a namespace tree will look like that follows th
       bob.somelib.trunk/
 
     prs/
-      _closed/
-        _y2020_m03_d27_frobnicator_new
-        _y2020_m04_d02_quaffle_new
-      _somePR
+      _myGreatPR
+      _anotherNewFeature
       ...
               
     releases/
@@ -40,17 +37,6 @@ Without further ado, here's what a namespace tree will look like that follows th
       ...
 
 Directly under the namespace root, we have a `trunk` (sub-)namespace (for the latest stable code), an `external` namespace (for external dependencies), a `prs` namespace (for pull requests in development, to be merged into `trunk` or to some external dependency once ready), and a `releases` namespace (for stable releases, forked off `trunk`).
-
-If you're including multiple projects in the same Unison codebase (often the case for your personal Unison repo, which has forks of multiple other projects), you can nest the above structure in namespaces under the root:
-
-    _project1/
-      trunk/
-      releases/
-      ...
-    _project2/
-      trunk/
-      releases/
-      ...
 
 > 🏗 The various namespaces starting with `_` is a naming convention signifying an "archived namespace". A future version of Unison will make the contents of archived namespaces invisible unless you `cd` into them (see [this ticket](https://github.com/unisonweb/unison/issues/1340) to track). 
 
@@ -65,9 +51,9 @@ Let's now look at some common workflows:
 
 <a id="installs"></a>
 
-## Installing a (released) library
+## Installing a library is easy, just `pull`
 
-Just use `pull` into your `external` namespace. Library authors will publish the exact `pull` command to tell people how to fetch the latest release (recommended convention is to put this in the README of the Git repository where the Unison codebase is hosted), but it will look something like:
+Just use `pull` into your `external` namespace. Library authors will publish [the exact `pull` command to tell people how to fetch the latest release](/docs/libraries), but it will look something like:
 
 ```ucm
 .> pull https://github.com/alice/mylib:.releases._v6 .external.alice.mylib.v6 
@@ -75,7 +61,7 @@ Just use `pull` into your `external` namespace. Library authors will publish the
 
 There's nothing magic happening here, this "installation" process is just including part of the remote namespace tree locally so it can be referenced by new code. Note that in this command, the release isn't put in an archived namespace, so it can be seen by the `find` command, located during parsing of scratch files, and so on.
 
-### Upgrading to the latest version
+### Upgrading libraries to the latest version
 
 There's no problem with having multiple versions of a library installed at once, though sometimes you want to upgrade to the latest version of a library and delete any references to the old version. There are a couple cases you can encounter here. If `alice.mylib.v6` is a superset of `alice.mylib.v5`, this is as simple as just deleting the `v5` after `v6` is installed.
 
@@ -86,51 +72,49 @@ If `v6` replaced any definitions with new ones (using the `update` command or `r
 ```ucm
 .> fork trunk prs.upgradeAliceLib
 .> patch external.mylib.v6.patches.v5_v6 prs.upgradeAliceLib
+.> merge prs.upgradeAliceLib trunk
 ```
-
-Assuming all is well after that `patch`, you can `merge prs.upgradeAliceLib trunk` back to trunk (and then `merge trunk` into any other pull requests being drafted).
 
 <a id="prs"></a>
 
 ## Day-to-day development: creating and merging pull requests 
 
-Rather than making changes directly to `trunk`, we recommend drafting changes to `trunk` in the `prs` namespace. This makes it very easy to switch between workstreams at any time and keep everything straight, and it keeps `trunk` stable. There's two kinds of changes: _new definitions_, and _updates_.
+Here's the basic workflow for drafting changes to `trunk`. It's not much different than a typical Git workflow, where you create branches, hack on them, then merge them to `master` / `trunk` when done: 
 
-For new definitions (say we'd like to add a function `List.frobnicate` to `base`) just create the definition in `.prs._myPR.List.frobnicate`. Other definitions can be added under `prs._myPR`, with a namespace structure that parallels the target namespace where you'd like to merge.
+1. `.> fork .trunk .prs._myCoolPR`
+2. `.> cd .prs._myCoolPR` and hack away. Use `diff.namespace .trunk .prs._myCoolPR` at any time to see what you've changed.
+3. `.> merge .prs._myCoolPR .trunk` when you're done
 
 > 🧐 We use an archived namespace for the PR itself so the definitions there don't pollute the namespace and are only visible if you're actively working on the PR by `cd`-ing into it.
 
-For _updates_ to a namespace, you can `.> fork trunk prs._myOtherPR` and then use `.prs._myOtherPR> update` to make changes to the namespace.
+To propose changes to another Unison codebase works similarly. We'll use [the Unison base library](https://github.com/unisonweb/base/blob/master/CONTRIBUTING.md) as an example:
 
-> 🍏 When you're done developing your changes, you may also want to add a writeup for the PR of type [`Doc`](/docs/documentation) in `.prs._myPR._changelog`. Name the writeup `y2020_m03_d27_myPR`, using the date (year, month, day) the PR was created and the PR name. When this gets merged it will become part of the changelog of the target namespace, which can be viewed (in order) just using `ls _changelog` or `find`.
+1. `.> pull https://github.com/unisonweb/base:.trunk _base` (you can do this both for initial fetch and for subsequent updates)
+2. `.> fork _base .prs.base._mything` to create a copy of `_base`. You can create multiple forks in `.prs.base`, if you have multiple things you're working on.
+3. If you haven't already done so, set your default license for `.prs.base` to match the license of the codebase you're contributing to (for [base](https://github.com/unisonweb/base/blob/master/CONTRIBUTING.md) it's the MIT license). See [these instructions on how to configure just a sub-namespace with a different license](https://www.unisonweb.org/docs/configuration/#setting-default-metadata-like-license-and-author).
+4. Now `cd .prs.base._mything` and hack away as before. At any time review what's changed between your namespace and `_base` with `diff.namespace ._base .prs.base._mything`.
+5. Push your forked version somewhere public. Suggestion: just mirror your root Unison namespace to a git repo `.> push git@github.com:mygithubname/allmyunisoncode`. No need to maintain a separate Git repo for every Unison library you want to contribute to.
+6. `.prs.base._mything> pull-request.create https://github.com/unisonweb/base:.trunk https://github.com/myuser/allmyunisoncode:.prs.base._mything` and this will create some output. Copy that output to your clipboard. We don't literally use the GitHub pull request mechanism for Unison repositories, we use GitHub issues instead.
+7. Next, create a GitHub issue in the repo you're submitting the code to (that's right, an _issue_, __not__ a GitHub PR). Many Unison repositories will have [a GitHub issue template](https://github.com/unisonweb/base/issues/new?template=unison-pull-request-template.md) for this purpose. Make the issue title something descriptive, and for the issue body, paste in the output generated by `pull-request.create` as well as some text describing the change, just like you would for any other pull request.
+8. Use the GitHub issue comments for coordinating the review. Once merged, the maintainer will close the issue.
 
-Once your change is looking good, you have a few ways of getting it into `trunk`:
+This workflow also works fine even if the source and destination repository are the same, so you might use the above PR process when suggesting changes to a library that you maintain with other people.
 
-1. If you're the sole maintainer, you can merge it to `trunk` yourself:
+### Reviewing pull requests
 
-  * `.> merge prs._myPR trunk` You can alternately do the merge in a staging namespace with:
-      * `.> fork trunk prs.merged_myPR`
-      * `.> merge prs._myPR prs.merged_myPR` and then assuming that looks good `.> merge prs.merged_myPR .trunk`
-  * `.> move.namespace prs._myPR prs._closed._y2020_m03_d27_myPR` to archive it with the current date
-  * `.> push <remoterepo>`
-
-2. If you are collaborating with others and want a fellow committer / maintainer to review and merge:
-
-  * `.> push <sharedgitrepo>`
-  * Create a GitHub issue (that's right, an _issue_, not a pull request) and in the issue body, say:
-    * Local path to your PR: `prs._coolFeature`
-    * The proposed `merge` command assuming the change passes review: `merge prs._coolFeature trunk`
-    * The writeup. If the writeup was done as a Unison [`Doc`](/docs/documentation), you can use `display` command on it to produce something that can be pasted into the GitHub issue.
-    * The output of the command `diff.namespace trunk prs._coolFeature` for quick review of what's actually changed.
-    * The reviewer will merge and archive the PR as in 1), and close the issue afterwards.
-
-3. If you are proposing the change for one of your dependencies or if you aren't a maintainer of the place you'd like to merge, use the `pull-request` command to propose the change. Below is a typical usage of `pull-request.create` that proposes merging something to `base`:
+We'll use [this issue as an example](https://github.com/unisonweb/base/issues/55). The issue created for the PR will have a `pr.load` command to review the PR locally. We'll run that command in any empty namespace:
 
 ```ucm
-.> pull-request.create https://github.com/unisonweb/base:.trunk https://github.com/myusername/myrepo:._prs.someTopic
+.review.pr55> pull-request.load git@github.com:unisonweb/base:.trunk git@github.com:ceedubs/unison-dev:.prs.base._genTests
 ```
 
-This will create some output. Copy that output to your clipboard. Next, create a GitHub issue in the repo where you're proposing the change (that's right, an _issue_, __not__ a GitHub PR). Make the issue title something descriptive, and for the issue body, paste in the output generated by `pull-request.create` as well as any additional commentary on the change, just like you would for any other pull request.
+If you `.review.pr55> ls` you'll see three sub-namespaces: `base` (the original namespace), `head` (the new namespace), and `merged` (the result of `merge head base`). Now you can do: 
+
+1. `.review.pr55> diff.namespace base merged` to see what's changed. The numbered entries in the diff can be referenced by subsequent commands, so `diff.namespace base merged` might be followed by `view 1-7` to view the first 7 definitions listed there.
+2. You can use comments on the GitHub issue to coordinate if there's any changes you'd like the contributor to make before accepting the PR. You can also make changes directly in `merged`.
+3. `.review.pr55> push git@github.com:unisonweb/base:.trunk merged` to push `merged` to `trunk`
+4. `.review.pr55> history merged` and copy the top namespace hash. That's the Unison namespace hash as of the merged PR. Then close the GitHub issue with a comment like "merged in #a9j230d9" and thank the contributor. 😀 If you ever want to go back in time, you can say `.> fork #a9j230d9 .pr55` to give the `#a9j230d9` namespace hash the name `.pr55` in your tree.
+5. If you like, `.> delete.namespace .review.pr55` to tidy up afterwards.
 
 <a id="syncing"></a>
 
@@ -142,10 +126,7 @@ Periodically, you can `pull` the latest `trunk` using:
 .> pull https://gitub.com/unisonorama/myproject trunk
 ```
 
-Here's how you can bring in-progress PRs up to date:
-
-* For __update__ PRs that are forks of the old `trunk`, you can `.prs._myPR> merge .trunk` to bring them up to date. 
-* For PRs with __new definitions only__, generally no action is needed unless the new definitions depend on something that's just been updated in `trunk`. In this case, you can do `.prs._myPR> patch .trunk.patch`. It's also not harmful to do this regardless; it will only have an effect if the patch in `trunk` updates a dependency of the definitions in the PR.
+If you have in-progress PRs that you want to sync with the latest, you can bring them up to date using `.prs._myPR> merge .trunk`.
 
 <a id="using-unreleased"></a>
 
