@@ -901,7 +901,7 @@ New types can be declared as described in detail in the [User-defined types](#us
 Unison provides a convenient feature called _abilities_ which lets you use the same ordinary Unison syntax for programs that do (asynchronous) I/O, stream processing, exception handling, parsing, distributed computation, and lots more.  Unison's system of abilities (often called "algebraic effects" in the literature) is based on [the Frank language by Sam Lindley, Conor McBride, and Craig McLaughlin](https://arxiv.org/pdf/1611.09259.pdf). Unison diverges slightly from the scheme detailed in this paper. In particular:
 
 * Unison's ability polymorphism is provided by ordinary polymorphic types, and a Unison type with an empty ability set explicitly disallows any abilities. In Frank, the empty ability set implies an ability-polymorphic type.
-* Unison doesn't overload function application syntax to do ability handling; instead it has a separate [`handle` construct](#handle-blocks) for this purpose.
+* Unison doesn't overload function application syntax to do ability handling; instead it has a separate [`handle` construct](#ability-handlers) for this purpose.
 
 ### Abilities in function types
 
