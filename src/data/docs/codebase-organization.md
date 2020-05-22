@@ -11,7 +11,7 @@ We recommend using this exact same set of conventions for library maintainers, l
 
 > 🖋  This documentation is still in draft form. Please help test out these conventions and let us know how they work for you. Also any general feedback or questions are welcome! See [this ticket](https://github.com/unisonweb/unison/issues/1409) or start a thread [in Slack #alphatesting](/slack).
 
-Without further ado, here's what a namespace tree will look like that follows these conventions. This will be explained more below, and we'll also show how common workflows (like installing and upgrading libraries and opening pull requests) can be handled with a few UCM commands:
+Here's what a namespace tree will look like that follows these conventions. This will be explained more below, and we'll also show how common workflows (like installing and upgrading libraries and opening pull requests) can be handled with a few UCM commands:
 
     trunk/
       List/
@@ -35,8 +35,13 @@ Without further ado, here's what a namespace tree will look like that follows th
       _v1/
       _v2/
       ...
+    
+    series/
+      _v1/
+      _v2/
+      ...
 
-Directly under the namespace root, we have a `trunk` (sub-)namespace (for the latest stable code), an `external` namespace (for external dependencies), a `prs` namespace (for pull requests in development, to be merged into `trunk` or to some external dependency once ready), and a `releases` namespace (for stable releases, forked off `trunk`).
+Directly under the namespace root, we have a `trunk` (sub-)namespace (for the latest stable code), an `external` namespace (for external dependencies), a `prs` namespace (for pull requests in development, to be merged into `trunk` or to some external dependency once ready), a `series` namespace (for releases branches, forked off `trunk`), and a `releases` namespace, contained released versions of trunk.
 
 > 🏗 The various namespaces starting with `_` is a naming convention signifying an "archived namespace". A future version of Unison will make the contents of archived namespaces invisible unless you `cd` into them (see [this ticket](https://github.com/unisonweb/unison/issues/1340) to track). 
 
@@ -156,22 +161,19 @@ If you are feeling adventurous it's also possible to directly apply the patch to
 Suppose you are creating `v12` of a library. The process is basically to `fork` a copy of `trunk`:
 
 0. Before getting started, we suggest reviewing the curent patch in `trunk` with `.> view.patch trunk.patch`. The term and type replacements listed here should generally be bugfixes or critical upgrades that you expect users of your library to make as well. You can use `delete.term-replacement` and `delete.type-replacement` to remove any entries you don't want to force on library users. See [below](#patches) for more.
-1. Fork a copy of `trunk`: `.> fork trunk releases._v12`
-2. Include the current dependencies in the release: `.> fork external releases._v12._external`. This ensures that anyone who obtains your library also receives its dependencies and the naming you had for those definitions at the time. (Would be great to minimize `_external` to just what's needed transitively by `trunk`, but this could come later)
-3. Create / update `releases._v12.releaseNotes : Doc`. Suggested content to include in this:
-  * A link to previous release notes (`releases._v11.releaseNotes`) at the end.
-  * The current namespace hash of `releases._v12` (accessible via `.releases._v12> history`), so it's clear from the notes alone exactly what version of the code they refer to.
-  * If the release has a non-empty `patch`, give some guidance on upgrading. Are all the edits type-preserving? If no, what sort of refactoring will users have to do? 
-  * How stable is the API? Do you anticipate many changes going forward? Is it a significant release? Should everyone upgrade?
-4. Reset the patch and release notes in `trunk`: `.trunk> delete.patch patch` and `.master> delete.term releaseNotes`. Anyone can upgrade from a past release, `v3`, by applying the patches `releases._v4.patch`, `releases._v5.patch` up through `releases._v12.patch`.
+1. Fork a copy of `trunk`: `.> fork trunk series._v12`
+2. Include the current dependencies in the release: `.> fork external series._v12._external`. This ensures that anyone who obtains your library also receives its dependencies and the naming you had for those definitions at the time. (Would be great to minimize `_external` to just what's needed transitively by `trunk`, but this could come later)
+3. Create / update `series._v12.releaseNotes : Doc`. You can include the current namespace hash of `series._v12`, a link to previous release notes (`releases._v11.releaseNotes`), and if the release has a non-empty `patch`, give some guidance on upgrading. Are all the edits type-preserving? If no, what sort of refactoring will users have to do? 
+4. `squash series._v12 releases._v12` to create the release. This squashed `releases._v12` will have no history and is more efficient for users to `pull` into their codebase.
+5. Reset the patch and release notes in `trunk`: `.trunk> delete.patch patch` and `.master> delete.term releaseNotes`. Anyone can upgrade from a past release, `v3`, by applying the patches `releases._v4.patch`, `releases._v5.patch` up through `releases._v12.patch`.
   * If desired, you can also produce cumulative patches for skipping multiple versions. These can be published on an ad hoc basis. If publishing these, just include them in `releases._v12.patches.v4_to_v12`.
-5. Update the README on the repo's GitHub to say that the latest release can be gotten via: `.> pull https://github.com/unisonweb/base:.releases._v12 external.base.v12`. You can also let folks know about the release via any other communication channels (Twitter, Slack, etc).
+6. Optional: you can add updated instructions for fetching the release to [the libraries page](/docs/libraries/) and also update the README on the repo's GitHub. You can also let folks know about the release via any other communication channels (Twitter, Slack, etc).
 
 We don't recommend any fancy numbering scheme for versioning, just increment the version number. Use the `releaseNotes` to convey metadata and additional nuance about each release.
 
 ### Backporting fixes
 
-Creating a bugfix release works the same way. Suppose the `v12` release has a bug. The bug has been fixed in the latest `trunk` and you'd like to backport it. Instead of forking `trunk`, instead `fork releases._v12 releases._v12a` (then `_v12b`, `_v12c`, etc). Then backport the fix to the `_v12a` namespace, and continue with the release steps as before.
+Creating a bugfix release works the same way. Suppose the `v12` release has a bug. The bug has been fixed in the latest `trunk` and you'd like to backport it. Just backport the fix to the `series._v12` namespace and continue with the release steps as before, but this time create `releases._v12a` (then `_v12b`, `_v12c`, etc).
 
 <a id="patches"></a>
 
