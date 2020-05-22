@@ -31,7 +31,7 @@ Run `ucm init` to initialize a Unison codebase in `$HOME/.unison`. This is where
 Launch `ucm` again, then from the `.>` prompt, do:
 
 ```ucm
-pull https://github.com/unisonweb/base:.releases._M1l base
+pull https://github.com/unisonweb/base:.releases._latest base
 ```
 
 You'll see some output from `git` in the background, and once that's done you'll see a big list of definitions that the `pull` added. Press `q` to exit the list of definitions.
