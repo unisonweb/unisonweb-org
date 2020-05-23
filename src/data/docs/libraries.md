@@ -71,8 +71,8 @@ pull https://github.com/thoradam/unison-read:.releases._v0 external.read.v0
 
 ### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`
 
-[This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version (M1l), do:
+[This library](https://github.com/unisonweb/base) includes all builtin functions, basic data structures and algorithms, and `IO`. To fetch the latest version, do:
 
 ```ucm
-pull https://github.com/unisonweb/base:.releases._M1l external.base.M1l
+pull https://github.com/unisonweb/base:.releases._latest base
 ```
