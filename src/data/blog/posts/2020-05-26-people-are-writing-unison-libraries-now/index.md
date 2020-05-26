@@ -8,7 +8,7 @@ categories: ["news"]
 featuredImage: /media/thing14.svg
 ---
 
-Last week we released another Unison alpha milestone. This release has a [number of bugfixes and performance improvements](link to release notes). :rainbow::star:
+Last week we released another Unison alpha milestone. This release has a [number of bugfixes and performance improvements](https://github.com/unisonweb/unison/releases/tag/release%2FM1m). 🌈⭐️
 
 It's exciting to see Unison gradually coming together, but even more exciting has been seeing people writing and publishing Unison code. I've been pretty busy reviewing pull requests to the [Unison base libraries](http://github.com/unisonweb/base), and there's already a lot of useful stuff there. Thanks to everyone who has contributed so far!
 
