@@ -1,6 +1,14 @@
-# People are writing Unison libraries now
+---
+slug: people-are-writing-libraries
+title: People are writing Unison libraries now
+description: "It's exciting to see Unison gradually coming together, but even more exciting has been seeing people writing and publishing Unison code. I've been pretty busy reviewing pull requests to the Unison base libraries and there's already a lot of useful stuff there. Thanks to everyone who has contributed so far!"
+date: 2020-05-26
+authors: ["runar-bjarnason"]
+categories: ["news"]
+featuredImage: /media/thing14.svg
+---
 
-Today we released another Unison alpha milestone. This release has a [number of bugfixes and performance improvements](link to release notes). :rainbow::star:
+Last week we released another Unison alpha milestone. This release has a [number of bugfixes and performance improvements](link to release notes). :rainbow::star:
 
 It's exciting to see Unison gradually coming together, but even more exciting has been seeing people writing and publishing Unison code. I've been pretty busy reviewing pull requests to the [Unison base libraries](http://github.com/unisonweb/base), and there's already a lot of useful stuff there. Thanks to everyone who has contributed so far!
 
