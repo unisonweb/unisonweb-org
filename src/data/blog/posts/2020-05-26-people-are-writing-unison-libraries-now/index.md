@@ -22,7 +22,7 @@ To get going with Unison, you can go through the [three minute quickstart guide]
 
 Once set up, `ucm` starts the Unison Codebase Manager:
 
-![image-20200520213314979](image-20200520213314979.png)
+![image-20200520213314979](/media/post-images/20200520213314979.png)
 
 I can now just start writing Unison code in any file in the directory from which I started `ucm`, as long as that file's name ends in `.u`. I open up a file `scratch.u` with  `vim` (my favorite editor), and write my first definition, the obligatory `factorial` function:
 
@@ -32,11 +32,11 @@ factorial n = List.foldr (*) 1 (range 2 (n + 1))
 
 If I save my scratch file, Unison responds with:
 
-![image-20200520215259737](image-20200520215259737.png)
+![image-20200520215259737](/media/post-images/20200520215259737.png)
 
 It's telling me that `factorial` is a function that takes a `Nat` (a 64-bit unsigned integer), and returns another `Nat`. I can add this function to my codebase:
 
-![image-20200520223126406](image-20200520223126406.png)
+![image-20200520223126406](/media/post-images/20200520223126406.png)
 
 I can try out my function right in the scratch file by adding a "watch expression", which is any line that starts with `>` (or an indentation block where the first line starts with `>`).
 
@@ -46,7 +46,7 @@ I can try out my function right in the scratch file by adding a "watch expressio
 
 Unison reponds by evaluating my expression:
 
-![image-20200520215820928](image-20200520215820928.png)
+![image-20200520215820928](/media/post-images/20200520215820928.png)
 
 ## Looking around the base library
 
@@ -54,15 +54,15 @@ The `base` library is already full of good stuff, with new things being added al
 
 In the definition of `factorial` above, I was using `foldr` and `range`. If I ask UCM to `find range`, it responds with everything it knows about with `range` in the name:
 
-![image-20200520223808394](image-20200520223808394.png)
+![image-20200520223808394](/media/post-images/20200520223808394.png)
 
 The second entry is the function I was using, `List.range`. I can ask for its definition either by name or by using the number from the list that UCM produced:
 
-![image-20200520224130827](image-20200520224130827.png)
+![image-20200520224130827](/media/post-images/20200520224130827.png)
 
 The `docs` command (try `help docs`) shows me the documentation for a given function or type, if it has any docs associated with it.
 
-![image-20200520224626845](image-20200520224626845.png)
+![image-20200520224626845](/media/post-images/20200520224626845.png)
 
 
 
@@ -84,7 +84,7 @@ Lots of stuff scrolls by, and Chris's library is now in my codebase. The namespa
 
 I'm using tab completion for this instead of typing out the whole thing. I `cd lib.rng` and look around.
 
-![image-20200520233757131](image-20200520233757131.png)
+![image-20200520233757131](/media/post-images/20200520233757131.png)
 
 Looks like there's a `README`, which is a Unison value of type `Doc`. I can ask UCM to render any `Doc` with the `display` command. In the `README` there's a usage example which shows me how to generate some random numbers.
 
@@ -98,7 +98,7 @@ factorial n = List.foldr (*) 1 (range 2 (n + 1))
 
 I wonder what this `mersenne.provide` is. Let's ask Unison.
 
-![image-20200522075051047](image-20200522075051047.png)
+![image-20200522075051047](/media/post-images/20200522075051047.png)
 
 OK, so `provide` generates numbers by providing a `Store State` ability, where `State` is the Mersenne twister's internal state. The `Nat32` is the seed, and this `Ask n` thing is a computation that can ask for a random `n` (which in my case is going to be `Nat`).
 
@@ -122,11 +122,11 @@ mersenneRNG seed x =
 
 Great! So now I can request a random `Nat` just by saying `nextNat`, and I can handle that request with `mersenneRNG`by providing a seed. But sometimes I don't want to provide a seed, and I just want to generate a random number as an `IO` effect. Let's try to feed it the system time.
 
-![image-20200522100603772](image-20200522100603772.png)
+![image-20200522100603772](/media/post-images/20200522100603772.png)
 
 OK, we can get an `EpochTime`, which wraps a `Nat`, using `systemTime`. Can we turn that into a `Nat32` as required by `mersenneRNG`? A type-based `find` turns up 3 different functions:
 
-![image-20200522100821121](image-20200522100821121.png)
+![image-20200522100821121](/media/post-images/20200522100821121.png)
 
 Skimming the `docs` for these, I see that `truncate32` is probably the thing I want. It truncates the high 32 bits, leaving me with just the least significant bits of the clock. So I write:
 
@@ -155,14 +155,15 @@ main = 'let
 
 I `add` all of that to a `scratch` namespace in my codebase:
 
-![image-20200522101957081](image-20200522101957081.png)
+![image-20200522101957081](/media/post-images/20200522101957081.png)
 
 Let's try to run it. UCM provides a `run` command which provide the `IO` ability to something of a type like `'{IO} a`.
 
-![image-20200522102323333](image-20200522102323333.png)
+![image-20200522102323333](/media/post-images/20200522102323333.png)
 
 Great! I got a random number using the system clock time as a seed. Maybe at some point I'll [send a pull request](https://www.unisonweb.org/docs/codebase-organization/#day-to-day-development-creating-and-merging-pull-requests) to Chris so he can incorporate some of this into his library.
 
 ## Conclusion
 
 I hope this gives you a taste of what it's like to work in Unison with the current alpha release, and that this encourages you to try it out and maybe contribute some libraries. Remember, it's early days yet, so little things you build now could make a big impact on the Unison community for the future.
+
