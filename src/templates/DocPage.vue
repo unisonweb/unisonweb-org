@@ -109,6 +109,7 @@
       path
       title
       content
+      description
       headings (depth: h2) {
         value
         anchor
