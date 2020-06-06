@@ -14,7 +14,7 @@ If you want to follow along with this document (highly recommended), this guide 
 The source for this document is [on GitHub][on-github]. Feedback and improvements are most welcome!
 
 [repoformat]: https://github.com/unisonweb/unison/blob/master/docs/repoformats/v1-DRAFT.markdown
-[on-github]: https://github.com/unisonweb/docsite/blob/gh-pages/_includes/unisontour.markdown
+[on-github]: https://github.com/unisonweb/unisonweb-org/edit/master/src/data/docs/tour/README.md
 [roadmap]: roadmap.html
 [quickstart]: /docs/quickstart
 [langref]: /docs/language-reference
