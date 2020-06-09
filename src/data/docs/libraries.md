@@ -19,6 +19,10 @@ There's active discussion of new library work in the [`#hackathon` channel on Sl
 
 This list is in alphabetical order by (user/repo). Each entry has a super brief description in the heading (since headings are indexed by the site-wide search), then a tweet-length blurb about the library which links to the code, then instructions on how to fetch the latest version.
 
+### 🚢 `anovstrup/unison-memo`: Memoization
+
+[Unison-memo](https://github.com/anovstrup/unison-memo) is a tiny memoization library, supporting the memoization of arbitrary computations (including effectful ones).
+
 ### 🧪 `atacratic/unison-datetime`: Date and time
 
 [This one](https://github.com/atacratic/unison-datetime) is currently just a design - code is TODO!
