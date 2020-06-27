@@ -36,7 +36,7 @@ pull https://github.com/unisonweb/base:.releases._latest base
 
 You'll see some output from `git` in the background, and once that's done you'll see a big list of definitions that the `pull` added. Press `q` to exit the list of definitions.
 
-Open a new file, `scratch.u` in the same directory where you launched `ucm`, then add the following _watch expression_ (a line starting with `>`) to the top, then save the file. This expression multiplies every element in a list by `10`, using the `List.map` function:
+Make a directory to work in, and create a new file there called `scratch.u` with the following contents: 
 
 ```unison
 ---
@@ -44,6 +44,27 @@ title: scratch.u
 ---
 > List.map (x -> x * 10) [1,2,3,4,5,6]
 ```
+
+A line beginning with `>` is a _watch expression_, and this one multiplies every element in a list by `10`, using the `List.map` function.
+
+If `ucm` is not running launch it again. Now you will see that when you are running `ucm` it watches all the unison source files for changes and evaluates any watch expressions:
+
+```unison
+.>
+
+  ✅
+
+  ~/ucm1/scratch.u changed.
+
+  Now evaluating any watch expressions (lines starting with `>`)... Ctrl+C cancels.
+
+
+    1 | > List.map (x -> x * 10) [1,2,3,4,5,6]
+          ⧩
+          [10, 20, 30, 40, 50, 60]
+```
+
+Congratulations, you ran your first Unison program!
 
 ## What next?
 
