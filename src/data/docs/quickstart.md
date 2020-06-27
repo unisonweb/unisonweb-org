@@ -47,7 +47,7 @@ title: scratch.u
 
 A line beginning with `>` is a _watch expression_, and this one multiplies every element in a list by `10`, using the `List.map` function.
 
-If `ucm` is not running launch it again. Now you will see that when you are running `ucm` it watches all the unison source files for changes and evaluates any watch expressions:
+If `ucm` is not running launch it again in the folder you created. `ucm` monitors all the unison source files in the current directory for changes and evaluates any watch expressions:
 
 ```unison
 .>
