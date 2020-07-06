@@ -13,7 +13,7 @@ If you want to follow along with this document (highly recommended), this guide 
 
 The source for this document is [on GitHub][on-github]. Feedback and improvements are most welcome!
 
-[repoformat]: https://github.com/unisonweb/unison/blob/master/docs/repoformats/v1-DRAFT.markdown
+[repoformat]: https://github.com/unisonweb/unison/blob/trunk/docs/repoformats/v1-DRAFT.markdown
 [on-github]: https://github.com/unisonweb/unisonweb-org/edit/master/src/data/docs/tour/README.md
 [roadmap]: roadmap.html
 [quickstart]: /docs/quickstart
@@ -133,7 +133,7 @@ So rename and move things around as much as you want. Don't worry about picking 
 
 > 🤓 If you're curious to learn about the guts of the Unison codebase format, you can check out the [v1 codebase format specification][repoformat].
 
-[repoformat]: https://github.com/unisonweb/unison/blob/master/docs/repoformats/v1-DRAFT.markdown
+[repoformat]: https://github.com/unisonweb/unison/blob/trunk/docs/repoformats/v1-DRAFT.markdown
 
 Use `undo` to back up a step.  (We don't have a `redo` yet, though).
 

@@ -5,7 +5,7 @@ description: A little bit about the company behind Unison
 
 # About Unison Computing
 
-Unison Computing is a [public benefit corp](https://en.wikipedia.org/wiki/Public-benefit_corporation), cofounded by Paul Chiusano, Rúnar Bjarnason, and Arya Irani. We work alongside other [amazing open source contributors](https://github.com/unisonweb/unison/blob/master/CONTRIBUTORS.markdown) on the Unison language. 💜
+Unison Computing is a [public benefit corp](https://en.wikipedia.org/wiki/Public-benefit_corporation), cofounded by Paul Chiusano, Rúnar Bjarnason, and Arya Irani. We work alongside other [amazing open source contributors](https://github.com/unisonweb/unison/blob/trunk/CONTRIBUTORS.markdown) on the Unison language. 💜
 
 Our overall mission: advance what's possible with software and work to make software creation simpler and more accessible to all. The company does research and development into new, free, open source software technologies like Unison, and builds useful products and services (like [the Unison Cloud Platform](http://unison.cloud)) to help capitalize this mission. 
 
