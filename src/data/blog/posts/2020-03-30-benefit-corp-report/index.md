@@ -8,7 +8,7 @@ categories: ["announcements"]
 featuredImage: /media/thing11.svg
 ---
 
-Unison Computing is a [public benefit corp](https://en.wikipedia.org/wiki/Public-benefit_corporation) (PBC), cofounded by Paul Chiusano, Rúnar Bjarnason, and Arya Irani. We work alongside other [amazing open source contributors](https://github.com/unisonweb/unison/blob/master/CONTRIBUTORS.markdown) on the Unison language. 💜 This post talks about why Unison Computing is a PBC and also includes our first annual report.
+Unison Computing is a [public benefit corp](https://en.wikipedia.org/wiki/Public-benefit_corporation) (PBC), cofounded by Paul Chiusano, Rúnar Bjarnason, and Arya Irani. We work alongside other [amazing open source contributors](https://github.com/unisonweb/unison/blob/trunk/CONTRIBUTORS.markdown) on the Unison language. 💜 This post talks about why Unison Computing is a PBC and also includes our first annual report.
 
 > 📕 If you're new to the Unison language and would like an overview of the project and its core ideas, we recommend this [40 minute Strange Loop talk](https://www.youtube.com/watch?v=gCWtkvDQ2ZI).
 
