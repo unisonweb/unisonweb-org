@@ -149,7 +149,7 @@ This area of Unison has had plenty of thought and research, but isn't built yet.
 
 - Paul's [Scale By The Bay 2018 talk](https://www.youtube.com/watch?v=v7L-5AQQkbM), from about 8 minutes in.
 - The 2015 [blog post](https://github.com/unisonweb/oldblog/blob/master/_posts/2015-06-02-distributed-evaluation.markdown) on distributed evaluation.
-- The current [API sketch](https://github.com/unisonweb/unison/blob/master/docs/distributed-programming-rfc.markdown).
+- The current [API sketch](https://github.com/unisonweb/unison/blob/trunk/docs/distributed-programming-rfc.markdown).
 
 ## Codebase model
 

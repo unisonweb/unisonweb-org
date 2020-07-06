@@ -76,7 +76,7 @@ Under the bonnet, Unison creates a directory called `.unison` which contains the
 
 Since everything is indexed by hash, you'll never actually change any file, so Git merge conflicts should never happen.
 
-See [the Codebase Editor design document](https://github.com/unisonweb/unison/blob/master/docs/codebase-editor-design.markdown) for more information.
+See [the Codebase Editor design document](https://github.com/unisonweb/unison/blob/trunk/docs/codebase-editor-design.markdown) for more information.
 
 ### More features
 
