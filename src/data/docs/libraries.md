@@ -43,6 +43,14 @@ pull https://github.com/atacratic/unison-random-mersenne.git:.releases._v1 exter
 pull https://github.com/bascott/unison-continuations:.releases._v1 external.continuations.v1
 ```
 
+### 🧪 `ceedubs/unison-foldl`: Composable, streaming, and efficient left folds
+
+[This library](https://github.com/ceedubs/unison-foldl) allows you to compose strict left folds such that their results can be combined in a single pass of input data. To fetch the latest version, do:
+
+```ucm
+pull https://github.com/ceedubs/unison-foldl:.trunk external.foldl
+```
+
 ### 🚢 `emiflake/unison-json`: Elm-like JSON decoders
 
 [This library](https://github.com/emiflake/unison-json) implements a JSON parser and Decoders to convert JSON values into Unison values using the applicative style. To fetch the latest version (v0), do:
