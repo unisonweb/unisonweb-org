@@ -59,6 +59,14 @@ pull https://github.com/ceedubs/unison-foldl:.trunk external.foldl
 pull https://github.com/emiflake/unison-json:.releases._v0 external.json.v0
 ```
 
+### 🧪 `fboeller/unison-expect`: Test Expectations
+
+[This library](https://github.com/fboeller/unison-expect) defines functions to create test expectations that result in expressive failure messages. 
+
+```ucm
+pull https://github.com/fboeller/unison-expect:.trunk .external.expect.v0
+```
+
 ### 🏗 `hojberg/unison-money`: Money and Currency
 
 [This library](https://github.com/hojberg/unison-money) is implements a `Money`
