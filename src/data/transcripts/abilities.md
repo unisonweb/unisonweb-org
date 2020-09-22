@@ -269,9 +269,11 @@ The type signature on `greet2` isn't needed and would be inferred. Likewise, to 
 
 ### Other interesting examples
 
-#### The `Abort` and `Exception` abilities
+#### Terminating with the `Abort` and `Exception` abilities
 
-The `Abort` ability is analogous to `Optional` and can be used to terminate a computation.
+The `Abort` ability can be used to terminate a computation. Validation is one practical use case for `Abort`&mdash;in the example below, we use `Abort` to implement a smart constructor for a `User` data type, aborting when an invalid constructor argument is encountered.
+
+> 📒 `Abort` is analogous to the `Optional` data type. The `Abort.toOptional` and `Optional.toAbort` functions below demonstrate the relationship between the two constructs.
 
 ```unison
 ability Abort where
@@ -280,13 +282,13 @@ ability Abort where
 
 Abort.toOptional : '{Abort} a -> Optional a
 Abort.toOptional a = handle !a with cases
-  {a} -> Some a
+  {a}                -> Some a
   {Abort.abort -> _} -> None
 
 Optional.toAbort : Optional a ->{Abort} a
 Optional.toAbort = cases
-  None -> Abort.abort
   Some a -> a
+  None   -> Abort.abort
 
 > Abort.toOptional 'let
     x = 1
@@ -296,9 +298,50 @@ Optional.toAbort = cases
     x = Optional.toAbort (Some 1)
     y = 2
     x + y
+
+-- Validation example: The following data types require validation; each "private"
+-- data constructor is intended only for use from a validating "smart constructor"
+-- that will abort on invalid arguments.
+type User = UserPrivate Username Password Age
+type Username = UsernamePrivate Text
+type Password = PasswordPrivate Text
+type Age = AgePrivate Nat
+
+User.User : Text -> Text -> Nat ->{Abort} User
+User.User name password age =
+  User.UserPrivate (Username.Username name) (Password.Password password) (Age.Age age)
+
+Username.Username : Text ->{Abort} Username
+Username.Username name =
+  if size name > 0
+  then Username.UsernamePrivate name
+  else Abort.abort
+
+Password.Password : Text ->{Abort} Password
+Password.Password password =
+  if size password >= 8
+  then Password.PasswordPrivate password
+  else Abort.abort
+
+Age.Age : Nat ->{Abort} Age
+Age.Age age =
+  if age >= 15
+  then Age.AgePrivate age
+  else Abort.abort
+
+test> Abort.tests.t1 = run (expect (Abort.toOptional '(User.User "Jill" "password" 13) == None))
+test> Abort.tests.t2 = run (expect (Abort.toOptional '(User.User "" "password" 21) == None))
+test> Abort.tests.t3 = run (expect (Abort.toOptional '(User.User "Jill" "pwd" 30) == None))
+test> Abort.tests.t4 = run (expect (Abort.toOptional '(User.User "Jill" "password" 18) ==
+  Some (User.UserPrivate
+    (Username.UsernamePrivate "Jill")
+    (Password.PasswordPrivate "password")
+    (Age.AgePrivate 18))))    
 ```
 
 That signature for `abort : {Abort} a` looks funny at first. It's saying that `abort` has a return type of `a` for any choice of `a`. Since we can call `abort` anywhere and it terminates the computation, an `abort` can stand in for an expression of any type (for instance, the first example does `42 + Abort.abort`, and the `abort` will have type `Nat`). The handler also has no way of resuming the computation after the `abort` since it has no idea what type needs to be provided to the rest of the computation.
+
+> __Exercise:__ Implement smart constructors that return `Optional` values instead of using `Abort`. How does the implementation compare to the one above?
 
 The `Exception` ability is similar, but the operation for failing the computation (which we'll name `raise`) takes an argument:
 
@@ -321,9 +364,49 @@ Either.toException = cases
 > Exception.toEither 'let
     x = toException (Right 1)
     x + 10 + toException (Right 100)
+
+-- Validation example revisited
+type User = UserPrivate Username Password Age
+type Username = UsernamePrivate Text
+type Password = PasswordPrivate Text
+type Age = AgePrivate Nat
+
+User.User : Text -> Text -> Nat ->{Exception Text} User
+User.User name password age =
+  User.UserPrivate (Username.Username name) (Password.Password password) (Age.Age age)
+
+Username.Username : Text ->{Exception Text} Username
+Username.Username name =
+  if size name > 0
+  then Username.UsernamePrivate name
+  else Exception.raise "Invalid username: must have at least one character"
+
+Password.Password : Text ->{Exception Text} Password
+Password.Password password =
+  if size password >= 8
+  then Password.PasswordPrivate password
+  else Exception.raise "Invalid password: must have at least 8 characters"
+
+Age.Age : Nat ->{Exception Text} Age
+Age.Age age =
+  if age >= 15
+  then Age.AgePrivate age
+  else Exception.raise "Invalid age: must be at least 15"
+
+test> Exception.tests.t1 = run (expect (Exception.toEither '(User.User "Jill" "password" 13) ==
+        Left "Invalid age: must be at least 15"))
+test> Exception.tests.t2 = run (expect (Exception.toEither '(User.User "" "password" 21) ==
+        Left "Invalid username: must have at least one character"))
+test> Exception.tests.t3 = run (expect (Exception.toEither '(User.User "Jill" "pwd" 30) ==
+        Left "Invalid password: must have at least 8 characters"))
+test> Exception.tests.t4 = run (expect (Exception.toEither '(User.User "Jill" "password" 18) ==
+        Right (User.UserPrivate
+          (Username.UsernamePrivate "Jill")
+          (Password.PasswordPrivate "password")
+          (Age.AgePrivate 18))))
 ```
 
-#### `Choose` for expressing nondeterminism
+#### Expressing nondeterminism with the `Choose` ability
 
 We can use abilities to choose nondeterministically, and collect up all results from all possible choices that can be made:
 
@@ -340,6 +423,79 @@ Choose.toList p =
   handle !p with h
 
 > Choose.toList '(choose [1,2,3], choose [3,4,5])
+```
+
+#### Manipulating global state with the `Store` ability
+
+The `Store` ability can provide access to global state and is analogous to the `State` monad familiar to functional programmers.
+
+```unison
+ability Store a where
+  get : a
+  put : a -> ()
+
+-- Updates the stored state by applying the given function to the current state
+-- and overwriting the state with the result.
+Store.modify : (a -> a) ->{Store a} ()
+Store.modify f = Store.put (f Store.get)
+
+-- Evaluates a delayed computation in a context in which the stored state
+-- has been initialized to a given value and returns the result. The
+-- stored state is restored to the value it had when `Store.local` was
+-- called.
+Store.local : a -> '{Store a} v ->{Store a} v
+Store.local localValue thunk =
+  oldValue = Store.get
+  Store.put localValue
+  result = !thunk
+  Store.put oldValue
+  result
+
+-- Evaluates a delayed computation in a context in which the stored state is
+-- initialized to the given value.
+Store.store : a -> '{Store a} v -> v
+Store.store init thunk =
+  h init = cases
+    {v}                     -> v
+    {Store.get   -> resume} -> handle resume init with h init
+    {Store.put a -> resume} -> handle !resume with h a
+  handle !thunk with h init
+
+Store.examples.storeMax : Nat ->{Store Nat} ()
+Store.examples.storeMax n =
+  if (n > Store.get) then Store.put n else ()
+
+test> Store.tests.t1 = Store.store 0 'let
+        List.map Store.examples.storeMax [1,3,12,5,16,4,7]
+        run (expect (Store.get == 16))
+```
+
+#### Caching computation with the `Memo` ability
+
+The `Memo` ability can cache partial computations:
+
+```unison
+ability Memo where
+  memoize : 'a -> a
+
+Memo.eval : '{Memo} a -> a
+Memo.eval expr =
+  h m = cases
+    {v}                    -> (v, m)
+    {Memo.memoize v' -> resume} ->
+      match Map.lookup v' m with
+        Some v -> handle resume v with h m
+        None   -> match handle !v' with h m with
+                    (v, m2) -> handle resume v with h (Map.insert v' v m2)
+  match handle !expr with h Map.empty with (v, _) -> v
+
+memoFib : Nat ->{Memo} Nat
+memoFib n = Memo.memoize 'let
+  if n == 0 then 1
+  else if n == 1 then 1
+  else memoFib (n `drop` 2) + memoFib (n `drop` 1)
+
+> Memo.eval '(memoFib 20)
 ```
 
 > 🚧 We are looking for other nice little examples of abilities to include here, feel free to [open a PR](https://github.com/unisonweb/unisonweb-org/blob/master/src/data/transcripts/abilities.md)!
