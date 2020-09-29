@@ -3,7 +3,7 @@ title: Frequently Asked Questions
 description: A list of frequently asked questions about Unison, compiled and curated by the community.
 ---
 
-This is a list of frequently asked questions about Unison, compiled and curated by the community.  The source of this doc is [here](https://github.com/unisonweb/unisonweb-org/tree/master/src/data/faq.md) and contributions are welcome!
+This is a list of frequently asked questions about Unison, compiled and curated by the community.  The source of this doc is [here](https://github.com/unisonweb/unisonweb-org/tree/master/src/data/docs/faq.md) and contributions are welcome!
 
 ## Build/install
 
