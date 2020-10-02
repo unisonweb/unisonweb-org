@@ -15,6 +15,7 @@ If you have any trouble with the process, or have ideas about how to improve thi
 [on-github]: https://github.com/unisonweb/unisonweb-org/blob/master/src/data/docs/quickstart.md
 [guide]: /docs/tour
 [roadmap]: /docs/roadmap
+[editor]: /docs/editor-setup
 
 ## Step 1: Install Unison
 
@@ -70,3 +71,4 @@ Congratulations, you ran your first Unison program!
 
 * Come [say hello in Slack][slack], tell us what you thought about this guide, and ask questions. 👋
 * A [more leisurely tour][guide] of the Unison language and the `ucm` command line tool. (25 minutes)
+* A [document][editor] for setting up your favorite editor with Unison.

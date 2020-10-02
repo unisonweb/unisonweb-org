@@ -342,6 +342,27 @@ Choose.toList p =
 > Choose.toList '(choose [1,2,3], choose [3,4,5])
 ```
 
+### Handling multiple abilities within one handler
+
+In some cases, it might be necessary or more readable to handle multiple abilities in a single handler instead of each individual ability in its own handler.
+The following example handles both the `Ask` ability and the `Abort` ability in a single handler.
+
+```unison
+handler : a -> '{Ask a, Abort} r -> Optional r
+handler answer input =
+  h : Request {Ask a, Abort} r -> Optional r
+  h = cases
+    {Ask.ask -> resume} -> handle resume answer with h
+    {Abort.abort -> _} -> None
+    {u} -> Some u
+  handle !input with h
+
+use Ask
+use Abort
+
+> handler 42 '(if ask == 42 then "The answer is correct" else abort)
+```
+
 > 🚧 We are looking for other nice little examples of abilities to include here, feel free to [open a PR](https://github.com/unisonweb/unisonweb-org/blob/master/src/data/transcripts/abilities.md)!
 
 <a id="answers"></a>
