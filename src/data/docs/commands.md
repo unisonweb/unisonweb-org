@@ -53,6 +53,12 @@ Here's what these reasons mean:
 
 Just do [`undo`](#undo)!
 
+## `alias.many` (or `copy`)
+
+Given a list of relative paths, make copies inside of a namespace
+
+`alias.many foo.foo bar.bar .quux` creates aliases `.quux.foo.foo` and `.quux.bar.bar`
+
 ## `alias.term`
 
 `alias.term foo bar` creates the name `bar` as an alias for the term `foo`. [Metadata linked to][metadata] `foo` is copied over to `bar` (use [`unlink`](#unlink) if this isn't what you want). `foo` and `bar` can be any [term names](/docs/language-reference#identifiers) including [operators](/docs/language-reference#identifiers) and hash qualified names. Here are a few examples:
@@ -89,6 +95,10 @@ Adds the builtin terms and types from your currrent version of Unison to a names
 ```
 
 When new builtin terms and types are added to Unison, this is one way you can get access to them from within a Unison codebase (you might also [`pull`](#pull) from another codebase that includes the new builtins). Once the builtins are in your namespace tree, you can rename or alias them however you like.
+
+## `copy.patch`
+
+Use `copy.patch foo bar` to copy a [patch](#patch) from `foo` to `bar`
 
 ## `docs`
 
@@ -144,6 +154,10 @@ The `find.verbose` command behaves identically to `find`, except that it include
 
 ```
 
+## `fork` (or `copy.namespace`)
+
+Use `fork src dest` to create a copy of the namespace `src` to the location `dest`
+
 ## `help`
 
 Issue this command (or `?`) to display UCM's built-in command reference.
@@ -151,6 +165,10 @@ Issue this command (or `?`) to display UCM's built-in command reference.
 ## `link`
 
 > 🚧  Unfortunately, this document is currently under construction. Check back later!
+
+## `patch`
+
+Rewrite any definitions that depend on definitions with type-preserving edits to use the updated versions of these dependencies
 
 ## `pull`
 
