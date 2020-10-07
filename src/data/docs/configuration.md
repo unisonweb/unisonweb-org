@@ -143,7 +143,7 @@ Add that to your codebase:
 
 Now add the following to your `.unisonConfig` file to make those values the default for any code you write:
 
-    DefaultMetadata = [ "._project1.metadata.authors.aliceCoder",
+    DefaultMetadata = [ "._project1.metadata.authors.aliceCoder"
                       , "._project1.metadata.licenses.aliceCoder2020" ]
 
 With this configuration, UCM will link these two values in to any Unison definitions you add to your codebase.
