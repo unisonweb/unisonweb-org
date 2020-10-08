@@ -23,6 +23,15 @@ This list is in alphabetical order by (user/repo). Each entry has a super brief 
 
 [Unison-memo](https://github.com/anovstrup/unison-memo) is a tiny memoization library, supporting the memoization of arbitrary computations (including effectful ones).
 
+
+### 🚢 `asoltysik/unison-md5`: MD5 hash function
+
+[This library](https://github.com/asoltysik/unison-md5) implements the MD5 message-digest algorithm.
+
+```ucm
+pull https://github.com/asoltysik/unison-md5:.releases._latest external.md5
+```
+
 ### 🧪 `atacratic/unison-datetime`: Date and time
 
 [This one](https://github.com/atacratic/unison-datetime) is currently just a design - code is TODO!
