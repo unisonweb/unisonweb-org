@@ -100,6 +100,42 @@ When new builtin terms and types are added to Unison, this is one way you can ge
 
 Use `copy.patch foo bar` to copy a [patch](#patch) from `foo` to `bar`
 
+## `delete`
+
+Use `delete foo` to remove a term or type named `foo` from the current namespace
+
+## `delete.namespace`
+
+Use `delete.namespace foo` to delete the namespace `foo`
+
+## `delete.patch`
+
+Use `delete.patch foo` to remove the [patch](#patch) `foo`
+
+## `delete.term`
+
+Use `delete.term foo` to remove the term name `foo` from the namespace
+
+## `delete.term-replacement`
+
+Use `delete.term-replacement foo bar` to remove any edits of the term `foo` from the [patch](#patch) `bar`
+
+### FAQ about `delete.term-replacement`
+
+`foo` refers to the term before any edits made to the patch `bar`
+
+## `delete.type`
+
+Use `delete.type foo` to remove the type name `foo` from the namespace
+
+## `delete.type-replacement`
+
+### FAQ about `delete.type-replacement`
+
+`foo` refers to the term before any edits made to the patch `bar`
+
+Use `delete.type-replacement foo bar` to remove any edits of the term `foo` from the [patch](#patch) `bar`.
+
 ## `docs`
 
 Use `docs foo` to print the documentation [associated with](#link) definition `foo` (see [documentation literals](/docs/language-reference#documentation-literals) to learn more).
