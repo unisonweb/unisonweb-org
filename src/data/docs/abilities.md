@@ -94,7 +94,7 @@ If you _don't_ want this inference, just add ability brackets to the arrow (like
 
 ### Ability polymorphism
 
-Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We say such functions _ability-polymorphic_ (or "ability-parametric"). For instance, here's the definition and signature of `List.map`, which applies a function to each element of a list:
+Often, higher-order functions (like `List.map`) don't care whether their input functions require abilities or not. We say such functions are _ability-polymorphic_ (or "ability-parametric"). For instance, here's the definition and signature of `List.map`, which applies a function to each element of a list:
 
 ```unison
 List.map : (a ->{m} b) -> [a] ->{m} [b]
@@ -573,7 +573,8 @@ Stream.filter f s =
   go _ =
     a = ask
     if f a then emit a
-    else !go
+    else ()
+    !go
   Stream.pipe s go
 
 Stream.map f s =
