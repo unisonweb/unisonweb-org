@@ -9,32 +9,9 @@ This is a list of frequently asked questions about Unison, compiled and curated 
 
 ### Is there a nix expression for Unison?
 
-Nix users can launch the Unison Codebase Manager with nix-shell like this:
+Check out the [unison-nix repository](https://github.com/ceedubs/unison-nix/).
 
-```
-% nix-shell -p unison-ucm --command ucm
-
-   _____     _
-  |  |  |___|_|___ ___ ___
-  |  |  |   | |_ -| . |   |
-  |_____|_|_|_|___|___|_|_|
-
-  Welcome to Unison!
-
-  I'm currently watching for changes to .u files under ~/ucm
-
-  Type help to get help. 😎
-
-.>
-```
-
-(This gives you a new shell with unison-ucm package already in it and then executes ucm inside.)
-
-nix is not officially supported, but there seems to be a substantial overlap between nix enthusiasts and Unison enthusiasts, so feel free to give it a try and ask on [slack](https://www.unisonweb.org/community) if you get stuck.
-
-- [Here](https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/compilers/unison/default.nix) is the nix derivation for installing Unison from the pre-built binaries.
-
-- See [here](https://gist.github.com/matthewess/03d833431b5855a3bc212861242bfaca) for instructions on how to install the development environment in which Unison itself is built.
+Nix is not officially supported, but there seems to be a substantial overlap between nix enthusiasts and Unison enthusiasts, so feel free to give it a try and ask on [slack](https://www.unisonweb.org/community) if you get stuck.
 
 ### I get `error while loading shared libraries: libtinfo.so.5`
 
