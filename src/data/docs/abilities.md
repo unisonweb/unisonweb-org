@@ -3,9 +3,117 @@ title: Abilities in Unison
 description: Unison's type system tracks which functions can do I/O, and the same language feature, called _abilities_ can be used for many other things, too. This is a tutorial on abilities.
 ---
 
+An Example Ability
+---
+
+A very common effect is logging. With Unison, writing and handling the `Logger` ability in different contexts is easy. This section will give you a taste of what can be done with Unison abilities. The remainder will provide the details on the syntax and implementing your own abilities and handlers. First, the `Logger` ability,
+
+```unison
+ability Logger where
+  log : Text -> ()
+```
+
+An example computation that uses the `Logger` effect,
+
+```unison
+useLogger : '{Logger} Nat
+useLogger = 'let
+  Logger.log "hello"
+  10
+```
+
+You could imagine this function doing some more complicated computation and logging values along the way, but where are the values logged? For that, we need to build a handler. Below is a handler that pairs the result of the computation with an accumulated log, stored as `Text`,
+
+```unison
+Logger.toText : '{Logger} a -> (a, Text)
+Logger.toText program =
+  h : Text -> Request {Logger} a -> (a, Text)
+  h log = cases
+    {Logger.log msg -> k} -> handle !k with h (log ++ msg ++ "\n")
+    {r} -> (r, log)
+  handle !program with h ""
+```
+
+We will explore the syntax of handlers later. For now, let's simply run this handler on our previous function using a watch expression,
+
+```unison
+> Logger.toText useLogger
+```
+
+```ucm
+17 | > Logger.toText useLogger
+        ⧩
+        (10, "hello\n")
+```
+
+Neat, what if we, instead, want to log to standard output? We replace our `Logger.toText` function with a different handler,
+
+```unison
+Logger.toStdOut : '{Logger} a -> {IO} a
+Logger.toStdOut logs =
+  h : Request {Logger} a -> {IO} a
+  h = cases
+    {Logger.log msg -> k} ->
+      printLine msg
+      handle !k with h
+    {r} -> r
+  handle !logs with h
+```
+
+In this case, we can't just replace our watch expression with `Logger.toStdOut`.  It will complain that `useLogger` doesn't have access to the `IO` ability.  What gives? The `IO` ability is special and needs to be executed with `run` from inside the code manager. We can facilitate this by writing a helper with the type `'{IO} ()`,
+
+```unison
+runLoggerToStdOut : '{IO} ()
+runLoggerToStdOut = 'let
+  n = Logger.toStdOut useLogger
+  printLine (Nat.toText n)
+```
+
+This example can be run in the Unison REPL and will print the logs followed by the result of the computation,
+
+```ucm
+.> run runLoggerToStdOut
+hello
+10
+```
+
+Let's now consider extending our effect by adding a context to the log itself. To do this, we'll build a `Logger` combinator, e.g.
+
+```unison
+Logger.withContext : Nat -> '{Logger} a -> {Logger} a
+Logger.withContext ctx program =
+  h : Request {Logger} a -> {Logger} a
+  h = cases
+    {Logger.log msg -> k} ->
+      Logger.log (Nat.toText ctx ++ ": " ++ msg)
+      handle !k with h
+    {r} -> r
+  handle !program with h
+```
+
+This function takes a natural number and prepends it to the log. We can use `withContext` anywhere the `Logger` ability is available,
+
+```unison
+loggerWithContext : '{Logger} ()
+loggerWithContext = 'let
+  Logger.withContext 100 '(Logger.log "hello")
+  Logger.log "world"
+
+> Logger.toText loggerWithContext
+```
+
+```ucm
+49 | > Logger.toText loggerWithContext
+        ⧩
+        ((), "100: hello\nworld\n")
+```
+
+Notice the `100: ` prepended to the first message. You could imagine writing combinators which only log at particular debug level or write logs to a specific file. This should give you a high-level view of why abilities are useful. Let's now dive into the syntax and write some more abilities.
+
+
 # Abilities in Unison
 
-Look at the following two Unison functions. The second one writes to your computer's terminal, which, unlike the former function, means this function interacts with another system. Unison recognizes this difference and communicates it through their types. We will be exploring this topic further in this tutorial.
+Look at the following two Unison functions. The second one writes to your computer's terminal, which, unlike the former function, means this function interacts with another system. Unison recognizes this difference and communicates it through their types.
 
 ```unison
 msg name = "Hello there " ++ name ++ "!"
@@ -29,7 +137,7 @@ Now evaluating any watch expressions (lines starting with
 
 Notice the `{IO}` attached to the `->` in `greet : Text ->{IO} ()`. We read this type signature as saying that `greet` is a function from `Text` to `()` which "while using I/O in the process". `IO` is what we call an _ability_ in Unison and we say that `greet` "requires the `IO` ability".
 
-This tutorial covers the basics of how you'll interact with abilities and how they are type-checked, using `IO` as an example, then we'll show you how to create and use new abilities. Abilities are a simple-to-use yet powerful language feature that subsumes many other more specific language features: exceptions, asynchronous I/O, generators, coroutines, logic programming, and many more concepts. Enabled by abilities, these concepts can be expressed as regular libraries in Unison.
+The rest of this tutorial covers the basics of how you'll interact with abilities and how they are type-checked, using `IO` as an example, then we'll show you how to create and use new abilities. Abilities are a simple-to-use yet powerful language feature that subsumes many other more specific language features: exceptions, asynchronous I/O, generators, coroutines, logic programming, and many more concepts. Enabled by abilities, these concepts can be expressed as regular libraries in Unison.
 
 Let's get started! If you are interested, this tutorial has several fun exercises located throughout the text.
 
@@ -91,12 +199,12 @@ f : {IO} ()
 f = ...
 ```
 
-To add abilities to values like this, Unison introduces [delayed computations](#delayed-computations). A delayed computation is annotated using the syntax `'...`, for example `'(printLine "Hi!")` will have the type `'{IO} ()`.  Notice that the `'` can be used at the type- and term-level. The type `'a` can be expanded as `b -> a`, where `b` is any type (typically `()` is used). To force a computation you can use the syntax `!...`, this applies `()` to a delayed computation. For example `!'a` is just `a`. All of the definitions below are equivalent,
+To add abilities to values like this, Unison introduces [delayed computations](#delayed-computations). A delayed computation is annotated using the syntax `'...`, for example `'(printLine "Hi!")` will have the type `'{IO} ()`.  Notice that the `'` can be used at the type- and term-level. The type `'a` can be expanded as `b -> a`, where `b` is any type (typically `()` is used). To force a computation you can use the syntax `!...`, this applies `()` to a delayed computation. For example `!'a` is just `a`. All of the definitions below have the same type,
 
 ```unison
-greet : Text -> ()
-greet name =
-  printLine ("Hello there, " ++ name)
+greet : a -> ()
+greet _ =
+  printLine "Hello there!"
 
 greet1 = '(greet "Alice")
 
@@ -106,7 +214,7 @@ greet2 = 'let
   greet "Bob"
 ```
 
-Above, you'll notice another language feature, `'let`, to create a delayed block computation.
+The type of each function is `'{IO} ()`. In `greet` the `IO` ability is inferred.  In `greet1` the entire type is inferred. Finally, in `greet2` we specify the type. You'll also notice another language feature, `'let` to create a delayed block computation.
 
 > See [the language reference](/docs/language-reference#delayed-computations) for more on this.
 
