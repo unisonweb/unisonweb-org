@@ -238,7 +238,7 @@ See the sections on:
 * [Blocks and statements](#blocks), for example: `x = 42`.
 * [Literals](#literals), for example: `1`, `"hello"`, `[1,2,3]`.
 * [Comments](#comments), for example `-- this is a comment`.
-* [Pattern matching](#match-expressions-and-pattern-matching), for example `match (x,y) with (1, "hi) -> 42`.
+* [Pattern matching](#match-expressions-and-pattern-matching), for example `match (x,y) with (1, "hi") -> 42`.
 
 ### Identifiers
 
