@@ -152,7 +152,7 @@ What's happening here?
 
 Try writing a function `Stream.sum : '{Stream Nat} () -> Nat` which sums up the values produced by a stream. Use a new handler rather than first converting the stream to a list.
 
-__Bonus:__ Try defining `Stream.sum` in terms of a more general operation, `Stream.foldLeft`:
+__Bonus:__ Try defining `Stream.sum'` in terms of a more general operation, `Stream.foldLeft`:
 
 ```
 Stream.foldLeft : (b -> a -> b) -> b -> '{Stream a} () -> b
@@ -162,16 +162,21 @@ Answers are at the bottom of this tutorial.
 
 #### Challenging exercises
 
-Try writing the following stream functions, each of which uses an interesting handler. We recommend writing out the signature of your handler function as we did above for the `h` function in `Stream.toList`.
+Try writing `Stream.map : (a -> b) -> '{Stream a} () -> {Stream b} ()`, which applys a function to each emitted element.
+
+Next, try implementing them such that they return a delayed `Stream`: `Stream.map' : (a -> b) -> '{Stream a} () -> '{Stream b} ()`. (*Hint: this is a one-character change.*)
+
+Finally, implement it such that it's of a polymorphic type instead of `Unit`: `Stream.map'' : (a -> b) -> '{Stream a} r -> '{Stream b} r`.
+
+Try writing the following stream functions, just skipping to the final `Stream.map''` style. We recommend writing out the signature of your handler function as we did above for the `h` function in `Stream.toList`.
 
 ```
-Stream.map : (a -> b) -> '{Stream a} r -> '{Stream b} r
-Stream.filter : (a -> Boolean) -> '{Stream a} () -> '{Stream a} ()
-Stream.take : Nat -> '{Stream a} () -> '{Stream a} ()
-Stream.terminated : '{Stream a} () -> '{Stream (Optional a)} ()
+Stream.filter : (a -> Boolean) -> '{Stream a} r -> '{Stream a} r
+Stream.take : Nat -> '{Stream a} r -> '{Stream a} r
+Stream.terminated : '{Stream a} r -> '{Stream (Optional a)} r
 ```
 
-`Stream.map` should apply a function to each emitted element, `filter` should skip over any elements not matching the `a -> Boolean` predicate, `take n` should emit only the first `n` elements before terminating, and `terminated` should wrap all elements emitted in `Some`, then emit a final `None` once the stream terminates.
+`Stream.filter` should skip over any elements not matching the `a -> Boolean` predicate, `take n` should emit only the first `n` elements before terminating, and `terminated` should wrap all elements emitted in `Some`, then emit a final `None` once the stream terminates.
 
 #### Abilities can be combined
 
@@ -230,7 +235,7 @@ Stream.pipe : '{Ask a, Stream b} r -> '{Stream a} () -> '{Stream b} ()
 
 In implementing this, you'll have a handler that matches on a `Request {Ask a, Stream b} r`. Handlers that match on multiple abilities at once like this are sometimes called _multihandlers_. There's nothing special you need to do in Unison to write multihandlers; just match on the operations from more than one ability in your handler!
 
-Once you've written `pipe`, try writing `Stream.map`, `Stream.filter`, and `Stream.take` using `pipe`.
+Once you've written `pipe`, try writing `Stream.map'''`, `Stream.filter'` using `pipe`.
 
 ## Learning more
 
@@ -387,25 +392,84 @@ Stream.foldLeft f b s =
       handle resume () with h (f acc a)
   handle !s with h b
 
-Stream.terminated : '{Stream a} () -> '{Stream (Optional a)} ()
-Stream.terminated s _ =
-  h : Request {Stream a} () ->{Stream (Optional a)} ()
+Stream.sum' = Stream.foldLeft (Nat.+) 0
+
+Stream.map : (a -> b) -> '{Stream a} () -> {Stream b} ()
+Stream.map f stream =
+  h : Request {Stream a} () -> {Stream b} ()
   h = cases
-    {_} -> emit None
+    { _ } -> ()
+    {Stream.emit a -> resume} ->
+      emit (f a)
+      handle resume () with h 
+  handle !stream with h
+
+-- technically, it's as simple as:
+-- Stream.map' : (a -> b) -> '{Stream a} () -> '{Stream b} ()
+-- Stream.map' f stream = '(Stream.map f stream)
+
+-- the fuller version:
+Stream.map' : (a -> b) -> '{Stream a} () -> '{Stream b} ()
+Stream.map' f stream =
+  h : Request {Stream a} () -> {Stream b} ()
+  h = cases
+    { _ } -> ()
+    {Stream.emit a -> resume} ->
+      emit (f a)
+      handle resume () with h 
+  'handle !stream with h
+
+Stream.map'' : (a -> b) -> '{Stream a} r -> '{Stream b} r
+Stream.map'' f stream =
+  h : Request {Stream a} r -> {Stream b} r
+  h = cases
+    { r } -> r
+    {Stream.emit a -> resume} ->
+      emit (f a)
+      handle resume () with h 
+  'handle !stream with h
+
+Stream.filter : (a -> Boolean) -> '{Stream a} r -> '{Stream a} r
+Stream.filter f stream =
+  h : Request {Stream a} r -> {Stream a} r
+  h = cases
+    { r } -> r
+    {Stream.emit a -> resume} ->
+      if f a then emit a else ()
+      handle resume () with h
+  'handle !stream with h
+
+Stream.take : Nat -> '{Stream a} r -> '{Stream a} r
+Stream.take i stream =
+  h : b -> Request {Stream a} r -> {Stream a} r
+  h acc = cases
+    {Stream.emit e -> resume} ->
+      if i > 0 then
+        handle resume () with h (i - 1)
+      else
+        ()
+    { r } -> r
+  'handle !stream with h i
+
+Stream.terminated : '{Stream a} r -> '{Stream (Optional a)} r
+Stream.terminated s _ =
+  h : Request {Stream a} r ->{Stream (Optional a)} r
+  h = cases
+    { r } -> 
+      emit None
+      r
     {Stream.emit a -> resume} ->
       emit (Some a)
       handle resume () with h
   handle !s with h
 
-Stream.sum' = Stream.foldLeft (Nat.+) 0
-
-Stream.pipe : '{Stream a} () -> '{Ask a, Stream b} r -> '{Stream b} ()
+Stream.pipe : '{Stream a} r -> '{Ask a, Stream b} r -> '{Stream b} r
 Stream.pipe s f _ =
   h s = cases
-    {_} -> ()
+    { r } -> r
     {Ask.ask -> resumeF} ->
       handle !s with cases
-        {_} -> ()
+        { r } -> r
         {Stream.emit a -> resumeS} ->
           handle resumeF a with h resumeS
     {Stream.emit b -> resumeF} ->
@@ -413,16 +477,16 @@ Stream.pipe s f _ =
       handle resumeF () with h s
   handle !f with h s
 
-Stream.filter f s =
+Stream.map''' f s =
+  go _ = emit (f ask)
+         !go
+  Stream.pipe s go
+
+Stream.filter' f s =
   go _ =
     a = ask
     if f a then emit a
     else ()
     !go
-  Stream.pipe s go
-
-Stream.map f s =
-  go _ = emit (f ask)
-         !go
   Stream.pipe s go
 ```
