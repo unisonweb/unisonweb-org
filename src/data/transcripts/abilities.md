@@ -168,11 +168,11 @@ Next, try implementing them such that they return a delayed `Stream`: `Stream.ma
 
 Finally, implement it such that it's of a polymorphic type instead of `Unit`: `Stream.map'' : (a -> b) -> '{Stream a} r -> '{Stream b} r`.
 
-Try writing the following stream functions, just skipping to the final `Stream.map''` style. We recommend writing out the signature of your handler function as we did above for the `h` function in `Stream.toList`.
+Try writing the following stream functions. We recommend writing out the signature of your handler function as we did above for the `h` function in `Stream.toList`.
 
 ```
 Stream.filter : (a -> Boolean) -> '{Stream a} r -> '{Stream a} r
-Stream.take : Nat -> '{Stream a} r -> '{Stream a} r
+Stream.take : Nat -> '{Stream a} () -> '{Stream a} ()
 Stream.terminated : '{Stream a} r -> '{Stream (Optional a)} r
 ```
 
@@ -439,16 +439,16 @@ Stream.filter f stream =
       handle resume () with h
   'handle !stream with h
 
-Stream.take : Nat -> '{Stream a} r -> '{Stream a} r
+Stream.take : Nat -> '{Stream a} () -> '{Stream a} ()
 Stream.take i stream =
-  h : b -> Request {Stream a} r -> {Stream a} r
+  h : b -> Request {Stream a} () -> {Stream a} ()
   h acc = cases
     {Stream.emit e -> resume} ->
       if i > 0 then
         handle resume () with h (i - 1)
       else
         ()
-    { r } -> r
+    { _ } -> ()
   'handle !stream with h i
 
 Stream.terminated : '{Stream a} r -> '{Stream (Optional a)} r
