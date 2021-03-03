@@ -5,7 +5,7 @@ description: Learn more about the research backing Unison, related work, and inf
 
 # An annotated bibliography
 
-> 🚧  This page is still very much under construction. [Source is here](https://github.com/unisonweb/unisonweb-org/new/master/src/data/docs) if you'd like to help fill it out.
+> 🚧  This page is still very much under construction. [Source is here](https://github.com/unisonweb/unisonweb-org/blob/master/src/data/docs/bibliography.md) if you'd like to help fill it out.
 
 This page is for those curious about Unison's background. It covers some of the research backing Unison and lists related work and influences. __You don't need to know about any of this to use Unison__ but we like to acknowledge that Unison is part of a big world where lots of interesting work happens. We are standing on the shoulders of giants!
 
