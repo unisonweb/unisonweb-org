@@ -3,5 +3,7 @@ links:
     url: '/docs'
   - label: Community
     url: '/community'
+  - label: Share
+    url: 'https://share.unison-lang.org'
   - label: Blog
     url: '/blog'
