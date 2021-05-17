@@ -119,41 +119,13 @@ Hyperlinking is supported to external urls, but you can also link to other relev
 
 # Suggested conventions
 
-Although documentation values don't require any particular structure, here's a more complete example that uses some helpful conventions:
-
-```unison
-List.take.doc = {{
-  `@List.take n xs` returns a list of the first `n`
-  elements of `xs`. Complexity is O(log n).
-
-  Here's a typical example:
-
-      @source{ List.take.examples.ex1 }
-      ↳ @eval{ List.take.examples.ex1 }
-
-  If we `@List.take` more than the size of the list, we
-  get back the original list:
-
-      @source{ List.take.examples.ex2 } 
-      ↳ @eval{ List.take.examples.ex2 }
-
-  And lastly, `@List.take 0 xs` is always equal to `[]`,
-  the empty list.
-
-  __Also see:__
-
-    * {List.drop} (ignores the first `n` elements)
-    * {List.doc} has more about the @List data structure
-}}
-```
-
-That is:
+Although documentation values don't require any particular structure you might try structuring your docs in accordance with the following guidelines: 
 
 - Start with a brief overview, then maybe a longer description, then some examples, then link to related definitions and further reading.
 - Use Markdown syntax for formatting. Indent examples by 4 spaces for readability when viewing the docs in plain text form, and this will also render nicely as Markdown.
-- Follow sensible naming conventions for associated documentation and examples. For a definition `List.take`, for example:
-    - Its primary documentation value could be called `List.take.doc`, and secondary docs could be in the `List.take.docs` namespace. Perhaps a document called `List.take.docs.advancedUsages` could show advanced usages of the function.
-    - Examples could be in the `List.take.examples` namespace. For instance, the examples above were named `List.take.examples.ex1` and `List.take.examples.ex2`.
+- Follow sensible naming conventions for associated documentation and examples. For a definition `Jabberwock.whiffle`, for example:
+    - Its primary documentation should be called `Jabberwock.whiffle.doc`, and secondary docs could be in the `Jabberwock.whiffle.docs` namespace. Perhaps a document called `Jabberwock.whiffle.docs.advancedUsages` could show advanced usages of the function.
+    - Examples could be in the `Jabberwock.whiffle.examples` namespace. For instance: `Jabberwock.whiffle.examples.ex1` and `Jabberwock.whiffle.examples.ex2`.
 
 # Evaluating Code 
 We'll reinforce and expand upon the myriad ways Unison source code can be included documentation next. We've observed that Unison source code can be included in docs using the `@source` block. Gone are the days when your docs describe a function which has changed its name or content. Unison docs do not drift from their code definitions!  We've also seen `@eval` for evaluating expressions, and term linking `[namedLink]({myTerm})` but the Unison doc format has additional capabilities. 
@@ -267,4 +239,3 @@ moreDocFeatures = {{
 ```
 
 We hope you'll agree that writing documentation in Unison is an easy and delightful process that will help developers better communicate the intent and value of their work. More details on documentation can be found [here.](https://github.com/unisonweb/unison/blob/ca951f36dbdc8a32e267acb9f8051ef64b90ec97/unison-src/transcripts-using-base/doc.output.md) We look forward to reading more Unison docs in the libraries and code of your own making. 😃 
-
