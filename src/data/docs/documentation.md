@@ -81,16 +81,11 @@ examples = {{
     * @eval{Interjection "Zoinks!"} 
     * This is going @eval{Adverb "swimmingly"} 
     * These are @eval{Adjective "lovely"}
-      - Japanese has [two forms of Adjectives,]({type JapaneseAdjective}) 
 }}
  
 furtherExposition = {{
-  There are *many* different interpretations of the possible parts of speech. 
+  There are *many* different interpretations of the possible parts of speech. [Learn more](https://en.wikipedia.org/wiki/Part_of_speech)}}
 }}
-
-{{Japanese Adjectives are "i" or "na" form, respectively. 
-[Learn more](https://en.wikipedia.org/wiki/Japanese_equivalents_of_adjectives)}}
-unique type JapaneseAdjective = い | な
 
 ```
 We'll break this down further. 
@@ -115,7 +110,7 @@ Bullet pointed lists and numbered lists are also supported in the documentation 
 As you can see, you can intermix your numbered and bullet pointed lists as you please and nest lists arbitrarily.
 
 ### Links
-Hyperlinking is supported to external urls, but you can also link to other relevant parts of your codebase via term or type linking. When we wrote `some text which looks [like this.]({type MyType})` we created a named type link. Similarly, we might have created a named *term* link with the same format: `I am a [term link]({myTermHere})`. Alternatively, if naming our link isn't important to our doc's flow, we can simply embed a type or term link `by writing a term link like so: {someTerm} or a type link like this: {type SomeType}`. Using term and type links within a doc is a handy way to link to other documents. In our example above, a user might use the click-through capabilities in an interactive renderer of the docs to understand the relationship between code components or learn more through relevant urls. 
+Hyperlinking is supported to external urls, but you can also link to other relevant parts of your codebase via term or type linking in docs blocks. If we were to write `some text which looks [like this.]({type MyType})` we are creating a named type link. Similarly, we might created a named *term* link with the same format: `I am a [term link]({myTermHere})`. Alternatively, if naming our link isn't important to our doc's flow, we can simply embed a type or term link `by writing a term link like so: {someTerm} or a type link like this: {type SomeType}`. Using term and type links within a doc is a handy way to link to other documents. A user might then use the click-through capabilities in an interactive renderer of the docs to understand the relationship between code components or learn more through relevant urls. 
 
 # Suggested conventions
 
