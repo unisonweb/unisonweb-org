@@ -12,7 +12,7 @@ Documentation blocks start with `{{` and end with a matching `}}`. Anonymous doc
 
 ```unison
 author = {{Noam Chomsky}}
-{{@eval{nonsense} - {{author}}, is a grammatically well formed, but non-sensical sentence}}
+{{@eval{nonsense} - *{{author}}*, is a grammatically well formed, but non-sensical sentence}}
 nonsense = "Colorless green ideas sleep furiously."
 ```
 
@@ -29,7 +29,7 @@ In the UCM you should see that our documentation block is automatically linked t
 ```
 
 ## Viewing Docs 
-To read the documentation associated with any term or type declaration, use the `docs` or `display` command in the UCM. A command taking the form `docs myName` will look for a term called `myName.doc` in the file or codebase, so we do not need to explicitly link our docs to our code if we respect that naming convention. 
+To read the documentation associated with any term or type declaration, use the `docs` or `display` command in the UCM. A command taking the form `docs myTermName` will look for a term called `myTermName.doc` in the file or codebase, so we do not need to explicitly link our docs to our code if we respect that naming convention. 
 
 ```ucm
 .> docs nonsense
@@ -81,7 +81,7 @@ examples = {{
     * @eval{Interjection "Zoinks!"} 
     * This is going @eval{Adverb "swimmingly"} 
     * These are @eval{Adjective "lovely"}
-      - Factoid: Japanese has [two forms of Adjectives,]({type JapaneseAdjective}) 
+      - Japanese has [two forms of Adjectives,]({type JapaneseAdjective}) 
 }}
  
 furtherExposition = {{
@@ -96,7 +96,7 @@ unique type JapaneseAdjective = い | な
 We'll break this down further. 
 
 ### Modular Docs
-Notice how documentation can be composed of much smaller blocks which are assembled together in the final `PartOfSpeech.doc` term. It's common to build longer documents by including subdocuments via the `{{ subdoc }}` syntax.
+Notice how documentation can be composed of much smaller blocks which are assembled together in the final `PartOfSpeech.doc` term. It's common to build longer documents by including subdocuments via the `{{ subdoc }}` syntax. 
 
 ### Style 
 The Unison doc format supports basic text formatting and styling.  Text can be \__bold__, \*italicized*, \~~strikethrough~~, or \`monospaced` and paragraphs are separated by one or more blank lines.
@@ -115,7 +115,45 @@ Bullet pointed lists and numbered lists are also supported in the documentation 
 As you can see, you can intermix your numbered and bullet pointed lists as you please and nest lists arbitrarily.
 
 ### Links
-Hyperlinking is supported to external urls, but you can also link to other relevant parts of your codebase via term or type linking. When we wrote `some text which looks [like this.]({type MyType})` we created a named type link. Similarly, we might have created a named *term* link with the same format: `I am a [term link]({myTermHere})`. Alternatively, if naming our link isn't important to our doc's flow, we can simply embed a type or term link `by writing a term link like so: {someTerm} or a type: {type SomeType}` in a documentation block. Using term and type links within a doc is a handy way to link to other documents. In our example above, a user might use the click-through capabilities in an interactive renderer of the docs to understand the relationship between code components or learn more through relevant urls.  
+Hyperlinking is supported to external urls, but you can also link to other relevant parts of your codebase via term or type linking. When we wrote `some text which looks [like this.]({type MyType})` we created a named type link. Similarly, we might have created a named *term* link with the same format: `I am a [term link]({myTermHere})`. Alternatively, if naming our link isn't important to our doc's flow, we can simply embed a type or term link `by writing a term link like so: {someTerm} or a type link like this: {type SomeType}`. Using term and type links within a doc is a handy way to link to other documents. In our example above, a user might use the click-through capabilities in an interactive renderer of the docs to understand the relationship between code components or learn more through relevant urls. 
+
+# Suggested conventions
+
+Although documentation values don't require any particular structure, here's a more complete example that uses some helpful conventions:
+
+```unison
+List.take.doc = {{
+  `@List.take n xs` returns a list of the first `n`
+  elements of `xs`. Complexity is O(log n).
+
+  Here's a typical example:
+
+      @source{ List.take.examples.ex1 }
+      ↳ @eval{ List.take.examples.ex1 }
+
+  If we `@List.take` more than the size of the list, we
+  get back the original list:
+
+      @source{ List.take.examples.ex2 } 
+      ↳ @eval{ List.take.examples.ex2 }
+
+  And lastly, `@List.take 0 xs` is always equal to `[]`,
+  the empty list.
+
+  __Also see:__
+
+    * {List.drop} (ignores the first `n` elements)
+    * {List.doc} has more about the @List data structure
+}}
+```
+
+That is:
+
+- Start with a brief overview, then maybe a longer description, then some examples, then link to related definitions and further reading.
+- Use Markdown syntax for formatting. Indent examples by 4 spaces for readability when viewing the docs in plain text form, and this will also render nicely as Markdown.
+- Follow sensible naming conventions for associated documentation and examples. For a definition `List.take`, for example:
+    - Its primary documentation value could be called `List.take.doc`, and secondary docs could be in the `List.take.docs` namespace. Perhaps a document called `List.take.docs.advancedUsages` could show advanced usages of the function.
+    - Examples could be in the `List.take.examples` namespace. For instance, the examples above were named `List.take.examples.ex1` and `List.take.examples.ex2`.
 
 # Evaluating Code 
 We'll reinforce and expand upon the myriad ways Unison source code can be included documentation next. We've observed that Unison source code can be included in docs using the `@source` block. Gone are the days when your docs describe a function which has changed its name or content. Unison docs do not drift from their code definitions!  We've also seen `@eval` for evaluating expressions, and term linking `[namedLink]({myTerm})` but the Unison doc format has additional capabilities. 
@@ -162,11 +200,10 @@ Let's see what this looks like in the UCM with the `display` command.
   
     Blocks of code can be evaluated as well:
   
-        use Nat +
         id x = x
-        id (10 + 10)
+        id (isPalindrome [?w,?o,?w])
         ⧨
-        20
+        true
   
     To include a typechecked snippet of code without evaluating it, you can write:
   
@@ -183,83 +220,51 @@ Let's see what this looks like in the UCM with the `display` command.
 Documentation can be futher embellished with helpful visual and semantic annotations. Unison supports documentation features like asides, callouts, tables, and tooltips. A rich rendering interface can style and format these appropriately. These don't currently have special syntax; just use the `{{ }}` syntax to call these functions directly. 
   
 ```unison
-otherElements : Doc2
-otherElements =
+asides : Doc2
+asides =
   {{
+    This is an aside: 
+    {{ docAside {{ Time flies like an arrow. }} }}
     
-    This is an aside. 
-    {{ docAside {{ Some extra detail that doesn't belong in main text. }} }}
-    
+    A callout: 
     {{ docCallout
-      None {{ This is an important callout, with no icon. }} 
+      None {{ Fruit flies like a banana. }} 
     }}
     
+    A callout with icon: 
     {{ docCallout
-      (Some {{ 🌻 }})
+      (Some {{ 🌹 }})
       {{
-      This is an important callout, with an icon. The text wraps
-      onto multiple lines.
+      Rose is a rose is a rose is a rose.
       }} 
     }}
-    
-    {{ docBlockquote
-      {{
+  }} 
+```
+
+Asides are for extra details that don't belong in the main text, whereas callouts should be used where you'd like to emphasize a particular point. Callouts are parameterized by an `Optional` icon so you can further customise your messages. 
+
+Block quotes, tables and hoverable tool-tips are also supported. 
+```unison
+moreDocFeatures = {{
+  {{ docBlockquote
+    {{
       "And what is the use of a book," thought Alice, "without
       pictures or conversation?"
       
       *Lewis Carroll, Alice's Adventures in Wonderland*
-      }} 
-    }}
-    
-    {{ docTooltip {{ Hover over me }} {{ You found it! }} }}
-    
-    {{ docTable [
-      [ {{ Twas brillig, }}, {{ and the slithy toves }}, {{
-        Did gyre and gimble in the wabe: All mimsy were the borogoves,
-      }} ],
-      [ {{ And the }}, {{ mome raths }}, {{ outgrabe. }} ] 
-    ] }}
-
+    }} 
   }}
+    
+  {{ docTooltip {{ Knock Knock! }} {{ Who's there? }} }}
+    
+  {{ docTable [
+    [ {{ Twas brillig, }}, {{ and the slithy toves }}, {{
+      Did gyre and gimble in the wabe: All mimsy were the borogoves,
+    }} ],
+    [ {{ And the }}, {{ mome raths }}, {{ outgrabe. }} ] 
+  ] }}
+}}
 ```
 
 We hope you'll agree that writing documentation in Unison is an easy and delightful process that will help developers better communicate the intent and value of their work. More details on documentation can be found [here.](https://github.com/unisonweb/unison/blob/ca951f36dbdc8a32e267acb9f8051ef64b90ec97/unison-src/transcripts-using-base/doc.output.md) We look forward to reading more Unison docs in the libraries and code of your own making. 😃 
-
-### Suggested conventions
-
-Although documentation values don't require any particular structure, here's a more complete example that uses some helpful conventions:
-
-```unison
-List.take.doc = [:
-  `@List.take n xs` returns a list of the first `n`
-  elements of `xs`. Complexity is O(log n).
-
-  Here's a typical example:
-
-      @[source] List.take.examples.ex1
-      ↳ @[evaluate] List.take.examples.ex1
-
-  If we `@List.take` more than the size of the list, we
-  get back the original list:
-
-      @[source] List.take.examples.ex2
-      ↳ @[evaluate] List.take.examples.ex2
-
-  And lastly, `@List.take 0 xs` is always equal to `[]`,
-  the empty list.
-
-  __Also see:__
-
-    * @List.drop (ignores the first `n` elements)
-    * @List.doc has more about the @List data structure
-:]
-```
-
-That is:
-
-- Start with a brief overview, then maybe a longer description, then some examples, then link to related definitions and further reading.
-- Use Markdown syntax for formatting. Indent examples by 4 spaces for readability when viewing the docs in plain text form, and this will also render nicely as Markdown.
-- Follow sensible naming conventions for associated documentation and examples. For a definition `List.take`, for example:
-    - Its primary documentation value could be called `List.take.doc`, and secondary docs could be in the `List.take.docs` namespace. Perhaps a document called `List.take.docs.advancedUsages` could show advanced usages of the function.
-    - Examples could be in the `List.take.examples` namespace. For instance, the examples above were named `List.take.examples.ex1` and `List.take.examples.ex2`.
 
