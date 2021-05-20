@@ -5,232 +5,239 @@ description: How to write Unison documentation and associate it with your code
 
 # Documenting Unison Code
 
-Unison ships with a powerful documentation format. Capable of expressing far more than markdown or static text, the documentation format empowers developers to write rich, clear, and correct docs. Documentation is a first class feature of the Unison language and is captured by the Unison type: `builtin.Doc2`. Unison docs offer native support for features like executing typechecked code samples, embedding docs within other docs, and annotating your writing with tooltips, asides, and callouts. We'll walk through some of these features next. 
+Unison comes with a powerful documentation format which makes it easy to write rich, correct documentation. In addition to basic Markdown-like syntax and formatting, Unison documentation also supports inline evaluation, typechecked and linked code snippets, and embedding docs within other docs. We'll walk through these features below.
 
 ## The basics 
-Documentation blocks start with `{{` and end with a matching `}}`. Anonymous documentation blocks can be defined immediately before a top-level term or type but you can also create them anywhere you'd write an expression. 
+Documentation blocks start with `{{` and end with a matching `}}`. This syntax creates an expression of type `Doc` and it can be used anywhere in your code where an expression can be written.
+
+Anonymous documentation blocks are blocks that are created immediately before the definitions in your code. This means we don't need to assign our documentation block to a value, as in `x = {{my docs}}`. We'll use a simple example here: 
 
 ```unison
-author = {{Noam Chomsky}}
-{{@eval{nonsense} - *{{author}}*, is a grammatically well formed, but non-sensical sentence}}
-nonsense = "Colorless green ideas sleep furiously."
+{{Maya Angelou is an acclaimed poet, director, essayist, and novelist.}}
+poet = "Maya Angelou" 
 ```
 
-Note that we're actually executing `nonsense` with the `@eval` block in our documentation and that the documentation value for `author` is embedded within another documentation block.
-
-In the UCM you should see that our documentation block is automatically linked to `nonsense` as `nonsense.doc`. 
+In the UCM we should see: 
 
 ```ucm
 ⍟ These new definitions are ok to `add`:
     
-    author       : Doc2
-    nonsense     : Text
-    nonsense.doc : Doc2
+    poet.doc       : Doc
+    poet           : Text
 ```
 
-## Viewing Docs 
-To read the documentation associated with any term or type declaration, use the `docs` or `display` command in the UCM. A command taking the form `docs myTermName` will look for a term called `myTermName.doc` in the file or codebase, so we do not need to explicitly link our docs to our code if we respect that naming convention. 
+Here our anonymous doc is automatically linked to `poet` as the term `poet.doc`. 
+
+To read a term's documentation, use the `docs` command in the UCM like this: 
 
 ```ucm
-.> docs nonsense
+.> docs poet
 
-  `"Colorless green ideas sleep furiously."` - Noam Chomsky, is a grammatically well formed, but non-sensical
-  sentence
+  Maya Angelou is an acclaimed poet, director, essayist, and novelist.
 ```
 
-To view the implementation of our documentation, we can use the `view` command. 
+A UCM command taking the form `docs myTermName` will look for a term called `myTermName.doc` in the file or codebase, so we do not need to explicitly link our docs to our code if we respect that naming convention. 
 
-```ucm
-.> view nonsense.doc
+## Evaluating and including code 
 
-  nonsense.doc : Doc2
-  nonsense.doc =
-    {{
-    @eval{ nonsense } - {{ author }}, is a grammatically well formed, but non-sensical sentence
-    }}
-```
+Let's write some documentation which showcases how Unison can evaluate code in documentation.  
 
-So - we know how to define a simple doc, link it to a definition, and render it in the console. Let's explore some of the richer formatting cabilities of Unison docs. 
-
-# Text Formatting and Linking
-
-Let's look at the following docs example to see more of the documentation type's powers: 
 ```unison
-{{
-  PartOfSpeech describes the nine ways a word can function in a phrase. Defined as: 
-
-  @source{type PartOfSpeech}
-
-  {{furtherExposition}}
-
-  {{examples}}
+{{  
+  ``repeat`` is a function which will repeat the provided text a specified number of times. 
 }}
-unique type PartOfSpeech Text = 
-  Noun Text | 
-  Verb Text | 
-  Adjective Text | 
-  Adverb Text | 
-  Pronoun Text | 
-  Preposition Text | 
-  Conjunction Text | 
-  Determiner Text | 
-  Interjection Text 
+repeat : Nat -> Text -> Text
+repeat n text = 
+  go i acc = 
+    if i >= n then acc else go (i+1) (text ++ acc) 
+  go 0 ""
+```
 
-examples = {{
+We're using the anonymous docs syntax again, but we've introduced a new Unison documentation feature - the double backtick syntax. Double backticks are how we include inlined snippets of Unison code. These snippets are typechecked, so you know the code in your documentation is going to accurately represent your codebase. If we were to rename `repeat` to `echo` the docs would reflect that automatically.   
+
+Unison docs also support evaluating entire blocks of code. This can be useful for specifying longer examples and use cases. Let's add one to our `repeat` documentation block:  
+
+```unison
+{{  
+    ``repeat`` is a function which will repeat the provided text a specified number of times. 
+
+    Examples: 
+  
+    ```
+    (repeat 2 "rose is a ") ++ "rose"
+    ```
+}}
+```
+
+The documentation will render both the source code and the result of evaluating the code for anything between triple backticks.
+
+```ucm
+.> docs repeat
+
+  `repeat` is a function which will repeat the provided text a specified number of times.
+  
   Examples:
-    * @eval{Interjection "Zoinks!"} 
-    * This is going @eval{Adverb "swimmingly"} 
-    * These are @eval{Adjective "lovely"}
-}}
- 
-furtherExposition = {{
-  There are *many* different interpretations of the possible parts of speech. [Learn more](https://en.wikipedia.org/wiki/Part_of_speech)}}
-}}
-
+  
+      repeat 2 "rose is a " Text.++ "rose"
+      ⧨
+      "rose is a rose is a rose"
 ```
-We'll break this down further. 
 
-### Modular Docs
-Notice how documentation can be composed of much smaller blocks which are assembled together in the final `PartOfSpeech.doc` term. It's common to build longer documents by including subdocuments via the `{{ subdoc }}` syntax. 
-
-### Style 
-The Unison doc format supports basic text formatting and styling.  Text can be \__bold__, \*italicized*, \~~strikethrough~~, or \`monospaced` and paragraphs are separated by one or more blank lines.
-
-### Lists 
-Bullet pointed lists and numbered lists are also supported in the documentation format. `*`, `+`, and `-` are all valid bullet points, though the variation will be normalized away by an eventual pretty-printer.  Numbered lists take the form: 
+Let's imagine our docs would really benefit from displaying the full source code of the function they're describing. We can do that with the `@source{myTerm}` syntax.
 
 ```unison
-{{
-1. Buffalo
-2. buffalo
-    * buffalo
-3. buffalo.
+{{  
+    ``repeat`` is a function which will repeat the provided text a specified number of times. 
+
+    Source: 
+
+    @source{repeat}
+
+    Examples: 
+
+    ```
+    (repeat 2 "rose is a ") ++ "rose"
+    ```
 }}
 ```
-As you can see, you can intermix your numbered and bullet pointed lists as you please and nest lists arbitrarily.
 
-### Links
-Hyperlinking is supported to external urls, but you can also link to other relevant parts of your codebase via term or type linking in docs blocks. If we were to write `some text which looks [like this.]({type MyType})` we are creating a named type link. Similarly, we might created a named *term* link with the same format: `I am a [term link]({myTermHere})`. Alternatively, if naming our link isn't important to our doc's flow, we can simply embed a type or term link `by writing a term link like so: {someTerm} or a type link like this: {type SomeType}`. Using term and type links within a doc is a handy way to link to other documents. A user might then use the click-through capabilities in an interactive renderer of the docs to understand the relationship between code components or learn more through relevant urls. 
+The full implementation of `repeat` is now on display: 
+
+```ucm
+.> docs repeat
+
+  `repeat` is a function which will repeat the provided text a specified number of times.
+  
+  Source:
+  
+      repeat n text =
+        go i acc =
+          if i >= n then acc
+          else
+            use Nat +
+            use Text ++
+            go (i + 1) (text ++ acc)
+        go 0 ""
+  
+  Examples:
+  
+      repeat 2 "rose is a " Text.++ "rose"
+      ⧨
+      "rose is a rose is a rose"
+```      
+
+Maybe our documentation is better served by just including the signature of a function. Let's try that with `@signature{myTerm}`: 
+
+```unison
+{{  
+    @signature{repeat}
+
+    ``repeat`` is a function which will repeat the provided text a specified number of times. 
+
+    Examples: 
+
+    ```
+    (repeat 2 "rose is a ") ++ "rose"
+    ```
+}}
+```
+
+```ucm 
+.> docs repeat
+
+  `repeat : Nat -> Text -> Text`
+  
+  `repeat` is a function which will repeat the provided text a specified number of times.
+  
+  Examples:
+  
+      repeat 2 "rose is a " Text.++ "rose"
+      ⧨
+      "rose is a rose is a rose"
+```
+
+It's common for Unison docs to be composed of smaller components. We can combine `Doc` values using the ``{{ subdoc }}`` syntax. In our `repeat.doc` code we might extract the "Examples" portion of our documentation into a separate term if it grows too long. 
+
+```unison
+{{  
+    @signature{repeat}
+
+    ``repeat`` is a function which will repeat the provided text a specified number of times. 
+
+    {{ repeat.doc.examples }}
+}}
+
+repeat.doc.examples : Doc
+repeat.doc.examples = {{ 
+    Examples: 
+
+    ```
+    (repeat 2 "rose is a ") ++ "rose"
+    ```
+
+    ```
+    repeat 0 "zero"
+    ```
+}}
+```
+
+When we want to read the docs for `repeat`, the entire docs block will be rendered to the user. 
+
+```ucm
+.> docs repeat 
+
+  `repeat : Nat -> Text -> Text`
+  
+  `repeat` is a function which will repeat the provided text a specified number of times.
+  
+  Examples:
+  
+      repeat 2 "rose is a " Text.++ "rose"
+      ⧨
+      "rose is a rose is a rose"
+  
+      repeat 0 "zero"
+      ⧨
+      ""
+```
+
+To summarize, Unison docs can execute and embed code in the following ways: 
+* ````double backticks```` are used to inline Unison code
+* `````triple backticks````` wrap executable code blocks
+* `@source{myTerm}` can be used for displaying the source code
+* `@signature{myTerm}` includes the signature in the docs
+* `{{ subdoc }}` includes a `Doc` element in the docs
+
+## Basic text formatting cheat sheet 
+
+Unison supports the following text formatting features:
+
+| Text Formatting | Docs Syntax |
+| ----------- | ----------- |
+| italicized | \*asterisks\* |
+| bold | \_\_double underscore\_\_ |
+| strikethrough | \~~double tilde\~~ | 
+| monospace | \`single backticks\` |
+| bullet list | *, -, or + | 
+| numbered list | 1. My List | 
+
+## Link syntax cheat sheet 
+
+Linking to both external URLs and definitions in your codebase can be done in several ways: 
+
+| Link type | Docs Syntax | Purpose |
+| ----------- | ----------- | ---- |
+| external url | \[An external url](https://unisonweb.org) | Links to an external URL, used for including relevant resources |
+| term/type link | {Some} is a term link and {type Optional} is a type link | Links to a term or type in the codebase, future documentation UI's may enable click-through linking | 
+| named term/type link | \[a named term link]({Some}) and \[A named type link]({type Optional}) | Links to a term or type in the codebase but gives the link the name in square brackets for readability |
 
 # Suggested conventions
 
-Although documentation values don't require any particular structure you might try structuring your docs in accordance with the following guidelines: 
+Although documentation values don't require any particular structure you might try writing your docs according to a few guidelines: 
 
-- Start with a brief overview, then maybe a longer description, then some examples, then link to related definitions and further reading.
-- Use Markdown syntax for formatting. Indent examples by 4 spaces for readability when viewing the docs in plain text form, and this will also render nicely as Markdown.
-- Follow sensible naming conventions for associated documentation and examples. For a definition `Jabberwock.whiffle`, for example:
-    - Its primary documentation should be called `Jabberwock.whiffle.doc`, and secondary docs could be in the `Jabberwock.whiffle.docs` namespace. Perhaps a document called `Jabberwock.whiffle.docs.advancedUsages` could show advanced usages of the function.
-    - Examples could be in the `Jabberwock.whiffle.examples` namespace. For instance: `Jabberwock.whiffle.examples.ex1` and `Jabberwock.whiffle.examples.ex2`.
+- Start with a brief one sentence or short paragraph overview, then optionally include a longer description, include some examples which illustrate common cases and edge cases, and finally link to related definitions and further reading.
+- Follow sensible naming conventions for documentation and examples. For a definition `Jabberwock.whiffle`, for example:
+    - Its primary documentation should be called `Jabberwock.whiffle.doc`, and secondary docs could be in the `Jabberwock.whiffle.doc` namespace. I.e. a document called `Jabberwock.whiffle.doc.advancedUsages` could show advanced usages of the term.
+    - Non-inlined documentation examples could be in the `Jabberwock.whiffle.doc.examples` namespace. For instance: `Jabberwock.whiffle.doc.examples.ex1` and `Jabberwock.whiffle.doc.examples.ex2`.
 
-# Evaluating Code 
-We'll reinforce and expand upon the myriad ways Unison source code can be included documentation next. We've observed that Unison source code can be included in docs using the `@source` block. Gone are the days when your docs describe a function which has changed its name or content. Unison docs do not drift from their code definitions!  We've also seen `@eval` for evaluating expressions, and term linking `[namedLink]({myTerm})` but the Unison doc format has additional capabilities. 
-
-```unison 
-  evaluation : Doc2
-  evaluation =
-    use Nat +
-    use Text ++ 
-    {{
-    # Evaluation
-    
-      Expressions can be evaluated inline, for instance
-      @eval{"hello" ++ " unison"}.
-      
-      Blocks of code can be evaluated as well:
-      
-      ```
-      id x = x
-      id (isPalindrome [?w,?o,?w])
-      ```
-      
-      To include a typechecked snippet of code without
-      evaluating it, you can write:
-      
-      @typecheck ```
-        isPalindrome : [Char] -> Boolean
-        isPalindrome cs = cs == reverse cs
-      ```
-
-      Maybe you'd just like the signatures of your functions in your docs. You can do that too: 
-      
-      @signatures{isPalindrome, ++}
-
-    }}
-```
-
-Let's see what this looks like in the UCM with the `display` command. 
-
-```ucm
-  # Evaluation
-  
-    Expressions can be evaluated inline, for instance `"hello unison"`.
-  
-    Blocks of code can be evaluated as well:
-  
-        id x = x
-        id (isPalindrome [?w,?o,?w])
-        ⧨
-        true
-  
-    To include a typechecked snippet of code without evaluating it, you can write:
-  
-        isPalindrome cs = cs == reverse cs
-  
-    Maybe you'd just like the signatures of your functions in your docs. You can do that too:
-  
-        isPalindrome : [Char] -> Boolean
-    
-        Text.++ : Text -> Text -> Text
-```
-
-# Embellishments 
-Documentation can be futher embellished with helpful visual and semantic annotations. Unison supports documentation features like asides, callouts, tables, and tooltips. A rich rendering interface can style and format these appropriately. These don't currently have special syntax; just use the `{{ }}` syntax to call these functions directly. 
-  
-```unison
-asides : Doc2
-asides =
-  {{
-    This is an aside: 
-    {{ docAside {{ Time flies like an arrow. }} }}
-    
-    A callout: 
-    {{ docCallout
-      None {{ Fruit flies like a banana. }} 
-    }}
-    
-    A callout with icon: 
-    {{ docCallout
-      (Some {{ 🌹 }})
-      {{
-      Rose is a rose is a rose is a rose.
-      }} 
-    }}
-  }} 
-```
-
-Asides are for extra details that don't belong in the main text, whereas callouts should be used where you'd like to emphasize a particular point. Callouts are parameterized by an `Optional` icon so you can further customise your messages. 
-
-Block quotes, tables and hoverable tool-tips are also supported. 
-```unison
-moreDocFeatures = {{
-  {{ docBlockquote
-    {{
-      "And what is the use of a book," thought Alice, "without
-      pictures or conversation?"
-      
-      *Lewis Carroll, Alice's Adventures in Wonderland*
-    }} 
-  }}
-    
-  {{ docTooltip {{ Knock Knock! }} {{ Who's there? }} }}
-    
-  {{ docTable [
-    [ {{ Twas brillig, }}, {{ and the slithy toves }}, {{
-      Did gyre and gimble in the wabe: All mimsy were the borogoves,
-    }} ],
-    [ {{ And the }}, {{ mome raths }}, {{ outgrabe. }} ] 
-  ] }}
-}}
-```
-
-We hope you'll agree that writing documentation in Unison is an easy and delightful process that will help developers better communicate the intent and value of their work. More details on documentation can be found [here.](https://github.com/unisonweb/unison/blob/ca951f36dbdc8a32e267acb9f8051ef64b90ec97/unison-src/transcripts-using-base/doc.output.md) We look forward to reading more Unison docs in the libraries and code of your own making. 😃 
+We hope you enjoy writing documentation in Unison! More details on Unison documentation can be found in a [transcript describing the full feature set.](https://github.com/unisonweb/unison/blob/ca951f36dbdc8a32e267acb9f8051ef64b90ec97/unison-src/transcripts-using-base/doc.output.md) 😃 
