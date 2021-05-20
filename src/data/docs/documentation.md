@@ -10,7 +10,7 @@ Unison comes with a powerful documentation format which makes it easy to write r
 ## The basics 
 Documentation blocks start with `{{` and end with a matching `}}`. This syntax creates an expression of type `Doc` and it can be used anywhere in your code where an expression can be written.
 
-Anonymous documentation blocks are blocks that are created immediately before the definitions in your code. This means we don't need to assign our documentation block to a value, as in `x = {{my docs}}`. We'll use a simple example here: 
+Anonymous documentation blocks are blocks that are created immediately before the definitions in your code. This means we don't need to assign our documentation block to a value, as in `x = {{my docs}}`. We'll use a simple example for the basics: 
 
 ```unison
 {{Maya Angelou is an acclaimed poet, director, essayist, and novelist.}}
@@ -41,11 +41,11 @@ A UCM command taking the form `docs myTermName` will look for a term called `myT
 To recap the basics: 
 * Start a documentation block with `{{ double curly braces }}`
 * Anonymous docs link a definition to its documentation and are placed immediately above a definition
-* Read the docs in the UCM using the `docs` command followed by definition name
+* Read the docs in the UCM using the `docs` command followed by a definition name
 
 ## Evaluating and including code 
 
-Let's write some documentation which showcases how Unison can evaluate code in documentation.  
+Let's write some documentation which demonstrates how Unison can evaluate code.  
 
 ```unison
 {{  
@@ -58,7 +58,7 @@ repeat n text =
   go 0 ""
 ```
 
-We're using the anonymous docs syntax again, but we've introduced a new Unison documentation feature - the double backtick syntax. Double backticks are how we include inlined snippets of Unison code. These snippets are typechecked, so you know the code in your documentation is going to accurately represent your codebase. If we were to rename `repeat` to `echo` the docs would reflect that automatically.   
+We've introduced a new Unison documentation feature with the double backtick syntax. Double backticks are how we include inlined snippets of Unison code. These snippets are typechecked, so you know the code in your documentation is going to accurately represent your codebase. If we were to rename `repeat` to `echo` the docs would reflect that automatically.   
 
 Unison docs also support evaluating entire blocks of code. This can be useful for specifying longer examples and use cases. Let's add one to our `repeat` documentation block:  
 
@@ -209,7 +209,7 @@ When we want to read the docs for `repeat`, the entire docs block will be render
 To summarize, Unison docs can execute and embed code in the following ways: 
 * ````double backticks```` are used to inline Unison code
 * `````triple backticks````` wrap executable code blocks
-* `@source{myTerm}` can be used for displaying the source code
+* `@source{myTerm}` is used for displaying the source code
 * `@signature{myTerm}` includes a signature in the docs
 * `{{ subdoc }}` will display another doc's content within the enclosing doc
 
