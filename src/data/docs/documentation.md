@@ -5,7 +5,7 @@ description: How to write Unison documentation and associate it with your code
 
 # Documenting Unison Code
 
-Unison comes with a powerful documentation format which makes it easy to write rich, correct documentation. In addition to basic Markdown-like syntax and formatting, Unison documentation also supports inline evaluation, typechecked and linked code snippets, and embedding docs within other docs. We'll walk through these features below.
+Unison comes with a powerful documentation format which makes it easy to write rich, correct documentation. In addition to basic Markdown-like syntax and formatting, Unison documentation also supports inline evaluation, typechecked code snippets, and embedding docs within other docs. We'll walk through these features below.
 
 ## The basics 
 Documentation blocks start with `{{` and end with a matching `}}`. This syntax creates an expression of type `Doc` and it can be used anywhere in your code where an expression can be written.
