@@ -13,7 +13,7 @@ Documentation blocks start with `{{` and end with a matching `}}`. This syntax c
 Anonymous documentation blocks are blocks that are created immediately before the definitions in your code. This means we don't need to assign our documentation block to a value, as in `x = {{my docs}}`. We'll use a simple example for the basics: 
 
 ```unison
-{{Maya Angelou is an acclaimed poet, director, essayist, and novelist.}}
+{{Maya Angelou was an acclaimed poet, director, essayist, and novelist.}}
 poet = "Maya Angelou" 
 ```
 
