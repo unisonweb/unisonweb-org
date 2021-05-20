@@ -38,6 +38,11 @@ To read a term's documentation, use the `docs` command in the UCM like this:
 
 A UCM command taking the form `docs myTermName` will look for a term called `myTermName.doc` in the file or codebase, so we do not need to explicitly link our docs to our code if we respect that naming convention. 
 
+To recap the basics: 
+* Start a documentation block with `{{ double curly braces }}`
+* Anonymous docs link a definition to its documentation and are placed immediately above a definition
+* Read the docs in the UCM using the `docs` command followed by definition name
+
 ## Evaluating and including code 
 
 Let's write some documentation which showcases how Unison can evaluate code in documentation.  
@@ -205,8 +210,8 @@ To summarize, Unison docs can execute and embed code in the following ways:
 * ````double backticks```` are used to inline Unison code
 * `````triple backticks````` wrap executable code blocks
 * `@source{myTerm}` can be used for displaying the source code
-* `@signature{myTerm}` includes the signature in the docs
-* `{{ subdoc }}` includes a `Doc` element in the docs
+* `@signature{myTerm}` includes a signature in the docs
+* `{{ subdoc }}` will display another doc's content within the enclosing doc
 
 ## Basic text formatting cheat sheet 
 
