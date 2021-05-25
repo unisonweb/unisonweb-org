@@ -150,7 +150,7 @@ Maybe our documentation is better served by just including the signature of a fu
 ```ucm 
 .> docs repeat
 
-  `repeat : Nat -> Text -> Text`
+  repeat : Nat -> Text -> Text
   
   `repeat` is a function which will repeat the provided text a specified number of times.
   
@@ -207,8 +207,8 @@ When we want to read the docs for `repeat`, the entire docs block will be render
 ```
 
 To summarize, Unison docs can execute and embed code in the following ways: 
-* ````double backticks```` are used to inline Unison code
-* `````triple backticks````` wrap executable code blocks
+* ``` ``double backticks`` ``` are used to inline Unison code
+* `` ```triple backticks``` `` wrap executable code blocks
 * `@source{myTerm}` is used for displaying the source code
 * `@signature{myTerm}` includes a signature in the docs
 * `{{ subdoc }}` will display another doc's content within the enclosing doc
@@ -219,12 +219,12 @@ Unison supports the following text formatting features:
 
 | Text Formatting | Docs Syntax |
 | ----------- | ----------- |
-| italicized | \*asterisks\* |
-| bold | \_\_double underscore\_\_ |
-| strikethrough | \~~double tilde\~~ | 
-| monospace | \`single backticks\` |
-| bullet list | *, -, or + | 
-| numbered list | 1. My List | 
+| italicized | `*asterisks*` or `_single underscore_` |
+| bold | `__double underscore__` or `**double asterisk**` |
+| strikethrough | `~~double tilde~~` | 
+| monospace | `` `single backticks` `` |
+| bullet list | `*`, `-`, or `+` | 
+| numbered list | `1. My List` | 
 
 ## Link syntax cheat sheet 
 
@@ -232,9 +232,9 @@ Linking to both external URLs and definitions in your codebase can be done in se
 
 | Link type | Docs Syntax | Purpose |
 | ----------- | ----------- | ---- |
-| external url | \[An external url](https://unisonweb.org) | Links to an external URL, used for including relevant resources |
-| term/type link | {Some} is a term link and {type Optional} is a type link | Links to a term or type in the codebase, future documentation UI's may enable click-through linking | 
-| named term/type link | \[a named term link]({Some}) and \[A named type link]({type Optional}) | Links to a term or type in the codebase but gives the link the name in square brackets for readability |
+| external url | `[An external url](https://unisonweb.org)` | Links to an external URL, used for including relevant resources |
+| term/type link | `{Some}` is a term link and `{type Optional}` is a type link | Links to a term or type in the codebase, future documentation UI's may enable click-through linking | 
+| named term/type link | `[a named term link]({Some})` and `[A named type link]({type Optional})` | Links to a term or type in the codebase but gives the link the name in square brackets for readability |
 
 # Suggested conventions
 
