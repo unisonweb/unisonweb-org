@@ -10,11 +10,13 @@ featuredImage: /media/thing12.svg
 
 Our last release was [M1m](https://github.com/unisonweb/unison/releases/tag/release%2FM1m) way back in May 2020 and a lot has been happening since then. Thanks to [all the contributors who helped make this release possible](https://github.com/unisonweb/unison/blob/trunk/CONTRIBUTORS.markdown).
 
-First, there's a snazzy new UI for browsing Unison codebases (see [here](https://twitter.com/pchiusano/status/1365020423201652737) and [here](https://twitter.com/shojberg/status/1384961094847025156)). This UI now comes embedded in UCM and a version is hosted at [share.unison-lang.org](http://share.unison-lang.org). If you have public Unison code you'd like to be browseable at [share.unison-lang.org](http://share.unison-lang.org), you can open a PR for [this file](https://github.com/unisonweb/shipwright/blob/trunk/files/initialize-codebase.sh) using [this link](https://github.com/unisonweb/shipwright/edit/trunk/files/initialize-codebase.sh).
+First, there's a snazzy new UI for browsing Unison codebases: 
 
 ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d5e8a0b6-d46c-40df-8e83-4fcfbd3207e8/unison-share-demo-m2.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d5e8a0b6-d46c-40df-8e83-4fcfbd3207e8/unison-share-demo-m2.mp4)
 
-All the code shown here is hyperlinked to support click through to definitions, and this UI will soon support find usages, rich rendering of documentation, and more. This excellent work was a joint effort by [@hojberg](https://github.com/hojberg) (designed and built the front end) and [@runarorama](https://github.com/runarorama) (wrote the back end server that provides an interface to the codebase over HTTP). There's still some ongoing work to improve the performance of this UI which [can be tracked here](https://github.com/unisonweb/unison/issues/2045).
+This UI now comes embedded in UCM and a version is hosted at [share.unison-lang.org](http://share.unison-lang.org). If you have public Unison code you'd like to be browseable at [share.unison-lang.org](http://share.unison-lang.org), you can [open a PR for this file](https://github.com/unisonweb/shipwright/edit/trunk/files/initialize-codebase.sh).
+
+All the code shown in the UI is hyperlinked to support click through to definitions, and this interface will soon support find usages, rich rendering of documentation, and more. This excellent work was a joint effort by [@hojberg](https://github.com/hojberg) (designed and built the front end) and [@runarorama](https://github.com/runarorama) (wrote the back end server that provides an interface to the codebase over HTTP). There's still some ongoing work to improve the performance of this UI which [can be tracked here](https://github.com/unisonweb/unison/issues/2045).
 
 Besides the Codebase UI, here's what else is new:
 
