@@ -2,17 +2,21 @@
 slug: m2-release
 title: New M2 release of Unison
 description: "We've just put out a major new release of Unison. It includes a snazzy new UI for browsing Unison codebases, a new computable documentation format, a new faster runtime, and a new SQLite-based codebase format that substantially improves codebase performance."
-date: 2020-05-29
+date: 2021-06-02
 authors: ["paul-chiusano"]
 categories: ["announcements"]
-featuredImage: /media/thing12.svg
+featuredImage: /media/blog-m2.svg
 ---
 
 Our last release was [M1m](https://github.com/unisonweb/unison/releases/tag/release%2FM1m) way back in May 2020 and a lot has been happening since then. Thanks to [all the contributors who helped make this release possible](https://github.com/unisonweb/unison/blob/trunk/CONTRIBUTORS.markdown).
 
 First, there's a snazzy new UI for browsing Unison codebases: 
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d5e8a0b6-d46c-40df-8e83-4fcfbd3207e8/unison-share-demo-m2.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d5e8a0b6-d46c-40df-8e83-4fcfbd3207e8/unison-share-demo-m2.mp4)
+<br />
+
+<video style="border-radius: 10px;" controls muted width="100%" src="/media/unison-share-demo-m2.mp4" poster="/media/unison-share-demo-m2.png"></video>
+
+<br />
 
 This UI now comes embedded in UCM and a version is hosted at [share.unison-lang.org](http://share.unison-lang.org). If you have public Unison code you'd like to be browseable at [share.unison-lang.org](http://share.unison-lang.org), you can [open a PR for this file](https://github.com/unisonweb/shipwright/edit/trunk/files/initialize-codebase.sh).
 
