@@ -31,6 +31,12 @@ Besides the Codebase UI, here's what else is new:
 
 See [the release notes](https://github.com/unisonweb/unison/issues/1930) for the full details.
 
-After M2, the next major release will be a beta which includes the distributed programming API and other goodies, and then a round of bugfixes and polish before a general availability release.
+You can head over to [unisonweb.org/docs](http://unisonweb.org/docs) for instructions on getting started or upgrading. And come [say hello in the Slack](https://unisonweb.org/slack).
 
-You can head over to [unisonweb.org/docs](http://unisonweb.org/docs) for instructions on getting started or upgrading. And come [say hello in the Slack](https://unisonweb.org/slack). 🌻
+## What's next?
+
+There are a few events coming up: regular "office hours", a documentation day, and a Unison workshop at ZuriHac. See [the event calendar](/calendar).
+
+Following M2, the next major release will be a beta release which includes the distributed programming API and a number of improvements to UCM and the codebase UI. After that will be mostly bugfixes and polish before our first general availability release!
+
+🌻
