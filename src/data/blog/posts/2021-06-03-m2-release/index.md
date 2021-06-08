@@ -37,6 +37,6 @@ You can head over to [unisonweb.org/docs](http://unisonweb.org/docs) for instruc
 
 There are a few events coming up: regular "office hours", a documentation day, and a Unison workshop at ZuriHac. See [the event calendar](/calendar).
 
-Following M2, the next major release will be a beta release which includes the distributed programming API and a number of improvements to UCM and the codebase UI. After that will be mostly bugfixes and polish before our first general availability release!
+Following M2, the next major release will be a beta release which includes the distributed programming API and a number of improvements to UCM and the codebase UI. We'll be publishing a roadmap soon. After the beta release will be mostly bugfixes and polish before our first general availability release!
 
 🌻
