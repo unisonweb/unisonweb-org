@@ -13,7 +13,7 @@ If you want to follow along with this document (highly recommended), this guide 
 
 The source for this document is [on GitHub][on-github]. Feedback and improvements are most welcome!
 
-[repoformat]: https://github.com/unisonweb/unison/blob/trunk/docs/repoformats/v1-DRAFT.markdown
+[repoformat]: https://github.com/unisonweb/unison/blob/trunk/docs/repoformats/v2.markdown
 [on-github]: https://github.com/unisonweb/unisonweb-org/edit/master/src/data/docs/tour/README.md
 [roadmap]: roadmap.html
 [quickstart]: /docs/quickstart
@@ -43,9 +43,9 @@ We __do__ need something else to make it nice to work with content-addressed cod
 
 When first launching Unison in a new directory, we get a message like:
 
-> No codebase exists here so I'm initializing one in: .unison/v1
+> No codebase exists here so I'm initializing one in: .unison/v2
 
-What's happening here? This is the Unison Codebase Manager starting up and initializing a fresh codebase. We're used to thinking about our codebase as a bag of text files that's mutated as we make changes to our code, but in Unison the codebase is represented as a collection of serialized syntax trees, identified by a hash of their content and stored in a collection of files inside of that `.unison/v1` directory.
+What's happening here? This is the Unison Codebase Manager starting up and initializing a fresh codebase. We're used to thinking about our codebase as a bag of text files that's mutated as we make changes to our code, but in Unison the codebase is represented as a collection of serialized syntax trees, identified by a hash of their content and stored in a collection of files inside of that `.unison/v2` directory.
 
 The Unison codebase format has a few key properties:
 
@@ -131,9 +131,9 @@ So rename and move things around as much as you want. Don't worry about picking 
 
 > ☝️ Using `alias.term` instead of `move.term` introduces a new name for a definition without removing the old name(s).
 
-> 🤓 If you're curious to learn about the guts of the Unison codebase format, you can check out the [v1 codebase format specification][repoformat].
+> 🤓 If you're curious to learn about the guts of the Unison codebase format, you can check out the [v2 codebase format specification][repoformat].
 
-[repoformat]: https://github.com/unisonweb/unison/blob/trunk/docs/repoformats/v1-DRAFT.markdown
+[repoformat]: https://github.com/unisonweb/unison/blob/trunk/docs/repoformats/v2.markdown
 
 Use `undo` to back up a step.  (We don't have a `redo` yet, though).
 
