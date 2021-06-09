@@ -1,6 +1,6 @@
 ---
 slug: m2-release
-title: New M2 release of Unison
+title: New milestone release of Unison
 description: "We've just put out a major new release of Unison. It includes a snazzy new UI for browsing Unison codebases, a new computable documentation format, a new faster runtime, and a new SQLite-based codebase format that substantially improves codebase performance."
 date: 2021-06-03
 authors: ["paul-chiusano"]
