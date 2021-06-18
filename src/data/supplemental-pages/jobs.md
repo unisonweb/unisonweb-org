@@ -32,12 +32,13 @@ That said, we are actively looking for a...
 
 The Unison Codebase Manager is the core tool that Unison programmers use when writing and exploring Unison code. It's responsible for things like storing Unison's unique code format, managing code dependencies, and surfacing information to the programmer about their codebase's state. It's written in Haskell, and we quite frankly need more hands to develop it into the nicest developer experience imaginable.  
 
-Some of the things that need doing, beyond designing and adding new functionality, include: 
+Some of the things we need help with, in addition to designing and adding new functionality, include: 
   * improving execution times or memory footprint, 
   * helping to figure out how to provide great error messages (and other interactions) for Unison developers, 
   * improving abstractions in Haskell code to improve readability and accelerate new development, 
   * developing open-source libraries or applications in Unison in your domains of choice,
-  * whatever else we can come up with together to make the Unison language, tools, and ecosystem a joy to use.  
+
+and whatever else we can come up with together to make the Unison language, tools, and ecosystem a joy to use.  
 
 You'll be joining a very small team and would have an active role in helping determine what we build next and how we build it. Bring your algorithms, networking, design, security, database, open-source, and interpersonal skills, because we want all of it.
 
