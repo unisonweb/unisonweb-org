@@ -24,15 +24,24 @@ The company offers competitive benefits, paid parental leave, and a vacation pol
 
 ### Open Positions
 
-Even when we're not trying to fill a specific position—and though we usually aren't—we love to hear from folks who are excited about what we're trying to accomplish and want to help make it happen.  So drop us a line, and we'll contact you first whenever we do have an opening that seems like a good fit.
+Even when we're not trying to fill a specific position—and though we usually aren't—we love to hear from folks who are excited about what we're trying to accomplish and want to help make it happen.  So check out the _How to Apply_ section, drop us a line, and we'll contact you first whenever we do have an opening that seems like a good fit.
 
 That said, we are actively looking for a...
 
 #### Software Engineer (Haskell)
 
-The Unison Codebase Manager is written in Haskell, and we quite frankly need more hands to develop it into the nicest developer experience imaginable.  You'll be joining a very small team and would have an active role in helping determine what we build next and how we build it.  You'll also be encouraged to develop open-source libraries or applications in Unison in your domains of choice.  Bring your algorithms, networking, design, security, databases, and interpersonal skills, because we want all of it.
+The Unison Codebase Manager is the core tool that Unison programmers use when writing and exploring Unison code. It's responsible for things like storing Unison's unique code format, managing code dependencies, and surfacing information to the programmer about their codebase's state. It's written in Haskell, and we quite frankly need more hands to develop it into the nicest developer experience imaginable.  
 
-### How to apply
+Some of the things that need doing, beyond designing and adding new functionality, include: 
+  * improving execution times or memory footprint, 
+  * helping to figure out how to provide great error messages (and other interactions) for Unison developers, 
+  * improving abstractions in Haskell code to improve readability and accelerate new development, 
+  * developing open-source libraries or applications in Unison in your domains of choice,
+  * whatever else we can come up with together to make the Unison language, tools, and ecosystem a joy to use.  
+
+You'll be joining a very small team and would have an active role in helping determine what we build next and how we build it. Bring your algorithms, networking, design, security, database, open-source, and interpersonal skills, because we want all of it.
+
+### How to Apply
 
 Send an email to jobs@unison.cloud. Here's what to include:
 
