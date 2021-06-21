@@ -18,7 +18,7 @@ And probably the most important thing we are looking for: enthusiasm for making 
 
 ### Logistics
 
-We are based in [Somerville, MA](https://en.wikipedia.org/wiki/Davis_Square), but we have employees in other parts of the US, and we are comfortably working remotely. (And, since the start of the coronavirus pandemic, we have all been working from home.) Although we ask that some working hours overlap with a 9-5 [ET](https://www.timeanddate.com/time/zones/et) work day, we also recognize that our team members are also parents, hobbyists, family members, and community members, and we are happy that our flexibility allows us to flourish both professionally and personally. 
+We are based in [Somerville, MA](https://en.wikipedia.org/wiki/Davis_Square), but we are a remote-first company and nobody has even been to the office since the start of the coronavirus pandemic. Our hiring is not limited to United States based applicants. Although we ask that some working hours overlap with a 9-5 [ET](https://www.timeanddate.com/time/zones/et) work day, we also recognize that our team members are also parents, hobbyists, family members, and community members, and we are happy that our flexibility allows us to flourish both professionally and personally. 
 
 The company offers competitive benefits, paid parental leave, and a vacation policy that emphasizes work/life balance.
 
