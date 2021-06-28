@@ -83,7 +83,7 @@ show-carets: true
   base.List.reverse : [a] -> [a]
   base.List.reverse as =
     use base.List +:
-    base.List.foldl (acc a -> a +: acc) [] as
+    base.List.foldLeft (acc a -> a +: acc) [] as
 ```
 
 Here, we did a type-based search for functions of type `[a] -> [a]`, got a list of results, and then used the `view` command to look at the nicely formatted source code of one of these results. Let's introduce some Unison syntax:
@@ -96,20 +96,20 @@ Here, we did a type-based search for functions of type `[a] -> [a]`, got a list 
 * Function arguments are separated by spaces and function application binds tighter than any operator, so `f x y + g p q` parses as `(f x y) + (g p q)`. You can always use parentheses to control grouping more explicitly.
 * The declaration `use base.List +:` lets us reference the function `base.List.+:` using just `+:`. (This function prepends an element to the front of a list.) [Use clauses](/docs/language-reference#use-clauses) like this can be placed in any Unison block; they don't need to go at the top of your file.
 
-> Try doing `view base.List.foldl` if you're curious to see how it's defined.
+> Try doing `view base.List.foldLeft` if you're curious to see how it's defined.
 
 ### Names are stored separately from definitions so renaming is fast and 100% accurate
 
-The Unison codebase, in its definition for `reverse`, doesn't store names for the definitions it depends on (like the `foldl` function); it references these definitions via their hash. As a result, changing the name(s) associated with a definition is easy.
+The Unison codebase, in its definition for `reverse`, doesn't store names for the definitions it depends on (like the `foldLeft` function); it references these definitions via their hash. As a result, changing the name(s) associated with a definition is easy.
 
-Let's try this out. `reverse` is defined using `List.foldl`, where `l` is a needless abbreviation for `left`. Let's rename that to `List.foldLeft` to make things clearer. Try out the following command (you can use tab completion here if you like):
+Let's try this out. `reverse` is defined using `List.foldLeft`. Let's rename that to `List.foldl` to make it more familiar to Haskell fans. Try out the following command (you can use tab completion here if you like):
 
 ```
 ---
 title: ucm
 show-carets: true
 ---
-.> move.term base.List.foldl base.List.foldLeft
+.> move.term base.List.foldLeft base.List.foldl
 
   Done.
 
@@ -118,12 +118,12 @@ show-carets: true
   base.List.reverse : [a] -> [a]
   base.List.reverse as =
     use base.List +:
-    base.List.foldLeft (acc a -> a +: acc) [] as
+    base.List.foldl (acc a -> a +: acc) [] as
 ```
 
-Notice that `view` shows the `foldLeft` name now, so the rename has taken effect. Nice!
+Notice that `view` shows the `foldl` name now, so the rename has taken effect. Nice!
 
-To make this happen, Unison just changed the name associated with the hash of `foldl` _in one place_. The `view` command just looks up the names for the hashes on the fly, right when it's printing out the code.
+To make this happen, Unison just changed the name associated with the hash of `foldLeft` _in one place_. The `view` command just looks up the names for the hashes on the fly, right when it's printing out the code.
 
 This is important: Unison __isn't__ doing a bunch of text mutation on your behalf, updating possibly thousands of files, generating a huge textual diff, and also breaking a bunch of downstream library users who are still expecting that definition to be called by the old name. That would be crazy, right?
 
@@ -150,7 +150,7 @@ title: ucm
   > Moves:
 
     Original name   New name
-    base.List.foldl base.List.foldLeft
+    base.List.foldLeft base.List.foldl
 
 .>
 ```
@@ -296,9 +296,9 @@ Save the file, and Unison comes back with:
 title: ucm
 show-numbers: false
 ---
-7 | test> square.tests.ex1 = check (square 4 == 16)
+8 | test> square.tests.ex1 = check (square 4 == 16)
 
-✅ Passed : Passed 1 tests.
+✅ Passed : Proved.
 ```
 
 Some syntax notes:
@@ -337,9 +337,9 @@ test> square.tests.prop1 =
 title: ucm
 show-numbers: false
 ---
-8 |   go _ = a = !nat
+11 |   go _ = a = !nat
 
-✅ Passed : Passed 100 tests. (cached)
+✅ Passed : Passed 100 tests.
 ```
 
 This will test our function with a bunch of different inputs.
