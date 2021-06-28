@@ -296,9 +296,9 @@ Save the file, and Unison comes back with:
 title: ucm
 show-numbers: false
 ---
-7 | test> square.tests.ex1 = check (square 4 == 16)
+8 | test> square.tests.ex1 = check (square 4 == 16)
 
-✅ Passed : Passed 1 tests.
+✅ Passed : Proved.
 ```
 
 Some syntax notes:
@@ -337,9 +337,9 @@ test> square.tests.prop1 =
 title: ucm
 show-numbers: false
 ---
-8 |   go _ = a = !nat
+11 |   go _ = a = !nat
 
-✅ Passed : Passed 100 tests. (cached)
+✅ Passed : Passed 100 tests.
 ```
 
 This will test our function with a bunch of different inputs.
