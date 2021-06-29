@@ -107,19 +107,19 @@ This workflow also works fine even if the source and destination repository are 
 
 ### Reviewing pull requests
 
-We'll use [this issue as an example](https://github.com/unisonweb/base/issues/55). The issue created for the PR will have a `pr.load` command to review the PR locally. We'll run that command in any empty namespace:
+We'll use [this issue as an example](https://github.com/unisonweb/base/issues/12). The issue created for the PR will have a `pull-request.load` command to review the PR locally. We'll run that command in any empty namespace:
 
 ```ucm
-.review.pr55> pull-request.load git@github.com:unisonweb/base:.trunk git@github.com:ceedubs/unison-dev:.prs.base._genTests
+.review.pr12> pull-request.load https://github.com/unisonweb/base:.trunk https://github.com/pchiusano/unisoncode:.prs.random2
 ```
 
-If you `.review.pr55> ls` you'll see three sub-namespaces: `base` (the original namespace), `head` (the new namespace), and `merged` (the result of `merge head base`). Now you can do: 
+If you `.review.pr12> ls` you'll see three or four sub-namespaces: `base` (the original namespace), `head` (the new namespace), `merged` (the result of `merge head base`) and potentially `squashed` (the same content as `merged` but without intermediate history). The following commands can be performed against either the `merged` or `squashed` namespace, depending on if preserving history is important to you: 
 
-1. `.review.pr55> diff.namespace base merged` to see what's changed. The numbered entries in the diff can be referenced by subsequent commands, so `diff.namespace base merged` might be followed by `view 1-7` to view the first 7 definitions listed there.
+1. `.review.pr12> diff.namespace base merged` to see what's changed. The numbered entries in the diff can be referenced by subsequent commands, so `diff.namespace base merged` might be followed by `view 1-7` to view the first 7 definitions listed there.
 2. You can use comments on the GitHub issue to coordinate if there's any changes you'd like the contributor to make before accepting the PR. You can also make changes directly in `merged`.
-3. `.review.pr55> push git@github.com:unisonweb/base:.trunk merged` to push `merged` to `trunk`
-4. `.review.pr55> history merged` and copy the top namespace hash. That's the Unison namespace hash as of the merged PR. Then close the GitHub issue with a comment like "merged in #a9j230d9" and thank the contributor. 😀 If you ever want to go back in time, you can say `.> fork #a9j230d9 .pr55` to give the `#a9j230d9` namespace hash the name `.pr55` in your tree.
-5. If you like, `.> delete.namespace .review.pr55` to tidy up afterwards.
+3. `.review.pr12> push git@github.com:unisonweb/base:.trunk merged` to push `merged` to `trunk`
+4. `.review.pr12> history merged` and copy the top namespace hash. That's the Unison namespace hash as of the merged PR. Then close the GitHub issue with a comment like "Merged to trunk in hash #pjdnqduc38" and thank the contributor. 😀 If you ever want to go back in time, you can say `.> fork #pjdnqduc38 .pr12` to give the `#pjdnqduc38` namespace hash the name `.pr12` in your tree.
+5. If you like, `.> delete.namespace .review.pr12` to tidy up afterwards.
 
 <a id="syncing"></a>
 
