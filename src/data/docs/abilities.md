@@ -326,7 +326,7 @@ A common usage of `Ask` is to avoid needing to pass around common configuration 
 Computations that use `Ask a` can also be thought of as stream consumers. Try writing a function `pipe`, which can be used to statefully transform a stream:
 
 ```
-Stream.pipe : '{Ask a, Stream b} r -> '{Stream a} () -> '{Stream b} ()
+Stream.pipe : '{Stream a} () -> '{Ask a, Stream b} r -> '{Stream b} ()
 
 ```
 
