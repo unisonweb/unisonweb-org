@@ -394,38 +394,34 @@ A literal expression is a basic form of Unison expression. Unison has the follow
 
 #### Documentation literals
 
-Documentation blocks have type `Doc` (documentation is a first-class value in the language).`[:` starts a documentation block and `:]` finishes it. For example:
+Documentation blocks have type `Doc` (documentation is a first-class value in the language).`{{` starts a documentation block and `}}` finishes it. For example:
 
 ```unison
 List.take.apiDocs : Doc
-List.take.apiDocs = [:
-`@List.take n [1,2,3]` returns the first `n` elements of
-a list. This is efficient and takes just `O(log n)` operations.
+List.take.apiDocs = {{
+  ``List.take n [1,2,3]`` returns the first `n` elements of
+  a list. This is efficient and takes just `O(log n)` operations.
 
-## Example
+  ## Example
 
-  @[source]   examples.List.take.ex1
-  ⧩
-  @[evaluate] examples.List.take.ex1
+    {{ examples.List.take.ex1 }}
 
-## Also see
+  ## Also see
 
-  * The `@List` type
-  * The `@[signature] List.drop` function
-  * More about finger trees (used to implement `@List`) here: `@docs.fingerTrees`
-:]
+    * The {type List} type and associated docs 
+    * The {List.drop} function with signature @inlineSignature{List.drop}
+    * More about finger trees (used to implement {type List}) here: {fingerTrees.doc}
+}}
 
 ```
 
-More specifically, within the block:
+More specifically, some important Doc features are:
 
-* Links to definitions are done with `@List.` ` \@` is used to escape the `@` symbol (and ` \:]` to escape the `:]` sequence).
-* `@[signature] List.take` expands to the type signature of List.take
-* `@[source] List.map` expands to the full source of List.map
-* `@[include] someOtherDoc`, inserts a value `someOtherDoc : Doc` here.
-* `@[evaluate] someDefinition` expands to the result of evaluating `someDefinition`, which must be a pre-existing definition in the codebase (it can't be an arbitrary expression).
-
-When Unison outputs a doc, it word-wraps paragraphs to fit the output width - where a paragraph is taken to be any sequence of non-indented lines.  So you can prevent the wrapping, for a given line, by indenting that line relative to the rest of the doc.
+* Links to definitions are done with single open and close braces. `{List.drop}` is a term link, and `{type List}` is a type link.
+* `@signature{List.take}` or `@inlineSignature{List.take}` expands to the type signature of List.take either as a block or inline, respectively.
+* `@source{List.map}` expands to the full source of List.map
+*  To insert another Doc value into another Doc, use nested double braces. `{{I am a doc {{thisDocValueWillBeDisplayed}} }}`
+* `@eval{someDefinition}` expands to the result of evaluating `someDefinition`, which must be a pre-existing definition in the codebase (it can't be an arbitrary expression). You can evaluate multi-line codeblocks with the triple backtick syntax ```` ``` multipleLines ``` ```` 
 
 #### Escape sequences
 
