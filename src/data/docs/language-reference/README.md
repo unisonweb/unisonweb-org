@@ -418,7 +418,7 @@ List.take.apiDocs = {{
 More specifically, some important Doc features are:
 
 * Links to definitions are done with single open and close braces. `{List.drop}` is a term link, and `{type List}` is a type link.
-* `@signature{List.take` or `@inlineSignature{List.take}` expands to the type signature of List.take either as a block or inline, respectively.
+* `@signature{List.take}` or `@inlineSignature{List.take}` expands to the type signature of List.take either as a block or inline, respectively.
 * `@source{List.map}` expands to the full source of List.map
 *  To insert another Doc value into another Doc, use nested double braces. `{{I am a doc {{thisDocValueWillBeDisplayed}} }}`
 * `@eval{someDefinition}` expands to the result of evaluating `someDefinition`, which must be a pre-existing definition in the codebase (it can't be an arbitrary expression). You can evaluate multi-line codeblocks with the triple backtick syntax ```` ``` multipleLines ``` ```` 
