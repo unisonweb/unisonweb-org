@@ -448,9 +448,9 @@ Text literals can include the following escape sequences:
 
 A line comment starts with `--` and is followed by any sequence of characters. A line that contains a comment can’t contain anything other than a comment and whitespace. Line comments are currently ignored by Unison.
 
-A line starting with `---` and containing no other characters is a _fold_. Any text below the fold is ignored by Unison.
+Multi-line comments are supported by starting a comment block with `{-` and ending it with `-}`. 
 
-Unison does not currently support block comments. A comment can span multiple lines by adding `--` to the front of each line of the comment.
+A line starting with `---` and containing no other characters is a _fold_. Any text below the fold is ignored by Unison.
 
 ### Type annotations
 
