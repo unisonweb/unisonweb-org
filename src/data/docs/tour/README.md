@@ -73,17 +73,16 @@ show-carets: true
 ---
 .> find : [a] -> [a]
 
-  1. base.Heap.sort : [a] -> [a]
-  2. base.List.distinct : [a] -> [a]
-  3. base.List.reverse : [a] -> [a]
-  4. base.Heap.sortDescending : [a] -> [a]
+  1. base.List.distinct : [a] -> [a]
+  2. base.Heap.sort : [a] -> [a]
+  3. base.List.dropLast : [a] -> [a]
+  4. base.List.reverse : [a] -> [a]
+  5. base.Heap.sortDescending : [a] -> [a]
 
-.> view 3
+.> view 4
 
   base.List.reverse : [a] -> [a]
-  base.List.reverse as =
-    use base.List +:
-    base.List.foldLeft (acc a -> a +: acc) [] as
+  base.List.reverse as = List.foldLeft (acc a -> a +: acc) [] as
 ```
 
 Here, we did a type-based search for functions of type `[a] -> [a]`, got a list of results, and then used the `view` command to look at the nicely formatted source code of one of these results. Let's introduce some Unison syntax:
@@ -94,7 +93,6 @@ Here, we did a type-based search for functions of type `[a] -> [a]`, got a list 
 * `base.List.reverse` takes one parameter, called `as`. The stuff after the `=` is called the _body_ of the function, and here it's a [block](/docs/language-reference#blocks-and-statements), which is demarcated by whitespace.
 * `acc a -> ..` is the syntax for an anonymous function.
 * Function arguments are separated by spaces and function application binds tighter than any operator, so `f x y + g p q` parses as `(f x y) + (g p q)`. You can always use parentheses to control grouping more explicitly.
-* The declaration `use base.List +:` lets us reference the function `base.List.+:` using just `+:`. (This function prepends an element to the front of a list.) [Use clauses](/docs/language-reference#use-clauses) like this can be placed in any Unison block; they don't need to go at the top of your file.
 
 > Try doing `view base.List.foldLeft` if you're curious to see how it's defined.
 
