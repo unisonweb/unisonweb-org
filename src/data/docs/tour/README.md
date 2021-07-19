@@ -344,7 +344,7 @@ This will test our function with a bunch of different inputs.
 
 #### Syntax notes
 
-* The Unison block which begins after an `=` begins a Unison block, which can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
+* The Unison block, which begins after an `=`, can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
 * You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference#delayed-computations) so it can be run multiple times by the `runs` function.
 * `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference#delayed-computations) `expr`.
 
@@ -363,9 +363,9 @@ show-carets: true
 
   ⍟ I've added these definitions:
 
-    square.tests.ex1    : [base.Test.Result]
-    square.tests.prop1  : [base.Test.Result]
-    square              : base.Nat -> base.Nat
+    square             : Nat -> Nat
+    square.tests.ex1   : [Result]
+    square.tests.prop1 : [Result]
 ```
 
 You've just added a new function and some tests to your Unison codebase. Try typing `view square` or `view square.tests.prop1`. Notice that Unison inserts precise `use` statements when rendering your code. `use` statements aren't part of your code once it's in the codebase. When rendering code, a minimal set of `use` statements is inserted automatically by the code printer, so you don't have to be precise with your `use` statements.
@@ -381,12 +381,18 @@ show-carets: true
 
   Cached test results (`help testcache` to learn more)
 
-  ◉ square.tests.ex1       : Passed 1 tests.
+  ◉ base.Abort.tests.ex1                                  : Proved.
+  ◉ base.Abort.tests.ex2                                  : Proved.
+  ◉ base.Abort.tests.ex3                                  : Proved.
+  ◉ base.Ask.tests.ex1                                    : Proved.
+  ◉ base.Bag.add.tests.adds                               : Passed 100 tests.
+...
+  ◉ square.tests.ex1       : Proved.
   ◉ square.tests.prop1     : Passed 100 tests.
 
-  ✅ 2 test(s) passing
+  ✅ 304 test(s) passing
 
-  Tip:  Use view square.tests.ex1 to view the source of a test.
+  Tip:  Use view base.Abort.tests.ex1 to view the source of a test.
 ```
 
 But actually, it didn't need to run anything! All the tests had been run previously and cached according to their Unison hash. In a purely functional language like Unison, tests like these are deterministic and can be cached and never run again. No more running the same tests over and over again!
@@ -443,9 +449,9 @@ show-carets: true
 ---
 .mylibrary> find
 
-  1.  square.tests.ex1 : [.base.Test.Result]
-  2.  square.tests.prop1 : [.base.Test.Result]
-  3.  square : .base.Nat -> .base.Nat
+  1. square : Nat -> Nat
+  2. square.tests.ex1 : [Result]
+  3. square.tests.prop1 : [Result]
 ```
 
 Also notice that we don't need to rerun our tests after this reshuffling. The tests are still cached:
@@ -459,7 +465,7 @@ show-carets: true
 
   Cached test results (`help testcache` to learn more)
 
-  ◉ square.tests.ex1       : Passed 1 tests.
+  ◉ square.tests.ex1       : Proved.
   ◉ square.tests.prop1     : Passed 100 tests.
 
   ✅ 2 test(s) passing
