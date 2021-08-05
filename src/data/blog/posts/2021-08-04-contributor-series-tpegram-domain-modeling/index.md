@@ -13,8 +13,6 @@ featuredImage: /media/thing7.svg
 ## Contributor Feature 
 Tavish Pegram is a Software Engineer at Peloton. Tavish's interests include DDD, FP, TDD, XP, and other letters as well. 
 
-We hope to feature more community generated content in the future. If you have an engineering topic or Unison project you'd like to write about, email community@unison.cloud.  
-
 ## The Kata
 [Source: Matteo Vaccari](http://matteo.vaccari.name/blog/archives/154)
 
@@ -389,7 +387,7 @@ sendBirthdayEmails : {MessageService, EmployeeRepository, Calendar} [Message]
 
 But we are stil getting the same error. 🙁
 
-Well, it turns out that these effects can actually only be run in the context of a handler and they have to be. Until we wire that up, we can instead just defer the computation (so all effects become deferred).
+Well, it turns out that these effects can actually only be run in the context of a handler and they have to be in a function body. We should defer the computation with a thunk (so all effects become deferred) and then wire our handler up.
 
 ```unison
 sendBirthdayEmails : '{MessageService, EmployeeRepository, Calendar} [Message]
@@ -487,9 +485,9 @@ Calendar.handler.mock date k =
 ```
 1) our mock calendar handler dates a `Date` as input. This is so we can specify the return value of `today`, so we can "mock" it in our tests.
 2) the `k` is the "continuation", our handler is being consulted to try to handle an ability, and then we call k to "continue" the existing computation.
-3) we define some handler `h` locally which does the actual bulk of the work. It pattern matches on any ability case we care about. Note that its signature has access to the `Calendar` ability.
+3) we define some handler `h` locally which does the actual bulk of the work. It pattern matches on any ability operations we care about. Note that its signature has access to the `Calendar` ability.
 4) we pattern match on two cases. The first is the `today` case. If we are handling the `today` method, all we are doing is handling the continuation (by calling resume) and providing the value for `today` which is the provided `date` since are just "mocking" the date in this handler. The continuation is called and handled recursively.
-5) we have a base `resume` pattern where we are basically saying "if this is any other behavior, just bubble this request up in case another handler knows how to handle it."
+5) we have a base `resume` pattern where we are basically saying "if this handler encounters behavior which _doesn't_ call the ability operations, just bubble this result up to the caller."
 
 In summary, `Calendar.handler.mock` takes a `Date`, and any function it handles that calls `today` will return that date.
 
@@ -506,14 +504,13 @@ EmployeeRepository.handler.mock employees k =
   handle k with h
 ```
 
-This is another mock to make it easy to test.
+This is another mock to make it easy to test our program.
 1) This handler takes a list of employees, which it uses to generate the return value for `fetchAllByBirthday`.
 2) Our `h` take a request with the `EmployeeRepository` ability.
 3) We match on the `fetchAllByBirthday` method and it's argument `birthday`.
 4) When we match on that method, we filter the provided list of employees based on the `birthday` arg, and resume the computation with those employees as the return value.
 5) In real life, we might read from a DB here.
 6) Otherwise we bubble up the function in case other handlers know how to handle it.
-
 
 And finally
 ```unison
@@ -577,11 +574,11 @@ test> sendBirthdayEmails.tests.noBirthdaysToday =
     else bug (expected, actual)
 ```
 
-Note that we have changed how we use the handlers to something slightly more idiomatic: a normal function call! Though I've chosen to pipe in the function as the last argument because I think it puts the "important" bit at the beginning of the line.
+Note that we have changed how we use the handlers to something slightly more idiomatic: a normal function call! I've chosen to pipe in the function as the last argument because I think it puts the "important" bit at the beginning of the line.
 
-Note (again) that we updated the handlers signature to defer the first `k` so we no longer need to add `!` to the top level test since it is done inside the handler.
+Note (again) that we updated the handler's signature to defer the first `k` so we no longer need to add `!` to the top level test since it is done inside the handler.
 
-Alright lets test with the next test case, a single birthday today!
+Alright let's test with the next test case, a single birthday today!
 ```unison
 test> sendBirthdayEmails.tests.oneBirthdayToday = 
   check let
@@ -694,7 +691,7 @@ test> sendBirthdayEmails.tests.twoBirthdaysToday =
     ✅ Passed : Proved.
 ```
 
-Great! And of course there a ton more tests you can add to make sure this is working for various corner cases, but this seems pretty good for now!
+Great! And of course there many more tests you can add to make sure this is working for various corner cases, but this seems pretty good for now!
 
 So let's go back and refactor our main function a bit now that we have the stability of some tests.
 ```unison
@@ -898,3 +895,7 @@ test> sendBirthdayEmails.tests.twoBirthdaysToday =
 [Mark Seemann - Pits of Success](https://www.youtube.com/watch?v=US8QG9I1XW0&ab_channel=NDCConferences)
 
 [Unison slack thread that contributed a lot of code examples](https://unisonlanguage.slack.com/archives/CLKV43YE4/p1624391625329100?thread_ts=1624385627.328200&cid=CLKV43YE4)
+
+## Get In Touch
+
+We hope to feature more community generated content in the future. If you have an engineering topic or Unison project you'd like to write about, email community@unison.cloud.  
