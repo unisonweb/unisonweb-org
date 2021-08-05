@@ -245,7 +245,7 @@ See the sections on:
 Unison identifiers come in two flavors:
 
 1. _Regular identifiers_ start with an alphabetic unicode character, emoji (which is any unicode character between 1F400 and 1FAFF inclusive), or underscore (`_`), followed by any number of alphanumeric characters, emoji, or the characters `_`, `!`, `|`, or `'`. For example, `foo`, `_bar4`, `qux'`, and `set!` are valid regular identifiers.
-2. _Operators_ consist entirely of the characters `!$%^&*-=+<>.~\\/:`. For example, `+`, `*`, `<>`, and `>>=` are valid operators.
+2. _Operators_ consist entirely of the characters `!$%^&*-=+<>.~\\/|:`. For example, `+`, `*`, `<>`, and `>>=` are valid operators.
 
 #### Namespace-qualified identifiers
 
@@ -270,7 +270,7 @@ Any identifier, including a namespace-qualified one, can appear _hash-qualified_
 
 #### Reserved words
 
-The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `where`, `use`, `and`, `or`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`.
+The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `'`, `|`, `!`, `'`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `where`, `use`, `&&`, `||`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`.
 
 ### Name resolution and the environment
 
