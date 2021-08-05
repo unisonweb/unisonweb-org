@@ -244,7 +244,7 @@ See the sections on:
 
 Unison identifiers come in two flavors:
 
-1. _Regular identifiers_ start with an alphabetic unicode character, emoji (which is any unicode character between 1F400 and 1FAFF inclusive), or underscore (`_`), followed by any number of alphanumeric characters, emoji, or the characters `_`, `!`, `|`, or `'`. For example, `foo`, `_bar4`, `qux'`, and `set!` are valid regular identifiers.
+1. _Regular identifiers_ start with an alphabetic unicode character, emoji (which is any unicode character between 1F400 and 1FAFF inclusive), or underscore (`_`), followed by any number of alphanumeric characters, emoji, or the characters `_`, `!`, or `'`. For example, `foo`, `_bar4`, `qux'`, and `set!` are valid regular identifiers.
 2. _Operators_ consist entirely of the characters `!$%^&*-=+<>.~\\/|:`. For example, `+`, `*`, `<>`, and `>>=` are valid operators.
 
 #### Namespace-qualified identifiers
