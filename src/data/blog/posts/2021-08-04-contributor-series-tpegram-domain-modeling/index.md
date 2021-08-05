@@ -1,7 +1,7 @@
 ---
 slug: birthday-kata
 title: Practical Example - Modeling a Birthday Message Service 
-description: Thank you Tavish Pegram for being the first in our guest contributor blogpost series! In this post, Tavish walks through a popular "kata" for practicing test driven development and hexagonal architecture. Along the way, he explores Unison's type system, abilities, and test capabilities.
+description: Thank you Tavish Pegram for being the first in our guest contributor blogpost series! In this post, Tavish walks through a popular "kata" for practicing test driven development and hexagonal architecture. Along the way, he explores Unison's type system, abilities, and testing conventions.
 date: 2021-08-04
 authors: [tavish-pegram]
 categories: ["contributors"]
@@ -12,6 +12,8 @@ featuredImage: /media/thing7.svg
 
 ## Contributor Feature 
 Tavish Pegram is a Software Engineer at Peloton. Tavish's interests include DDD, FP, TDD, XP, and other letters as well. 
+
+We hope to feature more community generated content in the future. If you have an engineering topic or Unison project you'd like to write about, email community@unison.cloud.  
 
 ## The Kata
 [Source: Matteo Vaccari](http://matteo.vaccari.name/blog/archives/154)
@@ -898,4 +900,4 @@ test> sendBirthdayEmails.tests.twoBirthdaysToday =
 
 ## Get In Touch
 
-We hope to feature more community generated content in the future. If you have an engineering topic or Unison project you'd like to write about, email community@unison.cloud.  
+If you've been working on a Unison project or have a programming topic you'd like to explore in Unison, we want to hear from you! Email community@unison.cloud and we'll help you get published here. 
