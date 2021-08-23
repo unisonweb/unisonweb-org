@@ -8,8 +8,6 @@ categories: ["contributors"]
 featuredImage: /media/thing7.svg
 ---
 
-# Practical Example - Modeling a Birthday Message Service
-
 ## Contributor Feature 
 Hi folks, Rebecca Mark here, kicking off the new Unison guest contributor blogpost series. In this series, we're going to be featuring different community members' work in addition to the usual release notes and company news. We want the blog to highlight Unison community voices and projects because we know that no programming language exists without the people who write in it and the problems they're interested in solving. We hope to feature more community generated content in the future! If you have an engineering topic or Unison project you'd like to write about, email community@unison.cloud and get in touch.  
 
