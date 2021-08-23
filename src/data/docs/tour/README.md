@@ -344,7 +344,7 @@ This will test our function with a bunch of different inputs.
 
 #### Syntax notes
 
-* The Unison block which begins after an `=` begins a Unison block, which can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
+* The Unison block, which begins after an `=`, can have any number of _bindings_ (like `a = ...`) all at the same indentation level, terminated by a single expression (here `expect (square ..)`), which is the result of the block.
 * You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference#delayed-computations) so it can be run multiple times by the `runs` function.
 * `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference#delayed-computations) `expr`.
 
@@ -363,9 +363,9 @@ show-carets: true
 
   ⍟ I've added these definitions:
 
-    square.tests.ex1    : [base.Test.Result]
-    square.tests.prop1  : [base.Test.Result]
-    square              : base.Nat -> base.Nat
+    square             : Nat -> Nat
+    square.tests.ex1   : [Result]
+    square.tests.prop1 : [Result]
 ```
 
 You've just added a new function and some tests to your Unison codebase. Try typing `view square` or `view square.tests.prop1`. Notice that Unison inserts precise `use` statements when rendering your code. `use` statements aren't part of your code once it's in the codebase. When rendering code, a minimal set of `use` statements is inserted automatically by the code printer, so you don't have to be precise with your `use` statements.
@@ -381,12 +381,18 @@ show-carets: true
 
   Cached test results (`help testcache` to learn more)
 
-  ◉ square.tests.ex1       : Passed 1 tests.
+  ◉ base.Abort.tests.ex1                                  : Proved.
+  ◉ base.Abort.tests.ex2                                  : Proved.
+  ◉ base.Abort.tests.ex3                                  : Proved.
+  ◉ base.Ask.tests.ex1                                    : Proved.
+  ◉ base.Bag.add.tests.adds                               : Passed 100 tests.
+...
+  ◉ square.tests.ex1       : Proved.
   ◉ square.tests.prop1     : Passed 100 tests.
 
-  ✅ 2 test(s) passing
+  ✅ 304 test(s) passing
 
-  Tip:  Use view square.tests.ex1 to view the source of a test.
+  Tip:  Use view base.Abort.tests.ex1 to view the source of a test.
 ```
 
 But actually, it didn't need to run anything! All the tests had been run previously and cached according to their Unison hash. In a purely functional language like Unison, tests like these are deterministic and can be cached and never run again. No more running the same tests over and over again!
@@ -443,9 +449,9 @@ show-carets: true
 ---
 .mylibrary> find
 
-  1.  square.tests.ex1 : [.base.Test.Result]
-  2.  square.tests.prop1 : [.base.Test.Result]
-  3.  square : .base.Nat -> .base.Nat
+  1. square : Nat -> Nat
+  2. square.tests.ex1 : [Result]
+  3. square.tests.prop1 : [Result]
 ```
 
 Also notice that we don't need to rerun our tests after this reshuffling. The tests are still cached:
@@ -459,7 +465,7 @@ show-carets: true
 
   Cached test results (`help testcache` to learn more)
 
-  ◉ square.tests.ex1       : Passed 1 tests.
+  ◉ square.tests.ex1       : Proved.
   ◉ square.tests.prop1     : Passed 100 tests.
 
   ✅ 2 test(s) passing
@@ -491,17 +497,15 @@ show-carets: true
 
   I added these definitions to the top of ~/unisoncode/scratch.u
 
-    square : .base.Nat -> .base.Nat
+    square : Nat -> Nat
     square x =
-      use .base.Nat *
+      use Nat *
       x * x
 
   You can edit them there, then do `update` to replace the definitions currently in this branch.
 ```
 
 This copies the pretty-printed definition of `square` into you scratch file "above the fold". That is, it adds a line starting with `---` and puts whatever was already in the file below this line. Unison ignores any file contents below the fold.
-
-> Notice that Unison has put the correct type signature on `square`. The absolute names `.base.Nat` look a bit funny. We will often do `use .base` at the top of our file to refer to all the basic functions and types in `.base` without a fully qualified name.
 
 Let's edit `square` and instead define `square x` (just for fun) as the sum of the first `x` odd numbers (here's a [nice geometric illustration of why this gives the same results](https://math.stackexchange.com/a/639079)):
 
@@ -513,7 +517,7 @@ square x =
   sum (map (x -> x * 2 + 1) (range 0 x))
 
 sum : [Nat] -> Nat
-sum = foldl (+) 0
+sum = foldLeft (+) 0
 ```
 
 ```
@@ -526,11 +530,13 @@ show-carets: true
 I found and typechecked these definitions in ~/unisoncode/scratch.u. If you do an
 `add` or `update` , here's how your codebase would change:
 
-  ⍟ These new definitions will replace existing ones of the same name and are ok to `update`:
+    ⍟ These new definitions are ok to `add`:
 
-    square : .base.Nat -> .base.Nat
+      sum : [Nat] -> Nat
 
-Now evaluating any watch expressions (lines starting with `>`)... Ctrl+C cancels.
+    ⍟ These names already exist. You can `update` them to your new definition:
+
+      square : Nat -> Nat
 ```
 
 ### Adding an updated definition to the codebase
@@ -546,11 +552,11 @@ show-carets: true
 
   ⍟ I've added these definitions:
 
-    sum : [.base.Nat] -> .base.Nat
+    sum : [Nat] -> Nat
 
-  ⍟ I've updated to these definitions:
+  ⍟ I've updated these names to your new definition:
 
-    square             : .base.Nat -> .base.Nat
+    square : Nat -> Nat
 ```
 
 ### Only affected tests are rerun on `update`
@@ -564,14 +570,16 @@ show-carets: true
 ---
 .mylibrary> test
 
-  New test results:
+  ✅
+  
+    New test results:
 
+  ◉ square.tests.ex1      : Proved.
   ◉ square.tests.prop1    : Passed 100 tests.
-  ◉ square.tests.ex1      : Passed 1 tests.
 
   ✅ 2 test(s) passing
 
-  Tip: Use view square.tests.prop1 to view the source of a test.
+  Tip: Use view square.tests.ex1 to view the source of a test.
 ```
 
 Notice the message indicates that the tests weren't cached. If we do `test` again, we'll get the newly cached results.
@@ -580,7 +588,7 @@ The dependency tracking for determining whether a test needs rerunning is 100% a
 
 ## Publishing code and installing Unison libraries
 
-Code is published using the `push` command and libraries are installed just via the `pull` command (recall how in the [quickstart guide](/docs/quickstart), we installed the base libraries with a `pull`). There's no separate tooling needed for managing dependencies or publishing code and you'll never encounter dependency conflicts in Unison. 
+Code is published using the `push` command and libraries are installed via the `pull` command (recall how in the [quickstart guide](/docs/quickstart), we installed the base libraries with a `pull`). There's no separate tooling needed for managing dependencies or publishing code and you'll never encounter dependency conflicts in Unison. 
 
 [This document](/docs/codebase-organization) covers the details of how to organize your codebase, issue and review pull requests, install libraries, and make releases.
 
