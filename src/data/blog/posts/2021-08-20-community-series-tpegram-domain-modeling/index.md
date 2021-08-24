@@ -1,15 +1,15 @@
 ---
 slug: birthday-kata
 title: Practical Example - Modeling a Birthday Message Service 
-description: Thank you Tavish Pegram for being the first in our guest contributor blogpost series! In this post, Tavish walks through a popular "kata" for practicing test driven development and hexagonal architecture. Along the way, he explores Unison's type system, abilities, and testing conventions.
+description: Thank you Tavish Pegram for being the first in our community blogpost series! In this post, Tavish walks through a popular "kata" for practicing test driven development and hexagonal architecture. Along the way, he explores Unison's type system, abilities, and testing conventions.
 date: 2021-08-20
 authors: [tavish-pegram]
-categories: ["contributors"]
+categories: ["community"]
 featuredImage: /media/thing7.svg
 ---
 
-## Contributor Feature 
-Hi folks, Rebecca Mark here, kicking off the new Unison guest contributor blogpost series. In this series, we're going to be featuring different community members' work in addition to the usual release notes and company news. We want the blog to highlight Unison community voices and projects because we know that no programming language exists without the people who write in it and the problems they're interested in solving. We hope to feature more community generated content in the future! If you have an engineering topic or Unison project you'd like to write about, email community@unison.cloud and get in touch.  
+## Community Series
+Hi folks, Rebecca Mark here, kicking off the new Unison community focused blogpost series. In this series, we're going to be featuring different contributors' work in addition to the usual release notes and company news. We want the blog to highlight Unison community voices and projects because we know that no programming language exists without the people who write in it and the problems they're interested in solving. We hope to feature more community generated content in the future! If you have an engineering topic or Unison project you'd like to write about, email community@unison.cloud and get in touch.  
 
 With that in mind, we'll turn it over to the author of this post: Tavish Pegram. Tavish is a Software Engineer at Peloton. His interests include DDD, FP, TDD, XP, and other letters as well. 
 
