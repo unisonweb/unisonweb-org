@@ -141,7 +141,7 @@ The general form of a type declaration is as follows:
   | DataConstructor_n
 ```
 
-### Structural types
+### Structural types  
 
 The `structural` keyword specifies that the type being defined is a structural type. Structural types may have different names but are equivalent if they share the same data constructor and type constructor structure. In Unison the following are the same: 
 
@@ -971,10 +971,12 @@ When inferring ability requirements for `f`, the ability requirements become the
 A user-defined ability is declared with an `ability` declaration such as:
 
 ``` unison
-ability Store v where
+structural ability Store v where
   get : v
   put : v -> ()
 ```
+
+Abilities need to be defined with either the `structural` or `unique` keyword. See the sections on [unique types](#unique-types) and [structural-types](#structural-types) for more detail on the difference.
 
 This results in a new ability type constructor `Store` which takes a type argument `v`. It also create two value-level constructors named `get` and `put`. The idea is that `get` provides the ability to "get" a value of type `v` from somewhere, and `put` allows "putting" a value of type `v` somewhere. Where exactly these values of type `v` will be kept depends on the handler.
 
@@ -1045,7 +1047,7 @@ When a handler calls the continuation, it needs describe how the ability is prov
 ``` unison
 use .base Request
 
-ability Store v where
+structural ability Store v where
   get : v
   put : v -> ()
 
