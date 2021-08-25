@@ -167,7 +167,7 @@ Abilities aren't just for working with `IO`. You can create your own abilities! 
 A simple example ability is something like `Stream`, which can be used to produce streams of output:
 
 ```unison
-ability Stream e where
+structural ability Stream e where
   emit : e ->{Stream e} ()
   -- equivalently
   -- emit : e -> ()

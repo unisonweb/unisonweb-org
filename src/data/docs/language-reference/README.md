@@ -23,7 +23,7 @@ This document describes Unison in terms of its default (and currently, only) tex
 A top-level declaration can appear at the _top level_ or outermost scope of a Unison file. It can be one of the following forms:
 
 * A [term declaration][term], like `x = 42`.
-* A [type declaration][type], like `type Optional a = None | Some a`.
+* A [type declaration][type], like `structural type Optional a = None | Some a`.
 * A [use clause][use], like `use .base` or `use math sqrt`.
 
 [term]: #term-declarations
@@ -107,12 +107,18 @@ The operator can be applied using either notation, no matter which way it's defi
 
 ## User-defined data types
 
-A user-defined data type is introduced with the `type` keyword. (See [Types](#types) for an informal description of Unison's type system.)
+A user-defined data type is introduced with the `type` keyword and a modifier `unique` or `structural`. The modifier indicates if the type is unique by its name, or if it is unique only by its structure. (See [Types](#types) for an informal description of Unison's type system.)
 
 For example:
 
 ``` unison
-type Optional a = None | Some a
+structural type Optional a = None | Some a
+```
+
+or 
+
+``` unison
+unique type UserId = Email Text | Phone Nat
 ```
 
 The `=` sign splits the definition into a _left-hand side_ and a _right-hand side_, much like term definitions.
@@ -128,14 +134,28 @@ Note that these terms and patterns receive qualified names: if the type named `x
 The general form of a type declaration is as follows:
 
 ``` unison
-<unique<[<regular-identifier>]?>?> type TypeConstructor p1 p2 … pn
+<unique|structural<[<regular-identifier>]?>?> type TypeConstructor p1 p2 … pn
   = DataConstructor_1
   | DataConstructor_2
   ..
   | DataConstructor_n
 ```
 
-The optional `unique` keyword introduces a [unique type](#unique-types), explained in the next section.
+### Structural types
+
+The `structural` keyword specifies that the type being defined is a structural type. Structural types may have different names but are equivalent if they share the same data constructor and type constructor structure. In Unison the following are the same: 
+
+``` unison
+structural type Optional a = None | Some a
+```
+
+``` unison
+structural type Maybe x = None | Just x
+```
+
+They can be referenced by either name in a codebase. 
+
+The `unique` keyword introduces a [unique type](#unique-types), explained in the next section.
 
 ### Unique types
 
@@ -144,9 +164,9 @@ A type declaration gives a name to a type, but Unison does not uniquely identify
 For example, Unison considers these type declarations to declare _the exact same type_, even though they give different names to both the type constructor and the data constructors:
 
 ``` unison
-type Optional a = Some a | None
+structural type Optional a = Some a | None
 
-type Maybe a = Just a | Nothing
+structural type Maybe a = Just a | Nothing
 ```
 
 So a value `Some 10` and a value `Just 10` are in fact the same value and these two expressions have the same type. Even though one nominally has the type `Optional Nat` and the other `Maybe Nat`, Unison understands that as the type `#5isltsdct9fhcrvu ##Nat`.
@@ -154,9 +174,9 @@ So a value `Some 10` and a value `Just 10` are in fact the same value and these 
 This is not always what you want. Sometimes you want to give meaning to a type that is more than just its structure. For example, it might be confusing that these two types are identical:
 
 ``` unison
-type Suit = Hearts | Spades | Diamonds | Clubs
+structural type Suit = Hearts | Spades | Diamonds | Clubs
 
-type Direction = North | South | East | West
+structural type Direction = North | South | East | West
 ```
 
 Unison will consider every unary type constructor with four nullary data constructors as identical to these declarations. So Unison will not stop us providing a `Direction` where a `Suit` is expected.
@@ -176,7 +196,7 @@ When compiling these declarations, Unison will generate a [universally unique id
 In the type declarations discussed above, the arguments to each data constructor are nameless.  For example:
 
 ``` unison
-type Point = Point Nat Nat
+structural type Point = Point Nat Nat
 ```
 
 Here, the data type `Point` has a constructor `Point.Point`, with two arguments, both of type `Nat`.  The arguments have no name, so they are identified positionally, for example when creating a value of this type, like `Point.Point 1 2`.
@@ -213,7 +233,7 @@ px = match p with
 A user-defined _ability_ declaration has the following general form:
 
 ``` unison
-ability A p_1 p_2 … p_n where
+unique|structural ability A p_1 p_2 … p_n where
   Request_1 : Type_1
   Request_2 : Type_2
   Request_n : Type_n
@@ -270,7 +290,7 @@ Any identifier, including a namespace-qualified one, can appear _hash-qualified_
 
 #### Reserved words
 
-The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `'`, `|`, `!`, `'`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `where`, `use`, `&&`, `||`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`.
+The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `'`, `|`, `!`, `'`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `structural`, `where`, `use`, `&&`, `||`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`.
 
 ### Name resolution and the environment
 
