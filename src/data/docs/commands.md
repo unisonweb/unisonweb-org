@@ -100,6 +100,10 @@ When new builtin terms and types are added to Unison, this is one way you can ge
 
 Use `copy.patch foo bar` to copy a [patch](#patch) from `foo` to `bar`
 
+## `debug.clear-cache` 
+
+Used for clearing the UCM cache of previous test or watch expression runs.
+
 ## `delete`
 
 Use `delete foo` to remove a term or type named `foo` from the current namespace
@@ -221,6 +225,16 @@ The first argument to `pull` is any [Git URL](#git-url) that identifies the name
 
 Use `quit` (or `exit` or `:q`) to terminate UCM.
 
+## `replace`
+
+Replaces the term or type with a different term or type, respectively. This applies the change to the default patch.
+
+`replace <from> <to>`
+
+The command optionally takes a `patch` value which scopes the replacement to a given patch.
+
+`replace <from> <to> <patch>` 
+
 ## `run`
 
 The `run` command is used to evaluate terms that require the `IO` ability within `ucm`.  A program that performs `IO` cannot be evaluated in a watch expression but _can_ be executed with `run`.
@@ -241,6 +255,10 @@ helloWorld = '(greet "World")
 .> run helloWorld
 ```
 
+## `ui`
+
+Use `ui` to open a browser window with the local codebase ui. 
+
 ## `undo`
 
 Use `undo` to revert the most recent change to the codebase. Some commands result in multiple steps in the history. You can use the [`reflog`](#reflog) and [`reset-root`](#reset-root) commands to move around history more reliably.
@@ -255,7 +273,7 @@ Use [the `reflog` command](#reflog) to jump to the point in history just before 
 
 ## `update`
 
-> 🚧  Unfortunately, this document is currently under construction. Check back later!
+Update allows you to update terms which have been previously added to the codebase. Update applies to terms in the recently saved scratch file which reflect changes relative to the namespace where it is run. Update will also add terms which are not present in the namespace where the command is issued. 
 
 ## Other commands (coming soon!)
 
