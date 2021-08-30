@@ -617,7 +617,7 @@ match 42 with
 
 #### Literal patterns
 
-A _literal pattern_ is a literal `Boolean`, `Nat`, `Int`, `Float`, `Char`, or `Text`. A literal pattern matches if the scrutinee has that exact value.
+A _literal pattern_ is a literal `Boolean`, `Nat`, `Int`, `Char`, or `Text`. A literal pattern matches if the scrutinee has that exact value.
 
 For example:
 
