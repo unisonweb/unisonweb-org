@@ -270,7 +270,7 @@ Any identifier, including a namespace-qualified one, can appear _hash-qualified_
 
 #### Reserved words
 
-The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `'`, `|`, `!`, `'`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `where`, `use`, `&&`, `||`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`.
+The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `'`, `|`, `!`, `'`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `where`, `use`, `&&`, `||`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`, `termLink`, `typeLink`.
 
 ### Name resolution and the environment
 
