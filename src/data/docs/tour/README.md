@@ -324,8 +324,8 @@ use test
 test> square.tests.ex1 = check (square 4 == 16)
 
 test> square.tests.prop1 =
-  go _ = a = !nat
-         b = !nat
+  go _ = a = !gen.nat
+         b = !gen.nat
          expect (square a * square b == square (a * b))
   runs 100 go
 ```
