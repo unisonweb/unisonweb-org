@@ -348,7 +348,7 @@ This will test our function with a bunch of different inputs.
 * You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference#delayed-computations) so it can be run multiple times by the `runs` function.
 * `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference#delayed-computations) `expr`.
 
-`nat` comes from `test` - `test.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
+`nat` comes from `test` - `test.gen.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
 
 ## Adding code to the codebase
 
