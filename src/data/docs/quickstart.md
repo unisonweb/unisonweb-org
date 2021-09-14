@@ -23,11 +23,9 @@ If you haven't already, please join the [#alphatesting channel on Slack][slack].
 
 When Unison is further along and ready for more general availability we'll just include those instructions here. For now, given the many rough edges that exist, we are really hoping that if you are trying out Unison you'll come talk to us, ask questions, and report bugs!
 
-## Step 2: Create your Unison codebase and start writing Unison code
+## Step 2: Create your Unison codebase
 
-Run `ucm` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. By default, the UCM will begin downloading the base libraries you'll need to write Unison code. It may take a moment, and once that's done you'll see a big list of definitions that were added. Press `q` to exit the list of definitions.
-
-Make a directory to work in, and create a new file there called `scratch.u` with the following contents: 
+Run `ucm` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. By default, the UCM will begin downloading the standard library, called `base`, which you'll use to write Unison code. It may take a moment, and once that's done you'll see a big list of definitions that were added. Press `q` to exit the list of definitions.
 
 ## Run your first program
 
