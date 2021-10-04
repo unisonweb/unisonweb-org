@@ -324,8 +324,8 @@ use test
 test> square.tests.ex1 = check (square 4 == 16)
 
 test> square.tests.prop1 =
-  go _ = a = !nat
-         b = !nat
+  go _ = a = !gen.nat
+         b = !gen.nat
          expect (square a * square b == square (a * b))
   runs 100 go
 ```
@@ -352,7 +352,7 @@ This will test our function with a bunch of different inputs.
 
 ## Adding code to the codebase
 
-The `square` function and the tests we've written for it are not yet part of the codebase. So far they only exists in our scratch file. Let's add it now. Switch to the Unison console and type `add`. You should get something like:
+The `square` function and the tests we've written for it are not yet part of the codebase. So far they only exist in our scratch file. Let's add them now. Switch to the Unison console and type `add`. You should get something like:
 
 ```
 ---
