@@ -25,7 +25,7 @@ When Unison is further along and ready for more general availability we'll just 
 
 ## Step 2: Create your Unison codebase
 
-Run `ucm` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. By default, the UCM will begin downloading the standard library, called `base`, which you'll use to write Unison code. It may take a moment, and once that's done you'll see a big list of definitions that were added. Press `q` to exit the list of definitions.
+Run `ucm` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. By default, the UCM will begin downloading the standard library, called `base`, which you'll use to write Unison code. It may take a moment! 
 
 ## Run your first program
 
