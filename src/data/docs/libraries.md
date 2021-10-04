@@ -92,10 +92,10 @@ pull https://github.com/hojberg/unison-money:.releases._latest external.money
 
 ### 🚢 `thoradam/unison-read`: Parsing / deserialization supporting incremental consumption
 
-[This library](https://github.com/thoradam/unison-read) provides a `Read a` ability, along with some combinators and handlers, that allow for incrementally consuming some `a`s to produce a result. To fetch the latest version (v0), do:
+[This library](https://github.com/thoradam/unison-read) provides a `Read a` ability, along with some combinators and handlers, that allow for incrementally consuming some `a`s to produce a result. To fetch the latest version (v1), do:
 
 ```ucm
-pull https://github.com/thoradam/unison-read:.releases._v0 external.read.v0
+pull https://github.com/thoradam/unison-read:.releases._v1 external.read.v1
 ```
 
 ### 🚢 `unisonweb/base`: builtin types and functions, basic data structures, algorithms, and `IO`

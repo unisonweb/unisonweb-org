@@ -290,7 +290,7 @@ Any identifier, including a namespace-qualified one, can appear _hash-qualified_
 
 #### Reserved words
 
-The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `'`, `|`, `!`, `'`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `structural`, `where`, `use`, `&&`, `||`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`.
+The following names are reserved by Unison and cannot be used as identifiers: `=`, `:`, `->`, `'`, `|`, `!`, `'`, `if`, `then`, `else`, `forall`, `handle`, `unique`, `structural`, `where`, `use`, `&&`, `||`, `true`, `false`, `type`, `ability`, `alias`, `let`, `namespace`, `cases`, `match`, `with`, `termLink`, `typeLink`.
 
 ### Name resolution and the environment
 
@@ -637,7 +637,7 @@ match 42 with
 
 #### Literal patterns
 
-A _literal pattern_ is a literal `Boolean`, `Nat`, `Int`, `Float`, `Char`, or `Text`. A literal pattern matches if the scrutinee has that exact value.
+A _literal pattern_ is a literal `Boolean`, `Nat`, `Int`, `Char`, or `Text`. A literal pattern matches if the scrutinee has that exact value.
 
 For example:
 
