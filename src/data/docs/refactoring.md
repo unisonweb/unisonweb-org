@@ -14,24 +14,26 @@ Unison takes a different approach to refactoring and updating code: rather than 
 
 For more about the theory, [this talk on Unison may be of interest](https://www.youtube.com/watch?v=IvENPX0MAZ4).
 
-> 📒 This document is a [Unison transcript](/docs/transcripts) which are executable Markdown documents with embedded Unison code and UCM commands. These are often used to create tutorials and other documentation that show interaction with UCM. The source of this transcript is [here](https://github.com/unisonweb/unisonweb-org/tree/master/src/data/transcripts/refactoring.md). Suggestions for improvements and PRs are welcome!
+> 📒 This document is a Unison "transcript," an executable Markdown document with embedded Unison code and UCM commands. These are often used to create tutorials and other documentation that show interaction with UCM. The source of this transcript is [here](https://github.com/unisonweb/unisonweb-org/tree/master/src/data/transcripts/refactoring.md). Suggestions for improvements and PRs are welcome!
 
 ## Setting up the example
 
 If you'd like to follow along, you can fetch the code via these commmands (the first command which fetches the base library can be omitted if you already have a copy in your codebase):
 
 ```ucm
-.> pull git@github.com:unisonweb/refactoring-example.git:.base .base
-.> pull git@github.com:unisonweb/refactoring-example.git:.cooking .cooking
+.> pull https://github.com/unisonweb/refactoring-example.git:.base .base
+```
+```ucm
+.> pull https://github.com/unisonweb/refactoring-example.git:.cooking .cooking
 ```
 The basic data type used in the `cooking` library is just a wrapper around a `Map Ingredient Float`, where the `Float` (a 64-bit floating point value) represents the quantity of the ingredient and `Ingredient` is just a wrapper around `Text`:
 
 ```ucm
 .cooking> view Ingredient Ingredients
 
-  unique type Ingredient = Ingredient Text
+  unique type Ingredient = { name : Text }
 
-  unique type Ingredients = Ingredients (Map Ingredient Float)
+  unique type Ingredients = { elements : Map Ingredient Float }
 
 ```
 Let's browse through the rest of the library and take a look at a few of the ingredient lists:
@@ -420,7 +422,7 @@ Let's do that for our `thanksgivingDessert` function:
 As a silly example, we'll use a simple `Logging` ability to indicate we'd like to print out a message in the middle of this function:
 
 ```unison
-ability Logging where
+unique ability Logging where
   log : Text -> ()
 
 thanksgivingDessert guestCount =
