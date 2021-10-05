@@ -167,7 +167,7 @@ Abilities aren't just for working with `IO`. You can create your own abilities! 
 A simple example ability is something like `Stream`, which can be used to produce streams of output:
 
 ```unison
-ability Stream e where
+structural ability Stream e where
   emit : e ->{Stream e} ()
   -- equivalently
   -- emit : e -> ()
@@ -275,7 +275,7 @@ This defers the choice of how to interpret the logging statements to the handler
 Here's another example ability, `Ask a`, which provides one operation, `ask`, for requesting a value of type `a` from whatever code handles the ability.
 
 ```unison
-ability Ask a where
+structural ability Ask a where
   ask : a
   -- equivalently, ask : {Ask a} a
 
@@ -300,7 +300,7 @@ use Ask ask
 
     ⍟ These new definitions are ok to `add`:
 
-      ability Ask a
+      structural ability Ask a
       Ask.provide : a -> '{Ask a} r -> r
 
   Now evaluating any watch expressions (lines starting with
@@ -376,7 +376,7 @@ The type signature on `greet2` isn't needed and would be inferred. Likewise, to 
 The `Abort` ability is analogous to `Optional` and can be used to terminate a computation.
 
 ```unison
-ability Abort where
+structural ability Abort where
   abort : a
   -- equivalently: `abort : {Abort} a`
 
@@ -408,7 +408,7 @@ Optional.toAbort = cases
 
     ⍟ These new definitions are ok to `add`:
 
-      ability Abort
+      structural ability Abort
       Abort.toOptional : '{Abort} a -> Optional a
       Optional.toAbort : Optional a ->{Abort} a
 
@@ -429,7 +429,7 @@ That signature for `abort : {Abort} a` looks funny at first. It's saying that `a
 The `Exception` ability is similar, but the operation for failing the computation (which we'll name `raise`) takes an argument:
 
 ```unison
-ability Exception e where
+structural ability Exception e where
   raise : e -> a
   -- equivalently: `raise : e -> {Exception e} a`
 
@@ -478,7 +478,7 @@ Either.toException = cases
 We can use abilities to choose nondeterministically, and collect up all results from all possible choices that can be made:
 
 ```unison
-ability Choose where
+structural ability Choose where
   choose : [a] -> a
 
 Choose.toList : '{Choose} a -> [a]
