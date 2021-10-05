@@ -25,19 +25,11 @@ When Unison is further along and ready for more general availability we'll just 
 
 ## Step 2: Create your Unison codebase
 
-Run `ucm init` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on.
+Run `ucm` to initialize a Unison codebase in `$HOME/.unison`. This is where Unison will store function definitions, types, namespaces, and so on. By default, the UCM will begin downloading the standard library, called `base`, which you'll use to write Unison code. It may take a moment! 
 
-## Step 3: Fetch the base libraries and run your first program
+## Run your first program
 
-Launch `ucm` again, then from the `.>` prompt, do:
-
-```ucm
-pull https://github.com/unisonweb/base:.releases._latest base
-```
-
-You'll see some output from `git` in the background, and once that's done you'll see a big list of definitions that the `pull` added. Press `q` to exit the list of definitions.
-
-Make a directory to work in, and create a new file there called `scratch.u` with the following contents: 
+Back in your terminal, make a directory to work in, and create a new file there called `scratch.u` with the following contents: 
 
 ```unison
 ---

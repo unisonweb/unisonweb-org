@@ -324,8 +324,8 @@ use test
 test> square.tests.ex1 = check (square 4 == 16)
 
 test> square.tests.prop1 =
-  go _ = a = !nat
-         b = !nat
+  go _ = a = !gen.nat
+         b = !gen.nat
          expect (square a * square b == square (a * b))
   runs 100 go
 ```
@@ -348,11 +348,11 @@ This will test our function with a bunch of different inputs.
 * You can call a function parameter `_` if you just plan to ignore it. Here, `go` ignores its argument; its purpose is just to make `go` [lazily evaluated](/docs/language-reference#delayed-computations) so it can be run multiple times by the `runs` function.
 * `!expr` means the same thing as `expr ()`, we say that `!expr` _forces_ the [delayed computation](/docs/language-reference#delayed-computations) `expr`.
 
-`nat` comes from `test` - `test.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
+`nat` comes from `test` - `test.gen.nat`. It's a _generator_ of natural numbers. `!nat` generates one of these numbers.
 
 ## Adding code to the codebase
 
-The `square` function and the tests we've written for it are not yet part of the codebase. So far they only exists in our scratch file. Let's add it now. Switch to the Unison console and type `add`. You should get something like:
+The `square` function and the tests we've written for it are not yet part of the codebase. So far they only exist in our scratch file. Let's add them now. Switch to the Unison console and type `add`. You should get something like:
 
 ```
 ---
