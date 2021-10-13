@@ -281,7 +281,7 @@ This creates two new hashes, `#ccc.0` and `#ccc.1`. Note that their definitions 
 
 ### How do I run a program that uses `IO`?
 
-In `ucm`, you can type `run myProgram`, where `myProgram` is some term of type `'{IO} ()`.
+In `ucm`, you can type `run myProgram`, where `myProgram` is some term of type `'{IO, Exception} ()`.
 
 ### Does Unison have IDE support? Editor support? Language Server Protocol (LSP) support?
 
@@ -289,7 +289,7 @@ We have editor support for the Unison syntax in Vim, Atom, and VS Code - see htt
 
 No editors currently understand the Unison codebase format, or offer function like 'find references', 'extract function', etc.  You can use `ucm` commands to get some of these abilities, for example `find`.
 
-There is a [Unison Github repo explorer](https://github.com/unisonweb/elm-browser) project (under development) which gives a browseable, hyperlinked view of the contents of a codebase.
+With Unison ships a [local UI](https://github.com/unisonweb/codebase-ui) to browse your codebase. Libraries can be explored and published on [Unison Share](https://share.unison-lang.org)
 
 Since the Unison codebase is a structured object containing full type information and metadata, we expect it will be possible to build developer tooling which beats that which exists for today's languages!
 
