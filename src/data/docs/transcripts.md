@@ -3,7 +3,7 @@
 
   Transcripts provide a way to script interactions between Unison code and the Unison Codebase
   Manager (UCM.) They are written as markdown documents
-  containing fenced codeblocks which define the Unison code and UCM commands to be performed.
+  containing fenced code blocks which define the Unison code and UCM commands to be performed.
   These interactions are called "stanzas" and they're evaluated starting from the top of the
   file.
 
