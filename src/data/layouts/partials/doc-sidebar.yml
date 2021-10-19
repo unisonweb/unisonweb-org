@@ -1,6 +1,6 @@
 linkSets:
 
-  - heading: Getting started 
+  - heading: Getting started
     icon: /media/life-buoy.svg
     links:
       - label: Welcome
@@ -19,6 +19,8 @@ linkSets:
         url: /docs/documentation
       - label: Testing your code
         url: /docs/testing
+      - label: Transcripts
+        url: /docs/transcripts
       - label: Organizing your code
         url: /docs/codebase-organization
       - label: Refactoring and code updates
