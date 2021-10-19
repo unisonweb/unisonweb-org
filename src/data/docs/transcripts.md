@@ -48,7 +48,7 @@
 
   * You can save the codebase that your transcript produced with the `--save-codebase`
     flag for debugging and sharing. At the end of the transcript run, the UCM will print out
-    the location of the directory where you can find your codebase and give you instrutions
+    the location of the directory where you can find your codebase and give you instructions
     for how to open it!
   * If you would like to run your transcript against a particular codebase, use the
    `transcript.fork` option. Here's an example of how it might be called:
