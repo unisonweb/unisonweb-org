@@ -232,7 +232,9 @@ In future we may introduce a 'prune' operation, to allow you to remove definitio
 
 ### How do I share my code?
 
-You use the Unison Codebase Manager's `push` command, to write it to a git repository - for example, one hosted on GitHub.
+If you want to _publicly_ share your code (or look at code that others have shared), check out [Unison Share](https://share.unison-lang.org/).
+
+You use the Unison Codebase Manager's `push` command, to write it to a git repository - for example, one hosted on GitHub. Run `help push` within `ucm` for more information.
 
 Currently git is the only supported VCS protocol, but it would be perfectly feasible to add others.
 
