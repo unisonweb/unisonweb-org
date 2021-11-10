@@ -9,6 +9,7 @@ This document is a collection of user-submitted instructions for setting up a te
 
 [githublink]: https://github.com/unisonweb/unisonweb-org/blob/master/src/data/docs/editor-setup.md
 [vimplug]: https://github.com/junegunn/vim-plug
+[vim-unison-help-doc]: https://github.com/unisonweb/unison/blob/trunk/editor-support/vim/doc/unison.txt
 
 ## Vim
 
@@ -20,6 +21,8 @@ Using [vim-plug][vimplug]:
         Plug 'unisonweb/unison', { 'branch': 'trunk', 'rtp': 'editor-support/vim' }
 
 3. Issue the vim command `:PlugInstall`.
+
+For more information run `:help unison` from within vim or view the [online help doc][vim-unison-help-doc].
 
 ## Atom
 
