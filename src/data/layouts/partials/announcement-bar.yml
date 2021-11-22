@@ -1,4 +1,4 @@
-show: false
+show: true
 color: yellow
 blurb: |
-  Unison Computing is hiring an Infrastructure Engineer, see [our jobs page!](/jobs)
+  📣 New Article: [Spark-like distributed datasets in under 100 lines of Unison](https://www.unison-lang.org/articles/distributed-datasets/)

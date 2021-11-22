@@ -76,6 +76,14 @@ pull https://github.com/emiflake/unison-json:.releases._v0 external.json.v0
 pull https://github.com/fboeller/unison-expect:.trunk .external.expect.v0
 ```
 
+### 🧪 `florianfmmartin/unison-rationals`: Rational Numbers
+
+[This library](https://github.com/florianfmmartin/unison) defines a new `Rational` type to represent and manipulate rational numbers.
+
+```ucm
+pull https://github.com/florianfmmartin/unison.git:.rationals.releases._v1 external.rationals.v1
+```
+
 ### 🏗 `hojberg/unison-money`: Money and Currency
 
 [This library](https://github.com/hojberg/unison-money) is implements a `Money`
