@@ -76,7 +76,7 @@ Some key differences...
 
 Unison does not currently support a Foreign Function Interface, for invoking code written in other languages.
 
-Your programs can interact with the outside world via the `IO` ability, and this includes interaction via network sockets - so you can interact with code written in other languages if that code can expose a network interface, for example as a web service.  We'd like to improve on this position in future.
+Your programs can interact with the outside world via the `IO` ability, and this includes interaction via network sockets - so you can interact with code written in other languages if that code can expose a network interface, for example as a web service.  We'd like to improve on this position in the future.
 
 The sketch design for how it will work is as follows.
 - A foreign API, let's say one for working with the GPU, will be exposed through a top-level ability, let's say `GPU`.
@@ -228,7 +228,7 @@ In fact, Unison may waste a lot less disk space than traditional languages, sinc
 
 The codebase stores its complete history - the same as git does.  That gives you a complete view of the operations that brought the codebase to its current state.  It also means that you can refer to a given definition in the codebase, by hash, and be sure that that reference will never become undefined.
 
-In future we may introduce a 'prune' operation, to allow you to remove definitions which have no inward references (from within the codebase).
+In the future, we may introduce a 'prune' operation to allow you to remove definitions which have no inward references (from within the codebase).
 
 ### How do I share my code?
 
@@ -295,11 +295,11 @@ With Unison ships a [local UI](https://github.com/unisonweb/codebase-ui) to brow
 
 Since the Unison codebase is a structured object containing full type information and metadata, we expect it will be possible to build developer tooling which beats that which exists for today's languages!
 
-A previous incarnation of the Unison project actually started with a structure editor, meaning that the 'input some freeform text' stage is bypassed entirely.  This is a direction we hope to come back to in future.
+A previous incarnation of the Unison project actually started with a structure editor, meaning that the 'input some freeform text' stage is bypassed entirely.  This is a direction we hope to come back to in the future.
 
 ### Does Unison compile to LLVM?
 
-Not yet!  We have done some exploratory work on this in the past, and expect to come back to it.  For the moment, we have a nice, clean, but unoptimized interpreter.  We definitely want to be able to compile Unison to native binaries in future.
+Not yet!  We have done some exploratory work on this in the past, and expect to come back to it.  For the moment, we have a nice, clean, but unoptimized interpreter.  We definitely want to be able to compile Unison to native binaries in the future.
 
 ### Are you looking for help with developing Unison?
 
