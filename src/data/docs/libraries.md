@@ -13,8 +13,8 @@ clicking symbols in the code, share definitions, or share whole projects.
 
 Checkout the [base
 library](https://share.unison-lang.org/latest/namespaces/unison/base), and many
-other libraries on [Unison Share](https://share.unison-lang.org)
+other libraries on [Unison Share](https://share.unison-lang.org).
 
-Get your library on Unison Share by following this [guide](https://github.com/unisonweb/share#adding-projects-to-unison-share)
+Get your library on Unison Share by following this [guide](https://github.com/unisonweb/share#adding-projects-to-unison-share).
 
 There's active discussion of new library work in the [`#libraries` channel on Slack](/slack).
