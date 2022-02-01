@@ -169,7 +169,7 @@ Rather than having a list of (possibly misleading) compile errors and a broken c
 
 The `todo` command is telling you the total number of transitive dependents still left to update, and prompting you to visit them in dependency order. So it tells us to look at `thanksgivingDessert` first, and not `thanksgivingDinner`, which depends on `thanksgivingDessert`.
 
-Here, we'll apply a simple fix here, which is to bind the new parameter at the use site:
+We'll apply a simple fix here, which is to bind the new parameter at the use site:
 
 ```unison:hide
 thanksgivingDessert guestCount =
