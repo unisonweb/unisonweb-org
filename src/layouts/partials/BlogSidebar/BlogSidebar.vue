@@ -1,18 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-xs-12 col-sm-5 col-md-12">
-
-      <un-page-section tag="div" class="u-padding--top--none@md u-padding--top--none@lg u-padding--top--none@xl">
-        <h2
-          class="u-margin--bottom u-tight"
-          data-font-size="2"
-          v-text="layoutContent.categories.heading"
-        />
-        <Categories />
-      </un-page-section>
-
-    </div>
-    <div class="col-xs-12 col-sm-7 col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12">
 
       <un-page-section tag="div" class="u-padding--top--none@md u-padding--top--none@lg u-padding--top--none@xl">
         <h2
