@@ -12,9 +12,11 @@ featuredImage: https://unison-lang.org/img/posts/unison-2021.svg
 
 ## A beautiful GUI for browsing the Unison codebase
 
-(embed gif of codebase UI here)
+<br />
 
-script idea for this: pop open a definition via the sidebar, then via the finder, open a definition that has docs, and then click through to something in the docs, then close that, open the source, and click through to a definition in the source
+<video style="border-radius: 10px;" controls muted width="100%" src="/media/feb-2022-unison-local.mp4" poster="/media/feb-2022-unison-local.png"></video>
+
+<br />
 
 Since a Unison codebase is not stored in text files, it's been a sticking point for developers that they haven't been able to easily browse their code and post it online for others to see. So this summer we rolled out a new user interface for browsing the Unison codebase through a web browser. This comes embedded in the Codebase Manager, so now when you start up `ucm` it also starts a local web server that lets you browse and search your code in a delightful way.
 
