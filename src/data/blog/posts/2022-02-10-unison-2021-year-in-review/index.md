@@ -10,7 +10,7 @@ featuredImage: https://unison-lang.org/img/posts/unison-2021.svg
 
 2021 was a big year for Unison. We released a new alpha version roughly every other month, and each release came with some serious improvements. In total, we merged more than 600 pull requests. Here are some of the highlights.
 
-## A beautiful GUI for browsing the Unison codebase
+## A beautiful UI for browsing Unison code
 
 <br />
 
