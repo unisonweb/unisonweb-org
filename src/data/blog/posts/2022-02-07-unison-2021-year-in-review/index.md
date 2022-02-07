@@ -1,7 +1,7 @@
 ---
 slug: unison-2021-year-in-review
 title: "Unison in 2021, 2022 and beyond: year in review and future plans"
-description: 2021 was a big year for Unison. 
+description: "2021 was a big year for Unison. We released a new alpha version roughly every other month, and each release came with some serious improvements. In total, we merged more than 600 pull requests. Here are some of the highlights."
 date: 2022-02-07
 authors: ["runar-bjarnason"]
 categories: ["news"]
