@@ -73,7 +73,7 @@ We doubled the size of the team at Unison Computing this year! Five new people j
 
 This is in addition to lots of people hacking on Unison in their spare time. More than a dozen new people added their efforts to the development of Unison this year. We hosted a Hacktoberfest event in October, during which the community came together to fix a whole bunch of issues.
 
-This year we also started hosting weekly community sessions on Wednesdays on [our Discord server](https://discord.gg/vNcZ5vAV). This is like a meetup where usually somebody will stream themselves live-coding something fun in Unison. You should come say hi!
+This year we also started hosting weekly community sessions on Wednesdays on [our Discord server](https://discord.gg/4De3u54Yj4). This is like a meetup where usually somebody will stream themselves live-coding something fun in Unison. You should come say hi!
 
 ## Big plans for 2022
 
