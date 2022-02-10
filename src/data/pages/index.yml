@@ -6,8 +6,8 @@ hero:
   blurb: |
     Unison is an open source functional programming language based on a simple idea with big implications: code is content-addressed and immutable.
   graphic:
-    alt: placeholder
-    title: placeholder
+    alt: Unison
+    title: Unison
     path: /media/graphic-homepage-hero.svg
   cta:
     label: Install
