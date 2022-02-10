@@ -26,7 +26,7 @@ We have big plans for this UI, and in time it might become a full-fledged IDE fo
 
 ## Unison Share community hub
 
-We launched a new community hub at [share.unison-lang.org](share.unison-lang.org) where people can share their Unison code for others to see. It also aims to be the place developers go to read API documentation. It already hosts a whole bunch of libraries from the community, as well as the Base libraries.
+We launched a new community hub at [share.unison-lang.org](https://share.unison-lang.org) where people can share their Unison code for others to see. It also aims to be the place developers go to read API documentation. It already hosts a whole bunch of libraries from the community, as well as the Base libraries.
 
 This site is running a version of the codebase UI, so the experience of browsing your local codebase vs a publicly shared library should be more or less the same.
 
