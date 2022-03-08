@@ -1,5 +1,21 @@
 # Redirects from what the browser requests to what we serve
-/docs/transcripts https://github.com/unisonweb/unison/blob/trunk/unison-src/transcripts/hello.md
-/slack       https://join.slack.com/t/unisonlanguage/shared_invite/zt-p010xqyb-66ZYDJgMhv_ZpeRlHSpUCg
-/calendar    https://calendar.google.com/calendar/u/0/embed?src=c_dtba5eidumieu2vv6pu5j45514@group.calendar.google.com&ctz=America/Boston&mode=AGENDA
-/at-work     https://drahilgwy2i.typeform.com/to/qQwzyJNs
+
+/                           https://unison-lang.org 301!
+
+# Redirect all but a select few docs, to the new site
+
+/docs/codebase-organization /docs/codebase-organization
+/docs/faq                   /docs/faq
+/docs/abilities             /docs/abilities
+
+/docs/*                     https://unison-lang.org/docs/:splat 301!
+
+/blog/*                     https://unison-lang.org/blog 301!
+/community                  https://unison-lang.org/community 301!
+/code-of-conduct            https://unison-lang.org/community/code-of-conduct 301!
+/talks                      https://unison-lang.org/talks 301!
+/unisoncomputing            https://unison-lang.org/unison-computing 301!
+
+/slack            https://join.slack.com/t/unisonlanguage/shared_invite/zt-p010xqyb-66ZYDJgMhv_ZpeRlHSpUCg
+/calendar         https://calendar.google.com/calendar/u/0/embed?src=c_dtba5eidumieu2vv6pu5j45514@group.calendar.google.com&ctz=America/Boston&mode=AGENDA
+/at-work          https://drahilgwy2i.typeform.com/to/qQwzyJNs
