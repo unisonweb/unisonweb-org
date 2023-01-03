@@ -1,6 +1,7 @@
 # Redirects from what the browser requests to what we serve
 
 /                           https://unison-lang.org 301!
+/index.html                 https://unison-lang.org 301!
 
 # Redirect all but a select few docs, to the new site
 
