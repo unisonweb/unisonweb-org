@@ -4009,9 +4009,9 @@ find-versions@^3.0.0:
   dependencies:
     semver-regex "^2.0.0"
 
-"flexboxgrid-sass@git://github.com/brianfryer/flexboxgrid-sass":
+"flexboxgrid-sass@https://github.com/brianfryer/flexboxgrid-sass":
   version "8.0.6"
-  resolved "git://github.com/brianfryer/flexboxgrid-sass#28187c469336976f493c7866d897f903a20dd53e"
+  resolved "https://github.com/brianfryer/flexboxgrid-sass#dba23bd02555fdd9f40fdd727282735ed9391972"
   dependencies:
     sass-flex-mixin "^1.0.3"
 
@@ -8000,9 +8000,9 @@ pretty-hrtime@^1.0.3:
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
-"prismjs@git://github.com/unisonweb/prism":
+"prismjs@https://github.com/unisonweb/prism":
   version "1.17.1"
-  resolved "git://github.com/unisonweb/prism#191bd2124be99c104991524c4c2f04af00f05650"
+  resolved "https://github.com/unisonweb/prism#191bd2124be99c104991524c4c2f04af00f05650"
   optionalDependencies:
     clipboard "^2.0.0"
 
@@ -8785,9 +8785,9 @@ sass-loader@^7.1.0:
     pify "^4.0.1"
     semver "^6.3.0"
 
-"sass-mediaqueries@git://github.com/brianfryer/sass-mediaqueries":
+"sass-mediaqueries@https://github.com/brianfryer/sass-mediaqueries":
   version "1.6.1"
-  resolved "git://github.com/brianfryer/sass-mediaqueries#c7b79f0842a566d934f8890e8469636577928595"
+  resolved "https://github.com/brianfryer/sass-mediaqueries#c7b79f0842a566d934f8890e8469636577928595"
 
 sass-mix@^0.1.2:
   version "0.1.5"
