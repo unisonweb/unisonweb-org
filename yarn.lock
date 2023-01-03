@@ -4009,9 +4009,9 @@ find-versions@^3.0.0:
   dependencies:
     semver-regex "^2.0.0"
 
-"flexboxgrid-sass@git://github.com/brianfryer/flexboxgrid-sass":
+"flexboxgrid-sass@git+https://github.com/brianfryer/flexboxgrid-sass#28187c469336976f493c7866d897f903a20dd53e":
   version "8.0.6"
-  resolved "git://github.com/brianfryer/flexboxgrid-sass#28187c469336976f493c7866d897f903a20dd53e"
+  resolved "git+https://github.com/brianfryer/flexboxgrid-sass#28187c469336976f493c7866d897f903a20dd53e"
   dependencies:
     sass-flex-mixin "^1.0.3"
 
@@ -8785,9 +8785,9 @@ sass-loader@^7.1.0:
     pify "^4.0.1"
     semver "^6.3.0"
 
-"sass-mediaqueries@git://github.com/brianfryer/sass-mediaqueries":
+"sass-mediaqueries@git+https://github.com/brianfryer/sass-mediaqueries#c7b79f0842a566d934f8890e8469636577928595":
   version "1.6.1"
-  resolved "git://github.com/brianfryer/sass-mediaqueries#c7b79f0842a566d934f8890e8469636577928595"
+  resolved "git+https://github.com/brianfryer/sass-mediaqueries#c7b79f0842a566d934f8890e8469636577928595"
 
 sass-mix@^0.1.2:
   version "0.1.5"
