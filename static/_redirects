@@ -3,12 +3,6 @@
 /                           https://unison-lang.org 301!
 /index.html                 https://unison-lang.org 301!
 
-# Redirect all but a select few docs, to the new site
-
-/docs/codebase-organization /docs/codebase-organization
-/docs/faq                   /docs/faq
-/docs/abilities             /docs/abilities
-
 /docs/*                     https://unison-lang.org/docs/:splat 301!
 
 /blog/*                     https://unison-lang.org/blog 301!
