@@ -1,3 +1,8 @@
+:warning: **This repository is no longer active!**
+https://unisonweb.org redirects to https://unison-lang.org which hosts https://github.com/unisonweb/website.
+
+---
+
 ## Local Development Environment Setup
 
 1. **Install `node` 8.13.0**
