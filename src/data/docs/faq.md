@@ -287,7 +287,7 @@ In `ucm`, you can type `run myProgram`, where `myProgram` is some term of type `
 
 ### Does Unison have IDE support? Editor support? Language Server Protocol (LSP) support?
 
-We have editor support for the Unison syntax in Vim, Atom, and VS Code - see https://www.unisonweb.org/docs/editor-setup.
+We have editor support for the Unison syntax in Vim, Atom, and VS Code - see https://www.unison-lang.org/learn/usage-topics/editor-setup/.
 
 No editors currently understand the Unison codebase format, or offer function like 'find references', 'extract function', etc.  You can use `ucm` commands to get some of these abilities, for example `find`.
 
