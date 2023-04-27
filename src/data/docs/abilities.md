@@ -543,6 +543,37 @@ Stream.foldLeft f b s =
       handle resume () with h (f acc a)
   handle !s with h b
 
+Stream.sum' = Stream.foldLeft (Nat.+) 0
+
+Stream.map : (a -> b) -> '{Stream a} r -> '{Stream b} r
+Stream.map f stream _ =
+  h : Request {Stream a} r -> {Stream b} r
+  h = cases
+    {r} -> r
+    {Stream.emit e -> resume} ->
+      emit (f e)
+      handle resume () with h
+  handle !stream with h
+
+Stream.filter : (a -> Boolean) -> '{Stream a} () -> '{Stream a} ()
+Stream.filter pred stream _ =
+  h : Request {Stream a} () -> {Stream a} ()
+  h req = match req with
+    {_} -> ()
+    {Stream.emit e -> resume} ->
+      if pred e then emit e else ()
+      handle resume () with h
+  handle !stream with h
+
+Stream.take : Nat -> '{Stream a} () -> '{Stream a} ()
+Stream.take n stream _ =
+  h i = cases
+    {_} -> ()
+    {Stream.emit e -> resume} ->
+      if n > i then emit e else ()
+      handle resume () with h (i+1)
+  handle !stream with h 0
+
 Stream.terminated : '{Stream a} () -> '{Stream (Optional a)} ()
 Stream.terminated s _ =
   h : Request {Stream a} () ->{Stream (Optional a)} ()
@@ -552,8 +583,6 @@ Stream.terminated s _ =
       emit (Some a)
       handle resume () with h
   handle !s with h
-
-Stream.sum' = Stream.foldLeft (Nat.+) 0
 
 Stream.pipe : '{Stream a} () -> '{Ask a, Stream b} r -> '{Stream b} ()
 Stream.pipe s f _ =
@@ -569,7 +598,7 @@ Stream.pipe s f _ =
       handle resumeF () with h s
   handle !f with h s
 
-Stream.filter f s =
+Stream.filter' f s =
   go _ =
     a = ask
     if f a then emit a
@@ -577,7 +606,7 @@ Stream.filter f s =
     !go
   Stream.pipe s go
 
-Stream.map f s =
+Stream.map' f s =
   go _ = emit (f ask)
          !go
   Stream.pipe s go
