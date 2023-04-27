@@ -114,9 +114,7 @@ show-carets: true
 .> view base.List.reverse
 
   base.List.reverse : [a] -> [a]
-  base.List.reverse as =
-    use base.List +:
-    base.List.foldl (acc a -> a +: acc) [] as
+  base.List.reverse as = foldl (acc a -> a +: acc) [] as
 ```
 
 Notice that `view` shows the `foldl` name now, so the rename has taken effect. Nice!
@@ -143,12 +141,13 @@ title: ucm
 
   ⏪
 
-  Here's the changes I undid:
+    Here are the changes I undid
 
-  > Moves:
+  Name changes:
 
-    Original name   New name
-    base.List.foldLeft base.List.foldl
+    Original                 Changes
+    1. base.List.foldLeft    2. base.List.foldl (added)
+                             3. base.List.foldLeft (removed)
 
 .>
 ```
@@ -284,7 +283,7 @@ square x = x * x
 
 use test
 
-test> square.tests.ex1 = check (square 4 == 16)
+test> square.tests.ex1 = check (square 4 === 16)
 ```
 
 Save the file, and Unison comes back with:
@@ -294,7 +293,7 @@ Save the file, and Unison comes back with:
 title: ucm
 show-numbers: false
 ---
-8 | test> square.tests.ex1 = check (square 4 == 16)
+8 | test> square.tests.ex1 = check (square 4 === 16)
 
 ✅ Passed : Proved.
 ```
@@ -308,7 +307,7 @@ The `check` function has type `Boolean -> Test.Result`. It takes a `Boolean` exp
 
 ### A property-based test
 
-Let's test this a bit more thoroughly. `square` should have the property that `square a * square b == square (a * b)` for all choices of `a` and `b`. The testing library supports writing property-based tests like this. There's some new syntax here, explained afterwards:
+Let's test this a bit more thoroughly. `square` should have the property that `square a * square b === square (a * b)` for all choices of `a` and `b`. The testing library supports writing property-based tests like this. There's some new syntax here, explained afterwards:
 
 ```unison
 ---
