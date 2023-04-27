@@ -232,6 +232,84 @@ In implementing this, you'll have a handler that matches on a `Request {Ask a, S
 
 Once you've written `pipe`, try writing `Stream.map`, `Stream.filter`, and `Stream.take` using `pipe`.
 
+### Handling abilities into IO
+
+In the introduction, the `greet` function was defined in terms of the `IO` ability — a special ability provided by the Unison runtime to interact with the environment (i.e., perform file or socket I/O, read from the local system clock, raise errors, etc.). In real programs, however, developers should generally follow the _principle of least power_ by describing such interactions in terms of more limited abilities. Carefully constraining the operations that a function may access makes our programs easier to reason about and easier to test. Limited abilities can then be interpreted in terms of `IO` at the top level of a program.
+
+Let's implement a Hello World program in terms of a user-defined `Console` ability that we'll handle into `IO`.
+
+```
+ability Console where
+  readLine  : Text
+  printLine : Text -> ()
+
+greet : '{Console} ()
+greet _ =
+  Console.printLine "What is your name?"
+  name = Console.readLine
+  Console.printLine ("Hello, " ++ name ++ "!")
+```
+
+We can easily test this program without performing any I/O:
+
+```
+testConsole : '{Console} () -> [Text] -> [Text]
+testConsole prog inputLines =
+  h inputLines outputLines = cases
+    { Console.readLine -> resume } ->
+      match inputLines with
+        hd +: tl -> handle resume hd with h tl outputLines
+        []       -> handle resume "" with h [] outputLines
+    { Console.printLine line -> resume } ->
+      handle !resume with h inputLines (outputLines :+ line)
+    { _ } -> outputLines
+  handle !prog with h inputLines []
+
+test> greet.test1 = run (expect
+  ((testConsole greet ["World"]) ==
+    ["What is your name?", "Hello, World!"]))
+
+test> greet.test2 = run (expect
+  ((testConsole greet ["Bob"]) ==
+    ["What is your name?", "Hello, Bob!"]))
+```
+
+`testConsole` takes a delayed computation that requires the `Console` ability and a list of strings that will be used to satisfy the computation's `Console.readLine` requests, and it returns the list of strings "printed" by the computation's `Console.printLine` operations.
+
+Alternatively, we could test for the exact sequence of operations that we expect:
+
+```
+test> greet.test = run (handle !greet with cases
+  { Console.printLine _ -> resume } ->
+    handle !resume with cases
+      { Console.readLine -> resume } ->
+        handle resume "World" with cases
+          { Console.printLine "Hello, World!" -> resume } ->
+            handle !resume with cases
+              { _ } -> ok
+              _ -> fail
+          _ -> fail
+      _ -> fail
+  _ -> fail)
+```
+
+In order to run our program, we'll want to reinterpret `Console` operations as `IO` operations.
+
+```
+liveConsole.handler : Request Console a ->{IO} a
+liveConsole.handler = cases
+  { Console.readLine -> resume } ->
+    handle resume !io.readLine with liveConsole.handler
+  { Console.printLine line -> resume } ->
+    io.printLine line
+    handle !resume with liveConsole.handler
+  { x } -> x
+
+helloWorld _ = handle !greet with liveConsole.handler
+```
+
+The `io.readLine` and `io.printLine` functions are defined in Unison's base library; they use the `IO` ability to read from and write to the local console. We can run this program in `ucm` with the command `run helloWorld`.
+
 ## Learning more
 
 That's all for the basics, but here are some topics you might be interested to learn more about:
